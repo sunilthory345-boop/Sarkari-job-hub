@@ -181,13 +181,18 @@ export default function MockTestPortal({
                     className="group border border-slate-100 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-blue-200 hover:bg-slate-50/50 transition duration-200"
                   >
                     <div>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center flex-wrap gap-2">
                         <span className="inline-block rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-bold text-blue-800">
                           {test.category}
                         </span>
                         <span className="text-xs text-slate-400 font-medium font-mono">
                           {test.questions.length} Items MCQ
                         </span>
+                        {test.id === 'ssc-cgl-science-mock-1' && (
+                          <span className="inline-block rounded-full bg-emerald-100 text-emerald-800 px-2 py-0.5 text-[10px] font-extrabold border border-emerald-200">
+                            ✨ Clean study mode (PRACTICE MOCK watermark removed)
+                          </span>
+                        )}
                       </div>
                       <h4 className="font-sans text-sm font-bold text-slate-800 mt-2 group-hover:text-blue-600 transition">
                         {test.title}
@@ -317,22 +322,70 @@ export default function MockTestPortal({
         <div className="rounded-3xl border border-blue-50 bg-white shadow-xl shadow-blue-50/20 overflow-hidden">
           
           {/* Header Progress panel */}
-          <div className="bg-linear-to-r from-blue-900 to-indigo-950 p-5 text-white flex items-center justify-between">
+          <div className="bg-linear-to-r from-blue-900 to-indigo-950 p-5 text-white flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <span className="text-[10px] bg-blue-500/25 border border-blue-400/20 rounded px-2 py-0.5 font-bold uppercase tracking-wide">
-                Live Assessment Engine
-              </span>
-              <h3 className="font-sans text-base font-bold mt-1.5">{activeTest.title}</h3>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] bg-red-500/30 border border-red-400/40 text-rose-300 rounded px-2.5 py-0.5 font-sans font-extrabold uppercase tracking-widest animate-pulse flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-rose-500"></span>
+                  BILINGUAL TEST ENGINE LIVE
+                </span>
+                <span className="text-[10px] bg-amber-500/30 border border-amber-400/40 text-amber-300 rounded px-2.5 py-0.5 font-sans font-bold uppercase tracking-wide">
+                  Negative Penalized: -{activeTest.negativeMark}
+                </span>
+              </div>
+              <h3 className="font-sans text-base font-extrabold mt-1.5">{activeTest.title}</h3>
             </div>
             
             {/* Timer circle badge */}
-            <div className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-xl border border-white/10 backdrop-blur-xs font-mono text-sm font-bold tracking-wider">
-              <Clock className="h-4.5 w-4.5 text-rose-400 animate-pulse" />
-              <span className={timeLeft < 60 ? 'text-rose-400 animate-flash' : 'text-white'}>
-                {formatTime(timeLeft)}
+            <div className="flex items-center gap-3">
+              <div className="text-right font-sans hidden sm:block">
+                <span className="block text-[10px] text-blue-200 uppercase font-bold tracking-widest">Time Remaining</span>
+                <span className="block text-[11px] text-rose-300 font-medium font-sans">बचा हुआ समय</span>
+              </div>
+              <div className="flex items-center gap-2.5 bg-rose-950/40 px-5 py-2.5 rounded-2xl border border-rose-500/20 backdrop-blur-xs font-mono text-base font-black tracking-widest text-rose-200 animate-fadeIn shrink-0">
+                <Clock className="h-4.5 w-4.5 text-rose-400 animate-spin" style={{ animationDuration: '3s' }} />
+                <span className={timeLeft < 60 ? 'text-red-400 animate-ping font-extrabold' : 'text-rose-100 font-extrabold'}>
+                  {formatTime(timeLeft)}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Dynamic Timer Progress Bar */}
+          <div className="h-1.5 w-full bg-slate-100 relative overflow-hidden">
+            <div 
+              className={`h-full transition-all duration-1000 ${
+                (timeLeft / (activeTest.durationMinutes * 60)) < 0.2 ? 'bg-red-500 animate-pulse' : 'bg-blue-600'
+              }`}
+              style={{ width: `${(timeLeft / (activeTest.durationMinutes * 60)) * 100}%` }}
+            ></div>
+          </div>
+
+          {/* Bilingual Live Stats Tracker Box */}
+          <div className="bg-amber-50/70 border-b border-amber-100 px-6 py-3 text-xs font-sans text-slate-700 flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <span className="text-sm">📝</span>
+              <span className="font-extrabold text-[#1E3A8A]">Assessment Protocol / नियम:</span>
+            </div>
+            <div className="flex items-center gap-4 flex-wrap text-[11px]">
+              <span className="bg-emerald-100/85 text-emerald-800 font-extrabold px-2 py-1 rounded-lg border border-emerald-200">
+                🟢 Correct / सही विकल्प: +2.00 Marks
+              </span>
+              <span className="bg-red-100/85 text-red-800 font-extrabold px-2 py-1 rounded-lg border border-red-200">
+                🔴 Incorrect Penalty / गलत उत्तर का नुकसान: -{activeTest.negativeMark} Marks
+              </span>
+              <span className="bg-slate-100/85 text-slate-700 font-extrabold px-2 py-1 rounded-lg border border-slate-200">
+                ⏳ Duration: {activeTest.durationMinutes} Mins
               </span>
             </div>
           </div>
+
+          {activeTest.id === 'ssc-cgl-science-mock-1' && (
+            <div className="bg-emerald-50 text-emerald-800 px-6 py-2 text-[11px] font-sans font-extrabold border-b border-emerald-100 flex items-center gap-2 animate-fadeIn">
+              <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-ping"></span>
+              <span>🔒 Clean Study Mode Active: Original background watermarks & "PRACTICE MOCK" overlay removed. Enjoy distraction-free learning!</span>
+            </div>
+          )}
 
           <div className="grid gap-6 p-6 md:grid-cols-12 font-sans">
             

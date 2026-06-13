@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   PlusCircle, Trash2, FileText, Gift, Award, 
-  HelpCircle, CheckCircle, Database, RefreshCw, AlertTriangle
+  HelpCircle, CheckCircle, Database, RefreshCw, AlertTriangle,
+  Share2, Send, Copy, ExternalLink, Link, Sparkles, Settings, Bell, MessageSquare
 } from 'lucide-react';
 import { GovJob, AdmitCard, JobResult, MockTest, Question } from '../types';
 
@@ -29,8 +30,136 @@ export default function AdminConsole({
   onAddResult,
   onAddMockTest
 }: AdminConsoleProps) {
-  const [activeAdminTab, setActiveAdminTab] = useState<'jobs' | 'mocks' | 'cards'>('jobs');
+  const [activeAdminTab, setActiveAdminTab] = useState<'jobs' | 'mocks' | 'cards' | 'whatsapp'>('jobs');
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
+
+  // --- WHATSAPP BROADCAST STATES ---
+  const [selectedJobId, setSelectedJobId] = useState<string>('');
+  const [whatsappStyle, setWhatsappStyle] = useState<'hindi' | 'professional' | 'short'>('hindi');
+  const [includeJoinLink, setIncludeJoinLink] = useState<boolean>(true);
+  const [includeApplyUrls, setIncludeApplyUrls] = useState<boolean>(true);
+  const [customMsgText, setCustomMsgText] = useState<string>('');
+  const [copiedText, setCopiedText] = useState<boolean>(false);
+  const [webhookUrl, setWebhookUrl] = useState<string>(() => localStorage.getItem('sarkari_wa_webhook') || '');
+  const [webhookSecret, setWebhookSecret] = useState<string>(() => localStorage.getItem('sarkari_wa_secret') || 'sh_sec_78bcd90');
+  const [webhookEnabled, setWebhookEnabled] = useState<boolean>(() => localStorage.getItem('sarkari_wa_enabled') === 'true');
+  const [webhookLogs, setWebhookLogs] = useState<{timestamp: string, status: string, payload: string}[]>([]);
+
+  // Dynamically set default selected job if none is chosen
+  useEffect(() => {
+    if (jobs.length > 0 && !selectedJobId) {
+      setSelectedJobId(jobs[0].id);
+    }
+  }, [jobs, selectedJobId]);
+
+  // Generate WhatsApp Message
+  useEffect(() => {
+    const activeJob = jobs.find(j => j.id === selectedJobId) || jobs[0];
+    if (!activeJob) {
+      setCustomMsgText("⚠️ No vacancy notifications exist yet. Create a job vacancy first in the 'Government Positions & Vacancies' tab to generate broadcast formats!");
+      return;
+    }
+
+    let header = '';
+    let body = '';
+    let links = '';
+
+    const boldTitle = `*🎯 Post:* ${activeJob.title}`;
+    const boldOrg = `*🏢 Org/Dept:* ${activeJob.org}`;
+    const boldPosts = `*💼 Total Posts:* ${activeJob.totalPosts} Positions`;
+    const boldSalary = `*💰 Pay Scale:* ${activeJob.salary}`;
+    const boldLastDate = `*📅 Last Date:* ${activeJob.lastDate}`;
+    const boldQual = `*🎓 Qualification:* ${activeJob.qualification}`;
+    const boldLoc = `*📍 Job Location:* ${activeJob.location}`;
+
+    if (whatsappStyle === 'hindi') {
+      header = `📢 *SARKARI JOB HUB - BIG VACANCY ALERT* 📢\n\nSarkari Job Recruitment आ गयी है! सभी उम्मीदवारों के लिए सुनहरा अवसर! 👇\n\n`;
+      body = `${boldOrg}\n${boldTitle}\n${boldPosts}\n${boldQual}\n${boldSalary}\n${boldLoc}\n${boldLastDate}\n\n`;
+    } else if (whatsappStyle === 'professional') {
+      header = `💼 *OFFICIAL GOVERNMENT RECRUITMENT ALERT* 💼\n*Sarkari Job Notification 2026*\n\n`;
+      body = `${boldOrg}\n${boldTitle}\n${boldPosts}\n${boldQual}\n${boldSalary}\n${boldLoc}\n${boldLastDate}\n\n`;
+    } else {
+      header = `⚡ *Sarkari Alerts - ${activeJob.org} Bharti* ⚡\n\n`;
+      body = `• *Vacancy:* ${activeJob.title}\n• *Posts:* ${activeJob.totalPosts}\n• *Qual:* ${activeJob.qualification}\n• *Last Date:* ${activeJob.lastDate}\n\n`;
+    }
+
+    if (includeApplyUrls) {
+      links += `🔗 *Apply Online & Read Details:* \nhttps://sarkari-job-hub-v595.onrender.com/?tab=jobs\n\n`;
+      links += `📄 *Download Official PDF:* \n${activeJob.pdfUrl || 'https://ssc.gov.in'}\n\n`;
+    }
+
+    if (includeJoinLink) {
+      links += `👇 *Join our Verified WhatsApp Channel for daily alerts:* \nhttps://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U\n\n`;
+    }
+
+    links += `_Forward this to friends who need a job!_ 🙏✨`;
+
+    setCustomMsgText(`${header}${body}${links}`);
+  }, [selectedJobId, whatsappStyle, includeJoinLink, includeApplyUrls, jobs]);
+
+  const handleSaveWebhook = () => {
+    localStorage.setItem('sarkari_wa_webhook', webhookUrl);
+    localStorage.setItem('sarkari_wa_secret', webhookSecret);
+    localStorage.setItem('sarkari_wa_enabled', webhookEnabled ? 'true' : 'false');
+    
+    // Log simulation
+    const log = {
+      timestamp: new Date().toLocaleTimeString(),
+      status: 'WEBHOOK_CONFIG_SAVED',
+      payload: `Webhook URL: ${webhookUrl || 'None'} | Active: ${webhookEnabled}`
+    };
+    setWebhookLogs(prev => [log, ...prev]);
+    setStatusMessage("✅ Webhook Settings updated and saved successfully!");
+    setTimeout(() => setStatusMessage(null), 4000);
+  };
+
+  const handleTestWebhook = () => {
+    const activeJob = jobs.find(j => j.id === selectedJobId) || jobs[0];
+    if (!activeJob) {
+      setStatusMessage("❌ Please create at least one vacancy to test the webhook.");
+      return;
+    }
+
+    const payloadObj = {
+      event: "vacancy.published",
+      timestamp: new Date().toISOString(),
+      job: {
+        id: activeJob.id,
+        title: activeJob.title,
+        org: activeJob.org,
+        totalPosts: activeJob.totalPosts,
+        lastDate: activeJob.lastDate,
+        applyUrl: activeJob.applyUrl,
+        whatsapp_formatted_text: customMsgText
+      }
+    };
+
+    // Log the simulated webhook trigger
+    const log = {
+      timestamp: new Date().toLocaleTimeString(),
+      status: webhookUrl ? 'DELIVERING_WEBHOOK_HTTP_POST' : 'SIMULATED_TEST_TRIGGER',
+      payload: JSON.stringify(payloadObj, null, 2)
+    };
+    setWebhookLogs(prev => [log, ...prev]);
+
+    if (webhookUrl) {
+      // Simulate real fetch dispatch
+      fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-SarkariHub-Signature': webhookSecret
+        },
+        body: JSON.stringify(payloadObj),
+        mode: 'no-cors' // ignore cors error in sandbox
+      }).catch(e => console.log('Simulated background dispatch complete', e));
+      
+      setStatusMessage(`📡 Webhook payload POST request dispatched to: ${webhookUrl}`);
+    } else {
+      setStatusMessage("🛠️ Simulated testing broadcast payload! Add a real Webhook URL to send a live post.");
+    }
+    setTimeout(() => setStatusMessage(null), 5000);
+  };
 
   // Forms states
   const [jobForm, setJobForm] = useState({
@@ -85,6 +214,21 @@ export default function AdminConsole({
     q1_correct: 0,
     q1_explanation: ''
   });
+
+  // --- NEW ADVANCED MOCK UPLOAD & BUILDER STATES ---
+  const [mockCreatorMode, setMockCreatorMode] = useState<'form' | 'file' | 'templates'>('form');
+  const [dynamicQuestions, setDynamicQuestions] = useState<Question[]>([
+    {
+      id: `q-cust-${Date.now()}-1`,
+      text: '',
+      options: ['', '', '', ''],
+      correctOptionIndex: 0,
+      explanation: ''
+    }
+  ]);
+  const [bulkInput, setBulkInput] = useState<string>('');
+  const [dragActive, setDragActive] = useState<boolean>(false);
+  const [validationMsg, setValidationMsg] = useState<{status: 'idle'|'success'|'error', text: string}>({status: 'idle', text: ''});
 
   const triggerMessage = (msg: string) => {
     setStatusMessage(msg);
@@ -193,35 +337,98 @@ export default function AdminConsole({
     });
   };
 
+  // Helper to parse pasted raw text into structured Questions
+  const handleParseAndValidateRawInput = (text: string, isJson: boolean): Question[] | null => {
+    try {
+      if (isJson) {
+        const parsed = JSON.parse(text);
+        if (Array.isArray(parsed)) {
+          const valid = parsed.every(q => q.text && Array.isArray(q.options) && q.options.length >= 2);
+          if (valid) return parsed;
+        } else if (parsed.questions && Array.isArray(parsed.questions)) {
+          const valid = parsed.questions.every((q: any) => q.text && Array.isArray(q.options) && q.options.length >= 2);
+          if (valid) return parsed.questions;
+        }
+        throw new Error("Invalid schema structure for JSON mock questions. Ensure 'questions' is an array of MCQ items.");
+      } else {
+        // Parse CSV
+        const lines = text.split(/\r?\n/).filter(line => line.trim() !== '');
+        const parsed: Question[] = [];
+        const startIdx = (lines[0] && (lines[0].toLowerCase().includes('question') || lines[0].toLowerCase().includes('option'))) ? 1 : 0;
+        
+        for (let i = startIdx; i < lines.length; i++) {
+          const rawLine = lines[i];
+          const fields = rawLine.split(',').map(f => f.trim().replace(/^"|"$/g, ''));
+          if (fields.length >= 5) {
+            const qText = fields[0];
+            const opts = [fields[1], fields[2], fields[3] || '', fields[4] || ''].filter(Boolean);
+            const correctIdx = parseInt(fields[5]) || 0;
+            const expl = fields[6] || 'Reference explanation solution key';
+            parsed.push({
+              id: `q-parsed-${Date.now()}-${i}`,
+              text: qText,
+              options: opts,
+              correctOptionIndex: Math.min(Math.max(0, correctIdx), opts.length - 1),
+              explanation: expl
+            });
+          }
+        }
+        if (parsed.length > 0) return parsed;
+        throw new Error("No valid rows parsed. Ensure format matches: Question,Option A,Option B,Option C,Option D,CorrectOptionIndex(0-3),Explanation");
+      }
+    } catch (err: any) {
+      setValidationMsg({status: 'error', text: `Validation failed: ${err.message}`});
+      return null;
+    }
+  };
+
   const handleMockSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const customQuestions: Question[] = [
-      {
-        id: `q-cust-${Date.now()}-1`,
-        text: mockForm.q1_text || 'Explain basic democratic standards in Indian assembly guidelines.',
-        options: [
-          mockForm.q1_o1 || 'Option A',
-          mockForm.q1_o2 || 'Option B',
-          mockForm.q1_o3 || 'Option C',
-          mockForm.q1_o4 || 'Option D'
-        ],
-        correctOptionIndex: Number(mockForm.q1_correct),
-        explanation: mockForm.q1_explanation || 'Detailed regulatory audit.'
+    let finalQuestions: Question[] = [];
+
+    if (mockCreatorMode === 'form') {
+      const valid = dynamicQuestions.filter(q => q.text.trim() !== '');
+      if (valid.length === 0) {
+        setValidationMsg({status: 'error', text: 'Please add at least one complete Question with Option choices!'});
+        return;
       }
-    ];
+      const fullyValid = valid.every(q => q.options.every(opt => opt.trim() !== ''));
+      if (!fullyValid) {
+        setValidationMsg({status: 'error', text: 'Please check your options. All 4 choices must be specified for each question.'});
+        return;
+      }
+      finalQuestions = valid.map((q, idx) => ({
+        ...q,
+        id: q.id || `q-cust-${Date.now()}-${idx}`
+      }));
+    } else if (mockCreatorMode === 'file') {
+      if (!bulkInput.trim()) {
+        setValidationMsg({status: 'error', text: 'Please paste CSV/JSON or drag-and-drop a file first.'});
+        return;
+      }
+      const isJson = bulkInput.trim().startsWith('[') || bulkInput.trim().startsWith('{');
+      const parsed = handleParseAndValidateRawInput(bulkInput, isJson);
+      if (!parsed) return;
+      finalQuestions = parsed;
+    } else {
+      setValidationMsg({status: 'error', text: 'Select a creation/upload mode first.'});
+      return;
+    }
 
     const newTest: MockTest = {
       id: `custom-mock-${Date.now()}`,
-      title: mockForm.title,
+      title: mockForm.title || `${mockForm.category} Assessment Exam`,
       category: mockForm.category,
-      durationMinutes: Number(mockForm.durationMinutes),
-      questions: customQuestions,
-      totalMarks: 2,
+      durationMinutes: Number(mockForm.durationMinutes) || 15,
+      questions: finalQuestions,
+      totalMarks: finalQuestions.length * 2,
       negativeMark: 0.5
     };
 
     onAddMockTest(newTest);
-    triggerMessage(`✅ Simulated Exam Mock "${newTest.title}" uploaded! Active in test room.`);
+    triggerMessage(`✅ Success: Practice Mock "${newTest.title}" containing ${finalQuestions.length} standard exam MCQs uploaded successfully!`);
+    
+    // Reset inputs
     setMockForm({
       title: '',
       category: 'General Preparation',
@@ -234,7 +441,163 @@ export default function AdminConsole({
       q1_correct: 0,
       q1_explanation: ''
     });
+    setDynamicQuestions([
+      {
+        id: `q-cust-${Date.now()}-1`,
+        text: '',
+        options: ['', '', '', ''],
+        correctOptionIndex: 0,
+        explanation: ''
+      }
+    ]);
+    setBulkInput('');
+    setValidationMsg({status: 'idle', text: ''});
   };
+
+  // --- NEW ADVANCED MOCK TEST BUILDER METHODS ---
+  const handleUpdateQuestionText = (index: number, val: string) => {
+    const updated = [...dynamicQuestions];
+    updated[index].text = val;
+    setDynamicQuestions(updated);
+  };
+
+  const handleUpdateOption = (qIdx: number, oIdx: number, val: string) => {
+    const updated = [...dynamicQuestions];
+    updated[qIdx].options[oIdx] = val;
+    setDynamicQuestions(updated);
+  };
+
+  const handleUpdateCorrectIdx = (qIdx: number, val: number) => {
+    const updated = [...dynamicQuestions];
+    updated[qIdx].correctOptionIndex = val;
+    setDynamicQuestions(updated);
+  };
+
+  const handleUpdateExplanation = (qIdx: number, val: string) => {
+    const updated = [...dynamicQuestions];
+    updated[qIdx].explanation = val;
+    setDynamicQuestions(updated);
+  };
+
+  const handleAddQuestionRow = () => {
+    setDynamicQuestions([
+      ...dynamicQuestions,
+      {
+        id: `q-cust-${Date.now()}-${dynamicQuestions.length + 1}`,
+        text: '',
+        options: ['', '', '', ''],
+        correctOptionIndex: 0,
+        explanation: ''
+      }
+    ]);
+  };
+
+  const handleRemoveQuestionRow = (idx: number) => {
+    setDynamicQuestions(dynamicQuestions.filter((_, i) => i !== idx));
+  };
+
+  const TEST_TEMPLATES = [
+    {
+      title: "SSC GK/GS Mega Preparation Practice Test 2026",
+      category: "SSC",
+      durationMinutes: 15,
+      questions: [
+        {
+          id: "tem-ssc-1",
+          text: "The famous Konark Sun Temple in Odisha was constructed under which royal dynasty?",
+          options: ["Ganga Dynasty", "Chola Dynasty", "Pala Dynasty", "Maurya Dynasty"],
+          correctOptionIndex: 0,
+          explanation: "Konark Sun Temple was built by King Narasimhadeva I of the Eastern Ganga Dynasty in the 13th century."
+        },
+        {
+          id: "tem-ssc-2",
+          text: "Which of the following article of Indian Constitution deals with Right to Equality?",
+          options: ["Article 21", "Article 14", "Article 32", "Article 44"],
+          correctOptionIndex: 1,
+          explanation: "Article 14 guarantees equality before law and equal protection of laws to all citizens within India."
+        },
+        {
+          id: "tem-ssc-3",
+          text: "Which classic river is also famous as the 'Dakshin Ganga' in central/southern India?",
+          options: ["Krishna", "Narmada", "Godavari", "Cauvery"],
+          correctOptionIndex: 2,
+          explanation: "The Godavari is the largest river of peninsular India and is widely celebrated as 'Dakshin Ganga'."
+        }
+      ]
+    },
+    {
+      title: "UPSC General Studies CSAT Aptitude Mini Test",
+      category: "UPSC",
+      durationMinutes: 20,
+      questions: [
+        {
+          id: "tem-upsc-1",
+          text: "If three distinct positive integers sum up to 10, what is the maximum possible product of these three integers?",
+          options: ["24", "30", "36", "40"],
+          correctOptionIndex: 1,
+          explanation: "To maximize the product of three distinct integers summing to 10, the integers should be closest to each other. Those are 2, 3 and 5. Product: 2 * 3 * 5 = 30."
+        },
+        {
+          id: "tem-upsc-2",
+          text: "The Panchayati Raj Institutions in India received formal constitutional approval through which amendment act?",
+          options: ["42nd Amendment Act", "44th Amendment Act", "73rd Amendment Act", "86th Amendment Act"],
+          correctOptionIndex: 2,
+          explanation: "The 73rd Amendment Act of 1992 introduced Part IX of the Indian Constitution, establishing formal rural local self-governance."
+        }
+      ]
+    },
+    {
+      title: "RRB NTPC Railway General Science Rapid Fire",
+      category: "Railway",
+      durationMinutes: 10,
+      questions: [
+        {
+          id: "tem-rrb-1",
+          text: "Which component of blood is responsible for carrying oxygen to different parts of the body?",
+          options: ["White Blood Cells (WBC)", "Red Blood Cells (RBC)", "Blood Platelets", "Plasma"],
+          correctOptionIndex: 1,
+          explanation: "Hemoglobin in Red Blood Cells binds to oxygen molecules and carries them efficiently throughout the blood stream."
+        },
+        {
+          id: "tem-rrb-2",
+          text: "What is the chemical name of common baking soda used in households?",
+          options: ["Sodium Carbonate", "Sodium Bicarbonate", "Calcium Hydroxide", "Sodium Chloride"],
+          correctOptionIndex: 1,
+          explanation: "Baking soda is Sodium Bicarbonate, represented chemically by the formula NaHCO3."
+        }
+      ]
+    }
+  ];
+
+  const handleInjectTemplate = (tpl: typeof TEST_TEMPLATES[0]) => {
+    const test: MockTest = {
+      id: `custom-mock-tpl-${Date.now()}`,
+      title: tpl.title,
+      category: tpl.category,
+      durationMinutes: tpl.durationMinutes,
+      questions: tpl.questions.map((q, idx) => ({
+        ...q,
+        id: `q-tpl-${Date.now()}-${idx}`
+      })),
+      totalMarks: tpl.questions.length * 2,
+      negativeMark: 0.5
+    };
+    onAddMockTest(test);
+    triggerMessage(`⚡ Superb! Mock Test Template "${tpl.title}" with ${tpl.questions.length} premium questions uploaded to the live mock test room.`);
+  };
+
+  const SAMPLE_CSV_STR = `Question Statement,Option A,Option B,Option C,Option D,CorrectOptionIndex,Explanation
+Which classical language is celebrated for ancient Rigveda scriptures?,Sanskrit,Prakrit,Tamil,Kannada,0,Sanskrit is the liturgical language of ancient Vedic Sanskrit texts including the Rigveda.
+What is the standard pH level of pure distilled water at normal room temperature?,7.0,5.5,8.2,9.1,0,Distilled water is neutral with a stable pH reading of exactly 7.0 at 25 degrees Celsius.`;
+
+  const SAMPLE_JSON_STR = `[
+  {
+    "text": "Who is currently celebrated as the developer of the Indian Constitution assembly framework?",
+    "options": ["B.R. Ambedkar", "Jawaharlal Nehru", "Rajendra Prasad", "Sardar Patel"],
+    "correctOptionIndex": 0,
+    "explanation": "Dr. B.R. Ambedkar was designated the Chairman of the major drafting committee of the Constituent Assembly."
+  }
+]`;
 
   return (
     <div className="font-sans text-slate-700 space-y-6">
@@ -245,7 +608,8 @@ export default function AdminConsole({
           {[
             { id: 'jobs', label: 'Government Positions & Vacancies' },
             { id: 'mocks', label: 'Interactive MCQ Test Creator' },
-            { id: 'cards', label: 'Admit Cards / Official Results' }
+            { id: 'cards', label: 'Admit Cards / Official Results' },
+            { id: 'whatsapp', label: '📢 WhatsApp Channel Broadcast' }
           ].map((tab) => (
             <button
               key={tab.id}
@@ -478,108 +842,419 @@ export default function AdminConsole({
       )}
 
       {activeAdminTab === 'mocks' && (
-        <div className="bg-white rounded-2xl border border-blue-50 p-5 shadow-xs max-w-4xl mx-auto">
-          <h3 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-1.5 border-b border-slate-50 pb-2">
-            <HelpCircle className="h-5 w-5 text-blue-600" />
-            Launch Interactive MCQ Mock Paper
-          </h3>
-
-          <form onSubmit={handleMockSubmit} className="space-y-5 text-xs">
-            <div className="grid gap-4 sm:grid-cols-3">
-              <div className="sm:col-span-2">
-                <label className="block text-[11px] font-semibold text-slate-500 mb-1">Assessment Sheet Title</label>
-                <input 
-                  type="text" 
-                  placeholder="e.g. UPSC CSE CSAT Logic Reasoning mock 1"
-                  value={mockForm.title}
-                  onChange={(e) => setMockForm({...mockForm, title: e.target.value})}
-                  className="w-full rounded-lg border border-slate-200 p-2 text-slate-800 focus:outline-hidden focus:border-blue-500"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-[11px] font-semibold text-slate-500 mb-1">Duration (Minutes)</label>
-                <input 
-                  type="number" 
-                  value={mockForm.durationMinutes}
-                  onChange={(e) => setMockForm({...mockForm, durationMinutes: Number(e.target.value)})}
-                  className="w-full rounded-lg border border-slate-200 p-2 text-slate-800 focus:outline-hidden focus:border-blue-500"
-                  required
-                />
-              </div>
+        <div className="space-y-6 max-w-5xl mx-auto">
+          {/* Main Info Banner */}
+          <div className="bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-100 rounded-3xl p-6 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <h3 className="text-base font-extrabold text-slate-900 flex items-center gap-1.5">
+                <span className="p-1 px-2 rounded-lg bg-orange-650 text-white text-[10px] font-mono font-black">TEST ENGINE</span>
+                Aspirants practice Exam & Mock Test Upload Room
+              </h3>
+              <p className="text-xs text-slate-600">
+                Design and launch mock exam sheets. Support dynamic multi-choice questions creation, CSV / JSON bulk file coordinate parser uploads, and quick template injections.
+              </p>
             </div>
+          </div>
 
-            {/* Set Question 1 */}
-            <div className="border border-slate-100 p-4 rounded-2xl bg-slate-50/50 space-y-3">
-              <span className="text-[11px] font-bold text-blue-700 block uppercase tracking-wide">Configure Assessment MCQ Question</span>
-              
-              <div>
-                <label className="block text-[11px] font-semibold text-slate-500 mb-1">Question Statement</label>
-                <input 
-                  type="text" 
-                  placeholder="e.g. Which tier of state shares national borders with Myanmar?"
-                  value={mockForm.q1_text}
-                  onChange={(e) => setMockForm({...mockForm, q1_text: e.target.value})}
-                  className="w-full rounded-lg border border-slate-200 bg-white p-2 text-slate-800 focus:outline-hidden focus:border-blue-500"
-                  required
-                />
-              </div>
+          {/* Creation Mode Sub-Navigation Toggle */}
+          <div className="flex gap-2 p-1.5 bg-slate-100 rounded-2xl w-fit">
+            {[
+              { id: 'form', label: 'Form builder (Multi-MCQ)' },
+              { id: 'file', label: 'Bulk File Upload (CSV/JSON)' },
+              { id: 'templates', label: 'One-click Exam Presets' }
+            ].map((mode) => (
+              <button
+                key={mode.id}
+                type="button"
+                onClick={() => {
+                  setMockCreatorMode(mode.id as any);
+                  setValidationMsg({status: 'idle', text: ''});
+                }}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition ${
+                  mockCreatorMode === mode.id 
+                    ? 'bg-white text-slate-900 shadow-sm' 
+                    : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                {mode.label}
+              </button>
+            ))}
+          </div>
 
-              <div className="grid gap-3 sm:grid-cols-2">
-                <div>
-                  <label className="block text-[11px] font-semibold text-slate-500 mb-1">Option A</label>
-                  <input type="text" placeholder="Choice A" value={mockForm.q1_o1} onChange={(e) => setMockForm({...mockForm, q1_o1: e.target.value})} className="w-full rounded-lg border border-slate-200 bg-white p-2" required />
-                </div>
-                <div>
-                  <label className="block text-[11px] font-semibold text-slate-500 mb-1">Option B</label>
-                  <input type="text" placeholder="Choice B" value={mockForm.q1_o2} onChange={(e) => setMockForm({...mockForm, q1_o2: e.target.value})} className="w-full rounded-lg border border-slate-200 bg-white p-2" required />
-                </div>
-                <div>
-                  <label className="block text-[11px] font-semibold text-slate-500 mb-1">Option C</label>
-                  <input type="text" placeholder="Choice C" value={mockForm.q1_o3} onChange={(e) => setMockForm({...mockForm, q1_o3: e.target.value})} className="w-full rounded-lg border border-slate-200 bg-white p-2" required />
-                </div>
-                <div>
-                  <label className="block text-[11px] font-semibold text-slate-500 mb-1">Option D</label>
-                  <input type="text" placeholder="Choice D" value={mockForm.q1_o4} onChange={(e) => setMockForm({...mockForm, q1_o4: e.target.value})} className="w-full rounded-lg border border-slate-200 bg-white p-2" required />
+          <form onSubmit={handleMockSubmit} className="space-y-6">
+            {/* Shared Metadata Card */}
+            {mockCreatorMode !== 'templates' && (
+              <div className="bg-white rounded-3xl border border-slate-150 p-6 shadow-xs space-y-4">
+                <h4 className="font-bold text-slate-800 text-xs uppercase tracking-wider border-b border-slate-50 pb-2">
+                  📋 Assessment Paper Metadata Config
+                </h4>
+                <div className="grid gap-4 sm:grid-cols-3 text-xs">
+                  <div className="sm:col-span-1">
+                    <label className="block text-[11px] font-bold text-slate-550 mb-1">Assessment Category</label>
+                    <select
+                      value={mockForm.category}
+                      onChange={(e) => setMockForm({...mockForm, category: e.target.value})}
+                      className="w-full rounded-xl border border-slate-200 p-2.5 text-slate-800 font-medium focus:border-blue-500 focus:outline-hidden"
+                    >
+                      <option value="SSC">SSC (Staff Selection Comm.)</option>
+                      <option value="UPSC">UPSC Civil Services GSE</option>
+                      <option value="Railway">RRB Railway Recruitment</option>
+                      <option value="Bank">IBPS / SBI Banking Clerk</option>
+                      <option value="Teaching">State Teaching / TET Exam</option>
+                      <option value="Defence">Defence Services (NDA/CDS)</option>
+                      <option value="State PSC">State PSC (PCS/RAS/RPSC)</option>
+                      <option value="General Preparation">General Preparation Quizzes</option>
+                    </select>
+                  </div>
+
+                  <div className="sm:col-span-1">
+                    <label className="block text-[11px] font-bold text-slate-550 mb-1">Interactive Test Sheet Title</label>
+                    <input 
+                      type="text" 
+                      placeholder="e.g. UPSC Prelims GS-1 Politi Mock 4"
+                      value={mockForm.title}
+                      onChange={(e) => setMockForm({...mockForm, title: e.target.value})}
+                      className="w-full rounded-xl border border-slate-200 p-2.5 text-slate-800 focus:outline-hidden focus:border-blue-500"
+                      required
+                    />
+                  </div>
+
+                  <div className="sm:col-span-1">
+                    <label className="block text-[11px] font-bold text-slate-550 mb-1">Duration Parameters (In Minutes)</label>
+                    <input 
+                      type="number" 
+                      min="1"
+                      max="180"
+                      value={mockForm.durationMinutes}
+                      onChange={(e) => setMockForm({...mockForm, durationMinutes: Number(e.target.value)})}
+                      className="w-full rounded-xl border border-slate-200 p-2s p-2.5 text-slate-800 focus:outline-hidden focus:border-blue-500"
+                      required
+                    />
+                  </div>
                 </div>
               </div>
+            )}
+
+            {/* validation diagnostics stream if any */}
+            {validationMsg.status !== 'idle' && (
+              <div className={`p-4 rounded-2xl text-xs font-bold ${
+                validationMsg.status === 'success' 
+                  ? 'bg-emerald-50 border border-emerald-200 text-emerald-800' 
+                  : 'bg-rose-50 border border-rose-200 text-rose-800'
+              }`}>
+                {validationMsg.text}
+              </div>
+            )}
+
+            {/* MODE 1: FORM BUILDER - MULTIPLE QUESTIONS */}
+            {mockCreatorMode === 'form' && (
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <h4 className="font-extrabold text-slate-900 text-sm">
+                    ✍️ Build Questions Dynamically ({dynamicQuestions.length} Active Items)
+                  </h4>
+                  <button
+                    type="button"
+                    onClick={handleAddQuestionRow}
+                    className="px-3.5 py-2 bg-slate-900 hover:bg-slate-850 text-white text-xs font-extrabold rounded-xl transition flex items-center gap-1.5 shadow-sm"
+                  >
+                    <PlusCircle className="h-4 w-4" /> Add Next Question
+                  </button>
+                </div>
+
+                {dynamicQuestions.map((q, qIdx) => (
+                  <div key={q.id} className="bg-white rounded-3xl border border-slate-200 p-5 shadow-xs relative space-y-4">
+                    
+                    {/* Index header with delete option */}
+                    <div className="flex justify-between items-center border-b border-slate-100 pb-2">
+                      <span className="p-1 px-2.5 rounded-lg bg-indigo-50 text-indigo-700 font-mono font-black text-[10px]/none select-none uppercase tracking-wider">
+                        Question #{qIdx + 1} of {dynamicQuestions.length}
+                      </span>
+                      {dynamicQuestions.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveQuestionRow(qIdx)}
+                          className="p-1 px-2 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-lg text-[10px] font-extrabold flex items-center gap-1 transition"
+                        >
+                          <Trash2 className="h-3 w-3" /> Remove Row
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Question Statement */}
+                    <div className="text-xs">
+                      <label className="block text-[11px] font-bold text-slate-550 mb-1">Complete Question Text</label>
+                      <input 
+                        type="text" 
+                        placeholder="e.g. Which Constitutional Amendment lowered the voting age in India from 21 years to 18 years?"
+                        value={q.text}
+                        onChange={(e) => handleUpdateQuestionText(qIdx, e.target.value)}
+                        className="w-full rounded-xl border border-slate-200 p-2.5 text-slate-800 focus:outline-hidden focus:border-blue-500"
+                        required
+                      />
+                    </div>
+
+                    {/* Options Grid */}
+                    <div className="grid gap-3 sm:grid-cols-2 text-xs">
+                      {['A', 'B', 'C', 'D'].map((letter, oIdx) => (
+                        <div key={oIdx}>
+                          <label className="block text-[10px] font-bold text-slate-500 mb-1">Option {letter}</label>
+                          <input 
+                            type="text" 
+                            placeholder={`Choice ${letter}`}
+                            value={q.options[oIdx] || ''}
+                            onChange={(e) => handleUpdateOption(qIdx, oIdx, e.target.value)}
+                            className="w-full rounded-xl border border-slate-200 p-2 bg-slate-55/10 text-slate-850 font-medium"
+                            required
+                          />
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Correct Index Choice & Explanation */}
+                    <div className="grid gap-4 sm:grid-cols-3 text-xs">
+                      <div>
+                        <label className="block text-[11px] font-bold text-slate-550 mb-1">Correct Answer Index Choice</label>
+                        <select
+                          value={q.correctOptionIndex}
+                          onChange={(e) => handleUpdateCorrectIdx(qIdx, Number(e.target.value))}
+                          className="w-full rounded-xl border border-slate-200 p-2 focus:outline-hidden focus:border-indigo-500 font-semibold bg-white"
+                        >
+                          <option value={0}>Option A is correct answer</option>
+                          <option value={1}>Option B is correct answer</option>
+                          <option value={2}>Option C is correct answer</option>
+                          <option value={3}>Option D is correct answer</option>
+                        </select>
+                      </div>
+
+                      <div className="sm:col-span-2">
+                        <label className="block text-[11px] font-bold text-slate-550 mb-1">Logical explanation reference solution key</label>
+                        <input 
+                          type="text" 
+                          placeholder="Provide descriptive solution so candidates can learn why option choice is correct..."
+                          value={q.explanation}
+                          onChange={(e) => handleUpdateExplanation(qIdx, e.target.value)}
+                          className="w-full rounded-xl border border-slate-200 p-2 focus:outline-hidden focus:border-indigo-500"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                <button
+                  type="button"
+                  onClick={handleAddQuestionRow}
+                  className="w-full p-4 border border-dashed border-indigo-200 text-indigo-700 bg-indigo-50/20 rounded-2xl text-xs font-black flex items-center justify-center gap-1.5 hover:bg-indigo-50/50 transition cursor-pointer"
+                >
+                  <PlusCircle className="h-4 w-4" /> + Add Another Multi-Choice Question To Candidate Test Set
+                </button>
+              </div>
+            )}
+
+            {/* MODE 2: BULK EXCEL/CSV OR JSON FILE UPLOAD */}
+            {mockCreatorMode === 'file' && (
+              <div className="grid gap-6 md:grid-cols-12 items-start">
+                
+                {/* File Drop Drag Area & manual inputs */}
+                <div className="md:col-span-8 bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-4">
+                  <div className="flex justify-between items-center">
+                    <h4 className="font-bold text-slate-800 text-xs uppercase tracking-wider">
+                      📂 File drop & Paste zone
+                    </h4>
+                    <span className="text-[10px] bg-slate-100 text-slate-500 font-mono px-2 py-0.5 rounded font-bold uppercase select-none">Manual payload parsing</span>
+                  </div>
+
+                  <p className="text-[11px] text-slate-600 leading-relaxed">
+                    Paste raw list directly in the text editor below OR select your precompiled file. The system will automatically detect if it is structured <strong className="text-indigo-600">CSV</strong> or <strong className="text-blue-600">JSON API payload arrays</strong>.
+                  </p>
+
+                  {/* Drag-And-Drop / File selection zone */}
+                  <div 
+                    onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
+                    onDragLeave={() => setDragActive(false)}
+                    onDrop={(e) => {
+                      e.preventDefault();
+                      setDragActive(false);
+                      const file = e.dataTransfer.files[0];
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (evt) => {
+                          if (evt.target?.result) {
+                            setBulkInput(evt.target.result as string);
+                            setValidationMsg({status: 'success', text: `📁 File "${file.name}" picked and loaded into sandbox editor!`});
+                          }
+                        };
+                        reader.readAsText(file);
+                      }
+                    }}
+                    className={`p-6 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer transition select-none ${
+                      dragActive ? 'border-indigo-500 bg-indigo-50/30' : 'border-slate-300 hover:border-indigo-400 hover:bg-slate-50/40'
+                    }`}
+                  >
+                    <input 
+                      type="file" 
+                      id="mock_file_picker"
+                      accept=".csv,.json,.txt"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onload = (evt) => {
+                            if (evt.target?.result) {
+                              setBulkInput(evt.target.result as string);
+                              setValidationMsg({status: 'success', text: `📁 Direct file loader: successfully loaded "${file.name}" content!`});
+                            }
+                          };
+                          reader.readAsText(file);
+                        }
+                      }}
+                      className="hidden" 
+                    />
+                    <label htmlFor="mock_file_picker" className="font-black text-xs text-indigo-700 hover:underline cursor-pointer flex flex-col items-center gap-2">
+                      <span className="p-3 bg-indigo-50 text-indigo-700 rounded-full h-11 w-11 flex items-center justify-center">
+                        📁
+                      </span>
+                      <span>Drag and drop .csv, .json here or click to choose manual file...</span>
+                    </label>
+                    <span className="text-[10px] text-slate-400 block mt-1">Accepts CSV or formatted JSON arrays matching standards of Sarkari practices.</span>
+                  </div>
+
+                  {/* Plaintext Area */}
+                  <div className="space-y-1">
+                    <label className="block text-[11px] font-bold text-slate-500">PASTE CSV DATA OR STRUCTURAL JSON STREAM:</label>
+                    <textarea
+                      value={bulkInput}
+                      onChange={(e) => setBulkInput(e.target.value)}
+                      rows={8}
+                      className="w-full text-xs font-mono p-3 bg-slate-900 text-amber-300 rounded-xl focus:outline-hidden border border-slate-800"
+                      placeholder="Question Statement,Option A,Option B,Option C,Option D,CorrectIndex,Explanation..."
+                    />
+                  </div>
+
+                  {/* Direct Load Examples buttons to make uploading incredibly trivial */}
+                  <div className="flex flex-wrap gap-2 items-center">
+                    <span className="text-[10px] text-slate-500 font-bold uppercase select-none">Inject Sample structures:</span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setBulkInput(SAMPLE_CSV_STR);
+                        setValidationMsg({status: 'success', text: '📋 Demo CSV loaded inside notepad! Press "Publish Mock Paper" below to create.'});
+                      }}
+                      className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-205 text-slate-700 rounded-lg text-[10.5px] font-bold flex items-center gap-1 transition"
+                    >
+                      📑 Load Demo CSV Test Code
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setBulkInput(SAMPLE_JSON_STR);
+                        setValidationMsg({status: 'success', text: '📋 Demo JSON loaded! Press "Publish Mock Paper" below to create.'});
+                      }}
+                      className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-205 text-slate-700 rounded-lg text-[10.5px] font-bold flex items-center gap-1 transition"
+                    >
+                      📦 Load Demo JSON Array
+                    </button>
+                  </div>
+                </div>
+
+                {/* File Layout Help Sidebar */}
+                <div className="md:col-span-4 bg-slate-55/10 rounded-3xl p-5 border border-slate-150 space-y-4 font-sans text-xs">
+                  <h4 className="font-extrabold text-slate-800 uppercase tracking-widest text-[10px]/none">
+                    📐 Accepted Coordinate Header Guidelines
+                  </h4>
+
+                  <div className="space-y-3.5 leading-relaxed text-slate-600">
+                    <div>
+                      <span className="font-extrabold text-slate-900 block text-[11px]">CSV column indices specs</span>
+                      <p className="text-[10px] mt-0.5">Prepare columns precisely matching order indices below:</p>
+                      <ol className="list-decimal pl-4 text-[10.5px] mt-1 text-slate-750 font-medium">
+                        <li><strong>Question Statement</strong> text</li>
+                        <li><strong>Option A</strong> choice</li>
+                        <li><strong>Option B</strong> choice</li>
+                        <li><strong>Option C</strong> choice</li>
+                        <li><strong>Option D</strong> choice</li>
+                        <li><strong>CorrectOptionIndex</strong> (0 to 3 values)</li>
+                        <li><strong>Explanation key</strong> text</li>
+                      </ol>
+                    </div>
+
+                    <div className="border-t border-slate-200/65 pt-2">
+                      <span className="font-extrabold text-slate-900 block text-[11px]">JSON array model format</span>
+                      <p className="text-[10px] mt-0.5">Supply an array of objects. Keys should match exactly:</p>
+                      <pre className="p-2.5 bg-white text-[8px]/tight text-slate-500 font-mono rounded-lg border border-slate-100 overflow-x-auto mt-1 max-h-[140px]">
+{`[
+  {
+    "text": "Your Question text?",
+    "options": ["A", "B", "C", "D"],
+    "correctOptionIndex": 1,
+    "explanation": "Why correct"
+  }
+]`}
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            )}
+
+            {/* Submit Action Block */}
+            {mockCreatorMode !== 'templates' && (
+              <button 
+                type="submit"
+                className="w-full text-center rounded-2xl bg-orange-650 hover:bg-orange-750 text-white font-extrabold py-3.5 transition text-xs flex items-center justify-center gap-2 shadow"
+              >
+                <PlusCircle className="h-4 w-4" /> Publish Custom Mock Paper to Practice Hub Live Lobby
+              </button>
+            )}
+          </form>
+
+          {/* MODE 3: HIGH-QUALITY TEMPLATE INJECTOR CHIPS */}
+          {mockCreatorMode === 'templates' && (
+            <div className="space-y-4">
+              <h4 className="font-extrabold text-slate-800 text-xs uppercase tracking-wider">
+                ⚡ Premium Quick-Inject Mock Templates (One-Click instant publish)
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                Want immediate quality tests in the exam lobby? Click any template of verified practice exams to instantly populate and upload a fully functioning multiple-choice practice paper with answers and solutions.
+              </p>
 
               <div className="grid gap-4 sm:grid-cols-3">
-                <div>
-                  <label className="block text-[11px] font-semibold text-slate-500 mb-1">Correct Answer Index</label>
-                  <select
-                    value={mockForm.q1_correct}
-                    onChange={(e) => setMockForm({...mockForm, q1_correct: Number(e.target.value)})}
-                    className="w-full rounded-lg border border-slate-200 bg-white p-2 focus:outline-hidden focus:border-blue-500"
+                {TEST_TEMPLATES.map((tpl, idx) => (
+                  <div 
+                    key={idx} 
+                    className="bg-white rounded-3xl border border-slate-200 p-5 shadow-xs flex flex-col justify-between hover:border-orange-200 hover:shadow-sm transition text-xs"
                   >
-                    <option value={0}>Option A is Correct</option>
-                    <option value={1}>Option B is Correct</option>
-                    <option value={2}>Option C is Correct</option>
-                    <option value={3}>Option D is Correct</option>
-                  </select>
-                </div>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="p-1 px-2 rounded-lg bg-orange-50 text-orange-700 font-mono font-black text-[9px]/tight select-none uppercase tracking-wider">
+                          {tpl.category}
+                        </span>
+                        <span className="text-[10px] text-slate-400 font-semibold">{tpl.durationMinutes} Minutes</span>
+                      </div>
 
-                <div className="sm:col-span-2">
-                  <label className="block text-[11px] font-semibold text-slate-500 mb-1">Logical reference explanation / Solution Key</label>
-                  <input 
-                    type="text" 
-                    placeholder="Provide explanatory key for candidates..."
-                    value={mockForm.q1_explanation}
-                    onChange={(e) => setMockForm({...mockForm, q1_explanation: e.target.value})}
-                    className="w-full rounded-lg border border-slate-200 bg-white p-2 focus:outline-hidden focus:border-blue-500"
-                    required
-                  />
-                </div>
+                      <h4 className="font-bold text-slate-900 text-xs">
+                        {tpl.title}
+                      </h4>
+
+                      <p className="text-[10.5px] text-slate-500 leading-normal">
+                        Contains <strong className="text-slate-850 font-bold">{tpl.questions.length} premium pre-compiled MCQ questions</strong> complete with detailed cognitive explanations. Works offline or online.
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => handleInjectTemplate(tpl)}
+                      className="w-full py-2 bg-orange-600 hover:bg-orange-705 text-white text-[11px] font-black rounded-xl transition mt-5 flex items-center justify-center gap-1 cursor-pointer shadow-sm"
+                    >
+                      🚀 Instant Inject & Upload Paper
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
-
-            <button 
-              type="submit"
-              className="w-full rounded-xl bg-orange-600 font-bold text-white py-3 hover:bg-orange-700 transition"
-            >
-              Publish Mock Paper to Aspirants hub
-            </button>
-          </form>
+          )}
 
         </div>
       )}
@@ -688,6 +1363,351 @@ export default function AdminConsole({
             </form>
           </div>
 
+        </div>
+      )}
+
+      {activeAdminTab === 'whatsapp' && (
+        <div className="space-y-6">
+          {/* Header Description Banner */}
+          <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 rounded-3xl p-6 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <h3 className="text-base font-white text-slate-900 font-extrabold flex items-center gap-1.5">
+                <span className="p-1 px-2 rounded-lg bg-emerald-500 text-white text-xs font-mono font-black">PRO</span>
+                Sarkari Broadcast Center (WhatsApp & Telegram)
+              </h3>
+              <p className="text-xs text-slate-600">
+                Generate pre-styled, Hindi-infused vacancy alert cards and sync alerts to your verified WhatsApp channel <strong className="text-emerald-700">(@SarkariJobHub)</strong> or Telegram community instantly.
+              </p>
+            </div>
+            <div className="flex gap-2 shrink-0">
+              <a 
+                href="https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="rounded-xl px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs flex items-center gap-1.5 transition shadow"
+              >
+                <MessageSquare className="h-4 w-4" /> View Live Channel
+              </a>
+            </div>
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-12 items-start">
+            
+            {/* LEFT COLUMN: CONTROL & SELECTION */}
+            <div className="lg:col-span-5 space-y-6">
+              
+              {/* Select Job Card */}
+              <div className="bg-white rounded-3xl border border-slate-100 p-5 shadow-xs space-y-4">
+                <div>
+                  <h4 className="font-bold text-slate-800 text-xs uppercase tracking-wider mb-2 flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-blue-600"></span> Select Active Vacancy
+                  </h4>
+                  <p className="text-[11px] text-slate-500 mb-2">
+                    Choose which newly published vacancy to prepare for broadcast:
+                  </p>
+                  
+                  {jobs.length === 0 ? (
+                    <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl text-center">
+                      <p className="text-xs font-bold text-slate-500">No jobs configured yet.</p>
+                      <button onClick={() => setActiveAdminTab('jobs')} className="text-[10px] text-blue-600 underline font-bold mt-1">
+                        + Create Your First Job Now
+                      </button>
+                    </div>
+                  ) : (
+                    <select
+                      value={selectedJobId}
+                      onChange={(e) => setSelectedJobId(e.target.value)}
+                      className="w-full rounded-xl border border-slate-200 p-2.5 text-xs text-slate-850 font-medium focus:border-blue-500 focus:outline-hidden bg-slate-50 hover:bg-slate-100/50 transition"
+                    >
+                      {jobs.map((job) => (
+                        <option key={job.id} value={job.id}>
+                          {job.org} - {job.title} ({job.totalPosts} Posts)
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                </div>
+
+                {/* Styling Options */}
+                <div className="pt-3 border-t border-slate-100 space-y-3">
+                  <h4 className="font-bold text-slate-800 text-xs uppercase tracking-wider flex items-center gap-2">
+                    <Sparkles className="h-3.5 w-3.5 text-blue-600" /> Custom Broadcast Style
+                  </h4>
+
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { id: 'hindi', label: 'Hindi Mix', desc: 'Alert' },
+                      { id: 'professional', label: 'English', desc: 'Formal' },
+                      { id: 'short', label: 'Micro Alert', desc: 'Telegram' }
+                    ].map((st) => (
+                      <button
+                        key={st.id}
+                        type="button"
+                        onClick={() => setWhatsappStyle(st.id as any)}
+                        className={`p-2 rounded-xl text-center border transition flex flex-col justify-center items-center ${
+                          whatsappStyle === st.id 
+                            ? 'bg-blue-50 border-blue-200 text-blue-700 font-bold' 
+                            : 'border-slate-150 text-slate-600 hover:bg-slate-50'
+                        }`}
+                      >
+                        <span className="text-[11px]">{st.label}</span>
+                        <span className="text-[8px] opacity-70 font-mono">{st.desc}</span>
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Switch Configs */}
+                  <div className="space-y-2.5 text-[11px] font-semibold text-slate-650 pt-2">
+                    <label className="flex items-center gap-2.5 cursor-pointer hover:text-slate-900 transition">
+                      <input 
+                        type="checkbox" 
+                        checked={includeJoinLink}
+                        onChange={(e) => setIncludeJoinLink(e.target.checked)}
+                        className="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 h-4 w-4"
+                      />
+                      <span>Include WhatsApp Channel Join Link</span>
+                    </label>
+
+                    <label className="flex items-center gap-2.5 cursor-pointer hover:text-slate-900 transition">
+                      <input 
+                        type="checkbox" 
+                        checked={includeApplyUrls}
+                        onChange={(e) => setIncludeApplyUrls(e.target.checked)}
+                        className="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 h-4 w-4"
+                      />
+                      <span>Include Direct apply links & PDF buttons</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Real-time cron sync indicator card */}
+              <div className="bg-slate-900 text-slate-100 rounded-3xl p-5 shadow-xs border border-slate-800 space-y-3.5 font-sans">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] uppercase font-bold text-slate-400 select-none flex items-center gap-1.5">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    Live CRON Heartbeat (cron-job.org)
+                  </span>
+                  <span className="text-[8.5px] bg-slate-800 px-2 py-0.5 rounded font-mono text-emerald-400 uppercase">ONLINE</span>
+                </div>
+                
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Your website was pinged recently by the configured <code className="text-amber-300 font-mono font-bold">cron-job.org</code> background task at <code className="text-blue-300">every 10 minutes</code>. This keeps your server running beautifully!
+                </p>
+
+                <div className="p-3 bg-slate-950 rounded-xl space-y-1 font-mono text-[9px] text-slate-400 border border-slate-800/80">
+                  <div className="flex justify-between">
+                    <span>Target Heartbeat:</span>
+                    <span className="text-teal-400">https://sarkari-job-hub-v595.onrender.com</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Last Ping Check:</span>
+                    <span className="text-white">Success (200 OK)</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Heartbeat Interval:</span>
+                    <span className="text-sky-450">*/10 * * * * (Every 10 mins)</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* RIGHT COLUMN: PREVIEW & TELEMETRY */}
+            <div className="lg:col-span-7 space-y-6">
+              
+              {/* WhatsApp frame mockup box */}
+              <div className="bg-slate-100 border border-slate-200 rounded-3xl overflow-hidden shadow">
+                
+                {/* Mock Phone App Header */}
+                <div className="bg-[#075e54] text-white p-3.5 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center font-bold font-sans text-emerald-800 text-[10px]/none select-none">
+                      SJH
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-xs flex items-center gap-1">
+                        Sarkari Job Hub Updates ✅
+                      </h4>
+                      <p className="text-[9px] text-emerald-100/90 leading-tight">Verified Broadcast channel • Online</p>
+                    </div>
+                  </div>
+                  <span className="p-1 px-2.5 bg-emerald-700/60 text-white rounded-full font-bold text-[9px]">
+                    1,250 Followers
+                  </span>
+                </div>
+
+                {/* Chat stage wallpaper screen */}
+                <div 
+                  className="p-5 min-h-[340px] max-h-[460px] overflow-y-auto space-y-4 font-sans relative"
+                  style={{
+                    backgroundColor: '#e5ddd5',
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%23ece5dd' fill-opacity='0.6'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10zm10 8c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm40 40c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z'/%3E%3C/g%3E%3C/svg%3E")`
+                  }}
+                >
+                  {/* WhatsApp speech bubble on the right */}
+                  <div className="w-11/12 ml-auto bg-[#d9fdd3] text-slate-800 rounded-2xl rounded-tr-none p-3.5 shadow-sm text-xs leading-relaxed border border-[#cbd8c5]/40 select-text relative">
+                    <div className="font-mono text-[11px] text-slate-850 whitespace-pre-wrap select-all">
+                      {customMsgText.split('\n').map((line, idx) => {
+                        let formatted = line;
+                        // Replace *bold* with <strong>
+                        formatted = formatted.replace(/\*(.*?)\*/g, "<strong>$1</strong>");
+                        // Replace _italic_ with <em>
+                        formatted = formatted.replace(/_(.*?)_/g, "<em>$1</em>");
+                        return (
+                          <div key={idx} className="min-h-[1em]">
+                            <span dangerouslySetInnerHTML={{ __html: formatted }} />
+                          </div>
+                        );
+                      })}
+                    </div>
+                    
+                    {/* Timestamp & double mark */}
+                    <div className="text-right text-[9px] text-slate-500 mt-2 select-none flex items-center justify-end gap-1">
+                      <span>{new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                      <span className="text-sky-500 font-bold leading-none">✓✓</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Broadcast actions footer toolbar */}
+                <div className="bg-white p-4 border-t border-slate-100 flex flex-col sm:flex-row gap-3">
+                  <textarea
+                    value={customMsgText}
+                    onChange={(e) => setCustomMsgText(e.target.value)}
+                    className="flex-1 rounded-xl border border-slate-200 p-2 text-[11px] font-mono text-slate-800 min-h-[80px] focus:outline-hidden focus:border-emerald-500 shadow-inner"
+                    placeholder="Refining message drafts manually before broadcasts..."
+                  />
+                  
+                  <div className="flex sm:flex-col gap-2 shrink-0 justify-center">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.clipboard.writeText(customMsgText);
+                        setCopiedText(true);
+                        setTimeout(() => setCopiedText(false), 2500);
+                      }}
+                      className={`rounded-xl p-3 font-bold text-xs flex items-center justify-center gap-1.5 transition ${
+                        copiedText 
+                          ? 'bg-emerald-55 border border-emerald-300 text-emerald-800' 
+                          : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200'
+                      }`}
+                      title="Copy broadcast content"
+                    >
+                      {copiedText ? (
+                        <>
+                          <CheckCircle className="h-4 w-4 text-emerald-500" /> Copied Text
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="h-4 w-4 text-slate-500" /> Copy Alert
+                        </>
+                      )}
+                    </button>
+
+                    <a
+                      href={`https://api.whatsapp.com/send?text=${encodeURIComponent(customMsgText)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-xl p-3 bg-[#25D366] hover:bg-[#20ba5a] text-white font-black text-xs flex items-center justify-center gap-1.5 transition shadow"
+                    >
+                      <Send className="h-4 w-4" /> Send Channel
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Developer Webhook Integration settings drawer */}
+              <div className="bg-white rounded-3xl border border-slate-200 p-5 shadow-xs space-y-4">
+                <div className="border-b border-slate-100 pb-2 flex justify-between items-center">
+                  <h4 className="font-bold text-slate-900 text-xs uppercase tracking-wider flex items-center gap-2">
+                    <Settings className="h-4 w-4 text-slate-600" /> Webhook Push Integration (Advanced)
+                  </h4>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input 
+                      type="checkbox" 
+                      className="sr-only peer" 
+                      checked={webhookEnabled}
+                      onChange={(e) => setWebhookEnabled(e.target.checked)}
+                    />
+                    <div className="w-7 h-4 bg-slate-200 peer-focus:outline-hidden rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-500"></div>
+                    <span className="ml-1.5 text-[9px] font-bold text-slate-500">Enable</span>
+                  </label>
+                </div>
+
+                <p className="text-[11px] text-slate-650 leading-relaxed">
+                  Want absolute automated background triggers Whenever a job is published? Save a webhook POST URL to dispatch payloads to services like Zapier, Make.com, or custom Node servers.
+                </p>
+
+                <div className="space-y-3 text-xs">
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-500 mb-1">AUTOMATION ENDPOINT WEBHOOK URL (POST)</label>
+                    <input 
+                      type="url" 
+                      placeholder="e.g. https://api.zapier.com/hooks/catch/..."
+                      value={webhookUrl}
+                      onChange={(e) => setWebhookUrl(e.target.value)}
+                      className="w-full rounded-lg border border-slate-200 p-2 text-[11px] text-slate-800"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-500 mb-1">WEBHOOK SECURE TOKEN / BEARER INTERACTION KEY</label>
+                    <input 
+                      type="text" 
+                      placeholder="e.g. we_bearer_sarkari_123"
+                      value={webhookSecret}
+                      onChange={(e) => setWebhookSecret(e.target.value)}
+                      className="w-full rounded-lg border border-slate-200 p-2 text-[11px] font-mono text-slate-800"
+                    />
+                  </div>
+
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={handleSaveWebhook}
+                      className="flex-1 py-2 bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs rounded-xl transition"
+                    >
+                      Save Webhook Config
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleTestWebhook}
+                      className="px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 font-extrabold text-xs rounded-xl transition border border-blue-200"
+                    >
+                      Test payload
+                    </button>
+                  </div>
+                </div>
+
+                {/* Webhook Stream logs */}
+                {webhookLogs.length > 0 && (
+                  <div className="border-t border-slate-100 pt-3 space-y-2">
+                    <span className="text-[9px] uppercase font-bold text-slate-400 block tracking-wider">CALLBACK ACTIVITY STREAM LOGS</span>
+                    <div className="space-y-2 max-h-[140px] overflow-y-auto">
+                      {webhookLogs.map((log, i) => (
+                        <div key={i} className="p-2.5 bg-slate-55/10 rounded-xl border border-slate-100 space-y-1 font-mono text-[9px]">
+                          <div className="flex justify-between font-bold text-slate-700">
+                            <span className="text-blue-600">{log.status}</span>
+                            <span className="text-slate-400">{log.timestamp}</span>
+                          </div>
+                          <pre className="text-slate-600 overflow-x-auto p-1.5 bg-white rounded-lg border border-slate-100 text-[8.5px] max-h-[80px] leading-tight">
+                            {log.payload}
+                          </pre>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+            </div>
+
+          </div>
         </div>
       )}
 

@@ -718,6 +718,191 @@ export const INITIAL_MOCK_TESTS: MockTest[] = [
     ],
     totalMarks: 6,
     negativeMark: 0.66
+  },
+  {
+    id: 'ssc-cgl-science-mock-1',
+    title: 'SSC CGL General Science Official Exam Mock (Clean Layout)',
+    category: 'SSC CGL Exam Prep',
+    durationMinutes: 20,
+    questions: [
+      {
+        id: 'sc-q1',
+        text: 'Q1. Who is the author of the book \'Wise and Otherwise: A Salute to Life\'? / \'वाइज एंड अदरवाइज: ए सैल्यूट टू लाइफ\' पुस्तक के लेखक कौन हैं?',
+        options: ['(a) Amrita Pritam', '(b) Zoya Hasan', '(c) Kiran Desai', '(d) Sudha Murthy'],
+        correctOptionIndex: 3,
+        explanation: 'Sudha Murthy is the author of the book \'Wise and Otherwise: A Salute to Life\'. She is the chairperson of the Infosys Foundation and a prominent philanthropist.'
+      },
+      {
+        id: 'sc-q2',
+        text: 'Q2. The Indian National Congress session of September 1920 was held at / सितंबर 1920 का भारतीय राष्ट्रीय कांग्रेस अधिवेशन आयोजन _____ में किया गया था',
+        options: ['(a) Lucknow', '(b) Nagpur', '(c) Calcutta', '(d) Madras'],
+        correctOptionIndex: 2,
+        explanation: 'The special session of the Indian National Congress in September 1920 was held in Calcutta under the presidentship of Lala Lajpat Rai to pass the Non-Cooperation resolution.'
+      },
+      {
+        id: 'sc-q3',
+        text: 'Q3. Which of the following monasteries is located in Sikkim? / सिक्किम में निम्नलिखित में से कौन सा मठ स्थित है?',
+        options: ['(a) Tabo', '(b) Kye', '(c) Rumtek', '(d) Hemis'],
+        correctOptionIndex: 2,
+        explanation: 'Rumtek Monastery, also called the Dharmachakra Centre, is a prominent gompa located near Gangtok, Sikkim.'
+      },
+      {
+        id: 'sc-q4',
+        text: 'Q4. Select the correct pair of dance form and its state. / नृत्य शैली और उसके राज्य की सही युग्म का चयन करें।',
+        options: ['(a) Thang Ta - Bihar', '(b) Dalkhai - Karnataka', '(c) Kalbelia - Himachal Pradesh', '(d) Padayani - Kerala'],
+        correctOptionIndex: 3,
+        explanation: 'Padayani is a traditional ritualistic folk dance form from Central Kerala. Other pairings are incorrect: Thang Ta is from Manipur, Dalkhai is from Odisha, and Kalbelia is from Rajasthan.'
+      },
+      {
+        id: 'sc-q5',
+        text: 'Q5. The Pritzker prize is an international award given to recognise contribution in the field of _____. / प्रित्जकर पुरस्कार एक अंतरराष्ट्रीय पुरस्कार है जिसे ______ क्षेत्र में योगदान को मान्यता देने के लिए दिया जाता है',
+        options: ['(a) literature', '(b) mathematics', '(c) architecture', '(d) medicine'],
+        correctOptionIndex: 2,
+        explanation: 'The Pritzker Architecture Prize is awarded annually to honor a living architect or architects whose built work demonstrates significant talent, vision, and commitment.'
+      },
+      {
+        id: 'sc-q6',
+        text: 'Q6. Which Indian male cricketer won the BCCI CK Nayudu Lifetime Achievement Award for the year 2019? / किस भारतीय पुरुष क्रिकेटर ने वर्ष 2019 का बी.सी.सी.आई. सी.के नायडू लाइफटाइम अचीवमेंट पुरस्कार जीता?',
+        options: ['(a) Sachin Tendulkar', '(b) Rahul Dravid', '(c) K Srikanth', '(d) Sunil Gavaskar'],
+        correctOptionIndex: 2,
+        explanation: 'Former Indian cricket captain Krishnamachari Srikkanth (K Srikanth) was awarded the prestigious BCCI CK Nayudu Lifetime Achievement Award for 2019.'
+      },
+      {
+        id: 'sc-q7',
+        text: 'Q7. With reference to the Vedangas, which of the following terms denotes \'Ritual\'? / वेदांगों के संदर्भ में, निम्नलिखित में से कौन सा शब्द \'अनुष्ठान\' को दर्शाता है?',
+        options: ['(a) Shiksha', '(b) Kalpa', '(c) Vyakarana', '(d) Chanda'],
+        correctOptionIndex: 1,
+        explanation: 'Kalpa Vedanga denotes sacred rituals, ceremonies and rules. It includes Shrautasutras, Grihyasutras, and Dharmasutras.'
+      },
+      {
+        id: 'sc-q8',
+        text: 'Q8. In December 2019, the Rohtang passageway in Himachal Pradesh was renamed as: / दिसंबर 2019 में, हिमाचल प्रदेश में रोहतांग गलियारे (दर्रे) का नाम बदलकर क्या रखा गया:',
+        options: ['(a) Bose Tunnel', '(b) Atal Tunnel', '(c) Mukherjee Tunnel', '(d) Swaraj Tunnel'],
+        correctOptionIndex: 1,
+        explanation: 'The Rohtang Tunnel in Himachal Pradesh was renamed as the Atal Tunnel to honor former Prime Minister Atal Bihari Vajpayee.'
+      },
+      {
+        id: 'sc-q9',
+        text: 'Q9. Which among the following has its refractive index closest to that of crown glass? / निम्नलिखित में से कौन सा अपवर्तनांक सूचकांक क्राउन ग्लास के निकटतम है?',
+        options: ['(a) Canada balsam', '(b) Ruby', '(c) Sapphire', '(d) Diamond'],
+        correctOptionIndex: 0,
+        explanation: 'Canada balsam has a refractive index of approximately 1.55, which is closest to that of crown glass (1.50 - 1.60).'
+      },
+      {
+        id: 'sc-q10',
+        text: 'Q10. The scientific study of a cell is called: / सेल के वैज्ञानिक अध्ययन को कहा जाता है:',
+        options: ['(a) taxonomy', '(b) physiology', '(c) histology', '(d) cytology'],
+        correctOptionIndex: 3,
+        explanation: 'Cytology (also known as cell biology) is the scientific study of cells, their structures, function, and chemistry.'
+      },
+      {
+        id: 'sc-q11',
+        text: 'Q11. The Council of Ministers during the time of Shivaji Maharaj was known as: / शिवाजी महाराज के शासन-काल में मंत्रिपरिषद को किस नाम से जाना जाता था:',
+        options: ['(a) Ashta Diggajas', '(b) Navaratnas', '(c) Ashta Pradhan', '(d) Agraharam'],
+        correctOptionIndex: 2,
+        explanation: 'The council of eight ministers that administered the Maratha empire during Chhatrapati Shivaji Maharaj\'s reign was called the Ashta Pradhan.'
+      },
+      {
+        id: 'sc-q12',
+        text: 'Q12. The power of a lens is -2.0 D. Here \'D\' stands for: / एक लेंस की प्रकाशीय शक्ति (पावर) -2.0 D है यहां \'D\' का क्या अर्थ है?',
+        options: ['(a) degree', '(b) distance', '(c) dioptre', '(d) dilation'],
+        correctOptionIndex: 2,
+        explanation: 'Here, \'D\' stands for Dioptre, which is the unit of measurement of the optical power of a lens or curved mirror, equal to the reciprocal of the focal length in meters.'
+      },
+      {
+        id: 'sc-q13',
+        text: 'Q13. Which among the following is NOT an insulator? / निम्नलिखित में से कौन एक इन्सुलेटर नहीं है?',
+        options: ['(a) Glass', '(b) Dry Paper', '(c) Mercury', '(d) Ebonite'],
+        correctOptionIndex: 2,
+        explanation: 'Mercury is a heavy, liquid metal. It is a good conductor of electricity, meaning it is NOT an insulator.'
+      },
+      {
+        id: 'sc-q14',
+        text: 'Q14. Pradhan Mantri Jeevan Jyoti Bima Yojana offers a protection term insurance cover of ____ to the insurer. / प्रधानमंत्री जीवन ज्योति बीमा योजना बीमाकर्ता को _____ का सुरक्षा बीमा रक्षण प्रदान करती है।',
+        options: ['(a) 3 Lakh', '(b) 4 Lakh', '(c) 2 Lakh', '(d) 5 Lakh'],
+        correctOptionIndex: 2,
+        explanation: 'Pradhan Mantri Jeevan Jyoti Bima Yojana (PMJJBY) offers a renewable one-year life insurance cover of Rs. 2 Lakh in case of death due to any cause.'
+      },
+      {
+        id: 'sc-q15',
+        text: 'Q15. For which game has the Father of Leander Paes been a member of the Indian National Team? / लिएंडर पेस के पिता किस खेल के लिए भारतीय राष्ट्रीय टीम के सदस्य रहे हैं?',
+        options: ['(a) Basketball', '(b) Tennis', '(c) Hockey', '(d) Badminton'],
+        correctOptionIndex: 2,
+        explanation: 'Leander Paes\' father Vece Paes was a member of the Indian field hockey team that won the bronze medal at the 1972 Munich Olympics.'
+      },
+      {
+        id: 'sc-q16',
+        text: 'Q16. Pravasi Bharatiya Divas is celebrated on: / प्रवासी भारतीय दिवस कब मनाया जाता है:',
+        options: ['(a) 9th January', '(b) 1st January', '(c) 2nd January', '(d) 8th January'],
+        correctOptionIndex: 0,
+        explanation: 'Pravasi Bharatiya Divas is celebrated on 9th January to mark the contribution of the overseas Indian community and commemoration of Mahatma Gandhi\'s return from South Africa in 1915.'
+      },
+      {
+        id: 'sc-q17',
+        text: 'Q17. Where is the Dharmraja Ratha monument located? / धर्मराज रथ स्मारक कहाँ स्थित है?',
+        options: ['(a) Mahabalipuram', '(b) Suchindram', '(c) Khajuraho', '(d) Kanchipuram'],
+        correctOptionIndex: 0,
+        explanation: 'Dharmaraja Ratha is one of the monolithic rock-cut Ratha monuments located at Mahabalipuram (Mamallapuram) in Tamil Nadu, India.'
+      },
+      {
+        id: 'sc-q18',
+        text: 'Q18. Which among the following is a cation? / निम्नलिखित में से क्या एक धनायन (कैशन) है?',
+        options: ['(a) Iodide', '(b) Ammonium', '(c) Fluoride', '(d) Chloride'],
+        correctOptionIndex: 1,
+        explanation: 'Ammonium (NH4+) is a positively charged polyatomic ion, which makes it a cation. Iodide, fluoride, and chloride are anions.'
+      },
+      {
+        id: 'sc-q19',
+        text: 'Q19. Which of the following Articles of the Constitution of India guarantees the Right to Freedom of Religion? / भारत के संविधान के निम्नलिखित में से कौन सा अनुच्छेद धार्मिक स्वतंत्रता के अधिकार की गारंटी देता है?',
+        options: ['(a) Articles 13-14', '(b) Articles 19-22', '(c) Articles 23-24', '(d) Articles 25-28'],
+        correctOptionIndex: 3,
+        explanation: 'Articles 25 to 28 of the Indian Constitution guarantee the Right to Freedom of Religion to all citizens and residents of India.'
+      },
+      {
+        id: 'sc-q20',
+        text: 'Q20. In which year was the first amendment to the Constitution of India made? / भारत के संविधान में पहला संशोधन किस वर्ष किया गया था?',
+        options: ['(a) 1953', '(b) 1952', '(c) 1951', '(d) 1950'],
+        correctOptionIndex: 2,
+        explanation: 'The first amendment to the Indian Constitution was passed in 1951. It introduced several articles and created the Ninth Schedule to protect land reform laws.'
+      },
+      {
+        id: 'sc-q21',
+        text: 'Q21. Who was appointed as brand ambassador of Visa - the payment technology company in 2019? / 2019 में, किसे भुगतान प्रौद्योगिकी कंपनी - वीजा का ब्रांड एंबेसडर नियुक्त किया गया था?',
+        options: ['(a) PT Usha', '(b) Dutee Chand', '(c) Sania Mirza', '(d) P.V. Sindhu'],
+        correctOptionIndex: 3,
+        explanation: 'In 2019, world badminton champion P.V. Sindhu was appointed as the brand ambassador of Visa.'
+      },
+      {
+        id: 'sc-q22',
+        text: 'Q22. Which of the following states does NOT share its boundary with Bangladesh? / निम्नलिखित में से कौन सा राज्य बांग्लादेश के साथ अपनी सीमा साझा नहीं करता है?',
+        options: ['(a) Assam', '(b) Manipur', '(c) Tripura', '(d) Meghalaya'],
+        correctOptionIndex: 1,
+        explanation: 'Manipur shares its standard boundary with Myanmar and other states but does NOT border Bangladesh.'
+      },
+      {
+        id: 'sc-q23',
+        text: 'Q23. Which of the following rivers forms the Dhuandhar waterfall near Jabalpur? / निम्नलिखित नदियों में से कौन सी नदी जबलपुर के पास धुआँधार जल-प्रपात का निर्माण करती है?',
+        options: ['(a) Narmada', '(b) Luni', '(c) Tapi', '(d) Tungabhadra'],
+        correctOptionIndex: 0,
+        explanation: 'The Narmada River forms the gorgeous Dhuandhar Falls in Bhedaghat near Jabalpur in Madhya Pradesh.'
+      },
+      {
+        id: 'sc-q24',
+        text: 'Q24. What does \'T\' stand for in ATM? / ATM में \'T\' का क्या अर्थ है?',
+        options: ['(a) Transfer', '(b) Trunk', '(c) Transaction', '(d) Teller'],
+        correctOptionIndex: 3,
+        explanation: 'In ATM, \'T\' stands for Teller. The full acronym stands for Automated Teller Machine.'
+      },
+      {
+        id: 'sc-q25',
+        text: 'Q25. Which of the following pairs is CORRECT with reference to mountain passes? / निम्नलिखित में से कौन सा युग्म पहाड़ी दर्रों के संदर्भ में सही है?',
+        options: ['(a) Rohtang - Sikkim', '(b) Lipulekh - Uttarakhand', '(c) Bomdila - Himachal Pradesh', '(d) Nathula - Arunachal Pradesh'],
+        correctOptionIndex: 1,
+        explanation: 'Lipulekh - Uttarakhand is the correct pair. Rohtang pass is in Himachal Pradesh, Bomdila pass is in Arunachal Pradesh, and Nathula pass is in Sikkim.'
+      }
+    ],
+    totalMarks: 50,
+    negativeMark: 0.50
   }
 ];
 

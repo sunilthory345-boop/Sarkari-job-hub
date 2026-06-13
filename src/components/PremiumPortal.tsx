@@ -140,8 +140,8 @@ export default function PremiumPortal({
     if (!finalQuery.trim() && !currentImage) return;
 
     // Check trial limit for free tier
-    if (!user.premiumUser && trialCount >= 1 && !customText) {
-      triggerToast("🔒 AI Doubt Solver trial limit reached! Upgrade to Premium for unmoderated questions.");
+    if (!user.premiumUser && trialCount >= 30 && !customText) {
+      triggerToast("🔒 AI Doubt Solver trial limit reached! Click Reset or upgrade to Premium for unmoderated questions.");
       return;
     }
 
@@ -324,9 +324,22 @@ export default function PremiumPortal({
               </div>
               
               {!user.premiumUser && (
-                <span className="text-[9px] font-extrabold text-amber-700 bg-amber-50 border border-amber-200 rounded px-2 py-0.5 animate-pulse">
-                  Free Trial: {trialCount}/1 limit
-                </span>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <span className="text-[9px] font-extrabold text-amber-700 bg-amber-50 border border-amber-200 rounded px-2 py-0.5 animate-pulse">
+                    Free Trial: {trialCount}/30 limit
+                  </span>
+                  <button
+                    onClick={() => {
+                      setTrialCount(0);
+                      triggerToast("🔄 Free trial counter reset! You have 30 more queries.");
+                    }}
+                    type="button"
+                    title="Reset trial counter to 0"
+                    className="text-[9px] bg-slate-200 hover:bg-slate-350 text-slate-700 font-extrabold px-2 py-0.5 rounded cursor-pointer transition"
+                  >
+                    Reset
+                  </button>
+                </div>
               )}
             </div>
 
@@ -422,7 +435,7 @@ export default function PremiumPortal({
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                disabled={!user.premiumUser && trialCount >= 1}
+                disabled={!user.premiumUser && trialCount >= 30}
                 title="Attach question image / take picture"
                 className="p-3 rounded-xl border border-slate-205 hover:bg-slate-50 text-slate-550 hover:text-slate-800 transition cursor-pointer flex items-center justify-center shrink-0"
               >
@@ -431,9 +444,9 @@ export default function PremiumPortal({
 
               <input
                 type="text"
-                placeholder={!user.premiumUser && trialCount >= 1 ? "🔒 Upgrade to write unlimited inquiries" : "Type exam query, drag-drop question picture..."}
+                placeholder={!user.premiumUser && trialCount >= 30 ? "🔒 Trial limit reached. Click Reset above or upgrade" : "Type exam query, drag-drop question picture..."}
                 value={userInput}
-                disabled={!user.premiumUser && trialCount >= 1}
+                disabled={!user.premiumUser && trialCount >= 30}
                 onChange={(e) => setUserInput(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') handleSendMessage();
@@ -442,7 +455,7 @@ export default function PremiumPortal({
               />
               <button
                 onClick={() => handleSendMessage()}
-                disabled={(!user.premiumUser && trialCount >= 1) || (!userInput.trim() && !attachedImage) || isLoading}
+                disabled={(!user.premiumUser && trialCount >= 30) || (!userInput.trim() && !attachedImage) || isLoading}
                 className="bg-[#1E3A8A] text-white px-4 py-3 rounded-xl flex items-center justify-center font-bold hover:bg-blue-800 disabled:opacity-50 transition shrink-0"
               >
                 <Send className="h-4 w-4" />

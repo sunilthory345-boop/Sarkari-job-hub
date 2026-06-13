@@ -329,7 +329,25 @@ export default function Navbar({
           </nav>
         </div>
 
-        <div className="border-t border-slate-100 pt-4">
+        <div className="border-t border-slate-100 pt-4 space-y-3">
+          <div className="flex gap-2">
+            <a 
+              href="https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-emerald-50 text-emerald-700 font-black rounded-xl hover:bg-emerald-100 border border-emerald-200 text-xs shadow-xs"
+            >
+              <span>🟢</span> WhatsApp
+            </a>
+            <a 
+              href="https://t.me/SarkariJobHubOfficial" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-blue-50 text-blue-700 font-black rounded-xl hover:bg-blue-100 border border-blue-200 text-xs shadow-xs"
+            >
+              <span>✈️</span> Telegram
+            </a>
+          </div>
           <p className="font-mono text-[9px] text-center text-slate-400 font-semibold">
             SECURE AD-FREE EXPERIENCE
           </p>

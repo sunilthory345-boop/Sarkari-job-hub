@@ -48,6 +48,11 @@ async function startServer() {
     res.json({ status: "ok" });
   });
 
+  // Google Search Console HTML Site Verification
+  app.get("/googlea4fd13bfa005370e.html", (req, res) => {
+    res.send("google-site-verification: googlea4fd13bfa005370e.html");
+  });
+
   // GET uploaded documents from backend database
   app.get("/api/documents", (req, res) => {
     res.json(serverDocuments);

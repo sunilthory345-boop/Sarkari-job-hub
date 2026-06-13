@@ -26,6 +26,7 @@ import ObjectionPortal from './components/ObjectionPortal';
 import SarkariUploadVault from './components/SarkariUploadVault';
 import SarkariAds from './components/SarkariAds';
 import AuthModal from './components/AuthModal';
+import { initializeGA, trackPageView } from './utils/analytics';
 
 export default function App() {
   // ----- ROOT PERSISTENT STATE -----
@@ -46,20 +47,93 @@ export default function App() {
 
   const [mockTests, setMockTests] = useState<MockTest[]>(() => {
     const saved = localStorage.getItem('sarkari_mock_tests');
-    return saved ? JSON.parse(saved) : INITIAL_MOCK_TESTS;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved) as MockTest[];
+        if (!parsed.some(t => t.id === 'ssc-cgl-science-mock-1')) {
+          const foundNew = INITIAL_MOCK_TESTS.find(t => t.id === 'ssc-cgl-science-mock-1');
+          if (foundNew) {
+            parsed.push(foundNew);
+            localStorage.setItem('sarkari_mock_tests', JSON.stringify(parsed));
+          }
+        }
+        return parsed;
+      } catch (e) {
+        return INITIAL_MOCK_TESTS;
+      }
+    }
+    return INITIAL_MOCK_TESTS;
   });
+
+  useEffect(() => {
+    localStorage.setItem('sarkari_mock_tests', JSON.stringify(mockTests));
+  }, [mockTests]);
 
   const [currentAffairs] = useState<CurrentAffair[]>(INITIAL_CURRENT_AFFAIRS);
   const [blogs] = useState<Blog[]>(INITIAL_BLOGS);
 
-  const [pyqsList, setPyqsList] = useState<{ title: string; type: string; size: string; year: number; exam: string; premium: boolean }[]>(() => {
+  const [pyqsList, setPyqsList] = useState<{ title: string; type: string; size: string; year: number; exam: string; premium: boolean; downloadUrl?: string }[]>(() => {
     const saved = localStorage.getItem('sarkari_pyqs');
     return saved ? JSON.parse(saved) : [
-      { title: 'UPSC IAS General Studies 2024 Solved paper compilation', type: 'Solved PDF Booklet', size: '3.8 MB', year: 2024, exam: 'UPSC', premium: false },
-      { title: 'SSC CHSL Quant & Logical Reasoning (10+2) sets', type: 'Practice Sheets', size: '1.2 MB', year: 2024, exam: 'SSC', premium: false },
-      { title: 'IBPS PO Reasoning Mains 5-Year combined compilation', type: 'Solved Booklet', size: '4.8 MB', year: 2023, exam: 'Bank', premium: true }
+      // 2025 Papers
+      { title: 'UPSC Civil Services General Studies Paper I 2025 (Solved PDF compilation)', type: 'Official Key', size: '4.4 MB', year: 2025, exam: 'UPSC', premium: false },
+      { title: 'SSC CGL Tier-1 Quantitative Aptitude All Shifts Solved 2025 Booklet', type: 'Solved Booklet', size: '2.5 MB', year: 2025, exam: 'SSC', premium: false },
+      { title: 'IBPS PO Mains Logical Reasoning & DI Special Solved Paper 2025', type: 'Solved Booklet', size: '3.1 MB', year: 2025, exam: 'Bank', premium: true },
+      { title: 'RRB NTPC General Science & General Awareness official Solved Key 2025', type: 'Solved Key', size: '2.1 MB', year: 2025, exam: 'Railway', premium: false },
+      { title: 'State TET / Teaching Eligibility Test Solved Question Booklet 2025', type: 'Practice Key', size: '1.8 MB', year: 2025, exam: 'Teaching', premium: false },
+      
+      // 2024 Papers
+      { title: 'UPSC IAS General Studies 2024 Solved Paper compilation', type: 'Solved PDF Booklet', size: '3.8 MB', year: 2024, exam: 'UPSC', premium: false },
+      { title: 'NDA/CDS General Ability Test (GAT) I 2024 Question Booklet & Solved Key', type: 'Official Key', size: '3.5 MB', year: 2024, exam: 'Defence', premium: true },
+      { title: 'SSC CHSL (10+2) English Language & Quant 2024 Solved Practice Sets', type: 'Solved Booklet', size: '2.9 MB', year: 2024, exam: 'SSC', premium: false },
+      { title: 'UPPSC Provincial Civil Services CSAT Paper 2024 Solved Solutions', type: 'Solved Booklet', size: '3.2 MB', year: 2024, exam: 'State PSC', premium: true },
+      { title: 'SBI Clerk Prelims Quantitative & Reasoning Aptitude 2024 Sets', type: 'Practice Sheets', size: '1.5 MB', year: 2024, exam: 'Bank', premium: false },
+
+      // 2023 Papers
+      { title: 'UPSC Civil Services CSAT Logical Aptitude Paper 2023 Solutions', type: 'Solved Booklet', size: '1.9 MB', year: 2023, exam: 'UPSC', premium: false },
+      { title: 'SSC MTS General Awareness & Logical Reasoning Solved Paper 2023', type: 'Solved Key', size: '1.4 MB', year: 2023, exam: 'SSC', premium: false },
+      { title: 'IBPS PO Reasoning Mains 5-Year Combined compilation', type: 'Solved Booklet', size: '4.8 MB', year: 2023, exam: 'Bank', premium: true },
+      { title: 'RRB Group D Reasoning & Aptitude Challenge Series Solved Booklet 2023', type: 'Solved Key', size: '2.8 MB', year: 2023, exam: 'Railway', premium: false },
+      { title: 'IBPS Clerk Quantitative Aptitude Mains 2023 Practice Paper', type: 'Practice Sheets', size: '1.7 MB', year: 2023, exam: 'Bank', premium: false },
+
+      // 2022 Papers
+      { title: 'UPSC Civil Services General Studies-1 2022 Official Paper & Solved Key', type: 'Solved Booklet', size: '4.0 MB', year: 2022, exam: 'UPSC', premium: false },
+      { title: 'SSC CGL Tier-2 Advance Mathematics Solved Selection Paper 2022', type: 'Official Key', size: '3.3 MB', year: 2022, exam: 'SSC', premium: true },
+      { title: 'CTET Paper 1 & 2 Environmental Studies & Pedagogy Solved Book 2022', type: 'Solved Booklet', size: '2.7 MB', year: 2022, exam: 'Teaching', premium: false },
+      { title: 'State PCS / Rajasthan RAS GS Paper I 2022 Solved Compilation Book', type: 'Practice Sheets', size: '5.0 MB', year: 2022, exam: 'State PSC', premium: true },
+
+      // 2021 Papers
+      { title: 'UPSC CSE Prelims Polity & History Sectional 2021 Review Paper Booklet', type: 'Official Key', size: '2.2 MB', year: 2021, exam: 'UPSC', premium: false },
+      { title: 'SSC GD Constable General Science 2021 All Shift Official Keys', type: 'Solved Key', size: '1.8 MB', year: 2021, exam: 'SSC', premium: false },
+      { title: 'IBPS RRB Officer Scale-1 Quant & Reasoning Solved Practice Booklet 2021', type: 'Solved Booklet', size: '3.0 MB', year: 2021, exam: 'Bank', premium: true },
+
+      // 2020 Papers
+      { title: 'UPSC Civil Services GSE GS Paper-I 2020 Solved Sectional Booklet', type: 'Solved Booklet', size: '4.2 MB', year: 2020, exam: 'UPSC', premium: false },
+      { title: 'SSC CGL Tier-1 English Comprehension 2020 Solutions compilation', type: 'Solved Key', size: '1.6 MB', year: 2020, exam: 'SSC', premium: false },
+      { title: 'RRB NTPC CBT-1 Static General Knowledge Solved Paper Review 2020', type: 'Practice Sheets', size: '2.7 MB', year: 2020, exam: 'Railway', premium: false },
+      { title: 'SBI PO Mains Data Interpretation & Numerical Analysis Booklet 2020', type: 'Solved Booklet', size: '3.9 MB', year: 2020, exam: 'Bank', premium: true }
     ];
   });
+
+  useEffect(() => {
+    localStorage.setItem('sarkari_pyqs', JSON.stringify(pyqsList));
+  }, [pyqsList]);
+
+  const [pyqSearch, setPyqSearch] = useState('');
+  const [pyqSelectedYear, setPyqSelectedYear] = useState('All');
+  const [pyqSelectedCategory, setPyqSelectedCategory] = useState('All');
+
+  // New PYQ Upload System States
+  const [showPyqUploadModal, setShowPyqUploadModal] = useState(false);
+  const [newPyqTitle, setNewPyqTitle] = useState('');
+  const [newPyqYear, setNewPyqYear] = useState(2025);
+  const [newPyqExam, setNewPyqExam] = useState('UPSC');
+  const [newPyqType, setNewPyqType] = useState('Solved PDF Booklet');
+  const [newPyqFileName, setNewPyqFileName] = useState('');
+  const [isUploadingPyq, setIsUploadingPyq] = useState(false);
+  const [uploadPyqProgress, setUploadPyqProgress] = useState(0);
+  const [newPyqUrl, setNewPyqUrl] = useState('');
+  const [pyqUploadMode, setPyqUploadMode] = useState<'file' | 'link'>('file');
 
   const [user, setUser] = useState<UserProfile>(() => {
     const saved = localStorage.getItem('sarkari_user_profile');
@@ -140,6 +214,15 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('sarkari_is_logged_in', isLoggedIn ? 'true' : 'false');
   }, [isLoggedIn]);
+
+  // Google Analytics Initialization & Tab View Tracking
+  useEffect(() => {
+    initializeGA();
+  }, []);
+
+  useEffect(() => {
+    trackPageView(activeTab);
+  }, [activeTab]);
 
   // Premium Transactions History types and state
   interface PremiumTransaction {
@@ -434,6 +517,52 @@ export default function App() {
         {activeTab === 'home' && (
           <div className="space-y-10">
             
+            {/* OFFICIAL BROADCAST ALERT BANNER */}
+            <div data-testid="broadcast-join-card" className="bg-gradient-to-r from-emerald-500/10 via-blue-500/11 to-[#1E3A8A]/10 rounded-2xl border border-blue-100 p-4 sm:p-5 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xs animate-fade-in">
+              <div className="flex items-center gap-3.5 text-left">
+                <div className="flex -space-x-2 shrink-0">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-emerald-500 text-white shadow-md ring-2 ring-white font-sans font-black text-xs">
+                    WA
+                  </div>
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-blue-500 text-white shadow-md ring-2 ring-white font-sans font-black text-xs">
+                    TG
+                  </div>
+                </div>
+                <div>
+                  <h4 className="font-sans font-bold text-sm sm:text-base text-slate-800 flex items-center gap-2 flex-wrap">
+                    <span>{locale === 'hi' ? 'व्हाट्सएप चैनल और टेलीग्राम ग्रुप जॉइन लिंक' : 'Official WhatsApp & Telegram Join Channels'}</span>
+                    <span className="text-[9px] font-bold bg-rose-600 text-white px-2 py-0.5 rounded-sm animate-pulse uppercase tracking-wider">MEMBER JOIN ACTIVE</span>
+                  </h4>
+                  <p className="font-sans text-xs text-slate-500 mt-1">
+                    {locale === 'hi' 
+                        ? 'नवीनतम सरकारी नौकरियों (Govt Jobs), एडमिट कार्ड और सरकारी रिजल्ट प्राप्त करने के लिए आज ही जुड़ें!' 
+                        : 'Get real-time notification updates, solved PDF booklets, syllabus guidelines, and news on your phone.'}
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex flex-wrap gap-2.5 w-full md:w-auto shrink-0 justify-end">
+                <a 
+                  href="https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  onClick={() => triggerToast("📲 WhatsApp: Opening verified Sarkari updates feed channel...")}
+                  className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 text-xs font-bold transition duration-200 shadow-md shadow-emerald-600/10"
+                >
+                  <span className="text-sm">🟢</span> {locale === 'hi' ? 'WhatsApp चैनल जॉइन करें' : 'Join WhatsApp Channel'}
+                </a>
+                <a 
+                  href="https://t.me/SarkariJobHubOfficial" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  onClick={() => triggerToast("✈️ Telegram: Redirecting to verified Sarkari Job Hub channel for PDF notes...")}
+                  className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 text-xs font-bold transition duration-200 shadow-md shadow-blue-600/10"
+                >
+                  <Send className="h-4 w-4 fill-white text-white" /> {locale === 'hi' ? 'Telegram ग्रुप जॉइन करें' : 'Join Telegram Group'}
+                </a>
+              </div>
+            </div>
+
             {/* National Emblem & Slogan Hero Banner */}
             <div className="relative rounded-3xl overflow-hidden bg-linear-to-r from-blue-900 via-blue-950 to-indigo-950 text-white p-6 sm:p-12 shadow-xl shadow-blue-900/10 border border-blue-800/20">
               {/* Backglow blur effects */}
@@ -1028,71 +1157,513 @@ export default function App() {
         )}
 
         {/* TAB 10: PREVIOUS YEAR PAPERS index sheets */}
-        {activeTab === 'pyqs' && (
-          <div className="bg-white rounded-3xl border border-blue-50 p-6 shadow-xs max-w-4xl mx-auto space-y-6 font-sans">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-50 pb-3">
-              <div>
-                <h2 className="text-lg font-extrabold text-slate-900 flex items-center gap-1.5">
-                  <Download className="h-5.5 w-5.5 text-blue-600" />
-                  Compilation of Previous Year Question Papers (PYQs)
-                </h2>
-                <p className="text-xs text-slate-500">Gain confidence by practicing mock papers with solutions downloaded directly to your phone.</p>
+        {activeTab === 'pyqs' && (() => {
+          const filteredPYQs = pyqsList.filter((pyq) => {
+            const matchesSearch = pyq.title.toLowerCase().includes(pyqSearch.toLowerCase()) || 
+                                  pyq.exam.toLowerCase().includes(pyqSearch.toLowerCase()) ||
+                                  pyq.type.toLowerCase().includes(pyqSearch.toLowerCase());
+            const matchesYear = pyqSelectedYear === 'All' || pyq.year.toString() === pyqSelectedYear;
+            const matchesCategory = pyqSelectedCategory === 'All' || pyq.exam.toLowerCase() === pyqSelectedCategory.toLowerCase();
+            return matchesSearch && matchesYear && matchesCategory;
+          });
+
+          return (
+            <div className="bg-white rounded-3xl border border-blue-50 p-6 shadow-xs max-w-4xl mx-auto space-y-6 font-sans">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-50 pb-3">
+                <div>
+                  <h2 className="text-lg font-extrabold text-slate-900 flex items-center gap-1.5 mb-0.5">
+                    <Download className="h-5.5 w-5.5 text-blue-600 animate-pulse" />
+                    Previous Year Question Papers (PYQs) Library
+                  </h2>
+                  <p className="text-xs text-slate-500">Practice with detailed solved question booklets from 2020 to 2025 across all major government vacancies.</p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setNewPyqTitle('');
+                    setNewPyqFileName('');
+                    setNewPyqYear(2025);
+                    setNewPyqExam('UPSC');
+                    setNewPyqType('Solved PDF Booklet');
+                    setShowPyqUploadModal(true);
+                  }}
+                  className="rounded-xl bg-blue-600 text-white hover:bg-blue-700 py-2.5 px-4 text-xs font-bold transition flex items-center gap-1.5 shrink-0 shadow-sm cursor-pointer"
+                >
+                  <Sparkles className="h-4 w-4 animate-bounce text-yellow-300" />
+                  <span>Upload PYQ / नया पुराना पेपर</span>
+                </button>
               </div>
 
-              <button
-                onClick={() => setActiveTab('uploads')}
-                className="rounded-xl border border-blue-600 text-blue-700 hover:bg-blue-50/50 py-2 px-4 text-xs font-bold transition flex items-center gap-1 shrink-0"
-              >
-                <Sparkles className="h-4 w-4 animate-pulse text-blue-600" /> Contribute PYQ File
-              </button>
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-2 text-xs">
-              {pyqsList.map((pyq, idx) => (
-                <div key={idx} className="p-4 border border-slate-150 rounded-2xl bg-slate-50/30 flex items-center justify-between gap-4">
-                  <div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-[10px] bg-slate-100 text-slate-550 font-bold px-2 py-0.5 rounded">
-                        {pyq.type}
-                      </span>
-                      <span className="text-[9px] bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded font-bold font-mono">
-                        {pyq.year} Exam
-                      </span>
-                    </div>
-                    <h4 className="font-bold text-slate-800 mt-2 leading-snug">{pyq.title}</h4>
-                    <span className="text-slate-400 font-mono mt-1 block">Size: {pyq.size}</span>
+              {/* Filters Panel */}
+              <div className="bg-slate-50/70 rounded-2xl p-4 border border-slate-100 grid gap-4 sm:grid-cols-12 text-xs">
+                {/* Search Term Input */}
+                <div className="sm:col-span-6 space-y-1">
+                  <label className="block text-[11px] font-bold text-slate-550 mb-1">Search Paper Title or Keyword</label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      className="w-full rounded-xl border border-slate-200 bg-white p-2.5 pl-3.5 text-slate-800 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-hidden"
+                      placeholder="e.g. UPSC General Studies, SSC English, etc..."
+                      value={pyqSearch}
+                      onChange={(e) => setPyqSearch(e.target.value)}
+                    />
+                    {pyqSearch && (
+                      <button 
+                        onClick={() => setPyqSearch('')}
+                        type="button" 
+                        className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-650 font-bold text-xs"
+                      >
+                        ✕
+                      </button>
+                    )}
                   </div>
-
-                  {pyq.premium && !user.premiumUser ? (
-                    <button
-                      onClick={() => setPremiumModalOpen(true)}
-                      className="flex items-center gap-1 border border-amber-400 text-amber-700 font-bold py-2 px-3.5 rounded-xl bg-amber-50 hover:bg-amber-100 transition font-sans text-xs flex-shrink-0"
-                    >
-                      👑 Lock
-                    </button>
-                  ) : (
-                    <button 
-                      onClick={() => alert(`Starting download for file "${pyq.title}".`)}
-                      className="flex items-center gap-1.5 bg-blue-600 text-white font-bold py-2 px-3.5 rounded-xl hover:bg-blue-700 transition font-sans text-xs flex-shrink-0"
-                    >
-                      <Download className="h-3.5 w-3.5" /> Download
-                    </button>
-                  )}
                 </div>
-              ))}
-            </div>
 
-            {/* In-Line Horizontal Ad Placement */}
-            <div className="pt-4 border-t border-slate-100">
-              <SarkariAds 
-                user={user} 
-                onGoPremium={() => setActiveTab('premium')} 
-                triggerToast={triggerToast} 
-                layout="banner" 
-              />
+                {/* Exam Category Selector */}
+                <div className="sm:col-span-3 space-y-1">
+                  <label className="block text-[11px] font-bold text-slate-550 mb-1">Vacancy Category</label>
+                  <select
+                    className="w-full rounded-xl border border-slate-200 bg-white p-2.5 text-slate-800 text-xs focus:outline-hidden font-medium"
+                    value={pyqSelectedCategory}
+                    onChange={(e) => setPyqSelectedCategory(e.target.value)}
+                  >
+                    <option value="All">All Vacancies</option>
+                    <option value="UPSC">UPSC Civil Services</option>
+                    <option value="SSC">SSC (CGL, CHSL, MTS)</option>
+                    <option value="Bank">Banking Exams (SBI/IBPS)</option>
+                    <option value="Railway">Railway (RRB NTPC, Group D)</option>
+                    <option value="Teaching">Teaching & TET certification</option>
+                    <option value="Defence">Defence Services (NDA/CDS)</option>
+                    <option value="State PSC">State Civil Services (PCS)</option>
+                  </select>
+                </div>
+
+                {/* Year Selector */}
+                <div className="sm:col-span-3 space-y-1">
+                  <label className="block text-[11px] font-bold text-slate-550 mb-1">Exam Year Range</label>
+                  <select
+                    className="w-full rounded-xl border border-slate-200 bg-white p-2.5 text-slate-800 text-xs focus:outline-hidden font-medium"
+                    value={pyqSelectedYear}
+                    onChange={(e) => setPyqSelectedYear(e.target.value)}
+                  >
+                    <option value="All">All Years (2020 - 2025)</option>
+                    <option value="2025">2025 Series</option>
+                    <option value="2024">2024 Series</option>
+                    <option value="2023">2023 Series</option>
+                    <option value="2022">2022 Series</option>
+                    <option value="2021">2021 Series</option>
+                    <option value="2020">2020 Series</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Quick Counter Banner */}
+              <div className="flex items-center justify-between text-[11px] text-slate-500 font-sans font-semibold px-1">
+                <span>Showing <strong className="text-slate-850 font-bold">{filteredPYQs.length}</strong> of <strong className="text-slate-850 font-bold">{pyqsList.length}</strong> verified previous year papers</span>
+                {(pyqSearch || pyqSelectedYear !== 'All' || pyqSelectedCategory !== 'All') && (
+                  <button
+                    onClick={() => {
+                      setPyqSearch('');
+                      setPyqSelectedYear('All');
+                      setPyqSelectedCategory('All');
+                    }}
+                    className="text-blue-650 hover:underline font-bold"
+                  >
+                    Clear active filters
+                  </button>
+                )}
+              </div>
+
+              {/* No outcomes view */}
+              {filteredPYQs.length === 0 ? (
+                <div className="p-10 border border-dashed border-slate-200 rounded-3xl text-center bg-slate-50/40">
+                  <span className="text-3xl block mb-2">🔍</span>
+                  <h4 className="font-bold text-slate-800 text-xs">No matching past papers found</h4>
+                  <p className="text-[11px] text-slate-500 mt-1 max-w-sm mx-auto leading-relaxed">
+                    Try adjusting your search keywords, vacancy category or changing the exam year selection to discover more papers.
+                  </p>
+                  <button 
+                    onClick={() => {
+                      setPyqSearch('');
+                      setPyqSelectedCategory('All');
+                      setPyqSelectedYear('All');
+                    }}
+                    type="button"
+                    className="px-4 py-2 mt-4 bg-blue-600 text-white rounded-xl font-bold text-xs hover:bg-blue-700 transition"
+                  >
+                    Reset Filter Search
+                  </button>
+                </div>
+              ) : (
+                <div className="grid gap-4 sm:grid-cols-2 text-xs">
+                  {filteredPYQs.map((pyq, idx) => (
+                    <div key={idx} className="p-4 border border-slate-150 rounded-2xl bg-slate-50/20 hover:border-blue-150 hover:shadow-xs transition flex items-center justify-between gap-4">
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="text-[9px] bg-slate-200 text-slate-650 font-bold px-1.5 py-0.5 rounded">
+                            {pyq.type}
+                          </span>
+                          <span className="text-[9px] bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded font-black font-mono">
+                            {pyq.year} Exam
+                          </span>
+                          <span className="text-[9px] bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded font-black font-mono uppercase">
+                            {pyq.exam}
+                          </span>
+                        </div>
+                        <h4 className="font-extrabold text-slate-850 mt-1 leading-snug">{pyq.title}</h4>
+                        <span className="text-slate-400 font-mono text-[10px] block">Size: {pyq.size}</span>
+                      </div>
+
+                      {pyq.premium && !user.premiumUser ? (
+                        <button
+                          onClick={() => setPremiumModalOpen(true)}
+                          className="flex items-center gap-1 border border-amber-400 text-amber-700 font-bold py-2 px-3.5 rounded-xl bg-amber-50 hover:bg-amber-100 transition font-sans text-xs flex-shrink-0"
+                        >
+                          👑 Lock
+                        </button>
+                      ) : (
+                        <button 
+                          onClick={() => {
+                            if (pyq.downloadUrl) {
+                              triggerToast(`🔗 Redirecting to study document page: ${pyq.title}`);
+                              window.open(pyq.downloadUrl, '_blank', 'noopener,noreferrer');
+                            } else {
+                              alert(`Starting download for file "${pyq.title}".`);
+                            }
+                          }}
+                          className="flex items-center gap-1.5 bg-blue-600 text-white font-bold py-2 px-3.5 rounded-xl hover:bg-blue-700 transition font-sans text-xs flex-shrink-0 shadow-xs cursor-pointer"
+                        >
+                          <Download className="h-3.5 w-3.5" /> Download
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* In-Line Horizontal Ad Placement */}
+              <div className="pt-4 border-t border-slate-100">
+                <SarkariAds 
+                  user={user} 
+                  onGoPremium={() => setActiveTab('premium')} 
+                  triggerToast={triggerToast} 
+                  layout="banner" 
+                />
+              </div>
+
+              {/* BEAUTIFUL POPUP OVERLAY MODAL FOR PYQ UPLOADS */}
+              {showPyqUploadModal && (
+                <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-fadeIn" onClick={() => !isUploadingPyq && setShowPyqUploadModal(false)}>
+                  <div className="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl border border-blue-50 relative pointer-events-auto space-y-4" onClick={(e) => e.stopPropagation()}>
+                    <button 
+                      onClick={() => !isUploadingPyq && setShowPyqUploadModal(false)}
+                      disabled={isUploadingPyq}
+                      className="absolute right-4 top-4 text-slate-400 hover:text-slate-600 disabled:opacity-50 cursor-pointer"
+                    >
+                      <X className="h-5 w-5" />
+                    </button>
+                    
+                    <div className="text-center pb-2 border-b border-slate-100">
+                      <span className="text-3xl block mb-1">📚</span>
+                      <h3 className="text-base font-extrabold text-[#1E3A8A]">
+                        Upload Previous Year Question Paper
+                      </h3>
+                      <p className="text-[11px] text-slate-500">Contribute solved key sets, unsolved sheets, or booklets (2020 - 2025)</p>
+                    </div>
+
+                    {/* Mode selector tab */}
+                    <div className="flex rounded-xl bg-slate-100 p-1">
+                      <button
+                        type="button"
+                        className={`w-1/2 py-2 text-center text-xs font-bold rounded-lg transition-all cursor-pointer ${
+                          pyqUploadMode === 'file' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-500 hover:text-slate-850'
+                        }`}
+                        onClick={() => {
+                          setPyqUploadMode('file');
+                          setNewPyqUrl('');
+                        }}
+                        disabled={isUploadingPyq}
+                      >
+                        📁 File Upload
+                      </button>
+                      <button
+                        type="button"
+                        className={`w-1/2 py-2 text-center text-xs font-bold rounded-lg transition-all cursor-pointer ${
+                          pyqUploadMode === 'link' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-500 hover:text-slate-850'
+                        }`}
+                        onClick={() => {
+                          setPyqUploadMode('link');
+                          setNewPyqFileName('');
+                        }}
+                        disabled={isUploadingPyq}
+                      >
+                        🔗 Paste Link / URL
+                      </button>
+                    </div>
+
+                    <form onSubmit={(e) => {
+                      e.preventDefault();
+                      if (!newPyqTitle.trim()) {
+                        triggerToast("⚠️ Please enter a title for the question paper!");
+                        return;
+                      }
+
+                      if (pyqUploadMode === 'link' && !newPyqUrl.trim()) {
+                        triggerToast("⚠️ Please paste a valid web/PDF link for the paper!");
+                        return;
+                      }
+                      
+                      // Start uploading simulation
+                      setIsUploadingPyq(true);
+                      setUploadPyqProgress(15);
+                      
+                      const steps = [
+                        { p: 35 },
+                        { p: 60 },
+                        { p: 85 },
+                        { p: 100 }
+                      ];
+
+                      let currentStep = 0;
+                      const interval = setInterval(() => {
+                        if (currentStep < steps.length) {
+                          setUploadPyqProgress(steps[currentStep].p);
+                          currentStep++;
+                        } else {
+                          clearInterval(interval);
+                          
+                          // Estimate size or display metadata
+                          const mockSize = pyqUploadMode === 'link' ? "Direct URL Link" : (newPyqFileName ? `${(Math.random() * 2.5 + 1.1).toFixed(1)} MB` : "2.4 MB");
+                          
+                          const newPaper = {
+                            title: newPyqTitle,
+                            type: newPyqType,
+                            size: mockSize,
+                            year: Number(newPyqYear),
+                            exam: newPyqExam,
+                            premium: false,
+                            downloadUrl: pyqUploadMode === 'link' ? newPyqUrl : undefined
+                          };
+                          
+                          setPyqsList(prev => [newPaper, ...prev]);
+                          setIsUploadingPyq(false);
+                          setShowPyqUploadModal(false);
+                          setNewPyqTitle('');
+                          setNewPyqFileName('');
+                          setNewPyqUrl('');
+                          triggerToast(`🎉 Success! Centered papers compiled under "${newPyqTitle}" successfully added!`);
+                        }
+                      }, 300);
+
+                    }} className="space-y-4 text-xs font-sans text-left">
+                      
+                      {/* Input Link / URL */}
+                      {pyqUploadMode === 'link' && (
+                        <div className="space-y-1.5 bg-blue-50/40 border border-blue-100 p-3.5 rounded-2xl">
+                          <label className="block text-[11px] font-extrabold text-blue-900">
+                            Paste Paper Link (टेस्टबुक या अन्य PDF लिंक) *
+                          </label>
+                          <div className="relative">
+                            <input
+                              type="url"
+                              required
+                              className="w-full rounded-xl border border-slate-200 bg-white p-2.5 pr-8 text-slate-850 font-medium focus:ring-1 focus:ring-blue-500 focus:outline-hidden"
+                              placeholder="Paste Testbook, Drive or external link here..."
+                              value={newPyqUrl}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setNewPyqUrl(val);
+                                
+                                // Beautiful Testbook detection
+                                if (val.toLowerCase().includes('testbook.com') || val.toLowerCase().includes('testbook:')) {
+                                  let language = "English Language Solution";
+                                  if (val.toLowerCase().includes('hindi')) {
+                                    language = "Hindi Medium Solved Paper";
+                                  } else if (val.toLowerCase().includes('quant') || val.toLowerCase().includes('math')) {
+                                    language = "Mathematics (Quant) Key Booklet";
+                                  } else if (val.toLowerCase().includes('science')) {
+                                    language = "General Science MCQ Booklet";
+                                  } else if (val.toLowerCase().includes('gk') || val.toLowerCase().includes('gs') || val.toLowerCase().includes('general-studies')) {
+                                    language = "General Studies GS Combined Sets";
+                                  }
+                                  
+                                  const matchId = val.match(/pdf\/([a-f0-9]+)/i);
+                                  const suffix = matchId ? ` (Testbook Ref: ${matchId[1].substring(0, 5)})` : " (Pasted Testbook Link)";
+                                  
+                                  setNewPyqTitle(`Official 2024 Past Paper - ${language}${suffix}`);
+                                  setNewPyqType("Solved PDF Booklet");
+                                  setNewPyqExam("SSC");
+                                  setNewPyqYear(2024);
+                                  triggerToast("✨ Magic! Extracted Testbook link credentials & prefilled paper details.");
+                                }
+                              }}
+                              disabled={isUploadingPyq}
+                            />
+                            <span className="absolute right-3 top-2.5 text-slate-350">🔗</span>
+                          </div>
+                          <span className="text-[10px] text-slate-500 block leading-normal mt-1">
+                            We will index this resource link securely so all aspirants can download it instantaneously!
+                          </span>
+                        </div>
+                      )}
+
+                      {/* Paper Title */}
+                      <div className="space-y-1">
+                        <label className="block text-[11px] font-bold text-slate-600">Paper Title / Name (शीर्षक) *</label>
+                        <input
+                          type="text"
+                          required
+                          className="w-full rounded-xl border border-slate-200 p-2.5 text-slate-850 font-medium focus:ring-1 focus:ring-blue-500 focus:outline-hidden"
+                          placeholder="e.g. SSC CGL Tier-1 Maths Shift-1 2024 Solved Paper"
+                          value={newPyqTitle}
+                          onChange={(e) => setNewPyqTitle(e.target.value)}
+                          disabled={isUploadingPyq}
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        {/* Vacancy Category */}
+                        <div className="space-y-1">
+                          <label className="block text-[11px] font-bold text-slate-600">Vacancy (श्रेणी)</label>
+                          <select
+                            className="w-full rounded-xl border border-slate-200 p-2.5 text-slate-800 bg-white font-medium"
+                            value={newPyqExam}
+                            onChange={(e) => setNewPyqExam(e.target.value)}
+                            disabled={isUploadingPyq}
+                          >
+                            <option value="UPSC">UPSC Civil Services</option>
+                            <option value="SSC">SSC (CGL, CHSL, MTS)</option>
+                            <option value="Bank">Banking (SBI/IBPS)</option>
+                            <option value="Railway">Railway (NTPC/Group D)</option>
+                            <option value="Teaching">Teaching & TET</option>
+                            <option value="Defence">Defence (NDA/CDS)</option>
+                            <option value="State PSC">State PCS</option>
+                          </select>
+                        </div>
+
+                        {/* Year */}
+                        <div className="space-y-1">
+                          <label className="block text-[11px] font-bold text-slate-600">Exam Year (वर्ष)</label>
+                          <select
+                            className="w-full rounded-xl border border-slate-200 p-2.5 text-slate-800 bg-white font-bold"
+                            value={newPyqYear}
+                            onChange={(e) => setNewPyqYear(Number(e.target.value))}
+                            disabled={isUploadingPyq}
+                          >
+                            <option value="2025">2025</option>
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      {/* Paper Type */}
+                      <div className="space-y-1">
+                        <label className="block text-[11px] font-bold text-slate-600">Paper Document Type</label>
+                        <select
+                          className="w-full rounded-xl border border-slate-200 p-2.5 text-slate-800 bg-white font-medium"
+                          value={newPyqType}
+                          onChange={(e) => setNewPyqType(e.target.value)}
+                          disabled={isUploadingPyq}
+                        >
+                          <option value="Solved PDF Booklet">Solved PDF Booklet</option>
+                          <option value="Official Key">Official Key with solutions</option>
+                          <option value="Solved Key">Solved Key & explanations</option>
+                          <option value="Question Booklet">Question Booklet (Unsolved)</option>
+                          <option value="Practice Sheets">Section-wise Practice Sheets</option>
+                        </select>
+                      </div>
+
+                      {/* Simulated File upload input */}
+                      {pyqUploadMode === 'file' && (
+                        <div className="space-y-1.5">
+                          <label className="block text-[11px] font-bold text-slate-600">Choose PDF Document or high-res capture</label>
+                          
+                          <div className="border border-dashed border-slate-250 bg-slate-50/50 hover:bg-slate-50 p-4 rounded-2xl text-center cursor-pointer relative transition" onClick={() => {
+                            if (isUploadingPyq) return;
+                            
+                            const randomNames = [
+                              "UPSC_Civil_Services_Prelims_GS_2025.pdf",
+                              "SSC_CGL_Mains_Mathematics_2024.pdf",
+                              "RRB_NTPC_Stage_1_Solved_Key_2020.pdf",
+                              "IBPS_PO_Quantitative_Aptitude_Mains_2023.pdf",
+                              "CTET_Paper_I_Child_Pedagogy_Solved_2022.pdf"
+                            ];
+                            const randomName = randomNames[Math.floor(Math.random() * randomNames.length)];
+                            setNewPyqFileName(randomName);
+                            // Auto fill title if it's empty
+                            if (!newPyqTitle) {
+                              const formatted = randomName.replace(".pdf", "").replace(/_/g, " ");
+                              setNewPyqTitle(formatted);
+                            }
+                            triggerToast("📁 Validated file selected for secure upload!");
+                          }}>
+                            <div className="space-y-1 flex flex-col items-center justify-center">
+                              <span className="text-2xl text-slate-405">📤</span>
+                              {newPyqFileName ? (
+                                <div className="text-center font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-150 flex items-center gap-1.5">
+                                  <span>📄 {newPyqFileName}</span>
+                                </div>
+                              ) : (
+                                <>
+                                  <span className="font-extrabold text-[#1E3A8A]">Tap to pick file / drag document</span>
+                                  <span className="text-[10px] text-slate-450 block">Supports PDF, DOC, JPG formats (Max 15MB)</span>
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Progress spinner */}
+                      {isUploadingPyq && (
+                        <div className="space-y-1 bg-blue-50/50 border border-blue-100 p-3 rounded-2xl">
+                          <div className="flex justify-between items-center text-[10px] font-extrabold text-blue-700">
+                            <span>Processing and indexing document...</span>
+                            <span>{uploadPyqProgress}%</span>
+                          </div>
+                          <div className="w-full bg-slate-205 rounded-full h-1.5 overflow-hidden">
+                            <div className="bg-blue-600 h-1.5 transition-all duration-300" style={{ width: `${uploadPyqProgress}%` }}></div>
+                          </div>
+                          <p className="text-[9px] text-slate-500 italic">
+                            {uploadPyqProgress < 30 ? "Connecting to secure database gateway..." : 
+                             uploadPyqProgress < 60 ? "Indexing link and verifying query params..." : 
+                             uploadPyqProgress < 90 ? "Verifying target authority certificates..." : 
+                             "Confirming upload transaction payload..."}
+                          </p>
+                        </div>
+                      )}
+
+                      {/* Buttons */}
+                      <div className="flex items-center gap-3 pt-2">
+                        <button
+                          type="button"
+                          className="w-1/2 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-755 font-extrabold transition cursor-pointer"
+                          onClick={() => !isUploadingPyq && setShowPyqUploadModal(false)}
+                          disabled={isUploadingPyq}
+                        >
+                          Cancel
+                        </button>
+                        
+                        <button
+                          type="submit"
+                          className="w-1/2 py-2.5 rounded-xl bg-blue-600 text-white font-extrabold hover:bg-blue-700 transition flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+                          disabled={isUploadingPyq || !newPyqTitle.trim()}
+                        >
+                          <span>🚀 Submit Paper</span>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-        )}
+          );
+        })()}
 
         {/* TAB 15: BRAND NEW ASPIRANT UPLOADS & FILE VAULT */}
         {activeTab === 'uploads' && (
@@ -1106,6 +1677,7 @@ export default function App() {
               ...prev
             ])}
             triggerToast={triggerToast}
+            onChangeTab={setActiveTab}
           />
         )}
 
@@ -1554,13 +2126,25 @@ export default function App() {
             <div className="space-y-3">
               <h4 className="text-white font-bold text-xs uppercase tracking-widest border-b border-slate-800 pb-1">Broadcast Channels</h4>
               <p className="text-slate-500 leading-normal">Subscribe to verified Telegram / WhatsApp feeds for direct 24x7 notifications updates.</p>
-              <div className="flex gap-2">
-                <button onClick={() => alert('Redirecting to verified Telegram notification channel. @JobSarkariHubOfficial')} className="bg-blue-600/20 border border-blue-500/30 text-blue-400 px-3 py-1.5 rounded-lg font-bold hover:bg-blue-600/30 transition">
-                  Telegram Alert
-                </button>
-                <button onClick={() => alert('Subscribed to verified WhatsApp broadcast alerts.')} className="bg-emerald-600/20 border border-emerald-500/30 text-emerald-400 px-3 py-1.5 rounded-lg font-bold hover:bg-emerald-600/30 transition">
-                  WhatsApp Alert
-                </button>
+              <div className="flex flex-wrap gap-2">
+                <a 
+                  href="https://t.me/SarkariJobHubOfficial" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  onClick={() => triggerToast("✈️ Telegram: Redirecting to official @JobSarkariHubOfficial channel...")}
+                  className="inline-flex items-center gap-1 bg-blue-600/20 border border-blue-500/30 text-blue-400 px-3 py-1.5 rounded-lg font-bold hover:bg-blue-600/30 transition text-xs"
+                >
+                  <Send className="h-3 w-3 fill-blue-400 text-blue-400" /> Telegram Channel
+                </a>
+                <a 
+                  href="https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  onClick={() => triggerToast("📲 WhatsApp: Opening verified broadcast newsletter...")}
+                  className="inline-flex items-center gap-1 bg-emerald-600/20 border border-emerald-500/30 text-emerald-400 px-3 py-1.5 rounded-lg font-bold hover:bg-emerald-600/30 transition text-xs"
+                >
+                  <span>🟢</span> WhatsApp Feed
+                </a>
               </div>
             </div>
 

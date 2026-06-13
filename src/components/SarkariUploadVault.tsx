@@ -12,6 +12,7 @@ interface SarkariUploadVaultProps {
   onAddMockTest: (newTest: MockTest) => void;
   onAddPYQ: (newPYQ: { title: string; exam: string; size: string; premium: boolean; year: number }) => void;
   triggerToast: (msg: string) => void;
+  onChangeTab?: (tab: string) => void;
 }
 
 interface UploadedDocument {
@@ -29,7 +30,8 @@ export default function SarkariUploadVault({
   onAddAdmitCard,
   onAddMockTest,
   onAddPYQ,
-  triggerToast
+  triggerToast,
+  onChangeTab
 }: SarkariUploadVaultProps) {
   // ---- TAB STATES ----
   const [activeSubTab, setActiveSubTab] = useState<'applied-docs' | 'admit-cards' | 'mock-test' | 'pyq-upl'>('applied-docs');
@@ -583,18 +585,36 @@ export default function SarkariUploadVault({
 
           {/* Quick template guidelines helper for custom mocks */}
           {activeSubTab === 'mock-test' && (
-            <div className="bg-blue-50/50 border border-blue-100/60 rounded-2xl p-4 space-y-2">
-              <h5 className="font-extrabold text-blue-900 flex items-center gap-1 text-[11px]">
-                <HelpCircle className="h-3.5 w-3.5" /> Simple TXT/CSV Quiz Format Instructions:
-              </h5>
-              <p className="text-[10px] text-slate-600 leading-relaxed font-sans">
-                You can draft a basic text file listing mock exam questions to test yourself easily. Our converter reads queries and answers dynamically:
-              </p>
-              <pre className="p-2 border border-slate-200 bg-white rounded-lg font-mono text-[9px] text-slate-500 overflow-x-auto leading-normal">
-                Question: What does Article 21 protect?{'\n'}
-                Options: [Power, Life & Personal Liberty, Wealth, Religion]{'\n'}
-                CorrectOptionIndex: 1
-              </pre>
+            <div className="space-y-3">
+              <div className="bg-gradient-to-r from-orange-50 to-indigo-50 border border-orange-100/80 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                <div className="space-y-0.5">
+                  <span className="font-extrabold text-orange-850 block">🛠️ Advanced Multiple MCQ Test Creator</span>
+                  <span className="text-slate-600 block text-[11px]">Build rigorous full-length exams with answers, logical explanations, negative marking schemes, or paste bulk CSV/JSON payloads.</span>
+                </div>
+                {onChangeTab && (
+                  <button
+                    type="button"
+                    onClick={() => onChangeTab('admin')}
+                    className="p-2 px-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-[11px] shrink-0 transition"
+                  >
+                    Open creator &rarr;
+                  </button>
+                )}
+              </div>
+
+              <div className="bg-blue-50/50 border border-blue-100/60 rounded-2xl p-4 space-y-2">
+                <h5 className="font-extrabold text-blue-900 flex items-center gap-1 text-[11px]">
+                  <HelpCircle className="h-3.5 w-3.5" /> Simple TXT/CSV Quiz Format Instructions:
+                </h5>
+                <p className="text-[10px] text-slate-600 leading-relaxed font-sans">
+                  You can draft a basic text file listing mock exam questions to test yourself easily. Our converter reads queries and answers dynamically:
+                </p>
+                <pre className="p-2 border border-slate-200 bg-white rounded-lg font-mono text-[9px] text-slate-500 overflow-x-auto leading-normal">
+                  Question: What does Article 21 protect?{'\n'}
+                  Options: [Power, Life & Personal Liberty, Wealth, Religion]{'\n'}
+                  CorrectOptionIndex: 1
+                </pre>
+              </div>
             </div>
           )}
 
