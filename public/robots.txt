@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+Sitemap: https://sarkari-job-hub-v55.onrender.com/sitemap.xml

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://sarkari-job-hub-v55.onrender.com/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sarkari-job-hub-v55.onrender.com/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://sarkari-job-hub-v55.onrender.com/?lang=hi" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sarkari-job-hub-v55.onrender.com/" />
+  </url>
+  <url>
+    <loc>https://sarkari-job-hub-v55.onrender.com/jobs</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sarkari-job-hub-v55.onrender.com/jobs?lang=en" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://sarkari-job-hub-v55.onrender.com/jobs?lang=hi" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sarkari-job-hub-v55.onrender.com/jobs" />
+  </url>
+  <url>
+    <loc>https://sarkari-job-hub-v55.onrender.com/admit-cards</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sarkari-job-hub-v55.onrender.com/admit-cards?lang=en" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://sarkari-job-hub-v55.onrender.com/admit-cards?lang=hi" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sarkari-job-hub-v55.onrender.com/admit-cards" />
+  </url>
+  <url>
+    <loc>https://sarkari-job-hub-v55.onrender.com/results</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sarkari-job-hub-v55.onrender.com/results?lang=en" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://sarkari-job-hub-v55.onrender.com/results?lang=hi" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sarkari-job-hub-v55.onrender.com/results" />
+  </url>
+  <url>
+    <loc>https://sarkari-job-hub-v55.onrender.com/mock-tests</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sarkari-job-hub-v55.onrender.com/mock-tests?lang=en" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://sarkari-job-hub-v55.onrender.com/mock-tests?lang=hi" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sarkari-job-hub-v55.onrender.com/mock-tests" />
+  </url>
+  <url>
+    <loc>https://sarkari-job-hub-v55.onrender.com/syllabus</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sarkari-job-hub-v55.onrender.com/syllabus?lang=en" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://sarkari-job-hub-v55.onrender.com/syllabus?lang=hi" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sarkari-job-hub-v55.onrender.com/syllabus" />
+  </url>
+</urlset>

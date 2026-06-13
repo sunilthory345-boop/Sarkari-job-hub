@@ -53,6 +53,64 @@ async function startServer() {
     res.send("google-site-verification: googlea4fd13bfa005370e.html");
   });
 
+  // Dynamic bilingual sitemap.xml
+  app.get("/sitemap.xml", (req, res) => {
+    res.header("Content-Type", "application/xml");
+    
+    const host = req.get("host") || "sarkari-job-hub-v55.onrender.com";
+    const protocol = req.secure ? "https" : "http";
+    const baseUrl = `${protocol}://${host}`;
+    
+    const currentDate = new Date().toISOString().split("T")[0];
+    
+    // Core static routes pointing to Hindi and English preparation sectors
+    const routes = [
+      { path: "", priority: "1.0", changefreq: "daily" },
+      { path: "jobs", priority: "0.9", changefreq: "daily" },
+      { path: "admit-cards", priority: "0.9", changefreq: "daily" },
+      { path: "results", priority: "0.85", changefreq: "weekly" },
+      { path: "mock-tests", priority: "0.9", changefreq: "daily" },
+      { path: "syllabus", priority: "0.8", changefreq: "weekly" },
+      { path: "current-affairs", priority: "0.8", changefreq: "daily" },
+      { path: "blog", priority: "0.7", changefreq: "weekly" },
+      { path: "objections", priority: "0.6", changefreq: "monthly" },
+      { path: "upload-vault", priority: "0.7", changefreq: "monthly" }
+    ];
+    
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+    xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n`;
+    
+    routes.forEach(r => {
+      const url = r.path ? `${baseUrl}/${r.path}` : baseUrl;
+      xml += `  <url>\n`;
+      xml += `    <loc>${url}</loc>\n`;
+      xml += `    <lastmod>${currentDate}</lastmod>\n`;
+      xml += `    <changefreq>${r.changefreq}</changefreq>\n`;
+      xml += `    <priority>${r.priority}</priority>\n`;
+      // Bilingual alternates
+      xml += `    <xhtml:link rel="alternate" hreflang="en" href="${url}?lang=en" />\n`;
+      xml += `    <xhtml:link rel="alternate" hreflang="hi" href="${url}?lang=hi" />\n`;
+      xml += `    <xhtml:link rel="alternate" hreflang="x-default" href="${url}" />\n`;
+      xml += `  </url>\n`;
+    });
+    
+    xml += `</urlset>`;
+    res.send(xml);
+  });
+
+  // Dynamic robots.txt
+  app.get("/robots.txt", (req, res) => {
+    res.header("Content-Type", "text/plain");
+    const host = req.get("host") || "sarkari-job-hub-v55.onrender.com";
+    const protocol = req.secure ? "https" : "http";
+    res.send(`User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+Sitemap: ${protocol}://${host}/sitemap.xml`);
+  });
+
   // GET uploaded documents from backend database
   app.get("/api/documents", (req, res) => {
     res.json(serverDocuments);
