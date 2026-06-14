@@ -180,7 +180,12 @@ const SEO_MAP: Record<LocaleType, Record<string, SEOMetadata>> = {
 /**
  * Dynamically updates primary SEO Meta elements in the header based on active tab and language locale.
  */
-export function updateSEOMetadata(activeTab: string, locale: LocaleType = 'en') {
+export function updateSEOMetadata(
+  activeTab: string, 
+  locale: LocaleType = 'en', 
+  subCategory?: string,
+  extraSubCategory?: string
+) {
   try {
     // Falls back to EN if MR/RJ map is missing or doesn't have the key
     const localeMap = SEO_MAP[locale] || SEO_MAP.en;
@@ -247,6 +252,62 @@ export function updateSEOMetadata(activeTab: string, locale: LocaleType = 'en') 
       document.head.appendChild(schemaScript);
     }
 
+    const breadcrumbList = [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": locale === 'hi' ? "मुख्य पृष्ठ" : "Home",
+        "item": window.location.origin + "/"
+      }
+    ];
+
+    if (activeTab !== 'home') {
+      const parentName = activeTab === 'admit-cards' ? (locale === 'hi' ? "प्रवेश पत्र" : "Admit Cards") : 
+                         activeTab === 'results' ? (locale === 'hi' ? "परीक्षा परिणाम" : "Results") :
+                         activeTab === 'mock-tests' ? (locale === 'hi' ? "मॉक टेस्ट" : "Mock Tests") :
+                         activeTab === 'syllabus' ? (locale === 'hi' ? "पाठ्यक्रम" : "Syllabus") :
+                         activeTab === 'jobs' ? (locale === 'hi' ? "सरकारी नौकरियां" : "Jobs") :
+                         activeTab === 'calendar' ? (locale === 'hi' ? "परीक्षा कैलेंडर" : "Exam Calendar") :
+                         activeTab === 'current-affairs' ? (locale === 'hi' ? "करंट अफेयर्स" : "Current Affairs") :
+                         activeTab === 'blog' ? (locale === 'hi' ? "ब्लॉग" : "Blogs") :
+                         activeTab === 'premium' ? (locale === 'hi' ? "प्रीमियम" : "Premium") :
+                         activeTab === 'contact' ? (locale === 'hi' ? "संपर्क" : "Contact") :
+                         activeTab === 'dashboard' ? (locale === 'hi' ? "डैशबोर्ड" : "Dashboard") :
+                         activeTab.charAt(0).toUpperCase() + activeTab.slice(1).replace('-', ' ');
+
+      breadcrumbList.push({
+        "@type": "ListItem",
+        "position": 2,
+        "name": parentName,
+        "item": window.location.origin + `/${activeTab}`
+      });
+
+      if (subCategory && subCategory !== 'All') {
+        breadcrumbList.push({
+          "@type": "ListItem",
+          "position": 3,
+          "name": subCategory,
+          "item": window.location.origin + `/${activeTab}?category=${encodeURIComponent(subCategory.toLowerCase())}`
+        });
+
+        if (extraSubCategory && extraSubCategory !== 'All') {
+          breadcrumbList.push({
+            "@type": "ListItem",
+            "position": 4,
+            "name": extraSubCategory,
+            "item": window.location.origin + `/${activeTab}?category=${encodeURIComponent(subCategory.toLowerCase())}&filter=${encodeURIComponent(extraSubCategory.toLowerCase())}`
+          });
+        }
+      } else if (extraSubCategory && extraSubCategory !== 'All') {
+        breadcrumbList.push({
+          "@type": "ListItem",
+          "position": 3,
+          "name": extraSubCategory,
+          "item": window.location.origin + `/${activeTab}?filter=${encodeURIComponent(extraSubCategory.toLowerCase())}`
+        });
+      }
+    }
+
     const jsonLdMarkup = {
       "@context": "https://schema.org",
       "@type": "WebPage",
@@ -260,20 +321,7 @@ export function updateSEOMetadata(activeTab: string, locale: LocaleType = 'en') 
       },
       "breadcrumb": {
         "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Sarkari Hub Home",
-            "item": window.location.origin + "/"
-          },
-          ...(activeTab !== 'home' ? [{
-            "@type": "ListItem",
-            "position": 2,
-            "name": activeTab.toUpperCase(),
-            "item": currentUrl
-          }] : [])
-        ]
+        "itemListElement": breadcrumbList
       }
     };
 

@@ -431,15 +431,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
     localStorage.setItem('sarkari_is_logged_in', isLoggedIn ? 'true' : 'false');
   }, [isLoggedIn]);
 
-  // Google Analytics Initialization & Tab View Tracking
-  useEffect(() => {
-    initializeGA();
-  }, []);
 
-  useEffect(() => {
-    trackPageView(activeTab);
-    updateSEOMetadata(activeTab, locale);
-  }, [activeTab, locale]);
 
   // Premium Transactions History types and state
   interface PremiumTransaction {
@@ -475,6 +467,8 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
 
   // Filter properties passed down to JobCard
   const [qualificationFilter, setQualificationFilter] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [selectedSyllabusGroup, setSelectedSyllabusGroup] = useState<'All' | 'SSC' | 'UPSC' | 'Bank' | 'Railway' | 'Rajasthan' | 'Defence'>('All');
 
   // Contact support form
   const [contactForm, setContactForm] = useState({ name: '', email: '', query: '' });
@@ -503,6 +497,43 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
   const [trafficPageViews, setTrafficPageViews] = useState(58410);
   const [trafficSpikeActive, setTrafficSpikeActive] = useState(false);
   const [trafficActiveTab, setTrafficActiveTab] = useState<'dashboard' | 'geo' | 'referrals' | 'realtime'>('dashboard');
+
+  // Google Analytics Initialization & Tab View Tracking
+  useEffect(() => {
+    initializeGA();
+  }, []);
+
+  useEffect(() => {
+    trackPageView(activeTab);
+    
+    let subCat = 'All';
+    let extraSubCat = 'All';
+    
+    if (activeTab === 'jobs') {
+      subCat = selectedCategory;
+      extraSubCat = qualificationFilter;
+    } else if (activeTab === 'syllabus') {
+      subCat = selectedSyllabusGroup;
+    } else if (activeTab === 'blog' && selectedBlog) {
+      subCat = selectedBlog.title;
+    } else if (activeTab === 'mock-tests' && selectedMockTestId) {
+      const matched = mockTests.find(t => t.id === selectedMockTestId);
+      if (matched) {
+        subCat = matched.title;
+      }
+    }
+    
+    updateSEOMetadata(activeTab, locale, subCat, extraSubCat);
+  }, [
+    activeTab, 
+    locale, 
+    selectedCategory, 
+    qualificationFilter, 
+    selectedSyllabusGroup, 
+    selectedBlog, 
+    selectedMockTestId, 
+    mockTests
+  ]);
 
   // Custom toast notification state
   const [toastMsg, setToastMsg] = useState<string | null>(null);
@@ -1583,6 +1614,8 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
               toggleSaveJob={toggleSaveJob}
               qualificationFilter={qualificationFilter}
               setQualificationFilter={setQualificationFilter}
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
             />
           </div>
         )}
@@ -1753,7 +1786,12 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
 
         {/* TAB 9: SYLLABUS & ADMISSIONS library */}
         {activeTab === 'syllabus' && (
-          <SyllabusPlanner user={user} triggerToast={triggerToast} />
+          <SyllabusPlanner 
+            user={user} 
+            triggerToast={triggerToast} 
+            selectedGroup={selectedSyllabusGroup}
+            setSelectedGroup={setSelectedSyllabusGroup}
+          />
         )}
 
         {/* TAB 10: PREVIOUS YEAR PAPERS index sheets */}

@@ -12,6 +12,8 @@ interface JobCardProps {
   toggleSaveJob: (jobId: string) => void;
   qualificationFilter?: string;
   setQualificationFilter?: (q: string) => void;
+  selectedCategory?: string;
+  setSelectedCategory?: (c: string) => void;
 }
 
 const getCategoryStyles = (cat: string) => {
@@ -40,10 +42,14 @@ export default function JobCard({
   user, 
   toggleSaveJob,
   qualificationFilter = 'All',
-  setQualificationFilter
+  setQualificationFilter,
+  selectedCategory: propCategory,
+  setSelectedCategory: propSetCategory
 }: JobCardProps) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [localCategory, setLocalCategory] = useState('All');
+  const selectedCategory = propCategory !== undefined ? propCategory : localCategory;
+  const setSelectedCategory = propSetCategory !== undefined ? propSetCategory : setLocalCategory;
   const [selectedJob, setSelectedJob] = useState<GovJob | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 

@@ -19,10 +19,19 @@ interface SyllabusTopic {
 interface SyllabusPlannerProps {
   user: UserProfile;
   triggerToast: (msg: string) => void;
+  selectedGroup?: 'All' | 'SSC' | 'UPSC' | 'Bank' | 'Railway' | 'Rajasthan' | 'Defence';
+  setSelectedGroup?: (g: 'All' | 'SSC' | 'UPSC' | 'Bank' | 'Railway' | 'Rajasthan' | 'Defence') => void;
 }
 
-export default function SyllabusPlanner({ user, triggerToast }: SyllabusPlannerProps) {
-  const [selectedGroup, setSelectedGroup] = useState<'All' | 'SSC' | 'UPSC' | 'Bank' | 'Railway' | 'Rajasthan' | 'Defence'>('All');
+export default function SyllabusPlanner({ 
+  user, 
+  triggerToast,
+  selectedGroup: propGroup,
+  setSelectedGroup: propSetGroup
+}: SyllabusPlannerProps) {
+  const [localGroup, setLocalGroup] = useState<'All' | 'SSC' | 'UPSC' | 'Bank' | 'Railway' | 'Rajasthan' | 'Defence'>('All');
+  const selectedGroup = propGroup !== undefined ? propGroup : localGroup;
+  const setSelectedGroup = propSetGroup !== undefined ? propSetGroup : setLocalGroup;
   const [searchQuery, setSearchQuery] = useState('');
 
   // AI strategy advice states
