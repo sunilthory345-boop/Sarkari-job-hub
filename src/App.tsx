@@ -29,6 +29,84 @@ import SarkariAds from './components/SarkariAds';
 import AuthModal from './components/AuthModal';
 import { initializeGA, trackPageView } from './utils/analytics';
 
+const INITIAL_PYQS = [
+  // 2026 Series
+  { title: 'National Health Mission (NHM) Vaccinator & Immunization Specialist Exam Paper 2026', type: 'Solved PDF Booklet', size: '2.8 MB', year: 2026, exam: 'Health/Vaccine', premium: false, downloadUrl: 'https://nhm.gov.in/vaccinator_exam_paper_2026.pdf' },
+  { title: 'SSC CGL Tier-1 General Intelligence & Quantitative Aptitude Solved Booklet 2026', type: 'Official Solved Key', size: '3.4 MB', year: 2026, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/cgl_tier1_solved_2026.pdf' },
+  { title: 'SSC CHSL (10+2) Tier-1 English Language & Reasoning Solved Sheets 2026', type: 'Solved Booklet', size: '2.9 MB', year: 2026, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/chsl_tier1_solved_2026.pdf' },
+  { title: 'SSC MTS Multi-Tasking Staff Numerical Aptitude & GK Solved Key 2026', type: 'Solved Key', size: '2.1 MB', year: 2026, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/mts_solved_key_2026.pdf' },
+  { title: 'SSC GD Constable General Duty Elementary Mathematics Booklet 2026', type: 'Solved PDF Booklet', size: '4.0 MB', year: 2026, exam: 'SSC', premium: true, downloadUrl: 'https://ssc.gov.in/gd_math_solved_2026.pdf' },
+
+  // 2025 Papers
+  { title: 'UPSSSC ANM Health Worker & Vaccine Administrator Solved Question Paper 2025', type: 'Official Solved Key', size: '3.1 MB', year: 2025, exam: 'Health/Vaccine', premium: false, downloadUrl: 'https://upsssc.gov.in/anm_vaccine_solved_2025.pdf' },
+  { title: 'UPSC Civil Services General Studies Paper I 2025 (Solved PDF compilation)', type: 'Official Key', size: '4.4 MB', year: 2025, exam: 'UPSC', premium: false },
+  { title: 'SSC CGL Tier-1 Quantitative Aptitude All Shifts Solved 2025 Booklet', type: 'Solved Booklet', size: '2.5 MB', year: 2025, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/cgl_tier1_2025.pdf' },
+  { title: 'SSC CHSL Tier-1 English Comprehension & Vocabulary Solved Paper 2025', type: 'Solved Key', size: '2.7 MB', year: 2025, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/chsl_2025_solved.pdf' },
+  { title: 'SSC MTS Multi-Tasking Staff Numerical Ability All Shifts Key 2025', type: 'Solved PDF Booklet', size: '2.3 MB', year: 2025, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/mts_2025_solutions.pdf' },
+  { title: 'SSC GD Constable All Shifts Solved General Knowledge Core Booklet 2025', type: 'Solved Booklet', size: '3.6 MB', year: 2025, exam: 'SSC', premium: true, downloadUrl: 'https://ssc.gov.in/gd_constable_gk_2025.pdf' },
+  { title: 'IBPS PO Mains Logical Reasoning & DI Special Solved Paper 2025', type: 'Solved Booklet', size: '3.1 MB', year: 2025, exam: 'Bank', premium: true },
+  { title: 'RRB NTPC General Science & General Awareness official Solved Key 2025', type: 'Solved Key', size: '2.1 MB', year: 2025, exam: 'Railway', premium: false },
+  { title: 'State TET / Teaching Eligibility Test Solved Question Booklet 2025', type: 'Practice Key', size: '1.8 MB', year: 2025, exam: 'Teaching', premium: false },
+  
+  // 2024 Papers
+  { title: 'Bihar Health Dept Vaccinator & Auxiliary Nurse Midwifery (ANM) Combined Past Paper 2024', type: 'Solved Booklet', size: '2.9 MB', year: 2024, exam: 'Health/Vaccine', premium: true, downloadUrl: 'https://state.bihar.gov.in/health/vaccinator_paper_2024.pdf' },
+  { title: 'UPSC IAS General Studies 2024 Solved Paper compilation', type: 'Solved PDF Booklet', size: '3.8 MB', year: 2024, exam: 'UPSC', premium: false },
+  { title: 'NDA/CDS General Ability Test (GAT) I 2024 Question Booklet & Solved Key', type: 'Official Key', size: '3.5 MB', year: 2024, exam: 'Defence', premium: true },
+  { title: 'SSC CHSL (10+2) English Language & Quant 2024 Solved Practice Sets', type: 'Solved Booklet', size: '2.9 MB', year: 2024, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/chsl_2024_solved.pdf' },
+  { title: 'SSC CGL Tier-2 Advanced Math & General English Solved Booklet 2024', type: 'Solved Booklet', size: '3.8 MB', year: 2024, exam: 'SSC', premium: true, downloadUrl: 'https://ssc.gov.in/cgl_tier2_2024.pdf' },
+  { title: 'SSC MTS Numerical Aptitude & Non-Verbal Solved Test Series 2024', type: 'Solved Key', size: '2.2 MB', year: 2024, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/mts_2024_solutions.pdf' },
+  { title: 'SSC GD Constable Quantitative Aptitude & Hindi/English Solved Set 2024', type: 'Solved PDF Booklet', size: '3.1 MB', year: 2024, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/gd_2024_solutions.pdf' },
+  { title: 'UPPSC Provincial Civil Services CSAT Paper 2024 Solved Solutions', type: 'Solved Booklet', size: '3.2 MB', year: 2024, exam: 'State PSC', premium: true },
+  { title: 'SBI Clerk Prelims Quantitative & Reasoning Aptitude 2024 Sets', type: 'Practice Sheets', size: '1.5 MB', year: 2024, exam: 'Bank', premium: false },
+
+  // 2023 Papers
+  { title: 'MP NHM Vaccination Officer & Cold Chain Technician Recruitment Exam Paper 2023', type: 'Solved PDF Booklet', size: '3.4 MB', year: 2023, exam: 'Health/Vaccine', premium: false, downloadUrl: 'https://nhmmp.gov.in/vaccination_officer_paper_2023.pdf' },
+  { title: 'UPSC Civil Services CSAT Logical Aptitude Paper 2023 Solutions', type: 'Solved Booklet', size: '1.9 MB', year: 2023, exam: 'UPSC', premium: false },
+  { title: 'SSC MTS General Awareness & Logical Reasoning Solved Paper 2023', type: 'Solved Key', size: '1.4 MB', year: 2023, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/mts_2023_solved.pdf' },
+  { title: 'SSC CGL Tier-1 General Studies, GK & Quantitative Aptitude Solutions 2023', type: 'Solved PDF Booklet', size: '3.5 MB', year: 2023, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/cgl_2023_solved.pdf' },
+  { title: 'SSC CHSL Tier-2 Mathematical Abilities & Reasoning Solved Book 2023', type: 'Solved Booklet', size: '3.0 MB', year: 2023, exam: 'SSC', premium: true, downloadUrl: 'https://ssc.gov.in/chsl_2023_tier2.pdf' },
+  { title: 'SSC GD Constable General Knowledge & Mental Ability Solved Compilation 2023', type: 'Official Key', size: '2.9 MB', year: 2023, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/gd_2023_key.pdf' },
+  { title: 'IBPS PO Reasoning Mains 5-Year Combined compilation', type: 'Solved Booklet', size: '4.8 MB', year: 2023, exam: 'Bank', premium: true },
+  { title: 'RRB Group D Reasoning & Aptitude Challenge Series Solved Booklet 2023', type: 'Solved Key', size: '2.8 MB', year: 2023, exam: 'Railway', premium: false },
+  { title: 'IBPS Clerk Quantitative Aptitude Mains 2023 Practice Paper', type: 'Practice Sheets', size: '1.7 MB', year: 2023, exam: 'Bank', premium: false },
+
+  // 2022 Papers
+  { title: 'Rajasthan RPSC Junior Health Inspector & Vaccine Officer Written Exam Booklet 2022', type: 'Solved Key', size: '2.5 MB', year: 2022, exam: 'Health/Vaccine', premium: true, downloadUrl: 'https://rpsc.rajasthan.gov.in/junior_health_inspector_2022.pdf' },
+  { title: 'UPSC Civil Services General Studies-1 2022 Official Paper & Solved Key', type: 'Solved Booklet', size: '4.0 MB', year: 2022, exam: 'UPSC', premium: false },
+  { title: 'SSC CGL Tier-2 Advance Mathematics Solved Selection Paper 2022', type: 'Official Key', size: '3.3 MB', year: 2022, exam: 'SSC', premium: true, downloadUrl: 'https://ssc.gov.in/cgl_2022_adv_math.pdf' },
+  { title: 'SSC CHSL Combined Higher Secondary Tier-1 Solved Aptitude Booklet 2022', type: 'Solved Booklet', size: '2.8 MB', year: 2022, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/chsl_2022_aptitude.pdf' },
+  { title: 'SSC MTS Non-Technical General Awareness & English Solutions 2022', type: 'Practice Sheets', size: '1.9 MB', year: 2022, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/mts_22_eng_ga.pdf' },
+  { title: 'SSC GD Constable Elementary Math & General Science Solved Paper 2022', type: 'Solved Booklet', size: '2.7 MB', year: 2022, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/gd_2022_solved.pdf' },
+  { title: 'CTET Paper 1 & 2 Environmental Studies & Pedagogy Solved Book 2022', type: 'Solved Booklet', size: '2.7 MB', year: 2022, exam: 'Teaching', premium: false },
+  { title: 'State PCS / Rajasthan RAS GS Paper I 2022 Solved Compilation Book', type: 'Practice Sheets', size: '5.0 MB', year: 2022, exam: 'State PSC', premium: true },
+
+  // 2021 Papers
+  { title: 'National Health Specialist (Immunization & Vaccine Logistics) Question Booklet 2021', type: 'Solved Booklet', size: '4.1 MB', year: 2021, exam: 'Health/Vaccine', premium: false, downloadUrl: 'https://nhm.gov.in/immunization_specialist_2021.pdf' },
+  { title: 'UPSC CSE Prelims Polity & History Sectional 2021 Review Paper Booklet', type: 'Official Key', size: '2.2 MB', year: 2021, exam: 'UPSC', premium: false },
+  { title: 'SSC GD Constable General Science 2021 All Shift Official Keys', type: 'Solved Key', size: '1.8 MB', year: 2021, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/gd_2021_science.pdf' },
+  { title: 'SSC CGL Tier-1 General Awareness & Reasoning 2021 Solved Book', type: 'Solved Booklet', size: '3.1 MB', year: 2021, exam: 'SSC', premium: true, downloadUrl: 'https://ssc.gov.in/cgl_2021_gk_reasoning.pdf' },
+  { title: 'SSC CHSL Quantitative Aptitude & Vocabulary 2021 Combined Solved Sets', type: 'Solved Booklet', size: '2.5 MB', year: 2021, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/chsl_2021_solutions.pdf' },
+  { title: 'SSC MTS Numerical Aptitude & Reasoning Ability Solved Paper 2021', type: 'Solved Key', size: '1.7 MB', year: 2021, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/mts_2021_solved_sheets.pdf' },
+  { title: 'IBPS RRB Officer Scale-1 Quant & Reasoning Solved Practice Booklet 2021', type: 'Solved Booklet', size: '3.0 MB', year: 2021, exam: 'Bank', premium: true },
+
+  // 2020 Papers
+  { title: 'State Government Vaccine Supervisor & COVID-19 Inoculator Core Exam Solved Paper 2020', type: 'Official Key', size: '3.0 MB', year: 2020, exam: 'Health/Vaccine', premium: false, downloadUrl: 'https://mohfw.gov.in/vaccine_supervisor_paper_2020.pdf' },
+  { title: 'UPSC Civil Services GSE GS Paper-I 2020 Solved Sectional Booklet', type: 'Solved Booklet', size: '4.2 MB', year: 2020, exam: 'UPSC', premium: false },
+  { title: 'SSC CGL Tier-1 English Comprehension 2020 Solutions compilation', type: 'Solved Key', size: '1.6 MB', year: 2020, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/cgl_2020_english.pdf' },
+  { title: 'SSC CHSL (10+2) Tier-1 Reasoning & Aptitude Solved shift compilation 2020', type: 'Solved Booklet', size: '3.2 MB', year: 2020, exam: 'SSC', premium: true, downloadUrl: 'https://ssc.gov.in/chsl_2020_tier1.pdf' },
+  { title: 'SSC MTS General Awareness & Numerical Ability Solved past booklet 2020', type: 'Solved Key', size: '1.8 MB', year: 2020, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/mts_2020_ga_math.pdf' },
+  { title: 'SSC GD Constable All Shifts General Knowledge & Hindi Solved Keys 2020', type: 'Official Key', size: '2.5 MB', year: 2020, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/gd_constable_2020_shifts.pdf' },
+  { title: 'RRB NTPC CBT-1 Static General Knowledge Solved Paper Review 2020', type: 'Practice Sheets', size: '2.7 MB', year: 2020, exam: 'Railway', premium: false },
+  { title: 'SBI PO Mains Data Interpretation & Numerical Analysis Booklet 2020', type: 'Solved Booklet', size: '3.9 MB', year: 2020, exam: 'Bank', premium: true },
+
+  // 2019 Papers
+  { title: 'NHM Auxiliary Nurse & Vaccinator (टीकाकर्मी) Technical Domain Knowledge Solved Paper 2019', type: 'Solved PDF Booklet', size: '1.9 MB', year: 2019, exam: 'Health/Vaccine', premium: false, downloadUrl: 'https://nhm.gov.in/anm_vaccinator_paper_2019.pdf' },
+  { title: 'SSC CGL Tier-2 Quantitative Aptitude Official Solved Question Paper 2019', type: 'Solved PDF Booklet', size: '4.5 MB', year: 2019, exam: 'SSC', premium: true, downloadUrl: 'https://ssc.gov.in/cgl_tier2_math_2019.pdf' },
+  { title: 'SSC CHSL Tier-1 Combined Higher Secondary Exam Solved Aptitude Book 2019', type: 'Solved Booklet', size: '2.8 MB', year: 2019, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/chsl_tier1_aptitude_2019.pdf' },
+  { title: 'SSC MTS Multi-Tasking Staff English Grammar & Logic Solved Test 2019', type: 'Solved Key', size: '2.0 MB', year: 2019, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/mts_solved_english_logic_2019.pdf' },
+  { title: 'SSC GD Constable General Duty Intelligence & Elementary Math Book 2019', type: 'Solved Booklet', size: '3.1 MB', year: 2019, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/gd_constable_2019_solved.pdf' }
+];
+
 export default function App() {
   // ----- ROOT PERSISTENT STATE -----
   const [jobs, setJobs] = useState<GovJob[]>(() => {
@@ -144,45 +222,22 @@ export default function App() {
 
   const [pyqsList, setPyqsList] = useState<{ title: string; type: string; size: string; year: number; exam: string; premium: boolean; downloadUrl?: string }[]>(() => {
     const saved = localStorage.getItem('sarkari_pyqs');
-    return saved ? JSON.parse(saved) : [
-      // 2025 Papers
-      { title: 'UPSC Civil Services General Studies Paper I 2025 (Solved PDF compilation)', type: 'Official Key', size: '4.4 MB', year: 2025, exam: 'UPSC', premium: false },
-      { title: 'SSC CGL Tier-1 Quantitative Aptitude All Shifts Solved 2025 Booklet', type: 'Solved Booklet', size: '2.5 MB', year: 2025, exam: 'SSC', premium: false },
-      { title: 'IBPS PO Mains Logical Reasoning & DI Special Solved Paper 2025', type: 'Solved Booklet', size: '3.1 MB', year: 2025, exam: 'Bank', premium: true },
-      { title: 'RRB NTPC General Science & General Awareness official Solved Key 2025', type: 'Solved Key', size: '2.1 MB', year: 2025, exam: 'Railway', premium: false },
-      { title: 'State TET / Teaching Eligibility Test Solved Question Booklet 2025', type: 'Practice Key', size: '1.8 MB', year: 2025, exam: 'Teaching', premium: false },
-      
-      // 2024 Papers
-      { title: 'UPSC IAS General Studies 2024 Solved Paper compilation', type: 'Solved PDF Booklet', size: '3.8 MB', year: 2024, exam: 'UPSC', premium: false },
-      { title: 'NDA/CDS General Ability Test (GAT) I 2024 Question Booklet & Solved Key', type: 'Official Key', size: '3.5 MB', year: 2024, exam: 'Defence', premium: true },
-      { title: 'SSC CHSL (10+2) English Language & Quant 2024 Solved Practice Sets', type: 'Solved Booklet', size: '2.9 MB', year: 2024, exam: 'SSC', premium: false },
-      { title: 'UPPSC Provincial Civil Services CSAT Paper 2024 Solved Solutions', type: 'Solved Booklet', size: '3.2 MB', year: 2024, exam: 'State PSC', premium: true },
-      { title: 'SBI Clerk Prelims Quantitative & Reasoning Aptitude 2024 Sets', type: 'Practice Sheets', size: '1.5 MB', year: 2024, exam: 'Bank', premium: false },
-
-      // 2023 Papers
-      { title: 'UPSC Civil Services CSAT Logical Aptitude Paper 2023 Solutions', type: 'Solved Booklet', size: '1.9 MB', year: 2023, exam: 'UPSC', premium: false },
-      { title: 'SSC MTS General Awareness & Logical Reasoning Solved Paper 2023', type: 'Solved Key', size: '1.4 MB', year: 2023, exam: 'SSC', premium: false },
-      { title: 'IBPS PO Reasoning Mains 5-Year Combined compilation', type: 'Solved Booklet', size: '4.8 MB', year: 2023, exam: 'Bank', premium: true },
-      { title: 'RRB Group D Reasoning & Aptitude Challenge Series Solved Booklet 2023', type: 'Solved Key', size: '2.8 MB', year: 2023, exam: 'Railway', premium: false },
-      { title: 'IBPS Clerk Quantitative Aptitude Mains 2023 Practice Paper', type: 'Practice Sheets', size: '1.7 MB', year: 2023, exam: 'Bank', premium: false },
-
-      // 2022 Papers
-      { title: 'UPSC Civil Services General Studies-1 2022 Official Paper & Solved Key', type: 'Solved Booklet', size: '4.0 MB', year: 2022, exam: 'UPSC', premium: false },
-      { title: 'SSC CGL Tier-2 Advance Mathematics Solved Selection Paper 2022', type: 'Official Key', size: '3.3 MB', year: 2022, exam: 'SSC', premium: true },
-      { title: 'CTET Paper 1 & 2 Environmental Studies & Pedagogy Solved Book 2022', type: 'Solved Booklet', size: '2.7 MB', year: 2022, exam: 'Teaching', premium: false },
-      { title: 'State PCS / Rajasthan RAS GS Paper I 2022 Solved Compilation Book', type: 'Practice Sheets', size: '5.0 MB', year: 2022, exam: 'State PSC', premium: true },
-
-      // 2021 Papers
-      { title: 'UPSC CSE Prelims Polity & History Sectional 2021 Review Paper Booklet', type: 'Official Key', size: '2.2 MB', year: 2021, exam: 'UPSC', premium: false },
-      { title: 'SSC GD Constable General Science 2021 All Shift Official Keys', type: 'Solved Key', size: '1.8 MB', year: 2021, exam: 'SSC', premium: false },
-      { title: 'IBPS RRB Officer Scale-1 Quant & Reasoning Solved Practice Booklet 2021', type: 'Solved Booklet', size: '3.0 MB', year: 2021, exam: 'Bank', premium: true },
-
-      // 2020 Papers
-      { title: 'UPSC Civil Services GSE GS Paper-I 2020 Solved Sectional Booklet', type: 'Solved Booklet', size: '4.2 MB', year: 2020, exam: 'UPSC', premium: false },
-      { title: 'SSC CGL Tier-1 English Comprehension 2020 Solutions compilation', type: 'Solved Key', size: '1.6 MB', year: 2020, exam: 'SSC', premium: false },
-      { title: 'RRB NTPC CBT-1 Static General Knowledge Solved Paper Review 2020', type: 'Practice Sheets', size: '2.7 MB', year: 2020, exam: 'Railway', premium: false },
-      { title: 'SBI PO Mains Data Interpretation & Numerical Analysis Booklet 2020', type: 'Solved Booklet', size: '3.9 MB', year: 2020, exam: 'Bank', premium: true }
-    ];
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved) as typeof INITIAL_PYQS;
+        const existingTitles = new Set(parsed.map(x => x.title));
+        const missing = INITIAL_PYQS.filter(x => !existingTitles.has(x.title));
+        if (missing.length > 0) {
+          const merged = [...parsed, ...missing];
+          localStorage.setItem('sarkari_pyqs', JSON.stringify(merged));
+          return merged;
+        }
+        return parsed;
+      } catch (e) {
+        return INITIAL_PYQS;
+      }
+    }
+    return INITIAL_PYQS;
   });
 
   useEffect(() => {
@@ -1085,14 +1140,16 @@ export default function App() {
                     localStorage.removeItem('sarkari_results');
                     localStorage.removeItem('sarkari_mock_tests');
                     localStorage.removeItem('sarkari_answer_keys');
+                    localStorage.removeItem('sarkari_pyqs');
                     
                     setJobs(INITIAL_JOBS);
                     setAdmitCards(INITIAL_ADMIT_CARDS);
                     setResults(INITIAL_RESULTS);
                     setMockTests(INITIAL_MOCK_TESTS);
                     setAnswerKeys(INITIAL_ANSWER_KEYS);
+                    setPyqsList(INITIAL_PYQS);
                     
-                    triggerToast("🔄 State synchronized! Rajasthan vacancies & all official key rosters updated successfully.");
+                    triggerToast("🔄 State synchronized! Vaccine papers (2019-2026) & state eligibility lists successfully loaded.");
                   }}
                   className="text-[10px] bg-amber-50 hover:bg-amber-100 text-amber-800 font-extrabold px-2.5 py-1 rounded transition flex items-center gap-1 border border-amber-200 shadow-xs cursor-pointer"
                   title="Force reload all default data, including new Rajasthan notifications and answer keys!"
@@ -1356,6 +1413,7 @@ export default function App() {
                     onChange={(e) => setPyqSelectedCategory(e.target.value)}
                   >
                     <option value="All">All Vacancies</option>
+                    <option value="Health/Vaccine">Vaccine & Health Exams</option>
                     <option value="UPSC">UPSC Civil Services</option>
                     <option value="SSC">SSC (CGL, CHSL, MTS)</option>
                     <option value="Bank">Banking Exams (SBI/IBPS)</option>
@@ -1374,13 +1432,15 @@ export default function App() {
                     value={pyqSelectedYear}
                     onChange={(e) => setPyqSelectedYear(e.target.value)}
                   >
-                    <option value="All">All Years (2020 - 2025)</option>
+                    <option value="All">All Years (2019 - 2026)</option>
+                    <option value="2026">2026 Series</option>
                     <option value="2025">2025 Series</option>
                     <option value="2024">2024 Series</option>
                     <option value="2023">2023 Series</option>
                     <option value="2022">2022 Series</option>
                     <option value="2021">2021 Series</option>
                     <option value="2020">2020 Series</option>
+                    <option value="2019">2019 Series</option>
                   </select>
                 </div>
               </div>
