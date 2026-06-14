@@ -216,7 +216,7 @@ export function updateSEOMetadata(
     }
     checkKeywordsMeta.setAttribute('content', currentKeywords);
 
-    // 4. Update Canonical Link
+    // 4. Update Canonical Link (Keep completely static at the root URL as requested by the user)
     let checkCanonical = document.querySelector('link[rel="canonical"]');
     if (!checkCanonical) {
       checkCanonical = document.createElement('link');
@@ -225,13 +225,13 @@ export function updateSEOMetadata(
     }
     const baseUrl = "https://sarkari-job-hub-v595.onrender.com";
     const currentUrl = baseUrl + (activeTab === 'home' ? '/' : `/${activeTab}`);
-    checkCanonical.setAttribute('href', currentUrl);
+    checkCanonical.setAttribute('href', "https://sarkari-job-hub-v595.onrender.com/");
 
-    // 5. Update Open Graph (OG) tags
+    // 5. Update Open Graph (OG) tags (Keep og:url completely static at root)
     const ogProperties = {
       'og:title': currentTitle,
       'og:description': currentDesc,
-      'og:url': currentUrl,
+      'og:url': "https://sarkari-job-hub-v595.onrender.com/",
     };
 
     Object.entries(ogProperties).forEach(([prop, val]) => {
@@ -244,9 +244,9 @@ export function updateSEOMetadata(
       ogMeta.setAttribute('content', val);
     });
 
-    // 5.5 Update Twitter Meta tags (including twitter:url)
+    // 5.5 Update Twitter Meta tags (Keep twitter:url completely static at root)
     const twitterProperties = {
-      'twitter:url': currentUrl,
+      'twitter:url': "https://sarkari-job-hub-v595.onrender.com/",
       'twitter:title': currentTitle,
       'twitter:description': currentDesc,
     };
