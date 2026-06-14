@@ -360,7 +360,57 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
     };
   });
 
-  const [activeTab, setActiveTab] = useState<string>('home');
+  const [activeTab, setActiveTab] = useState<string>(() => {
+    // Determine initial activeTab based on pathname first
+    const path = window.location.pathname.replace(/^\//, '');
+    const validTabs = [
+      'jobs', 'admit-cards', 'results', 'mock-tests', 'syllabus', 
+      'calendar', 'current-affairs', 'blog', 'premium', 'contact', 'dashboard', 'admin'
+    ];
+    if (validTabs.includes(path)) {
+      return path;
+    }
+    // Fall back to search query string tab (e.g. ?tab=jobs)
+    const params = new URLSearchParams(window.location.search);
+    const tabParam = params.get('tab');
+    if (tabParam && validTabs.includes(tabParam)) {
+      return tabParam;
+    }
+    return 'home';
+  });
+
+  // Track popstate events for backward/forward navigation
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      const path = window.location.pathname.replace(/^\//, '');
+      const validTabs = [
+        'jobs', 'admit-cards', 'results', 'mock-tests', 'syllabus', 
+        'calendar', 'current-affairs', 'blog', 'premium', 'contact', 'dashboard', 'admin'
+      ];
+      if (validTabs.includes(path)) {
+        setActiveTab(path);
+      } else {
+        const params = new URLSearchParams(window.location.search);
+        const tabParam = params.get('tab');
+        if (tabParam && validTabs.includes(tabParam)) {
+          setActiveTab(tabParam);
+        } else {
+          setActiveTab('home');
+        }
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Update HTML history state on activeTab change to preserve SEO path mapping
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+    const targetPath = activeTab === 'home' ? '/' : `/${activeTab}`;
+    if (currentPath !== targetPath) {
+      window.history.pushState({ tab: activeTab }, '', targetPath);
+    }
+  }, [activeTab]);
   const [locale, setLocale] = useState<LocaleType>(() => {
     const saved = localStorage.getItem('sarkari_locale');
     return (saved as LocaleType) || 'en';
@@ -2771,7 +2821,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                         <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-xs space-y-1 block select-none">
                           <div className="flex items-center gap-1.5 text-[11px] text-[#202124] font-medium leading-none overflow-hidden text-ellipsis whitespace-nowrap">
                             <span className="inline-flex h-4 w-4 bg-slate-100 rounded-full items-center justify-center text-[10px]">🌐</span>
-                            <span>https://sarkari-job-hub-v55.onrender.com</span>
+                            <span>https://sarkari-job-hub-v595.onrender.com</span>
                             <span className="text-[10px] text-slate-400">› jobs-sitemap</span>
                           </div>
                           
@@ -2807,7 +2857,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                             <span className="text-[#1D9BF0] uppercase font-black text-[9px] tracking-widest block">JOB SARKARI HUB OFFICIAL</span>
                             <h5 className="font-bold text-white leading-snug line-clamp-1">{seoTestTitle}</h5>
                             <p className="text-zinc-400 line-clamp-2 leading-relaxed">{seoTestDesc}</p>
-                            <span className="text-[10px] text-zinc-500 block pt-1 font-mono">sarkari-job-hub-v55.onrender.com</span>
+                            <span className="text-[10px] text-zinc-500 block pt-1 font-mono">sarkari-job-hub-v595.onrender.com</span>
                           </div>
                         </div>
                       </div>
@@ -2825,7 +2875,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "Job Sarkari Hub",
-  "url": "https://sarkari-job-hub-v55.onrender.com/",
+  "url": "https://sarkari-job-hub-v595.onrender.com/",
   "description": "${seoTestDesc}"
 }`);
                                 triggerToast("📋 JSON-LD schema copied successfully!");
@@ -2842,11 +2892,11 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "Job Sarkari Hub",
-  "url": "https://sarkari-job-hub-v55.onrender.com/",
+  "url": "https://sarkari-job-hub-v595.onrender.com/",
   "description": "${seoTestDesc.slice(0, 100)}...",
   "potentialAction": {
     "@type": "SearchAction",
-    "target": "https://sarkari-job-hub-v55.onrender.com/?q={search_term_string}",
+    "target": "https://sarkari-job-hub-v595.onrender.com/?q={search_term_string}",
     "query-input": "required name=search_term_string"
   }
 }`}

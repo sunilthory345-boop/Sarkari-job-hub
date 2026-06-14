@@ -218,7 +218,7 @@ export function updateSEOMetadata(activeTab: string, locale: LocaleType = 'en') 
       checkCanonical.setAttribute('rel', 'canonical');
       document.head.appendChild(checkCanonical);
     }
-    const currentUrl = window.location.origin + (activeTab === 'home' ? '/' : `/?tab=${activeTab}`);
+    const currentUrl = window.location.origin + (activeTab === 'home' ? '/' : `/${activeTab}`);
     checkCanonical.setAttribute('href', currentUrl);
 
     // 5. Update Open Graph (OG) tags

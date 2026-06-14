@@ -57,7 +57,7 @@ async function startServer() {
   app.get("/sitemap.xml", (req, res) => {
     res.header("Content-Type", "application/xml");
     
-    const host = req.get("host") || "sarkari-job-hub-v55.onrender.com";
+    const host = req.get("host") || "sarkari-job-hub-v595.onrender.com";
     const protocol = req.secure ? "https" : "http";
     const baseUrl = `${protocol}://${host}`;
     
@@ -101,7 +101,7 @@ async function startServer() {
   // Dynamic robots.txt
   app.get("/robots.txt", (req, res) => {
     res.header("Content-Type", "text/plain");
-    const host = req.get("host") || "sarkari-job-hub-v55.onrender.com";
+    const host = req.get("host") || "sarkari-job-hub-v595.onrender.com";
     const protocol = req.secure ? "https" : "http";
     res.send(`User-agent: *
 Allow: /
