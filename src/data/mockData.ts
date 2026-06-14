@@ -643,6 +643,56 @@ export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
     addedDate: '2026-06-12'
   },
   {
+    id: 'rsmssb-ldc-admit-2026',
+    title: 'RSMSSB Rajasthan LDC / Clerk Grade-II Admit Card 2026',
+    org: 'Rajasthan Staff Selection Board (RSMSSB)',
+    examDate: '2026-11-15',
+    examCity: 'Jaipur, Jodhpur, Udaipur, Ajmer Centres',
+    downloadUrl: 'https://rsmssb.rajasthan.gov.in/admit-card-ldc-2026',
+    officialLink: 'https://rsmssb.rajasthan.gov.in',
+    addedDate: '2026-06-13'
+  },
+  {
+    id: 'rsmssb-pashu-paricharak-admit-2026',
+    title: 'RSMSSB Rajasthan Animal Attendant (पशु परिचारक) Exam Admit Card 2526',
+    org: 'Rajasthan Staff Selection Board (RSMSSB)',
+    examDate: '2026-12-05',
+    examCity: 'Allotted Regional Headquarters (Rajasthan)',
+    downloadUrl: 'https://rsmssb.rajasthan.gov.in/admit-card-pashu-paricharak',
+    officialLink: 'https://rsmssb.rajasthan.gov.in',
+    addedDate: '2026-06-13'
+  },
+  {
+    id: 'rpsc-ras-admit-2026',
+    title: 'RPSC Rajasthan RAS/RTS Prelims Admit Card 2026',
+    org: 'Rajasthan Public Service Commission (RPSC)',
+    examDate: '2026-09-12',
+    examCity: 'All 33 District HQ Centres of Rajasthan',
+    downloadUrl: 'https://rpsc.rajasthan.gov.in/admit_card',
+    officialLink: 'https://rpsc.rajasthan.gov.in',
+    addedDate: '2026-06-13'
+  },
+  {
+    id: 'rajasthan-constable-admit-2026',
+    title: 'Rajasthan Police Constable Physical (PET/PST) Admit Card 2026',
+    org: 'Rajasthan Police Department',
+    examDate: '2026-07-20 to 2026-07-26',
+    examCity: 'Range-wise Stadiums (Jaipur, Jodhpur, Kota)',
+    downloadUrl: 'https://police.rajasthan.gov.in/constable-admit-card-2026',
+    officialLink: 'https://police.rajasthan.gov.in',
+    addedDate: '2026-06-13'
+  },
+  {
+    id: 'rsmssb-patwari-admit-2026',
+    title: 'RSMSSB Rajasthan Patwari Exam Admit Card 2026',
+    org: 'Rajasthan Staff Selection Board (RSMSSB)',
+    examDate: '2026-10-18',
+    examCity: 'District HQ School/College Venues',
+    downloadUrl: 'https://rsmssb.rajasthan.gov.in/admit-card-patwari',
+    officialLink: 'https://rsmssb.rajasthan.gov.in',
+    addedDate: '2026-06-13'
+  },
+  {
     id: 'sbi-clerk-admit-2026',
     title: 'SBI Junior Associates (Clerk) Main Exam Admit Card',
     org: 'State Bank of India (SBI)',
