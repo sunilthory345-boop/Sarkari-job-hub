@@ -30,6 +30,7 @@ import SarkariAds from './components/SarkariAds';
 import AuthModal from './components/AuthModal';
 import PrivacyPolicyModal from './components/PrivacyPolicyModal';
 import AboutUsModal from './components/AboutUsModal';
+import TrafficDashboardModal from './components/TrafficDashboardModal';
 import { initializeGA, trackPageView } from './utils/analytics';
 import { fetchWithRetry } from './utils/fetchHelper';
 
@@ -418,6 +419,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
   const [modalNotebookPhoto, setModalNotebookPhoto] = useState<string | null>(null);
   const [privacyOpen, setPrivacyOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [trafficOpen, setTrafficOpen] = useState(false);
 
   // Filter properties passed down to JobCard
   const [qualificationFilter, setQualificationFilter] = useState('All');
@@ -3302,7 +3304,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
           <div className="border-t border-slate-800 mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 font-sans">
             <div className="space-y-1 text-center sm:text-left">
               <p>© 2026 Job Sarkari Hub. Powered by Ministry of Informatics portal simulation guidelines.</p>
-              <p className="space-x-3">
+              <p className="space-x-3 flex flex-wrap items-center justify-center sm:justify-start gap-y-1">
                 <button 
                   onClick={() => setPrivacyOpen(true)}
                   className="text-sky-400 hover:text-sky-300 font-bold hover:underline cursor-pointer transition-colors"
@@ -3315,6 +3317,14 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                   className="text-emerald-400 hover:text-emerald-300 font-bold hover:underline cursor-pointer transition-colors"
                 >
                   💡 About Us (हमारे बारे में)
+                </button>
+                <span className="text-slate-600 font-bold">|</span>
+                <button 
+                  onClick={() => setTrafficOpen(true)}
+                  className="text-amber-400 hover:text-amber-300 font-bold hover:underline cursor-pointer transition-colors flex items-center gap-1 shrink-0"
+                >
+                  📊 Live Traffic (ट्रैफिक डेशबोर्ड)
+                  <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
                 </button>
               </p>
             </div>
@@ -3694,6 +3704,12 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
       <AboutUsModal 
         isOpen={aboutOpen}
         onClose={() => setAboutOpen(false)}
+      />
+
+      {/* Interactive Traffic Dashboard Modal */}
+      <TrafficDashboardModal 
+        isOpen={trafficOpen}
+        onClose={() => setTrafficOpen(false)}
       />
 
     </div>
