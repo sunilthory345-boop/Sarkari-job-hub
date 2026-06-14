@@ -829,6 +829,86 @@ export const INITIAL_ANSWER_KEYS: AnswerKey[] = [
 
 export const INITIAL_MOCK_TESTS: MockTest[] = [
   {
+    id: 'ssc-cgl-tier1-full-spec-1',
+    title: 'SSC CGL Tier-1 High-Quality Mock Test (Tier-1 विशेष परीक्षा)',
+    category: 'SSC CGL Exam Prep',
+    durationMinutes: 15,
+    questions: [
+      {
+        id: 'cgl-t1-q1',
+        text: 'The compound interest on a sum of ₹12,000 for 1 year at 10% per annum, compounded half-yearly is: / 10% वार्षिक ब्याज की दर से 1 वर्ष के लिए ₹12,000 की राशि पर चक्रवृद्धि ब्याज क्या होगा, यदि ब्याज अर्ध-वार्षिक रूप से संयोजित होता है?',
+        options: ['(a) ₹1,230', '(b) ₹1,200', '(c) ₹1,260', '(d) ₹1,300'],
+        correctOptionIndex: 0,
+        explanation: 'For half-yearly compounding: Rate = 10% / 2 = 5% per half-year, Time = 2 half-years. Amount = 12000 * (1 + 5/100)^2 = 12000 * (21/20)^2 = 12000 * 441 / 400 = 30 * 441 = ₹13,230. Compound Interest = Amount - Principal = 13230 - 12000 = ₹1,230.'
+      },
+      {
+        id: 'cgl-t1-q2',
+        text: 'In a code language, if "SARKARI" is written as "TBSCBSJ", how is "STUDENT" written in that language? / एक कूट भाषा में, यदि "SARKARI" को "TBSCBSJ" लिखा जाता है, तो उसी भाषा में "STUDENT" को कैसे लिखा जाएगा?',
+        options: ['(a) TUVFEOU', '(b) TVUEFOU', '(c) TTVEFOU', '(d) TVVEFOU'],
+        correctOptionIndex: 1,
+        explanation: 'The pattern is +1 for each letter: S(+1)=T, T(+1)=U, U(+1)=V, D(+1)=E, E(+1)=F, N(+1)=O, T(+1)=U. Therefore, "STUDENT" becomes "TVUEFOU".'
+      },
+      {
+        id: 'cgl-t1-q3',
+        text: 'Select the synonym of the given word: "OBSTINATE" / दिए गए शब्द का पर्यायवाची चुनिए: "OBSTINATE"',
+        options: ['(a) Docile', '(b) Stubborn', '(c) Flexible', '(d) Obedient'],
+        correctOptionIndex: 1,
+        explanation: '"Obstinate" means stubbornly refusing to change one\'s opinion or chosen course of action. Therefore, "Stubborn" is the correct synonym.'
+      },
+      {
+        id: 'cgl-t1-q4',
+        text: 'Which Indian classical dance form originates from the state of Andhra Pradesh? / कौन सा भारतीय शास्त्रीय नृत्य आंध्र प्रदेश राज्य से उत्पन्न हुआ है?',
+        options: ['(a) Kathakali', '(b) Bharatanatyam', '(c) Kuchipudi', '(d) Kathak'],
+        correctOptionIndex: 2,
+        explanation: 'Kuchipudi is one of the major Indian classical dances that originated in a village named Kuchipudi in Andhra Pradesh.'
+      },
+      {
+        id: 'cgl-t1-q5',
+        text: 'If x + 1/x = 5, then the value of x^2 + 1/x^2 is: / यदि x + 1/x = 5 है, तो x^2 + 1/x^2 का मान क्या होगा?',
+        options: ['(a) 23', '(b) 25', '(c) 27', '(d) 21'],
+        correctOptionIndex: 0,
+        explanation: 'Squaring both sides: (x + 1/x)^2 = 5^2 => x^2 + 2(x)(1/x) + 1/x^2 = 25 => x^2 + 2 + 1/x^2 = 25 => x^2 + 1/x^2 = 25 - 2 = 23.'
+      },
+      {
+        id: 'cgl-t1-q6',
+        text: 'Who has the authority to call a joint sitting of both Houses of Parliament in India? / भारत में संसद के दोनों सदनों की संयुक्त बैठक बुलाने का अधिकार किसके पास है?',
+        options: ['(a) Prime Minister', '(b) Speaker of Lok Sabha', '(c) President of India', '(d) Vice-President'],
+        correctOptionIndex: 2,
+        explanation: 'According to Article 108 of the Indian Constitution, the President of India has the authority to summon a joint sitting of both houses of Parliament.'
+      },
+      {
+        id: 'cgl-t1-q7',
+        text: 'Select the correctly spelt word from the options / दिए गए विकल्पों में से सही वर्तनी वाले शब्द का चयन करें:',
+        options: ['(a) Committe', '(b) Committee', '(c) Commitee', '(d) Commitey'],
+        correctOptionIndex: 1,
+        explanation: 'The correct spelling is "Committee" which has double m, double t, and double e.'
+      },
+      {
+        id: 'cgl-t1-q8',
+        text: 'Pointing to a lady in a photograph, Sunil said, "Her father-in-law\'s only son is my father." How is Sunil related to the lady? / एक तस्वीर में एक महिला की ओर इशारा करते हुए सुनील ने कहा, "उसके ससुर का इकलौता बेटा मेरे पिता हैं।" सुनील का उस महिला से क्या संबंध है?',
+        options: ['(a) Brother', '(b) Son', '(c) Nephew', '(d) Cousin'],
+        correctOptionIndex: 1,
+        explanation: 'The lady\'s father-in-law\'s only son is her husband. If the lady\'s husband is Sunil\'s father, then Sunil is the son of that lady.'
+      },
+      {
+        id: 'cgl-t1-q9',
+        text: 'Swaraj is my birthright and I shall have it! Who gave this slogan? / "स्वराज मेरा जन्मसिद्ध अधिकार है और मैं इसे लेकर रहूँगा!" यह नारा किसने दिया था?',
+        options: ['(a) Bal Gangadhar Tilak', '(b) Subhash Chandra Bose', '(c) Bhagat Singh', '(d) Mahatma Gandhi'],
+        correctOptionIndex: 0,
+        explanation: 'Bal Gangadhar Tilak coined and popularised this famous slogan to inspire nationalist devotion during the Indian freedom struggle.'
+      },
+      {
+        id: 'cgl-t1-q10',
+        text: 'The ratio of the speed of three cars is 2:3:4. What is the ratio of time taken by these cars to travel the same distance? / तीन कारों की गति का अनुपात 2:3:4 है। समान दूरी तय करने के लिए इन कारों द्वारा लिए गए समय का अनुपात क्या होगा?',
+        options: ['(a) 2:3:4', '(b) 4:3:2', '(c) 6:4:3', '(d) 12:8:6'],
+        correctOptionIndex: 2,
+        explanation: 'Time is inversely proportional to Speed when distance is constant. So, Ratio of Time = 1/2 : 1/3 : 1/4 = 12/2 : 12/3 : 12/4 = 6 : 4 : 3.'
+      }
+    ],
+    totalMarks: 20,
+    negativeMark: 0.50
+  },
+  {
     id: 'ssc-cgl-quant-1',
     title: 'SSC CGL Tier-1 Quantitative Aptitude booster',
     category: 'SSC CGL Exam Prep',
