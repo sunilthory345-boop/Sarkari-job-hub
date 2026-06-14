@@ -32,17 +32,62 @@ export default function App() {
   // ----- ROOT PERSISTENT STATE -----
   const [jobs, setJobs] = useState<GovJob[]>(() => {
     const saved = localStorage.getItem('sarkari_jobs');
-    return saved ? JSON.parse(saved) : INITIAL_JOBS;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved) as GovJob[];
+        const existingIds = new Set(parsed.map(j => j.id));
+        const missingJobs = INITIAL_JOBS.filter(j => !existingIds.has(j.id));
+        if (missingJobs.length > 0) {
+          const merged = [...parsed, ...missingJobs];
+          localStorage.setItem('sarkari_jobs', JSON.stringify(merged));
+          return merged;
+        }
+        return parsed;
+      } catch (e) {
+        return INITIAL_JOBS;
+      }
+    }
+    return INITIAL_JOBS;
   });
 
   const [admitCards, setAdmitCards] = useState<AdmitCard[]>(() => {
     const saved = localStorage.getItem('sarkari_admit_cards');
-    return saved ? JSON.parse(saved) : INITIAL_ADMIT_CARDS;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved) as AdmitCard[];
+        const existingIds = new Set(parsed.map(c => c.id));
+        const missingCards = INITIAL_ADMIT_CARDS.filter(c => !existingIds.has(c.id));
+        if (missingCards.length > 0) {
+          const merged = [...parsed, ...missingCards];
+          localStorage.setItem('sarkari_admit_cards', JSON.stringify(merged));
+          return merged;
+        }
+        return parsed;
+      } catch (e) {
+        return INITIAL_ADMIT_CARDS;
+      }
+    }
+    return INITIAL_ADMIT_CARDS;
   });
 
   const [results, setResults] = useState<JobResult[]>(() => {
     const saved = localStorage.getItem('sarkari_results');
-    return saved ? JSON.parse(saved) : INITIAL_RESULTS;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved) as JobResult[];
+        const existingIds = new Set(parsed.map(r => r.id));
+        const missingResults = INITIAL_RESULTS.filter(r => !existingIds.has(r.id));
+        if (missingResults.length > 0) {
+          const merged = [...parsed, ...missingResults];
+          localStorage.setItem('sarkari_results', JSON.stringify(merged));
+          return merged;
+        }
+        return parsed;
+      } catch (e) {
+        return INITIAL_RESULTS;
+      }
+    }
+    return INITIAL_RESULTS;
   });
 
   const [mockTests, setMockTests] = useState<MockTest[]>(() => {
@@ -50,12 +95,12 @@ export default function App() {
     if (saved) {
       try {
         const parsed = JSON.parse(saved) as MockTest[];
-        if (!parsed.some(t => t.id === 'ssc-cgl-science-mock-1')) {
-          const foundNew = INITIAL_MOCK_TESTS.find(t => t.id === 'ssc-cgl-science-mock-1');
-          if (foundNew) {
-            parsed.push(foundNew);
-            localStorage.setItem('sarkari_mock_tests', JSON.stringify(parsed));
-          }
+        const existingIds = new Set(parsed.map(t => t.id));
+        const missingMocks = INITIAL_MOCK_TESTS.filter(t => !existingIds.has(t.id));
+        if (missingMocks.length > 0) {
+          const merged = [...parsed, ...missingMocks];
+          localStorage.setItem('sarkari_mock_tests', JSON.stringify(merged));
+          return merged;
         }
         return parsed;
       } catch (e) {
