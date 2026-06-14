@@ -223,7 +223,8 @@ export function updateSEOMetadata(
       checkCanonical.setAttribute('rel', 'canonical');
       document.head.appendChild(checkCanonical);
     }
-    const currentUrl = window.location.origin + (activeTab === 'home' ? '/' : `/${activeTab}`);
+    const baseUrl = "https://sarkari-job-hub-v595.onrender.com";
+    const currentUrl = baseUrl + (activeTab === 'home' ? '/' : `/${activeTab}`);
     checkCanonical.setAttribute('href', currentUrl);
 
     // 5. Update Open Graph (OG) tags
@@ -243,6 +244,23 @@ export function updateSEOMetadata(
       ogMeta.setAttribute('content', val);
     });
 
+    // 5.5 Update Twitter Meta tags (including twitter:url)
+    const twitterProperties = {
+      'twitter:url': currentUrl,
+      'twitter:title': currentTitle,
+      'twitter:description': currentDesc,
+    };
+
+    Object.entries(twitterProperties).forEach(([name, val]) => {
+      let twMeta = document.querySelector(`meta[name="${name}"]`);
+      if (!twMeta) {
+        twMeta = document.createElement('meta');
+        twMeta.setAttribute('name', name);
+        document.head.appendChild(twMeta);
+      }
+      twMeta.setAttribute('content', val);
+    });
+
     // 6. Inject or Dynamic Refresh JSON-LD Breadcrumb / Schema Structured Object
     let schemaScript = document.getElementById('sarkari-dynamic-seo-schema');
     if (!schemaScript) {
@@ -257,7 +275,7 @@ export function updateSEOMetadata(
         "@type": "ListItem",
         "position": 1,
         "name": locale === 'hi' ? "मुख्य पृष्ठ" : "Home",
-        "item": window.location.origin + "/"
+        "item": baseUrl + "/"
       }
     ];
 
@@ -279,7 +297,7 @@ export function updateSEOMetadata(
         "@type": "ListItem",
         "position": 2,
         "name": parentName,
-        "item": window.location.origin + `/${activeTab}`
+        "item": baseUrl + `/${activeTab}`
       });
 
       if (subCategory && subCategory !== 'All') {
@@ -287,7 +305,7 @@ export function updateSEOMetadata(
           "@type": "ListItem",
           "position": 3,
           "name": subCategory,
-          "item": window.location.origin + `/${activeTab}?category=${encodeURIComponent(subCategory.toLowerCase())}`
+          "item": baseUrl + `/${activeTab}?category=${encodeURIComponent(subCategory.toLowerCase())}`
         });
 
         if (extraSubCategory && extraSubCategory !== 'All') {
@@ -295,7 +313,7 @@ export function updateSEOMetadata(
             "@type": "ListItem",
             "position": 4,
             "name": extraSubCategory,
-            "item": window.location.origin + `/${activeTab}?category=${encodeURIComponent(subCategory.toLowerCase())}&filter=${encodeURIComponent(extraSubCategory.toLowerCase())}`
+            "item": baseUrl + `/${activeTab}?category=${encodeURIComponent(subCategory.toLowerCase())}&filter=${encodeURIComponent(extraSubCategory.toLowerCase())}`
           });
         }
       } else if (extraSubCategory && extraSubCategory !== 'All') {
@@ -303,7 +321,7 @@ export function updateSEOMetadata(
           "@type": "ListItem",
           "position": 3,
           "name": extraSubCategory,
-          "item": window.location.origin + `/${activeTab}?filter=${encodeURIComponent(extraSubCategory.toLowerCase())}`
+          "item": baseUrl + `/${activeTab}?filter=${encodeURIComponent(extraSubCategory.toLowerCase())}`
         });
       }
     }
