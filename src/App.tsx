@@ -4,13 +4,14 @@ import {
   Sparkles, Award, ShieldAlert, Clock, Star, Bell, 
   CheckCircle, ArrowUpRight, GraduationCap, FileText, 
   HelpCircle, Download, CheckSquare, Send, Mail, Phone, 
-  Building2, Globe, Heart, ShieldCheck, Zap, CreditCard, Plus, Share2, ChevronDown, ChevronUp, Printer, Link, Camera, X
+  Building2, Globe, Heart, ShieldCheck, Zap, CreditCard, Plus, Share2, ChevronDown, ChevronUp, Printer, Link, Camera, X, RefreshCw
 } from 'lucide-react';
 
-import { GovJob, AdmitCard, JobResult, MockTest, CurrentAffair, Blog, UserProfile } from './types';
+import { GovJob, AdmitCard, JobResult, MockTest, CurrentAffair, Blog, UserProfile, AnswerKey } from './types';
 import { 
   INITIAL_JOBS, INITIAL_ADMIT_CARDS, INITIAL_RESULTS, 
-  INITIAL_MOCK_TESTS, INITIAL_CURRENT_AFFAIRS, INITIAL_BLOGS 
+  INITIAL_MOCK_TESTS, INITIAL_CURRENT_AFFAIRS, INITIAL_BLOGS,
+  INITIAL_ANSWER_KEYS
 } from './data/mockData';
 import { LANGUAGES, TRANSLATIONS, LocaleType } from './utils/lang';
 
@@ -89,6 +90,30 @@ export default function App() {
     }
     return INITIAL_RESULTS;
   });
+
+  const [answerKeys, setAnswerKeys] = useState<AnswerKey[]>(() => {
+    const saved = localStorage.getItem('sarkari_answer_keys');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved) as AnswerKey[];
+        const existingIds = new Set(parsed.map(k => k.id));
+        const missingKeys = INITIAL_ANSWER_KEYS.filter(k => !existingIds.has(k.id));
+        if (missingKeys.length > 0) {
+          const merged = [...parsed, ...missingKeys];
+          localStorage.setItem('sarkari_answer_keys', JSON.stringify(merged));
+          return merged;
+        }
+        return parsed;
+      } catch (e) {
+        return INITIAL_ANSWER_KEYS;
+      }
+    }
+    return INITIAL_ANSWER_KEYS;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('sarkari_answer_keys', JSON.stringify(answerKeys));
+  }, [answerKeys]);
 
   const [mockTests, setMockTests] = useState<MockTest[]>(() => {
     const saved = localStorage.getItem('sarkari_mock_tests');
@@ -1052,9 +1077,33 @@ export default function App() {
                   Real-time direct applications. Use search or sidebar tabs to filter.
                 </p>
               </div>
-              <span className="text-xs font-semibold bg-blue-50 text-blue-800 px-3 py-1 rounded-full font-mono">
-                {jobs.length} Alerts Active
-              </span>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => {
+                    localStorage.removeItem('sarkari_jobs');
+                    localStorage.removeItem('sarkari_admit_cards');
+                    localStorage.removeItem('sarkari_results');
+                    localStorage.removeItem('sarkari_mock_tests');
+                    localStorage.removeItem('sarkari_answer_keys');
+                    
+                    setJobs(INITIAL_JOBS);
+                    setAdmitCards(INITIAL_ADMIT_CARDS);
+                    setResults(INITIAL_RESULTS);
+                    setMockTests(INITIAL_MOCK_TESTS);
+                    setAnswerKeys(INITIAL_ANSWER_KEYS);
+                    
+                    triggerToast("🔄 State synchronized! Rajasthan vacancies & all official key rosters updated successfully.");
+                  }}
+                  className="text-[10px] bg-amber-50 hover:bg-amber-100 text-amber-800 font-extrabold px-2.5 py-1 rounded transition flex items-center gap-1 border border-amber-200 shadow-xs cursor-pointer"
+                  title="Force reload all default data, including new Rajasthan notifications and answer keys!"
+                >
+                  <RefreshCw className="h-3 w-3 text-amber-700 animate-spin" />
+                  Sync Latest Vacancies & Keys
+                </button>
+                <span className="text-xs font-semibold bg-blue-50 text-blue-800 px-3 py-1 rounded-full font-mono">
+                  {jobs.length} Alerts Active
+                </span>
+              </div>
             </div>
 
             <JobCard 
@@ -1176,7 +1225,7 @@ export default function App() {
 
         {/* TAB 5: ANSWER KEYS releases */}
         {activeTab === 'answer-key' && (
-          <ObjectionPortal triggerToast={triggerToast} />
+          <ObjectionPortal triggerToast={triggerToast} answerKeys={answerKeys} />
         )}
 
         {/* TAB 6: MOCK TEST & EXPERT ASSESSMENTS */}
@@ -1219,11 +1268,13 @@ export default function App() {
             admitCards={admitCards}
             results={results}
             mockTests={mockTests}
+            answerKeys={answerKeys}
             onAddJob={(newJob) => setJobs([newJob, ...jobs])}
             onDeleteJob={(jobId) => setJobs(jobs.filter(j => j.id !== jobId))}
             onAddAdmitCard={(newCard) => setAdmitCards([newCard, ...admitCards])}
             onAddResult={(newRes) => setResults([newRes, ...results])}
             onAddMockTest={(newTest) => setMockTests([newTest, ...mockTests])}
+            onAddAnswerKey={(newKey) => setAnswerKeys([newKey, ...answerKeys])}
           />
         )}
 

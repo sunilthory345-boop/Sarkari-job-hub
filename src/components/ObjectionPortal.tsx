@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { 
   CheckSquare, FileText, AlertTriangle, Send, 
-  HelpCircle, CheckCircle, Database, RefreshCw, CreditCard
+  HelpCircle, CheckCircle, Database, RefreshCw, CreditCard, Download, ExternalLink
 } from 'lucide-react';
+import { AnswerKey } from '../types';
 
 interface Objection {
   id: string;
@@ -16,9 +17,10 @@ interface Objection {
 
 interface ObjectionPortalProps {
   triggerToast: (msg: string) => void;
+  answerKeys?: AnswerKey[];
 }
 
-export default function ObjectionPortal({ triggerToast }: ObjectionPortalProps) {
+export default function ObjectionPortal({ triggerToast, answerKeys = [] }: ObjectionPortalProps) {
   const [objections, setObjections] = useState<Objection[]>(() => {
     const saved = localStorage.getItem('sarkari_candidate_objections');
     return saved ? JSON.parse(saved) : [
@@ -38,14 +40,13 @@ export default function ObjectionPortal({ triggerToast }: ObjectionPortalProps) 
     localStorage.setItem('sarkari_candidate_objections', JSON.stringify(objections));
   }, [objections]);
 
-  const activeAnswerKeys = [
-    { title: 'SSC MTS Math/General English 2026 Shift Answer Sheet', org: 'SSC', released: '2026-06-08', objectionsLimit: '2026-06-18' },
-    { title: 'RRB ALP General Science Provisional Solved Keys', org: 'RRB Railways', released: '2026-06-05', objectionsLimit: '2026-06-15' },
-    { title: 'Rajasthan RPSC Grade II Senior Teacher General Paper Keys', org: 'RPSC Rajasthan', released: '2026-06-12', objectionsLimit: '2026-06-22' },
-    { title: 'UPSC Civil Services CSE Prelims GS Booklet Correct Keys', org: 'UPSC', released: '2026-06-01', objectionsLimit: '2026-06-11' }
-  ];
+  const [selectedExam, setSelectedExam] = useState(() => answerKeys.length > 0 ? answerKeys[0].title : '');
 
-  const [selectedExam, setSelectedExam] = useState(activeAnswerKeys[0].title);
+  useEffect(() => {
+    if (answerKeys.length > 0 && !selectedExam) {
+      setSelectedExam(answerKeys[0].title);
+    }
+  }, [answerKeys, selectedExam]);
   const [questionNum, setQuestionNum] = useState<number>(1);
   const [suggestedOption, setSuggestedOption] = useState('Option A');
   const [explanationText, setExplanationText] = useState('');
@@ -117,7 +118,7 @@ export default function ObjectionPortal({ triggerToast }: ObjectionPortalProps) 
                 onChange={(e) => setSelectedExam(e.target.value)}
                 className="w-full rounded-lg border border-slate-200 bg-white p-2.5 text-slate-700 font-medium focus:outline-hidden focus:border-blue-500"
               >
-                {activeAnswerKeys.map((keyItem, i) => (
+                {answerKeys.map((keyItem, i) => (
                   <option key={i} value={keyItem.title}>{keyItem.title} ({keyItem.org})</option>
                 ))}
               </select>
@@ -184,14 +185,26 @@ export default function ObjectionPortal({ triggerToast }: ObjectionPortalProps) 
               <CheckSquare className="h-4 w-4 text-emerald-600" /> Active Provisional Solved catalog
             </h4>
             
-            <div className="space-y-2.5 max-h-[180px] overflow-y-auto">
-              {activeAnswerKeys.map((keyItem, i) => (
-                <div key={i} className="p-2 border border-slate-50 rounded-lg bg-slate-55/10 bg-slate-50">
+            <div className="space-y-2.5 max-h-[220px] overflow-y-auto pr-1">
+              {answerKeys.map((keyItem, i) => (
+                <div key={i} className="p-2 border border-slate-150 rounded-lg bg-slate-50 space-y-1.5 hover:border-blue-200 transition">
                   <h5 className="font-bold text-slate-800 text-[11px] leading-tight">{keyItem.title}</h5>
-                  <div className="flex justify-between text-[9px] text-slate-400 mt-1">
-                    <span>Limit: {keyItem.objectionsLimit}</span>
-                    <span className="text-blue-700 font-bold uppercase">{keyItem.org}</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[9px] text-slate-400 font-medium">Limit: {keyItem.objectionsLimit}</span>
+                    <span className="text-blue-700 font-bold uppercase text-[9px]">{keyItem.org}</span>
                   </div>
+                  {keyItem.pdfUrl && (
+                    <div className="pt-0.5">
+                      <a
+                        href={keyItem.pdfUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-[9.5px] font-extrabold text-emerald-600 hover:text-emerald-700 bg-emerald-50 hover:bg-emerald-100 rounded px-2 py-0.5 transition"
+                      >
+                        <Download className="h-3 w-3" /> Download PDF Key
+                      </a>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

@@ -2,21 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { 
   PlusCircle, Trash2, FileText, Gift, Award, 
   HelpCircle, CheckCircle, Database, RefreshCw, AlertTriangle,
-  Share2, Send, Copy, ExternalLink, Link, Sparkles, Settings, Bell, MessageSquare
+  Share2, Send, Copy, ExternalLink, Link, Sparkles, Settings, Bell, MessageSquare, CheckSquare
 } from 'lucide-react';
-import { GovJob, AdmitCard, JobResult, MockTest, Question } from '../types';
+import { GovJob, AdmitCard, JobResult, MockTest, Question, AnswerKey } from '../types';
 
 interface AdminConsoleProps {
   jobs: GovJob[];
   admitCards: AdmitCard[];
   results: JobResult[];
   mockTests: MockTest[];
+  answerKeys?: AnswerKey[];
   
   onAddJob: (job: GovJob) => void;
   onDeleteJob: (jobId: string) => void;
   onAddAdmitCard: (card: AdmitCard) => void;
   onAddResult: (res: JobResult) => void;
   onAddMockTest: (test: MockTest) => void;
+  onAddAnswerKey?: (key: AnswerKey) => void;
 }
 
 export default function AdminConsole({
@@ -24,11 +26,13 @@ export default function AdminConsole({
   admitCards,
   results,
   mockTests,
+  answerKeys = [],
   onAddJob,
   onDeleteJob,
   onAddAdmitCard,
   onAddResult,
-  onAddMockTest
+  onAddMockTest,
+  onAddAnswerKey
 }: AdminConsoleProps) {
   const [activeAdminTab, setActiveAdminTab] = useState<'jobs' | 'mocks' | 'cards' | 'whatsapp'>('jobs');
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
@@ -202,6 +206,14 @@ export default function AdminConsole({
     downloadUrl: 'https://upsc.gov.in/results'
   });
 
+  const [keyForm, setKeyForm] = useState({
+    title: '',
+    org: '',
+    released: '',
+    objectionsLimit: '',
+    pdfUrl: 'https://rsmssb.rajasthan.gov.in/ldc_keys.pdf'
+  });
+
   const [mockForm, setMockForm] = useState({
     title: '',
     category: 'General Preparation',
@@ -334,6 +346,30 @@ export default function AdminConsole({
       cutOffSC: '82 Marks',
       cutOffST: '81 Marks',
       downloadUrl: 'https://upsc.gov.in/results'
+    });
+  };
+
+  const handleKeySubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const newKey: AnswerKey = {
+      id: `custom-key-${Date.now()}`,
+      title: keyForm.title,
+      org: keyForm.org,
+      released: keyForm.released || new Date().toISOString().split('T')[0],
+      objectionsLimit: keyForm.objectionsLimit || new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      pdfUrl: keyForm.pdfUrl
+    };
+
+    if (onAddAnswerKey) {
+      onAddAnswerKey(newKey);
+    }
+    triggerMessage(`✅ Provisional Answer Key uploaded for "${newKey.title}"!`);
+    setKeyForm({
+      title: '',
+      org: '',
+      released: '',
+      objectionsLimit: '',
+      pdfUrl: 'https://rsmssb.rajasthan.gov.in/ldc_keys.pdf'
     });
   };
 
@@ -1260,7 +1296,7 @@ What is the standard pH level of pure distilled water at normal room temperature
       )}
 
       {activeAdminTab === 'cards' && (
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6 lg:grid-cols-3 md:grid-cols-2">
           
           {/* Admit Cards Form */}
           <div className="bg-white rounded-2xl border border-blue-50 p-5 shadow-xs">
@@ -1359,6 +1395,63 @@ What is the standard pH level of pure distilled water at normal room temperature
                 className="w-full rounded-xl bg-blue-600 font-bold text-white py-2.5 hover:bg-blue-700 transition"
               >
                 Publish Merit Result
+              </button>
+            </form>
+          </div>
+
+          {/* Answer Keys Form */}
+          <div className="bg-white rounded-2xl border border-blue-50 p-5 shadow-xs">
+            <h3 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-1.5 border-b border-slate-50 pb-2">
+              <CheckSquare className="h-5 w-5 text-blue-600" />
+              Upload Provisional Answer Keys & Sheets
+            </h3>
+
+            <form onSubmit={handleKeySubmit} className="space-y-4 text-xs">
+              <div>
+                <label className="block text-[11px] font-semibold text-slate-500 mb-1">Answer Key/Post Title</label>
+                <input 
+                  type="text" 
+                  placeholder="e.g. RSMSSB Rajasthan LDC Provisional Answer Sheets"
+                  value={keyForm.title}
+                  onChange={(e) => setKeyForm({...keyForm, title: e.target.value})}
+                  className="w-full rounded-lg border border-slate-200 p-2 focus:outline-hidden focus:border-blue-500 text-slate-800"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-semibold text-slate-500 mb-1">Commission/Authority</label>
+                <input 
+                  type="text" 
+                  placeholder="e.g. RSMSSB Rajasthan"
+                  value={keyForm.org}
+                  onChange={(e) => setKeyForm({...keyForm, org: e.target.value})}
+                  className="w-full rounded-lg border border-slate-200 p-2 focus:outline-hidden text-slate-800"
+                  required
+                />
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label className="block text-[11px] font-semibold text-slate-500 mb-1">Date Released</label>
+                  <input type="date" value={keyForm.released} onChange={(e) => setKeyForm({...keyForm, released: e.target.value})} className="w-full rounded-lg border border-slate-200 p-2 text-slate-800" />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-semibold text-slate-500 mb-1">Objections Deadline</label>
+                  <input type="date" value={keyForm.objectionsLimit} onChange={(e) => setKeyForm({...keyForm, objectionsLimit: e.target.value})} className="w-full rounded-lg border border-slate-200 p-2 text-slate-800" />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-semibold text-slate-500 mb-1">Direct Solved PDF Document Link</label>
+                <input type="url" value={keyForm.pdfUrl} onChange={(e) => setKeyForm({...keyForm, pdfUrl: e.target.value})} className="w-full rounded-lg border border-slate-200 p-2 text-slate-800 font-medium" required />
+              </div>
+
+              <button 
+                type="submit"
+                className="w-full rounded-xl bg-blue-600 font-bold text-white py-2.5 hover:bg-blue-700 transition"
+              >
+                Publish Answer Key Link
               </button>
             </form>
           </div>

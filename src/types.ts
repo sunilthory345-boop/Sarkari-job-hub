@@ -112,3 +112,13 @@ export interface UserProfile {
     date: string;
   }[];
 }
+
+export interface AnswerKey {
+  id: string;
+  title: string;
+  org: string;
+  released: string;
+  objectionsLimit: string;
+  pdfUrl?: string;
+}
+

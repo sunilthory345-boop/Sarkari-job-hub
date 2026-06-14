@@ -1,4 +1,4 @@
-import { GovJob, AdmitCard, JobResult, MockTest, CurrentAffair, Blog } from '../types';
+import { GovJob, AdmitCard, JobResult, MockTest, CurrentAffair, Blog, AnswerKey } from '../types';
 
 export const INITIAL_JOBS: GovJob[] = [
   {
@@ -726,6 +726,51 @@ export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
 
 export const INITIAL_RESULTS: JobResult[] = [
   {
+    id: 'rsmssb-ldc-result-2026',
+    title: 'RSMSSB Rajasthan LDC / Clerk Grade-II Written Result 2026',
+    org: 'Rajasthan Staff Selection Board (RSMSSB)',
+    meritListUrl: 'https://rsmssb.rajasthan.gov.in/Static/Files/LDC_Written_MeritList_2026.pdf',
+    scoreCardUrl: 'https://rsmssb.rajasthan.gov.in/ldc_scores',
+    cutOff: {
+      UR: '72.4%',
+      OBC: '68.5%',
+      SC: '58.1%',
+      ST: '54.5%'
+    },
+    downloadUrl: 'https://rsmssb.rajasthan.gov.in',
+    releaseDate: '2026-06-13'
+  },
+  {
+    id: 'rpsc-ras-prelims-result-2026',
+    title: 'RPSC Rajasthan RAS/RTS Prelims Exam Cutoff & Qualifier List 2026',
+    org: 'Rajasthan Public Service Commission (RPSC)',
+    meritListUrl: 'https://rpsc.rajasthan.gov.in/Static/Files/RAS_Prelims_Qualified_List_2026.pdf',
+    scoreCardUrl: 'https://rpsc.rajasthan.gov.in/ras_prelims_scores',
+    cutOff: {
+      UR: '84.72 Marks',
+      OBC: '84.72 Marks',
+      SC: '71.32 Marks',
+      ST: '76.24 Marks'
+    },
+    downloadUrl: 'https://rpsc.rajasthan.gov.in',
+    releaseDate: '2026-06-13'
+  },
+  {
+    id: 'raj-police-constable-res-2026',
+    title: 'Rajasthan Police Constable Written selection List 2026',
+    org: 'Rajasthan Police Department',
+    meritListUrl: 'https://police.rajasthan.gov.in/Static/Files/Constable_MeritList_2026.pdf',
+    scoreCardUrl: 'https://police.rajasthan.gov.in/scores',
+    cutOff: {
+      UR: '154 Marks',
+      OBC: '148 Marks',
+      SC: '136 Marks',
+      ST: '130 Marks'
+    },
+    downloadUrl: 'https://police.rajasthan.gov.in',
+    releaseDate: '2026-06-12'
+  },
+  {
     id: 'rpsc-grade1-result-2026',
     title: 'RPSC School Lecturer (Grade-I) 2025 Final Result & Merit',
     org: 'Rajasthan Public Service Commission (RPSC)',
@@ -770,6 +815,16 @@ export const INITIAL_RESULTS: JobResult[] = [
     downloadUrl: 'https://rrbcdg.gov.in',
     releaseDate: '2026-06-09'
   }
+];
+
+export const INITIAL_ANSWER_KEYS: AnswerKey[] = [
+  { id: 'rsmssb-ldc-key-2026', title: 'RSMSSB Rajasthan LDC / Clerk Grade-II 2026 Provisional Key', org: 'RSMSSB Rajasthan', released: '2026-11-20', objectionsLimit: '2026-11-30', pdfUrl: 'https://rsmssb.rajasthan.gov.in/ldc_provisional_key.pdf' },
+  { id: 'rsmssb-pashu-key-2526', title: 'RSMSSB Rajasthan Animal Attendant (पशु परिचारक) Solved OMR Key', org: 'RSMSSB Rajasthan', released: '2026-12-10', objectionsLimit: '2026-12-20', pdfUrl: 'https://rsmssb.rajasthan.gov.in/pashu_paricharak_key.pdf' },
+  { id: 'rpsc-ras-key-2026', title: 'RPSC Rajasthan RAS/RTS Prelims GS Solved Answer Booklets', org: 'RPSC Rajasthan', released: '2026-09-18', objectionsLimit: '2026-09-28', pdfUrl: 'https://rpsc.rajasthan.gov.in/ras_prelims_key_2026.pdf' },
+  { id: 'raj-constable-key-2026', title: 'Rajasthan Police Constable Written Exam Set A-B-C-D Answers', org: 'Rajasthan Police Department', released: '2026-08-01', objectionsLimit: '2026-08-10', pdfUrl: 'https://police.rajasthan.gov.in/constable_keys.pdf' },
+  { id: 'ssc-mts-key-2026', title: 'SSC MTS Math/General English 2026 Shift Answer Sheet', org: 'SSC', released: '2026-06-08', objectionsLimit: '2026-06-18', pdfUrl: 'https://ssc.gov.in/mts_answer_sheet_2026.pdf' },
+  { id: 'rrb-alp-key-2026', title: 'RRB ALP General Science Provisional Solved Keys', org: 'RRB Railways', released: '2026-06-05', objectionsLimit: '2026-06-15', pdfUrl: 'https://rrbcdg.gov.in/alp_provisional_keys.pdf' },
+  { id: 'upsc-cse-key-2026', title: 'UPSC Civil Services CSE Prelims GS Booklet Correct Keys', org: 'UPSC', released: '2026-06-01', objectionsLimit: '2026-06-11', pdfUrl: 'https://upsc.gov.in/cse_prelims_key_2026.pdf' }
 ];
 
 export const INITIAL_MOCK_TESTS: MockTest[] = [
