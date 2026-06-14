@@ -28,6 +28,7 @@ import ObjectionPortal from './components/ObjectionPortal';
 import SarkariUploadVault from './components/SarkariUploadVault';
 import SarkariAds from './components/SarkariAds';
 import AuthModal from './components/AuthModal';
+import PrivacyPolicyModal from './components/PrivacyPolicyModal';
 import { initializeGA, trackPageView } from './utils/analytics';
 import { fetchWithRetry } from './utils/fetchHelper';
 
@@ -414,6 +415,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
   const [showWhyPremium, setShowWhyPremium] = useState(false);
   const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
   const [modalNotebookPhoto, setModalNotebookPhoto] = useState<string | null>(null);
+  const [privacyOpen, setPrivacyOpen] = useState(false);
 
   // Filter properties passed down to JobCard
   const [qualificationFilter, setQualificationFilter] = useState('All');
@@ -3296,7 +3298,17 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
           )}
 
           <div className="border-t border-slate-800 mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 font-sans">
-            <p>© 2026 Job Sarkari Hub. Powered by Ministry of Informatics portal simulation guidelines.</p>
+            <div className="space-y-1 text-center sm:text-left">
+              <p>© 2026 Job Sarkari Hub. Powered by Ministry of Informatics portal simulation guidelines.</p>
+              <p className="space-x-2">
+                <button 
+                  onClick={() => setPrivacyOpen(true)}
+                  className="text-sky-400 hover:text-sky-300 font-bold hover:underline cursor-pointer transition-colors"
+                >
+                  🔒 Privacy Policy (गोपनीयता नीति)
+                </button>
+              </p>
+            </div>
             <p className="flex items-center gap-1 mt-2 sm:mt-0">
               Made with <Heart className="h-3.5 w-3.5 text-rose-500 fill-rose-500" /> for Government Job Seekers
             </p>
@@ -3661,6 +3673,12 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
         setIsLoggedIn={setIsLoggedIn}
         triggerToast={triggerToast}
         locale={locale}
+      />
+
+      {/* Interactive Privacy Policy / GDPR Consent Modal */}
+      <PrivacyPolicyModal 
+        isOpen={privacyOpen}
+        onClose={() => setPrivacyOpen(false)}
       />
 
     </div>
