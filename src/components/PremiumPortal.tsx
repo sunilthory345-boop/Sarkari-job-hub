@@ -88,11 +88,14 @@ export default function PremiumPortal({
 
   // Suggested Prompts
   const queryPills = [
-    "Difference between UPSC Civil Services Prelims GS Paper 1 and 2?",
-    "Explain standard syllogisms pattern for SSC CGL reasoning.",
-    "Formulas and shortcuts for Compound Interest to save time?",
-    "Recent updates on Rajasthan RPSC RAS exam preparation strategy.",
-    "Major features of current National Education Policy."
+    "If A:B = 2:3 and B:C = 4:5, find A:B:C",
+    "What details exist in Part III Articles 12 to 35 Indian Constitution",
+    "Mahatma Gandhi and Quit India Movement in 1942 history",
+    "Explain cell mitochondria biology general science",
+    "English grammar active passive voice rule",
+    "Volatile RAM and ROM memory differences computer awareness",
+    "West flowing peninsular rivers geography",
+    "Explain standard syllogisms pattern for SSC CGL reasoning."
   ];
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -232,16 +235,26 @@ export default function PremiumPortal({
             </p>
           </div>
 
-          <div className="shrink-0 flex items-center gap-2">
+          <div className="shrink-0 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
             {user.premiumUser ? (
-              <div className="bg-emerald-500/10 text-emerald-300 border border-emerald-400/35 px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5">
+              <div className="bg-emerald-500/10 text-emerald-300 border border-emerald-400/35 px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 justify-center">
                 <CheckCircle2 className="h-4 w-4 text-emerald-400" />
                 Active Premium ({user.premiumPlan || 'Lifetime'})
               </div>
             ) : (
-              <div className="bg-rose-500/15 border border-rose-400/20 px-4 py-2 rounded-xl text-xs font-bold text-rose-300 flex items-center gap-1.5">
-                <Lock className="h-4 w-4 text-rose-400" />
-                Free Tier Active
+              <div className="flex flex-col sm:flex-row gap-2">
+                <div className="bg-rose-500/15 border border-rose-400/20 px-4 py-2 rounded-xl text-xs font-bold text-rose-300 flex items-center gap-1.5 justify-center">
+                  <Lock className="h-4 w-4 text-rose-400" />
+                  Free Tier Active
+                </div>
+                <button
+                  type="button"
+                  onClick={onActivatePremium}
+                  className="bg-amber-500 hover:bg-amber-600 text-slate-950 font-black px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 justify-center transition-all cursor-pointer shadow-md shadow-amber-500/20 active:scale-95 animate-pulse"
+                >
+                  <Unlock className="h-4 w-4" />
+                  Activate Premium (1-Click)
+                </button>
               </div>
             )}
           </div>

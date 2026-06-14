@@ -18,6 +18,8 @@ interface MockTestPortalProps {
   }) => void;
   setPremiumModal: (open: boolean) => void;
   onChangeTab?: (tab: string) => void;
+  initialActiveTestId?: string | null;
+  onClearInitialActiveTestId?: () => void;
 }
 
 export default function MockTestPortal({ 
@@ -25,7 +27,9 @@ export default function MockTestPortal({
   user, 
   onSaveTestResult, 
   setPremiumModal,
-  onChangeTab
+  onChangeTab,
+  initialActiveTestId,
+  onClearInitialActiveTestId
 }: MockTestPortalProps) {
   const [activeTest, setActiveTest] = useState<MockTest | null>(null);
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
@@ -75,6 +79,18 @@ export default function MockTestPortal({
     setTestCompleted(false);
     setCompletedStats(null);
   };
+
+  useEffect(() => {
+    if (initialActiveTestId) {
+      const matched = mockTests.find(t => t.id === initialActiveTestId);
+      if (matched) {
+        handleStartTest(matched);
+      }
+      if (onClearInitialActiveTestId) {
+        onClearInitialActiveTestId();
+      }
+    }
+  }, [initialActiveTestId, mockTests]);
 
   const handleSelectOption = (questionId: string, optionIndex: number) => {
     setSelectedAnswers(prev => ({

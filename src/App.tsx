@@ -247,6 +247,27 @@ export default function App() {
   const [pyqSearch, setPyqSearch] = useState('');
   const [pyqSelectedYear, setPyqSelectedYear] = useState('All');
   const [pyqSelectedCategory, setPyqSelectedCategory] = useState('All');
+  const [selectedMockTestId, setSelectedMockTestId] = useState<string | null>(null);
+
+  // Homepage Integrated AI and Exam Prep States
+  const [homeAiInput, setHomeAiInput] = useState('');
+  const [homeAiMessages, setHomeAiMessages] = useState<Array<{ sender: 'user' | 'ai'; text: string; timestamp?: string }>>([
+    { 
+      sender: 'ai', 
+      text: `👋 **Namaste! I am Sarkari AI Exam Mitra (सरकारी एआई परीक्षा मित्र)** 
+
+I am ready bilingually to clear formulas, solve reasoning problems, or compile study syllabuses in real-time!
+
+**Suggested topics you can click to solve instantly:**
+* 🎯 *"Explain SSC CGL 2026 syllabus changes"*
+* 🤝 *"If A:B = 2:3 and B:C = 4:5, find A:B:C"*
+* 📈 *"How to find net gain if a retailer marks goods 20% costlier with 10% discount"*
+* 🏛️ *"What details exist in National Polity Part III Articles 12 to 35"*
+* 💉 *"BCG vaccine storage cold chain temperature dosage"*` 
+    }
+  ]);
+  const [homeAiLoading, setHomeAiLoading] = useState(false);
+  const [homeActivePrepTab, setHomeActivePrepTab] = useState<'mocks' | 'pyqs'>('mocks');
 
   // New PYQ Upload System States
   const [showPyqUploadModal, setShowPyqUploadModal] = useState(false);
@@ -587,6 +608,44 @@ export default function App() {
     }));
   };
 
+  // Homepage Chatbot AI handler
+  const handleHomeAiSubmit = async (customText?: string) => {
+    const textToSend = customText || homeAiInput;
+    if (!textToSend.trim()) return;
+
+    setHomeAiInput('');
+    const userMsg = { 
+      sender: 'user' as const, 
+      text: textToSend, 
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
+    };
+    setHomeAiMessages(prev => [...prev, userMsg]);
+    setHomeAiLoading(true);
+
+    try {
+      const response = await fetch('/api/doubt-solve', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: textToSend })
+      });
+      const data = await response.json();
+      setHomeAiMessages(prev => [...prev, {
+        sender: 'ai' as const,
+        text: data.text || "I was unable to formulate a response. Please rephrase your query.",
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      }]);
+    } catch (err) {
+      console.error(err);
+      setHomeAiMessages(prev => [...prev, {
+        sender: 'ai' as const,
+        text: "⚠️ **Network Error**\n\nFailed to establish connection with Sarkari AI server. Ensure your dev status is online.",
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      }]);
+    } finally {
+      setHomeAiLoading(false);
+    }
+  };
+
   // Payment checkout triggers
   const handleCheckoutProcess = (e: React.FormEvent) => {
     e.preventDefault();
@@ -878,6 +937,287 @@ export default function App() {
                   <span className="text-[10px] text-slate-400 mt-1 block">Interactive doubt solving desk available {locale === 'hi' ? 'विशेष रूप से आपकी भाषा में' : 'fully native in your language'}.</span>
                 </div>
               </div>
+            </div>
+
+            {/* SARKARI EXAM PREP ZONE: MOCKS, PYQS AND AI DOUBT SOLVER */}
+            <div data-testid="sarkari-exam-prep-zone" className="bg-slate-50 border border-slate-200/60 rounded-3xl p-6 shadow-xs grid gap-6 lg:grid-cols-12 font-sans text-left">
+              
+              {/* Left Column: AI Doubt Solver desk (7 cols) */}
+              <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-100 p-5 flex flex-col h-[520px]">
+                <div className="flex items-center justify-between border-b border-slate-50 pb-3 mb-3 shrink-0">
+                  <div className="flex items-center gap-2">
+                    <span className="p-1.5 bg-blue-50 text-blue-600 rounded-lg">
+                      <Sparkles className="h-4.5 w-4.5 text-blue-600 animate-pulse text-left" />
+                    </span>
+                    <div className="text-left">
+                      <h4 className="text-xs font-black text-slate-800 uppercase tracking-wide">Sarkari AI Exam Mitra</h4>
+                      <p className="text-[10px] text-slate-400">Your bilingual academic solver (Bilingual Hindi/English)</p>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => setActiveTab('premium')} 
+                    className="text-[10px] font-bold bg-blue-50 text-blue-600 hover:bg-blue-100 px-2.5 py-1 rounded-lg transition overflow-hidden"
+                  >
+                    Open Workspace »
+                  </button>
+                </div>
+
+                {/* Message logs area */}
+                <div className="flex-1 overflow-y-auto mb-3 space-y-4 pr-1 text-xs text-left scrollbar-thin">
+                  {homeAiMessages.map((msg, idx) => (
+                    <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                      <div className={`max-w-[90%] rounded-2xl p-3.5 leading-relaxed text-[11.5px] ${
+                        msg.sender === 'user' 
+                          ? 'bg-blue-650 text-white font-medium' 
+                          : 'bg-slate-50 border border-slate-150 text-slate-850'
+                      }`}>
+                        {msg.sender === 'ai' ? (
+                          <div className="text-[11px] space-y-2 prose prose-sm max-w-none text-left">
+                            {msg.text.split('\n').map((line, lIdx) => {
+                              const trimmed = line.trim();
+                              if (!trimmed) return <div key={lIdx} className="h-2" />;
+                              
+                              if (trimmed.startsWith('###')) {
+                                return (
+                                  <h5 key={lIdx} className="font-extrabold text-blue-950 text-[11.5px] uppercase tracking-wider mt-3.5 mb-1 text-left decoration-blue-600">
+                                    {trimmed.replace('###', '').trim()}
+                                  </h5>
+                                );
+                              }
+                              
+                              if (trimmed.startsWith('**') && trimmed.endsWith('**')) {
+                                return (
+                                  <p key={lIdx} className="font-bold text-slate-900 border-l-2 border-blue-550 pl-1.5 my-1 text-left">
+                                    {trimmed.replace(/\*\*/g, '').trim()}
+                                  </p>
+                                );
+                              }
+                              
+                              // Check for list items
+                              if (trimmed.startsWith('-') || trimmed.startsWith('*')) {
+                                return (
+                                  <div key={lIdx} className="flex gap-2 text-left pl-2">
+                                    <span className="text-blue-500 font-bold">•</span>
+                                    <span>{line.replace(/^[-*]\s*/, '').replace(/\*\*/g, '')}</span>
+                                  </div>
+                                );
+                              }
+
+                              return (
+                                <p key={lIdx} className="text-slate-700 leading-relaxed text-left">
+                                  {line.replace(/\*\*/g, '')}
+                                </p>
+                              );
+                            })}
+                          </div>
+                        ) : (
+                          <p className="whitespace-pre-wrap text-left">{msg.text}</p>
+                        )}
+                        {msg.timestamp && (
+                          <span className={`block text-[8px] mt-1.5 font-mono text-right ${msg.sender === 'user' ? 'text-blue-200' : 'text-slate-400'}`}>
+                            {msg.timestamp}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                  {homeAiLoading && (
+                    <div className="flex justify-start">
+                      <div className="bg-slate-50 border border-slate-150 rounded-2xl p-3 flex items-center gap-2">
+                        <div className="flex gap-1">
+                          <span className="h-2 w-2 rounded-full bg-blue-600 animate-bounce"></span>
+                          <span className="h-2 w-2 rounded-full bg-blue-600 animate-bounce delay-100"></span>
+                          <span className="h-2 w-2 rounded-full bg-blue-600 animate-bounce delay-200"></span>
+                        </div>
+                        <span className="text-[10px] text-slate-550 font-bold">Exam Mitra resolving query ...</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Suggestions Pills */}
+                <div className="mb-3 shrink-0">
+                  <span className="text-[9px] font-bold text-slate-400 block mb-1.5 uppercase tracking-wider text-left">Click to Solve Instant Doubt:</span>
+                  <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto">
+                    {[
+                      { label: "🤝 Ratio: A:B:C", query: "If A:B = 2:3 and B:C = 4:5, find A:B:C" },
+                      { label: "📈 Profit retail gain 20%", query: "Let cost price be 100 with marked price 120 and 10% discount" },
+                      { label: "📜 History: Gandhi Action", query: "Mahatma Gandhi and Quit India Movement in 1942 history" },
+                      { label: "🔬 Cell: Mitochondria", query: "Explain cell mitochondria biology general science" },
+                      { label: "🧩 Logic: Syllogisms", query: "Syllogisms rules and EJOTY reasoning" },
+                      { label: "✍️ English: Voice Rules", query: "English grammar active passive voice rule" },
+                      { label: "🌍 Rivers of India", query: "West flowing peninsular rivers geography" },
+                      { label: "💻 RAM vs ROM memory", query: "Volatile RAM and ROM memory differences computer awareness" },
+                      { label: "🏛️ Articles 12-35", query: "What details exist in Part III Articles 12 to 35 Indian Constitution" }
+                    ].map((pill, pIdx) => (
+                      <button
+                        key={pIdx}
+                        type="button"
+                        disabled={homeAiLoading}
+                        onClick={() => handleHomeAiSubmit(pill.query)}
+                        className="text-[9.5px] bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold px-2 py-1 rounded-lg border border-slate-150 transition cursor-pointer text-left shrink-0 active:bg-slate-200"
+                      >
+                        {pill.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Chat Action Input bar */}
+                <form 
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleHomeAiSubmit();
+                  }}
+                  className="relative flex items-center bg-slate-50 rounded-xl border border-slate-200 p-1 shrink-0"
+                >
+                  <input
+                    type="text"
+                    disabled={homeAiLoading}
+                    value={homeAiInput}
+                    onChange={(e) => setHomeAiInput(e.target.value)}
+                    placeholder="Ask formulas, clinical guides, exam timelines..."
+                    className="flex-1 bg-transparent px-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-hidden"
+                  />
+                  <button
+                    type="submit"
+                    disabled={homeAiLoading || !homeAiInput.trim()}
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg px-4 py-1.5 text-xs transition cursor-pointer flex items-center gap-1 shrink-0"
+                  >
+                    <span>Ask AI / पूछें</span>
+                    <Send className="h-3.5 w-3.5" />
+                  </button>
+                </form>
+              </div>
+
+              {/* Right Column: Preps (Mock & PYQ Tabs) (5 cols) */}
+              <div className="lg:col-span-5 flex flex-col h-[520px]">
+                
+                {/* Visual Tab header */}
+                <div className="bg-white rounded-xl border border-slate-100 p-1.5 flex gap-1 mb-4 shadow-2xs shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setHomeActivePrepTab('mocks')}
+                    className={`flex-1 py-2 rounded-lg font-bold text-xs transition cursor-pointer ${
+                      homeActivePrepTab === 'mocks' 
+                        ? 'bg-blue-600 text-white shadow-xs' 
+                        : 'bg-transparent text-slate-500 hover:bg-slate-50'
+                    }`}
+                  >
+                    📝 Practice Mocks ({mockTests.length})
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setHomeActivePrepTab('pyqs')}
+                    className={`flex-1 py-2 rounded-lg font-bold text-xs transition cursor-pointer ${
+                      homeActivePrepTab === 'pyqs' 
+                        ? 'bg-blue-600 text-white shadow-xs' 
+                        : 'bg-transparent text-slate-500 hover:bg-slate-50'
+                    }`}
+                  >
+                    📚 Solved PYQs (2019-2026)
+                  </button>
+                </div>
+
+                {/* Content display box list */}
+                <div className="flex-1 overflow-y-auto space-y-3.5 text-left pr-1 scrollbar-thin">
+                  {homeActivePrepTab === 'mocks' ? (
+                    <>
+                      <div className="bg-emerald-50/50 p-3 rounded-xl border border-emerald-100 text-[11px] text-emerald-800 leading-relaxed">
+                        ⚡ <strong>Speed-Training Locker:</strong> Attempt high-weightage mock drills compiled by SSC and Medical experts bilingually.
+                      </div>
+                      
+                      {mockTests.slice(0, 2).map((t) => (
+                        <div key={t.id} className="bg-white p-4 rounded-xl border border-slate-150 hover:border-blue-150 transition shadow-2xs flex flex-col justify-between">
+                          <div>
+                            <div className="flex items-center justify-between gap-2 flex-wrap mb-1.5">
+                              <span className="text-[9px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-black uppercase">
+                                {t.category}
+                              </span>
+                              <span className="text-[9px] bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded font-bold">
+                                {locale === 'hi' ? 'द्विभाषी उपलब्ध' : 'Bilingual Ready'}
+                              </span>
+                            </div>
+                            <h5 className="font-sans text-xs font-extrabold text-slate-900 group-hover:text-blue-650 leading-tight">
+                              {t.title}
+                            </h5>
+                            <div className="flex items-center gap-3 text-[10px] text-slate-400 mt-2 font-medium">
+                              <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> {t.durationMinutes} Mins</span>
+                              <span className="flex items-center gap-1"><CheckCircle className="h-3 w-3" /> {t.questions.length} Solved MCQ</span>
+                            </div>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setSelectedMockTestId(t.id);
+                              setActiveTab('mock-tests');
+                              triggerToast(`🚀 Loading test: ${t.title}`);
+                            }}
+                            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg text-[11px] mt-3.5 transition shadow-2xs cursor-pointer flex items-center justify-center gap-1"
+                          >
+                            <span>Start Practice Test / अभ्यास शुरू करें</span>
+                            <ArrowUpRight className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
+                      ))}
+                      
+                      <button 
+                        type="button"
+                        onClick={() => setActiveTab('mock-tests')}
+                        className="w-full py-2.5 rounded-xl border border-dashed border-slate-300 text-slate-500 hover:text-slate-800 text-xs font-bold text-center transition cursor-pointer"
+                      >
+                        Browse All Mock Tests ({mockTests.length}) »
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <div className="bg-blue-50/50 p-3 rounded-xl border border-blue-100 text-[11px] text-blue-800 leading-relaxed">
+                        🌟 <strong>Past Solved Keys:</strong> Direct download PDFs covering all competitive vaccines and SSC phases (2019 to 2026).
+                      </div>
+
+                      {pyqsList.slice(0, 3).map((pyq, pIdx) => (
+                        <div key={pIdx} className="bg-white p-3 rounded-xl border border-slate-150 shadow-2xs hover:border-blue-150 transition flex items-center justify-between gap-3 text-left">
+                          <div className="space-y-1 max-w-[77%] text-left">
+                            <div className="flex items-center gap-1 px-0.5 text-left">
+                              <span className="text-[8px] bg-blue-50 text-blue-700 px-1 rounded-xs font-black font-mono">
+                                {pyq.year} Series
+                              </span>
+                              <span className="text-[8px] bg-emerald-50 text-emerald-700 px-1 rounded-xs font-black font-mono">
+                                {pyq.exam}
+                              </span>
+                            </div>
+                            <h5 className="font-sans text-[11px] font-bold text-slate-850 truncate leading-snug text-left">
+                              {pyq.title}
+                            </h5>
+                            <span className="text-[9px] text-slate-400 font-semibold block text-left truncate">{pyq.type}</span>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() => {
+                              triggerToast(`📥 Downloading solved booklet: "${pyq.title}"... Saved PDF locally.`);
+                            }}
+                            className="p-1.5 bg-slate-50 hover:bg-slate-100 text-slate-600 rounded-lg border border-slate-150 transition cursor-pointer hover:text-blue-600 shadow-2xs shrink-0"
+                            title="Download Solved Key"
+                          >
+                            <Download className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
+                      ))}
+
+                      <button 
+                        type="button"
+                        onClick={() => setActiveTab('pyqs')}
+                        className="w-full py-2.5 rounded-xl border border-dashed border-slate-300 text-slate-500 hover:text-slate-800 text-xs font-bold text-center transition cursor-pointer"
+                      >
+                        Browse All Solved Papers ({pyqsList.length}) »
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
+
             </div>
 
             {/* Main grid columns */}
@@ -1300,6 +1640,8 @@ export default function App() {
               onSaveTestResult={handleSaveTestResult}
               setPremiumModal={setPremiumModalOpen}
               onChangeTab={setActiveTab}
+              initialActiveTestId={selectedMockTestId}
+              onClearInitialActiveTestId={() => setSelectedMockTestId(null)}
             />
           </div>
         )}
