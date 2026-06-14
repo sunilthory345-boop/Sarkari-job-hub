@@ -6,6 +6,7 @@ import {
   Camera, Image as ImageIcon, X
 } from 'lucide-react';
 import { UserProfile, MockTest } from '../types';
+import { fetchWithRetry } from '../utils/fetchHelper';
 
 interface PremiumPortalProps {
   user: UserProfile;
@@ -168,7 +169,7 @@ export default function PremiumPortal({
       }
 
       // API call to Express backend
-      const response = await fetch('/api/doubt-solve', {
+      const response = await fetchWithRetry('/api/doubt-solve', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: finalQuery, image: currentImage })

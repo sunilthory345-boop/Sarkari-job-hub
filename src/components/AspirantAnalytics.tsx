@@ -7,6 +7,7 @@ import {
   TrendingUp, Zap, Clock, Award, CheckCircle2, 
   Gauge, AlertCircle, BookOpen, Brain, Lightbulb, RefreshCw
 } from 'lucide-react';
+import { fetchWithRetry } from '../utils/fetchHelper';
 
 interface TestAttempt {
   id: string;
@@ -144,7 +145,7 @@ export default function AspirantAnalytics({ testHistory }: AspirantAnalyticsProp
     setAiStrategy('');
     try {
       const subjectStats = subjectChartData.map(s => `${s.subject}: ${s.accuracy}% accuracy (${s.attempts} attempts)`).join(', ');
-      const response = await fetch('/api/doubt-solve', {
+      const response = await fetchWithRetry('/api/doubt-solve', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

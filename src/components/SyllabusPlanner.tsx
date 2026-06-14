@@ -5,6 +5,7 @@ import {
   Brain, RefreshCw
 } from 'lucide-react';
 import { UserProfile } from '../types';
+import { fetchWithRetry } from '../utils/fetchHelper';
 
 interface SyllabusTopic {
   id: string;
@@ -32,7 +33,7 @@ export default function SyllabusPlanner({ user, triggerToast }: SyllabusPlannerP
     setLoadingAdvice(true);
     setAiAdvice('');
     try {
-      const response = await fetch('/api/doubt-solve', {
+      const response = await fetchWithRetry('/api/doubt-solve', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

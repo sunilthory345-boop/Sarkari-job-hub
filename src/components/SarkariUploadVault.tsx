@@ -4,6 +4,7 @@ import {
   Layers, Plus, FileUp, ShieldCheck, RefreshCw, Calendar, MapPin, Sparkles, UserCheck 
 } from 'lucide-react';
 import { UserProfile, AdmitCard, MockTest, Question } from '../types';
+import { fetchWithRetry } from '../utils/fetchHelper';
 
 interface SarkariUploadVaultProps {
   user: UserProfile;
@@ -62,7 +63,7 @@ export default function SarkariUploadVault({
   // Pull existing verified documents on load
   const loadDocumentsFromBackend = async () => {
     try {
-      const response = await fetch('/api/documents');
+      const response = await fetchWithRetry('/api/documents');
       if (response.ok) {
         const data = await response.json();
         setDocuments(data);
@@ -162,7 +163,7 @@ export default function SarkariUploadVault({
 
         if (activeSubTab === 'applied-docs') {
           // Push to backend endpoint '/api/documents'
-          const res = await fetch('/api/documents', {
+          const res = await fetchWithRetry('/api/documents', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -332,7 +333,7 @@ export default function SarkariUploadVault({
 
   const handleDeleteDoc = async (id: string) => {
     try {
-      const res = await fetch(`/api/documents/${id}`, {
+      const res = await fetchWithRetry(`/api/documents/${id}`, {
         method: 'DELETE'
       });
       if (res.ok) {

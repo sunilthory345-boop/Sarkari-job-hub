@@ -22,12 +22,14 @@ import UserDashboard from './components/UserDashboard';
 import AdminConsole from './components/AdminConsole';
 import CalendarView from './components/CalendarView';
 import PremiumPortal from './components/PremiumPortal';
+import SarkariBlogPortal from './components/SarkariBlogPortal';
 import SyllabusPlanner from './components/SyllabusPlanner';
 import ObjectionPortal from './components/ObjectionPortal';
 import SarkariUploadVault from './components/SarkariUploadVault';
 import SarkariAds from './components/SarkariAds';
 import AuthModal from './components/AuthModal';
 import { initializeGA, trackPageView } from './utils/analytics';
+import { fetchWithRetry } from './utils/fetchHelper';
 
 const INITIAL_PYQS = [
   // 2026 Series
@@ -218,7 +220,21 @@ export default function App() {
   }, [mockTests]);
 
   const [currentAffairs] = useState<CurrentAffair[]>(INITIAL_CURRENT_AFFAIRS);
-  const [blogs] = useState<Blog[]>(INITIAL_BLOGS);
+  const [blogs, setBlogs] = useState<Blog[]>(() => {
+    const saved = localStorage.getItem('sarkari_blogs_seo');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    return INITIAL_BLOGS;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('sarkari_blogs_seo', JSON.stringify(blogs));
+  }, [blogs]);
 
   const [pyqsList, setPyqsList] = useState<{ title: string; type: string; size: string; year: number; exam: string; premium: boolean; downloadUrl?: string }[]>(() => {
     const saved = localStorage.getItem('sarkari_pyqs');
@@ -623,7 +639,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
     setHomeAiLoading(true);
 
     try {
-      const response = await fetch('/api/doubt-solve', {
+      const response = await fetchWithRetry('/api/doubt-solve', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: textToSend })
@@ -2272,65 +2288,11 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
 
         {/* TAB 12: BLOG & PREPARATION STRATEGY */}
         {activeTab === 'blog' && (
-          <div className="space-y-6">
-            <div className="border-b border-slate-100 pb-3">
-              <h2 className="font-sans text-xl font-extrabold text-slate-900">
-                Exam Tips, Preparation Blueprints & Mentorship Guidance
-              </h2>
-              <p className="text-xs text-slate-500 mt-1">
-                Maximize competitive score ratios with insights from certified top-scorers and rank guides.
-              </p>
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-2">
-              {blogs.map((post) => (
-                <div key={post.id} className="bg-white rounded-3xl border border-slate-150 p-5 space-y-3 font-sans text-xs">
-                  <div className="flex justify-between text-[10px] text-slate-400 font-bold font-mono">
-                    <span>{post.category}</span>
-                    <span>{post.readTime}</span>
-                  </div>
-
-                  <h3 className="font-extrabold text-slate-900 text-sm mt-1">{post.title}</h3>
-                  <p className="text-slate-500 text-xs leading-normal">{post.summary}</p>
-                  
-                  <div className="flex items-center justify-between pt-2 border-t border-slate-50 text-[11px]">
-                    <span className="text-slate-400 font-semibold italic">By: {post.author}</span>
-                    <button
-                      onClick={() => setSelectedBlog(post)}
-                      className="text-blue-600 font-bold hover:underline"
-                    >
-                      Read full blueprint →
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Read Blog modal */}
-            {selectedBlog && (
-              <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-xs">
-                <div className="w-full max-w-2xl bg-white rounded-3xl p-6 shadow-2xl relative">
-                  <button 
-                    onClick={() => setSelectedBlog(null)}
-                    className="absolute top-4 right-4 bg-slate-100 hover:bg-slate-200 rounded-full p-2 text-slate-500 text-xs font-bold font-mono"
-                  >
-                    CLOSE
-                  </button>
-                  
-                  <span className="text-[10px] bg-blue-100 text-blue-800 font-bold px-2 py-0.5 rounded uppercase">
-                    {selectedBlog.category} Article
-                  </span>
-                  
-                  <h3 className="font-sans text-lg font-extrabold text-slate-900 mt-3">{selectedBlog.title}</h3>
-                  <p className="text-xs text-slate-400 italic mt-1 font-sans">Published by {selectedBlog.author} • {selectedBlog.readTime}</p>
-                  
-                  <p className="text-sm text-slate-600 leading-relaxed font-sans mt-5 bg-slate-50 p-4 rounded-2xl border border-slate-100 whitespace-pre-line">
-                    {selectedBlog.content}
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
+          <SarkariBlogPortal 
+            blogs={blogs} 
+            onAddBlog={(newBlog) => setBlogs(prev => [newBlog, ...prev])} 
+            triggerToast={triggerToast} 
+          />
         )}
 
         {/* TAB 13: PREMIUM MEMBERSHIP GATE CHOOSE PLANS & PREMIUM WORKSPACE */}
