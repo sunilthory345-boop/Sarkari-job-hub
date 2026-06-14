@@ -32,6 +32,7 @@ import PrivacyPolicyModal from './components/PrivacyPolicyModal';
 import AboutUsModal from './components/AboutUsModal';
 import TrafficDashboardModal from './components/TrafficDashboardModal';
 import { initializeGA, trackPageView } from './utils/analytics';
+import { updateSEOMetadata } from './utils/seoHelper';
 import { fetchWithRetry } from './utils/fetchHelper';
 
 const INITIAL_PYQS = [
@@ -387,7 +388,8 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
 
   useEffect(() => {
     trackPageView(activeTab);
-  }, [activeTab]);
+    updateSEOMetadata(activeTab, locale);
+  }, [activeTab, locale]);
 
   // Premium Transactions History types and state
   interface PremiumTransaction {
