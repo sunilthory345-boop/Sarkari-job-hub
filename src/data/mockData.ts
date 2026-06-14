@@ -234,6 +234,72 @@ export const INITIAL_JOBS: GovJob[] = [
     description: 'The RPSC RAS recruits administrative officers for state civil services post classifications including Rajasthan Administrative Service (RAS), Rajasthan Police Service (RPS), and Rajasthan Accounts Service.'
   },
   {
+    id: 'rsmssb-ldc-2026',
+    title: 'RSMSSB Rajasthan LDC / Clerk Grade-II Recruitment 2026',
+    org: 'Rajasthan Staff Selection Board (RSMSSB)',
+    category: 'State PSC',
+    qualification: '12th Pass',
+    ageLimit: '18 - 40 Years',
+    salary: 'Pay Matrix Level-5 (Grade Pay Rs. 2400)',
+    fees: {
+      General: '₹600',
+      OBC: '₹400',
+      SC_ST_Female: '₹400'
+    },
+    totalPosts: 4197,
+    applyUrl: 'https://rsmssb.rajasthan.gov.in',
+    pdfUrl: 'https://rsmssb.rajasthan.gov.in/Static/Files/LDC_Advt_Detailed_2026.pdf',
+    officialWebsite: 'https://rsmssb.rajasthan.gov.in',
+    postedDate: '2026-06-13',
+    lastDate: '2026-08-10',
+    importantDates: {
+      applyStart: '2026-06-13',
+      applyEnd: '2026-08-10',
+      examDate: '2026-11-15',
+      admitCardRelease: '2026-11-01'
+    },
+    selectionProcess: [
+      'Phase I - Written Exam (Paper-I GK & Math, Paper-II Hindi & English)',
+      'Phase II - Computer Skill & Typing Test (Speed & Efficiency)',
+      'Document Verification & Merit Allotment'
+    ],
+    location: 'Rajasthan',
+    description: 'RSMSSB invites online applications to fill 4,197 vacancies of Lower Division Clerk (LDC) / Junior Assistants across various government office departments in Rajasthan.'
+  },
+  {
+    id: 'rsmssb-pashu-paricharak-2026',
+    title: 'RSMSSB Rajasthan Animal Attendant (पशु परिचारक) Bharti 2026',
+    org: 'Rajasthan Staff Selection Board (RSMSSB)',
+    category: 'State PSC',
+    qualification: '10th Pass',
+    ageLimit: '18 - 40 Years',
+    salary: 'Pay Matrix Level L-1 Scale as per rules',
+    fees: {
+      General: '₹600',
+      OBC: '₹400',
+      SC_ST_Female: '₹400'
+    },
+    totalPosts: 5934,
+    applyUrl: 'https://rsmssb.rajasthan.gov.in',
+    pdfUrl: 'https://rsmssb.rajasthan.gov.in/Static/Files/PashuParicharak_Advt_2026.pdf',
+    officialWebsite: 'https://rsmssb.rajasthan.gov.in',
+    postedDate: '2026-06-13',
+    lastDate: '2026-08-15',
+    importantDates: {
+      applyStart: '2026-06-13',
+      applyEnd: '2026-08-15',
+      examDate: '2026-12-05',
+      admitCardRelease: '2026-11-20'
+    },
+    selectionProcess: [
+      'Single Session Objective Written Exam',
+      'Document Merit Check & Rating Verification',
+      'Medical Check-up'
+    ],
+    location: 'Rajasthan',
+    description: 'A major direct recruitment opportunity for 10th pass candidates to serve as Animal Attendant (पशु परिचारक) in Animal Husbandry Department of Rajasthan.'
+  },
+  {
     id: 'rsmssb-accountant-2026',
     title: 'RSMSSB Junior Accountant & Tehsil Revenue Accountant 2026',
     org: 'Rajasthan Staff Selection Board (RSMSSB)',
