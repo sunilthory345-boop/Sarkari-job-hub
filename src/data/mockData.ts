@@ -2,6 +2,427 @@ import { GovJob, AdmitCard, JobResult, MockTest, CurrentAffair, Blog, AnswerKey 
 
 export const INITIAL_JOBS: GovJob[] = [
   {
+    id: 'india-post-gds-2026',
+    title: 'India Post Gramin Dak Sevak (GDS) Recruitment 2026',
+    org: 'Department of Posts, India Post',
+    category: 'Others',
+    qualification: '10th Pass',
+    ageLimit: '18 - 40 Years (Relaxation Applicable)',
+    salary: 'Rs. 12,000 - Rs. 29,380 (BPM / ABPM)',
+    fees: {
+      General: '₹100',
+      OBC: '₹100',
+      SC_ST_Female: '₹0 (Free)'
+    },
+    totalPosts: 44228,
+    applyUrl: 'https://indiapostgdsonline.gov.in',
+    pdfUrl: 'https://indiapostgdsonline.gov.in/documents/GDS_Notifications_2026.pdf',
+    officialWebsite: 'https://indiapostgdsonline.gov.in',
+    postedDate: '2026-06-14',
+    lastDate: '2026-07-15',
+    importantDates: {
+      applyStart: '2026-06-14',
+      applyEnd: '2026-07-15',
+      examDate: 'No Written Exam (Merit Based)',
+      admitCardRelease: 'Direct Merit List Release'
+    },
+    selectionProcess: [
+      'Automatic Merit List based on Class 10th Marks',
+      'Original Certificates Matching Verification',
+      'Local Language Proficiency Proof'
+    ],
+    location: 'All India (Various Circles)',
+    description: 'Direct engagement of Branch Postmaster (BPM) and Assistant Branch Postmaster (ABPM) / Dak Sevaks. No written examinations. Selection purely on 10th class Board percentage.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'airforce-agniveer-vayu-022026',
+    title: 'Indian Air Force Agniveer Vayu Intake 02/2026',
+    org: 'Indian Air Force (भारतीय वायु सेना)',
+    category: 'Defence',
+    qualification: '12th Pass',
+    ageLimit: 'Born between 27 June 2005 and 27 December 2009',
+    salary: 'Rs. 30,000 (1st Yr) to Rs. 40,000 (4th Yr) + Agniveer Scheme perks',
+    fees: {
+      General: '₹550 + GST',
+      OBC: '₹550 + GST',
+      SC_ST_Female: '₹550 + GST'
+    },
+    totalPosts: 3500,
+    applyUrl: 'https://agnipathvayu.cdac.in',
+    pdfUrl: 'https://agnipathvayu.cdac.in/AV/img/detailed_advt_02_2026.pdf',
+    officialWebsite: 'https://agnipathvayu.cdac.in',
+    postedDate: '2026-06-14',
+    lastDate: '2026-07-05',
+    importantDates: {
+      applyStart: '2026-06-14',
+      applyEnd: '2026-07-05',
+      examDate: '2026-08-18',
+      admitCardRelease: '2026-08-10'
+    },
+    selectionProcess: [
+      'Phase-I Online Written Computer Testing (Science & Other subjects)',
+      'Phase-II Physical Fitness Test (PFT-1 & PFT-2) & Adaptability Test',
+      'Phase-III Comprehensive Medical Examination'
+    ],
+    location: 'All India IAF Stations',
+    description: 'Hiring of courageous airmen as Agniveer Vayu for technical and non-technical fields. Fully structured mock question papers and sample templates updated directly in our WhatsApp/Telegram channels.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'up-police-constable-2026',
+    title: 'UP Police Constable Civil Police Recruitment 2026',
+    org: 'Uttar Pradesh Police Recruitment & Promotion Board (UPPRPB)',
+    category: 'Police',
+    qualification: '12th Pass',
+    ageLimit: '18 - 25 Years (Relaxation extended for State Reserv.)',
+    salary: 'Rs. 21,700 - Rs. 69,100 (Grade Pay 2000)',
+    fees: {
+      General: '₹400',
+      OBC: '₹400',
+      SC_ST_Female: '₹400'
+    },
+    totalPosts: 60244,
+    applyUrl: 'https://uppbpb.gov.in',
+    pdfUrl: 'https://uppbpb.gov.in/notifications/constable_civil_police_2026.pdf',
+    officialWebsite: 'https://uppbpb.gov.in',
+    postedDate: '2026-06-14',
+    lastDate: '2026-07-30',
+    importantDates: {
+      applyStart: '2026-06-14',
+      applyEnd: '2026-07-30',
+      examDate: '2026-10-05',
+      admitCardRelease: '2026-09-25'
+    },
+    selectionProcess: [
+      'Offline OMR-based Written Exam (300 Marks, 150 Questions)',
+      'Document Matching Verification (DV) & Physical Measurement Test (PMT)',
+      'Physical Efficiency Test (PET - Run 4.8 km for Men / 2.4 km for Women)'
+    ],
+    location: 'Uttar Pradesh',
+    description: 'Mega Recruitment drive for Civil Police Constable in Uttar Pradesh. Dynamic preparation packages, previous year solved keys, and daily general knowledge capsules added for aspirants.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'bihar-police-constable-2026',
+    title: 'Bihar Police Sipahi (Constable) Recruitment 2026',
+    org: 'Central Selection Board of Constables (CSBC Bihar)',
+    category: 'Police',
+    qualification: '12th Pass',
+    ageLimit: '18 - 25 Years',
+    salary: 'Rs. 21,700 - Rs. 69,100 (Pay Level 3)',
+    fees: {
+      General: '₹675',
+      OBC: '₹675',
+      SC_ST_Female: '₹180 (All Resident Sisters / Reserv.)'
+    },
+    totalPosts: 21391,
+    applyUrl: 'https://csbc.bih.nic.in',
+    pdfUrl: 'https://csbc.bih.nic.in/Advt/CSBC_01_2026_Constable.pdf',
+    officialWebsite: 'https://csbc.bih.nic.in',
+    postedDate: '2026-06-13',
+    lastDate: '2026-07-25',
+    importantDates: {
+      applyStart: '2026-06-13',
+      applyEnd: '2026-07-25',
+      examDate: '2026-09-18',
+      admitCardRelease: '2026-09-02'
+    },
+    selectionProcess: [
+      'Written CBT Screening Test (100 Marks, Minimum 30% Pass)',
+      'Physical Efficiency Test (PET - High Jump, Shot Put & Run)',
+      'Final Merit ranking based entirely on PET total score'
+    ],
+    location: 'Bihar',
+    description: 'Sipahi recruitment for District Police, Bihar Special Armed Police (BSAP) and other units. Ensure high physical fitness score as final rank doesn\'t depend on the written exam.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'rrb-group-d-2026',
+    title: 'Railway RRB Group-D (Level-1 Trackman & Assistants) 2026',
+    org: 'Railway Recruitment Boards (RRB)',
+    category: 'Railway',
+    qualification: '10th Pass',
+    ageLimit: '18 - 33 Years (Relaxations as according)',
+    salary: 'Rs. 18,000 + allowances (7th CPC Pay Matrix level-1)',
+    fees: {
+      General: '₹500 (₹400 Refundable)',
+      OBC: '₹500',
+      SC_ST_Female: '₹250 (₹250 Refunded)'
+    },
+    totalPosts: 103769,
+    applyUrl: 'https://rrbcdg.gov.in',
+    pdfUrl: 'https://rrbcdg.gov.in/CEN_Level_1_Detailed_Notifications.pdf',
+    officialWebsite: 'https://rrbcdg.gov.in',
+    postedDate: '2026-06-14',
+    lastDate: '2026-08-10',
+    importantDates: {
+      applyStart: '2026-06-14',
+      applyEnd: '2026-08-10',
+      examDate: '2026-11-20',
+      admitCardRelease: '2026-11-10'
+    },
+    selectionProcess: [
+      'Computer Based Test CBT (General Science, Maths, Reasoning)',
+      'Physical Efficiency Test (PET - Weight carrying 35kg/20kg & Running)',
+      'Verification of documents & medical fitness tests'
+    ],
+    location: 'All India (Various Zonal Railways)',
+    description: 'Massive level 1 posts recruitment across all Indian Railway zones including Central, Northern, Western, and Southern Railways for matriculates and ITI holders.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'ctet-july-2026',
+    title: 'Central Teacher Eligibility Test (CTET) July 2026',
+    org: 'Central Board of Secondary Education (CBSE)',
+    category: 'Teaching',
+    qualification: 'Graduate',
+    ageLimit: 'Minimum 17 Years (No Maximum Age Limit)',
+    salary: 'Eligibility Certificate (Life-time validity)',
+    fees: {
+      General: '₹1000 (Single Paper) / ₹1200 (Both)',
+      OBC: '₹1000 (Single Paper) / ₹1200 (Both)',
+      SC_ST_Female: '₹500 (Single Paper) / ₹600 (Both)'
+    },
+    totalPosts: 25000,
+    applyUrl: 'https://ctet.nic.in',
+    pdfUrl: 'https://ctet.nic.in/webinfo/ctet_information_bulletin_july_2026.pdf',
+    officialWebsite: 'https://ctet.nic.in',
+    postedDate: '2026-06-12',
+    lastDate: '2026-07-02',
+    importantDates: {
+      applyStart: '2026-06-12',
+      applyEnd: '2026-07-02',
+      examDate: '2026-07-19',
+      admitCardRelease: '2026-07-10'
+    },
+    selectionProcess: [
+      'Paper I offline central testing (Primary Stage: Classes I-V)',
+      'Paper II offline central testing (Elementary Stage: Classes VI-VIII)',
+      'Issuance of DigiLocker Digital Certificate'
+    ],
+    location: 'All India',
+    description: 'CBSE Teacher Eligibility exam standard to qualify for Central School KVS, NVS, Army, and elite state board teacher recruitments. Live model answers uploaded on active release day.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'csir-ugc-net-2026',
+    title: 'CSIR UGC NET Examination June 2026',
+    org: 'National Testing Agency (NTA)',
+    category: 'Teaching',
+    qualification: 'Post Graduate',
+    ageLimit: 'JRF: max 30 Years | Assistant Professor: No limit',
+    salary: 'Junior Research Fellowship (JRF) Stipends / Lecturer position',
+    fees: {
+      General: '₹1150',
+      OBC: '₹600 (EWS/NCL)',
+      SC_ST_Female: '₹325 (Third-gender separate)'
+    },
+    totalPosts: 4500,
+    applyUrl: 'https://csirnet.nta.ac.in',
+    pdfUrl: 'https://csirnet.nta.ac.in/csir_net_nta_information_bulletin_june_2026.pdf',
+    officialWebsite: 'https://csirnet.nta.ac.in',
+    postedDate: '2026-06-13',
+    lastDate: '2026-07-10',
+    importantDates: {
+      applyStart: '2026-06-13',
+      applyEnd: '2026-07-10',
+      examDate: '2026-08-25',
+      admitCardRelease: '2026-08-15'
+    },
+    selectionProcess: [
+      'Computer Based Test (CBT - Subject Specific Part A, B, C)',
+      'Final Joint JRF Merit cutoff calculation list',
+      'Eligibility certificates dispatching'
+    ],
+    location: 'All India',
+    description: 'National determination of JRF Eligibility & Assistant Professor placements in Chemicals, Earth, Life, Mathematical & Physical science streams.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'cisf-constable-fire-2026',
+    title: 'CISF Constable Fire (Male Only) Recruitment 2026',
+    org: 'Central Industrial Security Force (CISF)',
+    category: 'Defence',
+    qualification: '12th Pass',
+    ageLimit: '18 - 23 Years',
+    salary: 'Rs. 21,700 - Rs. 69,100 (Pay Level 3)',
+    fees: {
+      General: '₹100',
+      OBC: '₹100',
+      SC_ST_Female: '₹0'
+    },
+    totalPosts: 1130,
+    applyUrl: 'https://cisfrectt.cisf.gov.in',
+    pdfUrl: 'https://cisfrectt.cisf.gov.in/notifications/constable_fire_recruitment_2026.pdf',
+    officialWebsite: 'https://cisfrectt.cisf.gov.in',
+    postedDate: '2026-06-14',
+    lastDate: '2026-07-15',
+    importantDates: {
+      applyStart: '2026-06-14',
+      applyEnd: '2026-07-15',
+      examDate: '2026-09-12',
+      admitCardRelease: '2026-08-28'
+    },
+    selectionProcess: [
+      'Physical Efficiency Test (PET - Run 5km in 24 minutes)',
+      'Computer Based examination CBT (General GK, Maths, Hindi-English)',
+      'Document Matching & Detailed Medical round (DME)'
+    ],
+    location: 'All India (Various State Units)',
+    description: 'Special paramilitary recruitment for brave male science candidates who want to join Central Force protection teams in CISF.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'ssc-chsl-2026',
+    title: 'SSC CHSL (10+2) LDC, JSA & DEO Recruitment 2026',
+    org: 'Staff Selection Commission (SSC)',
+    category: 'SSC',
+    qualification: '12th Pass',
+    ageLimit: '18 - 27 Years',
+    salary: 'Rs. 19,900 - Rs. 81,100 (Level 2/4 depends on post)',
+    fees: {
+      General: '₹100',
+      OBC: '₹100',
+      SC_ST_Female: '₹0 (Free)'
+    },
+    totalPosts: 3712,
+    applyUrl: 'https://ssc.gov.in',
+    pdfUrl: 'https://ssc.gov.in/notifications/chsl_official_notif_2026.pdf',
+    officialWebsite: 'https://ssc.gov.in',
+    postedDate: '2026-06-11',
+    lastDate: '2026-07-05',
+    importantDates: {
+      applyStart: '2026-06-11',
+      applyEnd: '2026-07-05',
+      examDate: '2026-08-20',
+      admitCardRelease: '2026-08-05'
+    },
+    selectionProcess: [
+      'Tier-1 Online computer based screening exam',
+      'Tier-2 Advanced comprehensive testing & Skill/Typing speed test',
+      'Original paperwork checks & final allotment list'
+    ],
+    location: 'All India Offices',
+    description: 'Hiring for Lower Divisional Clerk (LDC), Junior Secretariat Assistant (JSA), and Data Entry Operator (DEO) in prominent Central Government Ministries & Commissions.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'ibps-rrb-crp-xv-2026',
+    title: 'IBPS RRB CRP-XV Office Assistant & Officers Recruitment 2026',
+    org: 'Institute of Banking Personnel Selection (IBPS)',
+    category: 'Bank',
+    qualification: 'Graduate',
+    ageLimit: '18 - 28 Years (Office Assistant), 18 - 30 Years (Scale-I)',
+    salary: 'Rs. 25,000 - Rs. 45,000 (Varies by Officers Grade)',
+    fees: {
+      General: '₹850',
+      OBC: '₹850',
+      SC_ST_Female: '₹175'
+    },
+    totalPosts: 9815,
+    applyUrl: 'https://www.ibps.in',
+    pdfUrl: 'https://www.ibps.in/wp-content/uploads/rrb_xv_detailed_advt.pdf',
+    officialWebsite: 'https://www.ibps.in',
+    postedDate: '2026-06-14',
+    lastDate: '2026-06-27',
+    importantDates: {
+      applyStart: '2026-06-07',
+      applyEnd: '2026-06-27',
+      examDate: '2026-08-01',
+      admitCardRelease: '2026-07-20'
+    },
+    selectionProcess: [
+      'Preliminary CBT Examination',
+      'Main Examination (Office Assistants & Scale-I)',
+      'Interview (Senior Scale-I, II, III Officers)',
+      'Provisional Bank Allocation List'
+    ],
+    location: 'All India Regional Rural Banks (Gramin Bank)',
+    description: 'CRP RRBs XV Recruitment of Group "A"-Officers (Scale-I, II & III) and Group "B"-Office Assistants (Multipurpose) across multiple Regional Rural Banks (Gramin Banks) of India.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'ssc-mts-havaldar-2026',
+    title: 'SSC Multi Tasking Staff (MTS) & Havaldar Bharti 2026',
+    org: 'Staff Selection Commission (SSC)',
+    category: 'SSC',
+    qualification: '10th Pass',
+    ageLimit: '18 - 25 Years & 18 - 27 Years',
+    salary: 'Rs. 18,000 - Rs. 22,000 + allowances (Pay Level 1)',
+    fees: {
+      General: '₹100',
+      OBC: '₹100',
+      SC_ST_Female: '₹0 (Exempted)'
+    },
+    totalPosts: 8430,
+    applyUrl: 'https://ssc.gov.in',
+    pdfUrl: 'https://ssc.gov.in/notifications/ssc_mts_havaldar_detailed_2026.pdf',
+    officialWebsite: 'https://ssc.gov.in',
+    postedDate: '2026-06-14',
+    lastDate: '2026-07-14',
+    importantDates: {
+      applyStart: '2026-06-14',
+      applyEnd: '2026-07-14',
+      examDate: '2026-10-15',
+      admitCardRelease: '2026-10-01'
+    },
+    selectionProcess: [
+      'Computer Based examination (CBT, Bilingual in Hindi/English)',
+      'Physical Efficiency Test (PET) / Physical Standard Test (PST) (For Havaldar Only)',
+      'Document Matching Verification'
+    ],
+    location: 'All India',
+    description: 'Hiring for Multi Tasking Staff (MTS), a non-technical General Central Service Group "C" Non-Gazetted, Non-Ministerial post in various Ministries/Departments/Offices, and Havaldar in CBIC & CBN.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'upsc-capf-ac-2026',
+    title: 'UPSC Central Armed Police Forces (CAPF) Assistant Commandants 2026',
+    org: 'Union Public Service Commission (UPSC)',
+    category: 'Defence',
+    qualification: 'Graduate',
+    ageLimit: '20 - 25 Years',
+    salary: 'Rs. 56,100 - Rs. 1,77,500 (Pay level-10)',
+    fees: {
+      General: '₹200',
+      OBC: '₹200',
+      SC_ST_Female: '₹0 (Exempted)'
+    },
+    totalPosts: 506,
+    applyUrl: 'https://upsconline.nic.in',
+    pdfUrl: 'https://upsc.gov.in/sites/default/files/Exam-Notif-CAPF-2026-Engl.pdf',
+    officialWebsite: 'https://upsc.gov.in',
+    postedDate: '2026-06-14',
+    lastDate: '2026-07-05',
+    importantDates: {
+      applyStart: '2026-06-14',
+      applyEnd: '2026-07-05',
+      examDate: '2026-08-02',
+      admitCardRelease: '2026-07-18'
+    },
+    selectionProcess: [
+      'Written Examination (Paper I & II)',
+      'Physical Standards/Physical Efficiency Tests and Medical Standards Tests',
+      'Interview / Personality Test (150 Marks)'
+    ],
+    location: 'All India / BSF, CRPF, CISF, ITBP, SSB bases',
+    description: 'Group-A Gazetted Officer recruitment through Union Public Service Commission in BSF, CRPF, CISF, ITBP, and SSB forces.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
     id: 'delhi-police-constable-2526',
     title: 'Delhi Police Executive Constable Recruitment 2026',
     org: 'Staff Selection Commission & Delhi Police (SSC)',
