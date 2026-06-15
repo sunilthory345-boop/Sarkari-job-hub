@@ -369,6 +369,28 @@ export default function SarkariBlogPortal({ blogs, onAddBlog, triggerToast }: Sa
   const [newAuthor, setNewAuthor] = useState('');
   const [newMetaKeywords, setNewMetaKeywords] = useState('Sarkari Result, Mock test, Syllabus PDF');
 
+  // Sitemap Generator States
+  const [isSitemapModalOpen, setIsSitemapModalOpen] = useState(false);
+  const [sitemapDomain, setSitemapDomain] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return `${window.location.protocol}//${window.location.host}`;
+    }
+    return 'https://jobsarkarihub.org';
+  });
+  const [sitemapRoutes, setSitemapRoutes] = useState<Record<string, { label: string; enabled: boolean; priority: string; changefreq: string }>>({
+    'home': { label: 'Home Page (मुख्य पृष्ठ)', enabled: true, priority: '1.0', changefreq: 'daily' },
+    'jobs': { label: 'Private & Government Jobs', enabled: true, priority: '0.9', changefreq: 'daily' },
+    'admit-cards': { label: 'Admit Cards (प्रवेश पत्र)', enabled: true, priority: '0.9', changefreq: 'daily' },
+    'results': { label: 'Exam Results (सरकारी परिणाम)', enabled: true, priority: '0.9', changefreq: 'weekly' },
+    'mock-tests': { label: 'Live Mock Test Room', enabled: true, priority: '0.85', changefreq: 'daily' },
+    'syllabus': { label: 'Syllabus PDF Repository', enabled: true, priority: '0.8', changefreq: 'weekly' },
+    'current-affairs': { label: 'Bilingual GK Affairs', enabled: true, priority: '0.8', changefreq: 'daily' },
+    'blog': { label: 'Strategy Guidelines Blog', enabled: true, priority: '0.7', changefreq: 'weekly' },
+    'objections': { label: 'Ans-Key Challenge Desk', enabled: true, priority: '0.6', changefreq: 'monthly' },
+    'upload-vault': { label: 'Vault Folder Directory', enabled: true, priority: '0.7', changefreq: 'monthly' }
+  });
+  const [includeBlogsInSitemap, setIncludeBlogsInSitemap] = useState(true);
+
   // Combine standard mock blogs + default rich SEO ones
   const allBlogsList = useMemo(() => {
     const existingIds = new Set(blogs.map(b => b.id));
@@ -376,6 +398,66 @@ export default function SarkariBlogPortal({ blogs, onAddBlog, triggerToast }: Sa
     return [...blogs, ...uniqueDefaults];
   }, [blogs]);
 
+  // Dynamic XML string compiler
+  const generatedXmlCode = useMemo(() => {
+    const cleanDomain = sitemapDomain.trim().replace(/\/+$/, '');
+    const currentDate = new Date().toISOString().split('T')[0];
+    
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+    xml += `<urlset\n  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n  xmlns:xhtml="http://www.w3.org/1999/xhtml"\n>\n`;
+    
+    // Add active route paths
+    Object.entries(sitemapRoutes).forEach(([key, route]) => {
+      if (route.enabled) {
+        const pathSuffix = key === 'home' ? '' : `/${key}`;
+        const url = `${cleanDomain}${pathSuffix}`;
+        xml += `  <url>\n`;
+        xml += `    <loc>${url}</loc>\n`;
+        xml += `    <lastmod>${currentDate}</lastmod>\n`;
+        xml += `    <changefreq>${route.changefreq}</changefreq>\n`;
+        xml += `    <priority>${route.priority}</priority>\n`;
+        xml += `    <xhtml:link rel="alternate" hreflang="en" href="${url}?lang=en" />\n`;
+        xml += `    <xhtml:link rel="alternate" hreflang="hi" href="${url}?lang=hi" />\n`;
+        xml += `    <xhtml:link rel="alternate" hreflang="x-default" href="${url}" />\n`;
+        xml += `  </url>\n`;
+      }
+    });
+
+    // Add blogs if toggled on
+    if (includeBlogsInSitemap) {
+      allBlogsList.forEach(blog => {
+        const url = `${cleanDomain}/blog?id=${blog.id}`;
+        xml += `  <url>\n`;
+        xml += `    <loc>${url}</loc>\n`;
+        xml += `    <lastmod>${blog.date}</lastmod>\n`;
+        xml += `    <changefreq>weekly</changefreq>\n`;
+        xml += `    <priority>0.7</priority>\n`;
+        xml += `    <xhtml:link rel="alternate" hreflang="en" href="${url}&amp;lang=en" />\n`;
+        xml += `    <xhtml:link rel="alternate" hreflang="hi" href="${url}&amp;lang=hi" />\n`;
+        xml += `    <xhtml:link rel="alternate" hreflang="x-default" href="${url}" />\n`;
+        xml += `  </url>\n`;
+      });
+    }
+
+    xml += `</urlset>`;
+    return xml;
+  }, [sitemapDomain, sitemapRoutes, includeBlogsInSitemap, allBlogsList]);
+
+  // Action to download calculated sitemap.xml to user computer
+  const handleDownloadSitemapXml = () => {
+    try {
+      const blob = new Blob([generatedXmlCode], { type: 'application/xml;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.setAttribute('download', 'sitemap.xml');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      triggerToast("📥 Dynamic sitemap.xml generated and downloaded to your computer!");
+    } catch (e) {
+      triggerToast("❌ Failed to download sitemap file. Please copy the code directly instead.");
+    }
+  };
   // Filtered post selector
   const filteredBlogs = useMemo(() => {
     return allBlogsList.filter(blog => {
@@ -703,6 +785,15 @@ export default function SarkariBlogPortal({ blogs, onAddBlog, triggerToast }: Sa
           >
             <Plus className="h-4 w-4" />
             <span>Publish SEO Article / ब्लॉग लिखें</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setIsSitemapModalOpen(true)}
+            className="bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-black text-xs px-5 py-3 rounded-2xl transition cursor-pointer shadow-lg shadow-blue-500/20 flex items-center gap-2 text-left border border-blue-500/40"
+          >
+            <SearchCode className="h-4.5 w-4.5 text-blue-200" />
+            <span>Sitemap XML Kaise Banaye? / साईटमैप गाइड</span>
           </button>
         </div>
       </div>
@@ -1374,6 +1465,260 @@ export default function SarkariBlogPortal({ blogs, onAddBlog, triggerToast }: Sa
                 </div>
 
               </form>
+
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* Sarkari SEO Academy & Sitemap XML Builder Modal */}
+      {isSitemapModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-xs text-left animate-fade-in">
+          <div className="w-full max-w-5xl bg-white rounded-3xl shadow-2xl relative flex flex-col max-h-[92vh] border border-slate-200">
+            
+            {/* Modal Header */}
+            <div className="p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50 rounded-t-3xl text-left">
+              <div className="text-left space-y-1">
+                <h3 className="font-sans text-sm sm:text-base font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                  <span className="p-1 px-2.5 bg-blue-100 text-blue-800 rounded-lg text-xs font-mono font-bold">SEO PRO</span>
+                  <span>Sarkari Sitemap Academy & Live XML Builder (साईटमैप निर्माण)</span>
+                </h3>
+                <p className="text-[10px] text-slate-500">Learn how XML sitemaps work, bilingually, and configure search indexes on Google Webmaster tools.</p>
+              </div>
+              <button 
+                type="button"
+                onClick={() => setIsSitemapModalOpen(false)}
+                className="bg-slate-200 hover:bg-slate-300 active:scale-95 text-slate-800 rounded-full px-3 py-1.5 text-[10px] font-black font-mono tracking-wider cursor-pointer transition"
+              >
+                CLOSE
+              </button>
+            </div>
+
+            {/* Modal Body (Scrollable Double Core Grid) */}
+            <div className="flex-1 overflow-y-auto p-5 sm:p-6 grid gap-6 md:grid-cols-12 font-sans bg-slate-50/50">
+              
+              {/* Left Column: Educational Strategy Guide / "kaise banaye" (5 Cols) */}
+              <div className="md:col-span-5 space-y-5 bg-white p-5 rounded-2xl border border-slate-200/60 shadow-3xs text-left max-h-[70vh] overflow-y-auto scrollbar-thin">
+                
+                <div className="space-y-1">
+                  <div className="inline-flex items-center gap-1.5 text-xs text-blue-700 font-bold font-mono">
+                    <BookOpen className="h-4 w-4" />
+                    <span>SECTOR 1: WHAT & WHY (साईटमैप क्या है?)</span>
+                  </div>
+                  <h4 className="font-sans text-xs font-black text-slate-800 uppercase tracking-wider">
+                    Sitemap XML Concept Guide
+                  </h4>
+                </div>
+
+                <div className="text-[11.5px] text-slate-650 leading-relaxed space-y-3 font-sans">
+                  <p>
+                    एक <strong>XML Sitemap</strong> आपके सरकारी या Sarkari Result जॉब पोर्टल की सभी महत्वपूर्ण कड़ियों (URLs) का एक व्यवस्थित संग्रह (Blueprint Map) होता है। यह सर्च इंजनों (जैसे Google, Bing) के क्रॉलर्स को आपकी साइट को आसानी से इंडेक्स करने में मदद करता है।
+                  </p>
+                  <p>
+                    सरकारी परिणाम वेबसाइटों के लिए, समय पर नए एडमिट कार्ड या नौकरियों को गूगल में सूचीबद्ध करवाना अत्यंत महत्वपूर्ण है। बिना साईटमैप के गूगल बॉट्स को नए लिंक्स ढूंढने में देरी हो सकती है।
+                  </p>
+                </div>
+
+                <hr className="border-slate-100" />
+
+                {/* Core Tag Details Table */}
+                <div className="space-y-2">
+                  <h5 className="text-[10px] font-black text-slate-800 uppercase tracking-widest font-mono">Essential XML Tags explained:</h5>
+                  <div className="space-y-1.5 text-[10.5px]">
+                    <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 flex justify-between items-start">
+                      <span className="font-mono text-blue-700 font-bold">&lt;loc&gt;</span>
+                      <span className="text-[9.5px] text-slate-500 text-right font-sans w-2/3"><strong>URL Location:</strong> Absolute link to your page. (पेज का पूरा यूआरएल पता)</span>
+                    </div>
+                    <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 flex justify-between items-start">
+                      <span className="font-mono text-blue-700 font-bold">&lt;lastmod&gt;</span>
+                      <span className="text-[9.5px] text-slate-500 text-right font-sans w-2/3"><strong>Last Modified:</strong> When the page content last updated. (अंतिम बदलाव तिथि)</span>
+                    </div>
+                    <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 flex justify-between items-start">
+                      <span className="font-mono text-blue-700 font-bold">&lt;changefreq&gt;</span>
+                      <span className="text-[9.5px] text-slate-500 text-right font-sans w-2/3"><strong>Update Frequency:</strong> daily, weekly, monthly, hourly. (बदलाव की दर)</span>
+                    </div>
+                    <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 flex justify-between items-start">
+                      <span className="font-mono text-blue-700 font-bold">&lt;priority&gt;</span>
+                      <span className="text-[9.5px] text-slate-500 text-right font-sans w-2/3"><strong>Priority:</strong> Relative importance range from 0.0 to 1.0. (प्राथमिकता अंक)</span>
+                    </div>
+                  </div>
+                </div>
+
+                <hr className="border-slate-100" />
+
+                {/* How to submit to search console */}
+                <div className="space-y-2.5">
+                  <div className="inline-flex items-center gap-1 text-xs text-emerald-800 font-bold font-mono">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                    <span>GOOGLE SEARCH CONSOLE INSTRUCTIONS (सबमिशन गाइड)</span>
+                  </div>
+                  
+                  <ol className="list-decimal pl-4 text-[10.5px] text-slate-600 space-y-2 leading-relaxed">
+                    <li>
+                      <strong>Create sitemap.xml:</strong> Configure your base URL and page paths in our compiler, then hit <strong>Download XML</strong>.
+                    </li>
+                    <li>
+                      <strong>Upload to Root:</strong> Host the file at the main root of your web workspace (e.g. placed at <code>/public/sitemap.xml</code> or served dynamically via routing).
+                    </li>
+                    <li>
+                      <strong>Open Console:</strong> Login to <a href="https://search.google.com/search-console" target="_blank" referrerPolicy="no-referrer" className="text-blue-600 underline">Google Search Console</a> and select your verified domain property.
+                    </li>
+                    <li>
+                      <strong>Add Sitemap URL:</strong> Go to the **Sitemaps (साईटमैप)** section on the left panel.
+                    </li>
+                    <li>
+                      <strong>Input Link & Submit:</strong> Write <code>sitemap.xml</code> and click <strong>Submit (जमा करें)</strong>. Google will now recursively scan all listed links!
+                    </li>
+                  </ol>
+                </div>
+
+                {/* Real full stack sitemap confirmation */}
+                <div className="bg-blue-50 border border-blue-200 p-3.5 rounded-xl space-y-1.5 text-left text-[10.5px] text-blue-900 leading-normal">
+                  <p className="font-bold flex items-center gap-1.5">
+                    <Sparkles className="h-4 w-4 text-blue-600" />
+                    <span>Live Dynamically Enabled Backend / लाईव साईटमैप</span>
+                  </p>
+                  <p>
+                    Great news! In your application, the backend Node-Express controller in <code>server.ts</code> is <strong>already pre-configured</strong> to dynamically serve standard XML indices at the live route path:
+                  </p>
+                  <div className="pt-2">
+                    <a 
+                      href="/sitemap.xml" 
+                      target="_blank" 
+                      className="inline-flex items-center gap-1 bg-blue-600 hover:bg-blue-700 px-3 py-1.5 rounded-lg text-white font-black text-[9.5px] tracking-wide transition uppercase cursor-pointer"
+                    >
+                      <span>Open Live Website sitemap.xml ➡️</span>
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Right Column: Custom Live Sitemap XML Builder & Previewer (7 Cols) */}
+              <div className="md:col-span-7 space-y-5 flex flex-col justify-between">
+                
+                {/* Build Form Dashboard */}
+                <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-3xs space-y-4 text-left">
+                  
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-3 font-sans">
+                    <div className="space-y-0.5">
+                      <span className="text-[9px] text-slate-400 block font-mono font-bold uppercase tracking-wider">Interactive Generator Console</span>
+                      <h4 className="font-sans text-xs font-black text-slate-800 uppercase tracking-wider">
+                        Configure Indexable Sarkari Links
+                      </h4>
+                    </div>
+                    <div className="flex bg-slate-100 p-1 rounded-lg border border-slate-150 gap-0.5 text-[9px] font-bold text-slate-605">
+                      <span>Standards Compliant v0.9</span>
+                    </div>
+                  </div>
+
+                  {/* Input Base Domain URL */}
+                  <div className="space-y-1 text-left">
+                    <label className="block text-[10px] font-black text-slate-500 uppercase tracking-wider">Your Website Base Domain URL (वेबसाइट यूआरएल)</label>
+                    <input 
+                      type="url" 
+                      value={sitemapDomain}
+                      onChange={(e) => setSitemapDomain(e.target.value)}
+                      placeholder="https://jobsarkarihub.org"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-mono focus:outline-hidden focus:border-blue-500"
+                    />
+                    <p className="text-[9px] text-slate-400">Do not include a trailing slash. Changes will reflect instantly below in real-time.</p>
+                  </div>
+
+                  {/* Toggle Route Lists */}
+                  <div className="space-y-2">
+                    <label className="block text-[10px] font-black text-slate-500 uppercase tracking-wider">Select Routes to include in Google Index</label>
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] max-h-44 overflow-y-auto pr-1">
+                      
+                      {Object.entries(sitemapRoutes).map(([key, route]) => (
+                        <div key={key} className="bg-slate-50 p-2 rounded-xl border border-slate-100 flex items-center justify-between gap-1">
+                          <label className="flex items-center gap-2 cursor-pointer font-bold text-slate-700 whitespace-nowrap overflow-hidden text-ellipsis">
+                            <input 
+                              type="checkbox"
+                              checked={route.enabled}
+                              onChange={(e) => {
+                                setSitemapRoutes(prev => ({
+                                  ...prev,
+                                  [key]: { ...prev[key], enabled: e.target.checked }
+                                }));
+                              }}
+                              className="h-3.5 w-3.5 text-blue-600 border-slate-300 rounded-sm focus:ring-blue-500"
+                            />
+                            <span className="truncate">/{key === 'home' ? '' : key}</span>
+                          </label>
+                          <div className="flex items-center gap-1.5 shrink-0 select-none">
+                            <span className="text-[8px] bg-slate-205 text-slate-600 px-1 py-0.5 rounded-sm font-mono font-bold uppercase tracking-wider">
+                              prio:{route.priority}
+                            </span>
+                            <span className="text-[8px] bg-blue-100 text-blue-800 px-1 py-0.5 rounded-sm font-mono font-bold uppercase tracking-wider">
+                              {route.changefreq}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+
+                    </div>
+                  </div>
+
+                  {/* Toggle Route to Include Blogs */}
+                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center justify-between text-left text-xs text-slate-705">
+                    <div className="space-y-0.5">
+                      <p className="font-bold text-slate-800">Include Dynamic Strategy Blogs too?</p>
+                      <p className="text-[10px] text-slate-500">Injects {allBlogsList.length} bilingual published preparation guide URLs bilingually.</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setIncludeBlogsInSitemap(prev => !prev)}
+                      className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase transition cursor-pointer ${
+                        includeBlogsInSitemap ? 'bg-blue-600 text-white' : 'bg-slate-200 text-slate-600'
+                      }`}
+                    >
+                      {includeBlogsInSitemap ? '✅ ACTIVE' : '❌ DISABLED'}
+                    </button>
+                  </div>
+
+                </div>
+
+                {/* Show Live calculated XML code */}
+                <div className="bg-slate-900 rounded-3xl p-4 sm:p-5 text-left border border-slate-800 space-y-3 relative overflow-hidden flex-1 flex flex-col justify-between">
+                  
+                  <div className="flex items-center justify-between border-b border-slate-850 pb-2.5">
+                    <div className="space-y-0.5 text-left">
+                      <span className="text-[8.5px] text-slate-450 font-mono font-bold uppercase tracking-widest">LIVE GENERATED DYNAMIC SITEMAP DATA</span>
+                      <h4 className="text-white text-xs font-black uppercase font-mono tracking-wider">XML Markup Preview</h4>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        type="button"
+                        onClick={() => copyToClipboard(generatedXmlCode, "Compiled XML Sitemap")}
+                        className="text-[9.5px] bg-slate-850 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-xl font-bold flex items-center gap-1 transition cursor-pointer border border-slate-700"
+                      >
+                        <Copy className="h-3.5 w-3.5" /> Copy Code
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleDownloadSitemapXml}
+                        className="text-[9.5px] bg-emerald-500 hover:bg-emerald-600 text-slate-900 px-3 py-1.5 rounded-xl font-black flex items-center gap-1 transition cursor-pointer shadow-md shadow-emerald-500/15"
+                      >
+                        <Plus className="h-3.5 w-3.5" /> Download XML
+                      </button>
+                    </div>
+                  </div>
+
+                  <pre className="p-3 bg-slate-950 rounded-2xl text-[9px] sm:text-[9.5px] font-mono text-cyan-400 overflow-x-auto border border-blue-950 text-left h-48 sm:h-56 scrollbar-thin overflow-y-auto">
+                    {generatedXmlCode}
+                  </pre>
+
+                  <div className="text-[10px] text-slate-400 leading-relaxed pt-1 flex items-center gap-1">
+                    <AlertCircle className="h-3.5 w-3.5 text-amber-500 shrink-0" />
+                    <span>Upload generated file as <code>sitemap.xml</code> in your server's public directory to allow natural crawl search bots to trace active shifts!</span>
+                  </div>
+
+                </div>
+
+              </div>
 
             </div>
 
