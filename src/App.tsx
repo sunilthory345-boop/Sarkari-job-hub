@@ -3802,6 +3802,30 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
         onClose={() => setTrafficOpen(false)}
       />
 
+      {/* Floating Join Telegram Button */}
+      <a
+        href="https://t.me/JobSarkariHub"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-full px-5 py-3 text-white shadow-2xl transition-all duration-300 hover:scale-115 hover:shadow-cyan-500/20 active:scale-95 group font-sans text-xs sm:text-sm font-bold border border-sky-400/20"
+        style={{ backgroundColor: '#229ED9' }}
+        id="telegram-floating-join-btn"
+      >
+        <span className="relative flex h-2.5 w-2.5">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+        </span>
+        <svg 
+          className="h-4.5 w-4.5 fill-white transition-transform duration-500 group-hover:rotate-[15deg] group-hover:scale-110" 
+          viewBox="0 0 24 24"
+        >
+          <path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701-.332 4.965c.487 0 .702-.223.974-.485l2.337-2.27 4.861 3.591c.896.494 1.541.24 1.764-.83l3.189-15.02c.326-1.309-.499-1.902-1.359-1.513z" />
+        </svg>
+        <span>
+          {locale === 'hi' ? 'टेलीग्राम ज्वाइन करें' : 'Join Telegram'}
+        </span>
+      </a>
+
     </div>
   );
 }
