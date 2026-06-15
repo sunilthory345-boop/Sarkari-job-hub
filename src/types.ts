@@ -26,6 +26,8 @@ export interface GovJob {
   selectionProcess: string[];
   location: string;
   description: string;
+  isWhatsAppAlert?: boolean;
+  whatsAppUrl?: string;
 }
 
 export interface AdmitCard {

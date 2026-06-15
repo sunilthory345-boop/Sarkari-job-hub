@@ -2,6 +2,216 @@ import { GovJob, AdmitCard, JobResult, MockTest, CurrentAffair, Blog, AnswerKey 
 
 export const INITIAL_JOBS: GovJob[] = [
   {
+    id: 'delhi-police-constable-2526',
+    title: 'Delhi Police Executive Constable Recruitment 2026',
+    org: 'Staff Selection Commission & Delhi Police (SSC)',
+    category: 'Police',
+    qualification: '12th Pass',
+    ageLimit: '18 - 25 Years',
+    salary: 'Rs. 21,700 - Rs. 69,100 (Pay Level-3)',
+    fees: {
+      General: '₹100',
+      OBC: '₹100',
+      SC_ST_Female: '₹0 (Exempted)'
+    },
+    totalPosts: 7547,
+    applyUrl: 'https://ssc.gov.in',
+    pdfUrl: 'https://ssc.gov.in/notifications/delhi_police_const_2026.pdf',
+    officialWebsite: 'https://ssc.gov.in',
+    postedDate: '2026-06-12',
+    lastDate: '2026-07-15',
+    importantDates: {
+      applyStart: '2026-06-12',
+      applyEnd: '2026-07-15',
+      examDate: '2026-09-10',
+      admitCardRelease: '2026-08-25'
+    },
+    selectionProcess: [
+      'Written Computer Based Test (CBT)',
+      'Physical Endurance & Measurement Test (PE&MT)',
+      'Medical Examination & Document Verification'
+    ],
+    location: 'Delhi NCR / All India',
+    description: 'Direct recruitment of Male and Female Constables in Delhi Police through SSC. Complete syllabus download, previous cut-offs, and free interactive online study practices inside parents portal.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'isro-tech-assistant-2026',
+    title: 'ISRO Technical Assistant & Technician-B Recruits 2026',
+    org: 'Indian Space Research Organisation (ISRO)',
+    category: 'Others',
+    qualification: 'Diploma',
+    ageLimit: '18 - 35 Years',
+    salary: 'Rs. 44,900 - Rs. 1,42,400 (Level 7 / Level 3)',
+    fees: {
+      General: '₹250',
+      OBC: '₹250',
+      SC_ST_Female: '₹0 (Full Refund after CBT exam)'
+    },
+    totalPosts: 224,
+    applyUrl: 'https://www.isro.gov.in/Careers.html',
+    pdfUrl: 'https://www.isro.gov.in/media_isro/careers/isro_tech_assist_advt_2026.pdf',
+    officialWebsite: 'https://isro.gov.in',
+    postedDate: '2026-06-14',
+    lastDate: '2026-07-10',
+    importantDates: {
+      applyStart: '2026-06-14',
+      applyEnd: '2026-07-10',
+      examDate: '2026-09-05',
+      admitCardRelease: '2026-08-20'
+    },
+    selectionProcess: [
+      'Written Test (80 MCQs, 90 Minutes)',
+      'Skill Test / Trade Test (Go/No-Go Basis)',
+      'Document Matching Verification'
+    ],
+    location: 'All India',
+    description: 'Exciting opportunity for Engineering Diploma holders (Mechanical, Electronics, Computer Science, Electrical) and ITI certificate holders to join India\'s apex space research agency.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'ssc-je-civil-mech-2026',
+    title: 'SSC Junior Engineer (JE) Civil, Mechanical & Electrical 2026',
+    org: 'Staff Selection Commission (SSC)',
+    category: 'SSC',
+    qualification: 'Diploma',
+    ageLimit: 'Up to 30/32 Years (Post specific)',
+    salary: 'Rs. 35,400 - Rs. 1,12,400 (Level 6)',
+    fees: {
+      General: '₹100',
+      OBC: '₹100',
+      SC_ST_Female: '₹0 (Exempted)'
+    },
+    totalPosts: 1988,
+    applyUrl: 'https://ssc.gov.in',
+    pdfUrl: 'https://ssc.gov.in/notifications/je_advt_detailed_2026.pdf',
+    officialWebsite: 'https://ssc.gov.in',
+    postedDate: '2026-06-11',
+    lastDate: '2026-07-08',
+    importantDates: {
+      applyStart: '2026-06-11',
+      applyEnd: '2026-07-08',
+      examDate: '2026-10-02',
+      admitCardRelease: '2026-09-18'
+    },
+    selectionProcess: [
+      'Paper-I online computer based testing (Objective type)',
+      'Paper-II online computer based testing (Subject Depth/Multiple Choice)',
+      'Medical round & original certificates matching verification'
+    ],
+    location: 'All India',
+    description: 'Group \'B\' Non-Gazetted hiring for CPWD, MES, Farakka Barrage, Central Water Commission, and border roads organization. Complete notification distributed first inside Sarkari update feed.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'rsmssb-cho-bharti-2026',
+    title: 'Rajasthan Community Health Officer (CHO) Bharti 2026',
+    org: 'RSMSSB Rajasthan (कर्मचारी चयन बोर्ड)',
+    category: 'State PSC',
+    qualification: 'Graduate',
+    ageLimit: '21 - 40 Years (Relaxation for Category)',
+    salary: 'Rs. 25,000 (Consolidated monthly honorarium)',
+    fees: {
+      General: '₹600',
+      OBC: '₹400 (Non-Creamy Layer)',
+      SC_ST_Female: '₹400'
+    },
+    totalPosts: 3531,
+    applyUrl: 'https://sso.rajasthan.gov.in',
+    pdfUrl: 'https://rsmssb.rajasthan.gov.in/Static/files/CHO_Advt2026_Details.pdf',
+    officialWebsite: 'https://rsmssb.rajasthan.gov.in',
+    postedDate: '2026-06-13',
+    lastDate: '2026-07-20',
+    importantDates: {
+      applyStart: '2026-06-13',
+      applyEnd: '2026-07-20',
+      examDate: '2026-11-12',
+      admitCardRelease: '2026-11-01'
+    },
+    selectionProcess: [
+      'Offline OMR-Based Screening Exam',
+      'Contractual bridge training selection check',
+      'Double Document Verification'
+    ],
+    location: 'Rajasthan',
+    description: 'Contractual posting for Community Health Officers under National Health Mission (NHM) Rajasthan. Exclusive detailed preparation mock tests and solutions released instantly in WhatsApp stream.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'navy-agniveer-ssr-2526',
+    title: 'Indian Navy Agniveer (SSR & MR) - 01/2026 Batch',
+    org: 'Indian Navy (भारतीय नौसेना)',
+    category: 'Defence',
+    qualification: '12th Pass',
+    ageLimit: 'Born between 01 Nov 2005 and 30 Apr 2009',
+    salary: 'Rs. 30,000 - Rs. 40,000 (Seva Nidhi Package extra)',
+    fees: {
+      General: '₹550 + GST',
+      OBC: '₹550 + GST',
+      SC_ST_Female: '₹550 + GST'
+    },
+    totalPosts: 1400,
+    applyUrl: 'https://joinindiannavy.gov.in',
+    pdfUrl: 'https://joinindiannavy.gov.in/ssr_mr_detailed_instructions_01_2026.pdf',
+    officialWebsite: 'https://joinindiannavy.gov.in',
+    postedDate: '2026-06-08',
+    lastDate: '2026-06-28',
+    importantDates: {
+      applyStart: '2026-06-08',
+      applyEnd: '2026-06-28',
+      examDate: '2026-08-16',
+      admitCardRelease: '2026-08-04'
+    },
+    selectionProcess: [
+      'Stage-I Indian Navy Entrance Test (INET - Computer Based)',
+      'Stage-II Physical Fitness Test (PFT), Written test and medical eligibility',
+      'Final Induction Training at INS Chilka'
+    ],
+    location: 'All India (Navy bases)',
+    description: 'Sailors recruitment for SSR (Senior Secondary Recruit) and MR (Matric Recruit) under the Agniveer scheme. Full list of qualifying heights, weight limits, and running laps details attached.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'anganwadi-supervisor-2026',
+    title: 'Anganwadi Supervisor (महिला सुपरवाइजर) & Workers 2026',
+    org: 'Integrated Child Development Services (ICDS)',
+    category: 'Others',
+    qualification: '10th Pass',
+    ageLimit: '18 - 45 Years',
+    salary: 'Rs. 18,200 - Rs. 56,900 (Stipends model separate)',
+    fees: {
+      General: '₹0 (Free Application)',
+      OBC: '₹0',
+      SC_ST_Female: '₹0'
+    },
+    totalPosts: 5200,
+    applyUrl: 'https://wcd.nic.in',
+    pdfUrl: 'https://wcd.nic.in/anganwadi_job_circular_2026.pdf',
+    officialWebsite: 'https://wcd.nic.in',
+    postedDate: '2026-06-14',
+    lastDate: '2026-07-30',
+    importantDates: {
+      applyStart: '2026-06-14',
+      applyEnd: '2026-07-30',
+      examDate: '2026-09-30',
+      admitCardRelease: '2026-09-15'
+    },
+    selectionProcess: [
+      'Merit scoring based on Class 10/12 final percentages',
+      'Local residency check and interview verification',
+      'Final community order induction list'
+    ],
+    location: 'All India (State-wise districts)',
+    description: 'ICDS notification alerts published for Anganwadi Workers, Helpers, and Mini-worker assistants. Get district-wise selection tables instantly within our official WhatsApp updates community channel.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
     id: 'ssc-cgl-2026',
     title: 'SSC CGL Recruitment 2026',
     org: 'Staff Selection Commission (SSC)',

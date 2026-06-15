@@ -68,6 +68,8 @@ export default function JobCard({
     let matchesCategory = false;
     if (selectedCategory === 'All') {
       matchesCategory = true;
+    } else if (selectedCategory === 'WhatsAppAlerts') {
+      matchesCategory = !!job.isWhatsAppAlert;
     } else if (selectedCategory === 'Rajasthan') {
       matchesCategory = job.location.toLowerCase().includes('rajasthan') || 
                         job.org.toLowerCase().includes('rpsc') || 
@@ -114,6 +116,7 @@ export default function JobCard({
         <div className="flex flex-wrap gap-2">
           {[
             { id: 'All', label: 'All Exams (सभी)', emoji: '🌐', color: 'border-slate-200 bg-white hover:bg-slate-50 text-slate-800' },
+            { id: 'WhatsAppAlerts', label: 'WhatsApp Job Alerts', emoji: '🟢', color: 'border-emerald-200 bg-emerald-50/20 hover:bg-emerald-50 text-emerald-900' },
             { id: 'SSC', label: 'SSC Exams Office', emoji: '🏢', color: 'border-blue-200 bg-blue-50/20 hover:bg-blue-50 text-blue-900' },
             { id: 'Bank', label: 'Banking (SBI, IBPS)', emoji: '🏦', color: 'border-indigo-200 bg-indigo-50/20 hover:bg-indigo-50 text-indigo-900' },
             { id: 'Railway', label: 'Railway RRB NTPC/ALP', emoji: '🚉', color: 'border-green-200 bg-green-50/20 hover:bg-green-50 text-green-900' },
@@ -272,9 +275,27 @@ export default function JobCard({
               >
                 {/* Save bookmark and Commission banner */}
                 <div className="flex items-start justify-between gap-2">
-                  <span className={`inline-block rounded px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wide ${cStyles.text}`}>
-                    {job.category} Exam
-                  </span>
+                  <div className="flex flex-wrap gap-1.5 items-center">
+                    <span className={`inline-block rounded px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wide ${cStyles.text}`}>
+                      {job.category} Exam
+                    </span>
+                    {job.isWhatsAppAlert && (
+                      <a 
+                        href="https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 px-1.5 py-0.5 text-[8.5px] font-extrabold hover:bg-emerald-500/20 transition-colors cursor-pointer"
+                        title="Official channel live vacancy alert!"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <span className="relative flex h-1.5 w-1.5 shrink-0">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                        </span>
+                        WA ALERT
+                      </a>
+                    )}
+                  </div>
                   <button 
                     onClick={() => toggleSaveJob(job.id)}
                     className="rounded-full p-1 text-slate-400 hover:bg-slate-50 hover:text-blue-600 transition"
@@ -437,6 +458,36 @@ export default function JobCard({
                   </div>
                 </div>
               </div>
+
+              {selectedJob.isWhatsAppAlert && (
+                <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div className="flex items-center gap-3 text-left">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-white shadow-md font-sans font-extrabold text-xs">
+                      WA
+                    </div>
+                    <div>
+                      <h5 className="font-sans font-extrabold text-xs text-emerald-800 uppercase tracking-wider flex items-center gap-1.5 leading-none">
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded bg-emerald-500 h-2 w-2"></span>
+                        </span>
+                        Verified WhatsApp Channel Alerts
+                      </h5>
+                      <p className="font-sans text-xs text-slate-600 mt-1.5 leading-relaxed">
+                        यह भर्ती आधिकारिक तौर पर हमारे सत्यापित <strong className="text-emerald-700">@SarkariJobHub</strong> व्हाट्सएप चैनल पर प्रसारित की गई है।
+                      </p>
+                    </div>
+                  </div>
+                  <a 
+                    href="https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="shrink-0 w-full sm:w-auto text-center inline-flex items-center justify-center gap-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 text-xs font-bold transition duration-250 shadow-md shadow-emerald-600/10 cursor-pointer"
+                  >
+                    🟢 Join Channel For Fast Alerts
+                  </a>
+                </div>
+              )}
 
               {/* Description body */}
               <div>
