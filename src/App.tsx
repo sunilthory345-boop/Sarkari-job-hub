@@ -203,10 +203,13 @@ export default function App() {
     const deletedSaved = localStorage.getItem('sarkari_deleted_mock_ids');
     let deletedSet = new Set<string>();
     deletedSet.add('ssc-cgl-quant-1');
+    deletedSet.add('upsc-gs-1');
+    deletedSet.add('ssc-cgl-science-mock-1');
+    deletedSet.add('ssc-cgl-tier1-full-spec-1');
     if (deletedSaved) {
       try {
         const deletedIds = JSON.parse(deletedSaved) as string[];
-        deletedSet = new Set([...deletedIds, 'ssc-cgl-quant-1']);
+        deletedSet = new Set([...deletedIds, 'ssc-cgl-quant-1', 'upsc-gs-1', 'ssc-cgl-science-mock-1', 'ssc-cgl-tier1-full-spec-1']);
       } catch (e) {
         console.error(e);
       }

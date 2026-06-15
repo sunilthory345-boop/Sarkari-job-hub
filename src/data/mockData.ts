@@ -1,5 +1,6 @@
 import { GovJob, AdmitCard, JobResult, MockTest, CurrentAffair, Blog, AnswerKey } from '../types';
 import { getSSCCGL100Questions } from '../utils/cglMockGenerator';
+import { generateAllExtendedMocks } from '../utils/examMockGenerator';
 
 export const INITIAL_JOBS: GovJob[] = [
   {
@@ -1592,7 +1593,7 @@ export const INITIAL_ANSWER_KEYS: AnswerKey[] = [
   { id: 'upsc-cse-key-2026', title: 'UPSC Civil Services CSE Prelims GS Booklet Correct Keys', org: 'UPSC', released: '2026-06-01', objectionsLimit: '2026-06-11', pdfUrl: 'https://upsc.gov.in/cse_prelims_key_2026.pdf' }
 ];
 
-export const INITIAL_MOCK_TESTS: MockTest[] = [
+const ALL_MOCK_TESTS: MockTest[] = [
   {
     id: 'ssc-cgl-tier1-100q-grand-mock',
     title: 'SSC CGL Tier-1 100-Question Grand Mock (वास्तविक परीक्षा CBT इंटरफेस)',
@@ -1899,6 +1900,13 @@ export const INITIAL_MOCK_TESTS: MockTest[] = [
     negativeMark: 0.50
   }
 ];
+
+const ALL_MOCK_TESTS_WITH_EXTENDED = [
+  ...ALL_MOCK_TESTS.filter(t => t.id !== 'upsc-gs-1' && t.id !== 'ssc-cgl-science-mock-1' && t.id !== 'ssc-cgl-tier1-full-spec-1'),
+  ...generateAllExtendedMocks()
+];
+
+export const INITIAL_MOCK_TESTS: MockTest[] = ALL_MOCK_TESTS_WITH_EXTENDED;
 
 export const INITIAL_CURRENT_AFFAIRS: CurrentAffair[] = [
   {

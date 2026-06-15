@@ -51,22 +51,46 @@ export default function MockTestPortal({
   const [cbtTermsAccepted, setCbtTermsAccepted] = useState(false);
   const [cbtViewLanguage, setCbtViewLanguage] = useState<'English' | 'Hindi'>('English');
   const [questionCBTStates, setQuestionCBTStates] = useState<Record<string, 'not_visited' | 'not_answered' | 'answered' | 'marked_for_review' | 'answered_marked_for_review'>>({});
+  const [selectedCategoryFilter, setSelectedCategoryFilter] = useState<string>('All');
 
   // Active question filter by section
-  const getQuestionSection = (idx: number, totalQuestions: number): 'Reasoning' | 'General Awareness' | 'Quantitative Aptitude' | 'English Comprehension' | 'General Practice' => {
-    if (totalQuestions !== 100) return 'General Practice';
-    if (idx < 25) return 'Reasoning';
-    if (idx < 50) return 'General Awareness';
-    if (idx < 75) return 'Quantitative Aptitude';
-    return 'English Comprehension';
+  const getExamSections = (testCategory: string = '') => {
+    const cat = testCategory.toLowerCase();
+    if (cat.includes('upsc')) {
+      return [
+        { id: 'sec-1', label: 'History, Art & Culture', start: 0, end: 24 },
+        { id: 'sec-2', label: 'Geography & Environment', start: 25, end: 49 },
+        { id: 'sec-3', label: 'Indian Polity & Constitution', start: 50, end: 74 },
+        { id: 'sec-4', label: 'Economy & IR', start: 75, end: 99 }
+      ];
+    }
+    if (cat.includes('bank') || cat.includes('ibps')) {
+      return [
+        { id: 'sec-1', label: 'Quantitative Aptitude', start: 0, end: 34 },
+        { id: 'sec-2', label: 'Reasoning Ability', start: 35, end: 69 },
+        { id: 'sec-3', label: 'English Language', start: 70, end: 99 }
+      ];
+    }
+    if (cat.includes('railway') || cat.includes('ntpc')) {
+      return [
+        { id: 'sec-1', label: 'General Awareness', start: 0, end: 39 },
+        { id: 'sec-2', label: 'Mathematics', start: 40, end: 69 },
+        { id: 'sec-3', label: 'General Intelligence & Reasoning', start: 70, end: 99 }
+      ];
+    }
+    return [
+      { id: 'Reasoning', label: 'General Intelligence & Reasoning', start: 0, end: 24 },
+      { id: 'General Awareness', label: 'General Awareness', start: 25, end: 49 },
+      { id: 'Quantitative Aptitude', label: 'Quantitative Aptitude', start: 50, end: 74 },
+      { id: 'English Comprehension', label: 'English Comprehension', start: 75, end: 99 }
+    ];
   };
 
-  const getSectionIndices = (section: string) => {
-    if (section === 'Reasoning') return { start: 0, end: 24 };
-    if (section === 'General Awareness') return { start: 25, end: 49 };
-    if (section === 'Quantitative Aptitude') return { start: 50, end: 74 };
-    if (section === 'English Comprehension') return { start: 75, end: 99 };
-    return { start: 0, end: 0 };
+  const getQuestionSection = (idx: number, totalQuestions: number, category: string = ''): string => {
+    if (totalQuestions !== 100) return 'General Practice';
+    const sections = getExamSections(category);
+    const matched = sections.find(sec => idx >= sec.start && idx <= sec.end);
+    return matched ? matched.label : 'General Practice';
   };
 
   // For PYQ section
@@ -323,8 +347,37 @@ export default function MockTestPortal({
                 </div>
               )}
 
+              {/* Category Filter Pills (परीक्षा संवर्ग फिल्टर) */}
+              <div className="mb-6 flex flex-wrap gap-1.5 border-b border-slate-100 pb-4">
+                {[
+                  { id: 'All', label: 'All Exams (सभी)' },
+                  { id: 'UPSC Civil Services Prep', label: 'UPSC CSE (IAS)' },
+                  { id: 'SSC CGL Exam Prep', label: 'SSC CGL' },
+                  { id: 'IBPS PO Exam Prep', label: 'IBPS PO' },
+                  { id: 'RRB NTPC Exam Prep', label: 'RRB NTPC' },
+                  { id: 'SSC CHSL Exam Prep', label: 'SSC CHSL' }
+                ].map((catBtn) => {
+                  const isSel = selectedCategoryFilter === catBtn.id;
+                  return (
+                    <button
+                      key={catBtn.id}
+                      onClick={() => setSelectedCategoryFilter(catBtn.id)}
+                      className={`text-xs px-3.5 py-2 rounded-xl font-bold transition duration-150 border ${
+                        isSel
+                          ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                          : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                      }`}
+                    >
+                      {catBtn.label}
+                    </button>
+                  );
+                })}
+              </div>
+
               <div className="space-y-4">
-                {mockTests.map((test) => (
+                {mockTests
+                  .filter((t) => selectedCategoryFilter === 'All' || t.category === selectedCategoryFilter)
+                  .map((test) => (
                   <div 
                     key={test.id}
                     className="group border border-slate-100 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-blue-200 hover:bg-slate-50/50 transition duration-200"
@@ -667,20 +720,13 @@ export default function MockTestPortal({
           {/* SECTION TABS FOR 100 QUESTION CBT TEST */}
           {activeTest.questions.length === 100 && (
             <div className="bg-slate-200 border-b border-slate-300 p-2 flex gap-1 overflow-x-auto select-none scrollbar-thin">
-              {[
-                { id: 'Reasoning', label: 'General Intelligence & Reasoning' },
-                { id: 'General Awareness', label: 'General Awareness' },
-                { id: 'Quantitative Aptitude', label: 'Quantitative Aptitude' },
-                { id: 'English Comprehension', label: 'English Comprehension' }
-              ].map((sectionTab) => {
-                const currentSection = getQuestionSection(currentQuestionIdx, 100);
-                const isActive = currentSection === sectionTab.id;
+              {getExamSections(activeTest.category).map((sectionTab) => {
+                const isActive = currentQuestionIdx >= sectionTab.start && currentQuestionIdx <= sectionTab.end;
                 return (
                   <button
                     key={sectionTab.id}
                     onClick={() => {
-                      const range = getSectionIndices(sectionTab.id);
-                      navigateToQuestion(range.start);
+                      navigateToQuestion(sectionTab.start);
                     }}
                     className={`rounded-t-lg px-3.5 py-2 font-sans font-extrabold text-xs shrink-0 transition ${
                       isActive 
@@ -705,7 +751,7 @@ export default function MockTestPortal({
                 {/* Header title bar */}
                 <div className="bg-[#415b76] text-white px-4 py-2 flex justify-between items-center text-xs font-bold leading-none font-mono">
                   <span>
-                    SECTION: {getQuestionSection(currentQuestionIdx, activeTest.questions.length).toUpperCase()}
+                    SECTION: {getQuestionSection(currentQuestionIdx, activeTest.questions.length, activeTest.category).toUpperCase()}
                   </span>
                   <span>
                     QUESTION NO: {currentQuestionIdx + 1}
@@ -993,7 +1039,7 @@ export default function MockTestPortal({
               {activeTest?.questions.map((q, idx) => {
                 const isCorrect = selectedAnswers[q.id] === q.correctOptionIndex;
                 const wasSkipped = selectedAnswers[q.id] === undefined;
-                const sectionLabel = activeTest.questions.length === 100 ? getQuestionSection(idx, 100) : 'General Practice';
+                const sectionLabel = activeTest.questions.length === 100 ? getQuestionSection(idx, 100, activeTest.category) : 'General Practice';
 
                 return (
                   <div key={q.id} className="border border-slate-100 rounded-2xl p-4 bg-slate-50/40 relative">
