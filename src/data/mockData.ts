@@ -2,6 +2,77 @@ import { GovJob, AdmitCard, JobResult, MockTest, CurrentAffair, Blog, AnswerKey 
 
 export const INITIAL_JOBS: GovJob[] = [
   {
+    id: 'hssc-constable-2026',
+    title: 'Haryana HSSC Male & Female Police Constable Recruitment 2026',
+    org: 'Haryana Staff Selection Commission (HSSC)',
+    category: 'Police',
+    qualification: '12th Pass',
+    ageLimit: '18 - 25 Years (Relaxation Applicable)',
+    salary: 'Rs. 21,700 - Rs. 69,100 (Level 3 Pay Scale)',
+    fees: {
+      General: '₹100',
+      OBC: '₹100',
+      SC_ST_Female: '₹0 (Haryana Female & Reserved Category Exempt)'
+    },
+    totalPosts: 5600,
+    applyUrl: 'https://hssc.gov.in',
+    pdfUrl: 'https://hssc.gov.in/notifications/HSSC_Advt_Police_Constable_2026.pdf',
+    officialWebsite: 'https://hssc.gov.in',
+    postedDate: '2026-06-15',
+    lastDate: '2026-07-15',
+    importantDates: {
+      applyStart: '2026-06-15',
+      applyEnd: '2026-07-15',
+      examDate: '2026-09-10',
+      admitCardRelease: '2026-08-30'
+    },
+    selectionProcess: [
+      'Physical Measurement Test (PMT - Height & Chest eligibility)',
+      'Physical Screening Test (PST - Run 2.5km for Men / 1.0km for Women)',
+      'Knowledge Written Examination (90% weightage index)',
+      'Socio-Economic Criteria evaluation & Additional Qualification weights'
+    ],
+    location: 'Haryana',
+    description: 'Haryana Staff Selection Commission is conducting a major recruitment drive of 5,600 Male and Female Police Constables in Haryana Police. Apply links are officially active from today, June 15, 2026.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'bpsc-bho-horticulture-2026',
+    title: 'Bihar BPSC Block Horticulture Officer (BHO) Vacancies 2026',
+    org: 'Bihar Public Service Commission (BPSC)',
+    category: 'Others',
+    qualification: 'B.Sc',
+    ageLimit: '21 - 37 Years (Male), 21 - 40 Years (Female)',
+    salary: 'Rs. 35,400 - Rs. 1,12,400 (Level 6 Pay Scale)',
+    fees: {
+      General: '₹750',
+      OBC: '₹750',
+      SC_ST_Female: '₹200 (For SC, ST and Resident Women of Bihar status)'
+    },
+    totalPosts: 318,
+    applyUrl: 'https://bpsc.bih.nic.in',
+    pdfUrl: 'https://bpsc.bih.nic.in/Advt/BHO_Reopened_Advt_2026.pdf',
+    officialWebsite: 'https://bpsc.bih.nic.in',
+    postedDate: '2026-06-15',
+    lastDate: '2026-06-30',
+    importantDates: {
+      applyStart: '2026-06-15',
+      applyEnd: '2026-06-30',
+      examDate: '2026-08-22',
+      admitCardRelease: '2026-08-12'
+    },
+    selectionProcess: [
+      'Written Examination (General Hindi, GS papers, Agriculture/Horticulture)',
+      'Personal Interview round (50 Marks evaluative index)',
+      'Document Verification & Merit classification list'
+    ],
+    location: 'Bihar',
+    description: 'BPSC has officially reopened the online application portal for recruitment of Block Horticulture Officer (BHO) inside Government of Bihar Agriculture Department.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
     id: 'india-post-gds-2026',
     title: 'India Post Gramin Dak Sevak (GDS) Recruitment 2026',
     org: 'Department of Posts, India Post',
@@ -1264,6 +1335,36 @@ export const INITIAL_JOBS: GovJob[] = [
 
 export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
   {
+    id: 'upsc-cse-admit-2026',
+    title: 'UPSC Civil Services (IAS/IFS) Prelims e-Admit Card 2026',
+    org: 'Union Public Service Commission (UPSC)',
+    examDate: '2026-06-21',
+    examCity: 'All India Authorized Center Cities (As in Admit Card)',
+    downloadUrl: 'https://upsconline.nic.in/eadmitcard/subsession.php',
+    officialLink: 'https://upsc.gov.in',
+    addedDate: '2026-06-15'
+  },
+  {
+    id: 'nta-neet-ug-reexam-admit-2026',
+    title: 'NTA NEET UG Re-Exam Admit Card 2026 (For Affected Aspirants)',
+    org: 'National Testing Agency (NTA)',
+    examDate: '2026-06-23',
+    examCity: 'Allotted Specially Setup Exam Center Halls',
+    downloadUrl: 'https://exams.nta.ac.in/NEET/',
+    officialLink: 'https://nta.ac.in',
+    addedDate: '2026-06-15'
+  },
+  {
+    id: 'ssc-phase12-admit-2026',
+    title: 'SSC Selection Post Phase XII Call Letter & Region-wise Status 2026',
+    org: 'Staff Selection Commission (SSC)',
+    examDate: '2026-06-20 to 2026-06-26',
+    examCity: 'Download Region-wise (NR, CR, WR, SR, ER, MPR, KKR)',
+    downloadUrl: 'https://ssc.gov.in/admit-card',
+    officialLink: 'https://ssc.gov.in',
+    addedDate: '2026-06-15'
+  },
+  {
     id: 'ssc-chsl-admit-2026',
     title: 'SSC CHSL (10+2) Tier-I Admit Card 2026',
     org: 'Staff Selection Commission (SSC)',
@@ -1357,6 +1458,36 @@ export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
 
 export const INITIAL_RESULTS: JobResult[] = [
   {
+    id: 'nta-neet-ug-final-res-2026',
+    title: 'NTA NEET UG 2026 Scorecard, Revised Rank List & All India Cutoffs',
+    org: 'National Testing Agency (NTA)',
+    meritListUrl: 'https://exams.nta.ac.in/NEET/',
+    scoreCardUrl: 'https://exams.nta.ac.in/NEET/check_score',
+    cutOff: {
+      UR: '164 Marks (50th percentile index)',
+      OBC: '129 Marks (40th percentile index)',
+      SC: '129 Marks',
+      ST: '129 Marks'
+    },
+    downloadUrl: 'https://exams.nta.ac.in/NEET/',
+    releaseDate: '2026-06-15'
+  },
+  {
+    id: 'ssc-gd-constable-res-2026',
+    title: 'SSC GD Constable 2026 CBT Written Test Result & PET/PST Qualifier List',
+    org: 'Staff Selection Commission (SSC)',
+    meritListUrl: 'https://ssc.gov.in/GD_Constable_2026_Qualified_List.pdf',
+    scoreCardUrl: 'https://ssc.gov.in/gd_scores',
+    cutOff: {
+      UR: '138.5 Marks (General ground)',
+      OBC: '135.2 Marks',
+      SC: '122.6 Marks',
+      ST: '118.4 Marks'
+    },
+    downloadUrl: 'https://ssc.gov.in',
+    releaseDate: '2026-06-15'
+  },
+  {
     id: 'rsmssb-ldc-result-2026',
     title: 'RSMSSB Rajasthan LDC / Clerk Grade-II Written Result 2026',
     org: 'Rajasthan Staff Selection Board (RSMSSB)',
@@ -1449,6 +1580,8 @@ export const INITIAL_RESULTS: JobResult[] = [
 ];
 
 export const INITIAL_ANSWER_KEYS: AnswerKey[] = [
+  { id: 'ugc-net-june-key-2026', title: 'UGC NET June 2026 Provisional Solved Keys (Paper 1 & Paper 2)', org: 'National Testing Agency (NTA)', released: '2026-06-15', objectionsLimit: '2026-06-25', pdfUrl: 'https://ugcnet.nta.ac.in/provisional_key_june_2026.pdf' },
+  { id: 'up-bed-jee-key-2026', title: 'UP Joint B.Ed Entrance Exam (JEE) 2026 Official Solved Answer Key', org: 'Bundelkhand University, Jhansi', released: '2026-06-15', objectionsLimit: '2026-06-22', pdfUrl: 'https://bujhansi.ac.in/up-bed-2026-solved-sheet.pdf' },
   { id: 'rsmssb-ldc-key-2026', title: 'RSMSSB Rajasthan LDC / Clerk Grade-II 2026 Provisional Key', org: 'RSMSSB Rajasthan', released: '2026-11-20', objectionsLimit: '2026-11-30', pdfUrl: 'https://rsmssb.rajasthan.gov.in/ldc_provisional_key.pdf' },
   { id: 'rsmssb-pashu-key-2526', title: 'RSMSSB Rajasthan Animal Attendant (पशु परिचारक) Solved OMR Key', org: 'RSMSSB Rajasthan', released: '2026-12-10', objectionsLimit: '2026-12-20', pdfUrl: 'https://rsmssb.rajasthan.gov.in/pashu_paricharak_key.pdf' },
   { id: 'rpsc-ras-key-2026', title: 'RPSC Rajasthan RAS/RTS Prelims GS Solved Answer Booklets', org: 'RPSC Rajasthan', released: '2026-09-18', objectionsLimit: '2026-09-28', pdfUrl: 'https://rpsc.rajasthan.gov.in/ras_prelims_key_2026.pdf' },

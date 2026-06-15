@@ -110,30 +110,33 @@ export default function AdminConsole({
     }
 
     links += `👇 *Join our Verified WhatsApp Channel for daily alerts:* \nhttps://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U\n\n`;
+    links += `🚀 *Join our Official Telegram Channel for instantly downloadable files & PDFs:* \nhttps://t.me/JobSarkariHubOfficial\n\n`;
     links += `_Forward this to friends who need an update!_ 🙏✨`;
 
     const fullMessage = `${header}${body}${links}`;
 
-    // Add to WA Auto Broadcasts
+    // Add to WA and Telegram Auto Broadcasts
     const newBroadcast = {
       id: `wa-auto-${Date.now()}`,
       type: type === 'jobs' ? 'Job Alert' : type === 'admit-card' ? 'Admit Card' : type === 'result' ? 'Result' : type === 'answer-key' ? 'Answer Key' : 'Free Mock Test',
       title: `${org} - ${title}`,
       timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + ', Today',
       message: fullMessage,
-      status: 'DELIVERED' as const
+      status: 'DELIVERED' as const,
+      telegramStatus: 'DELIVERED' as const
     };
 
     setWaAutoBroadcasts(prev => [newBroadcast, ...prev]);
 
     // Format secure payload object
     const payloadObj = {
-      event: "content.published_notify_whatsapp",
+      event: "content.published_notify_social",
       timestamp: new Date().toISOString(),
       type,
       title,
       org,
-      whatsapp_formatted_text: fullMessage
+      whatsapp_formatted_text: fullMessage,
+      telegram_formatted_text: fullMessage
     };
 
     const isWebhookActive = localStorage.getItem('sarkari_wa_enabled') === 'true';
@@ -143,7 +146,7 @@ export default function AdminConsole({
     // Log simulated or real webhook trigger
     const log = {
       timestamp: new Date().toLocaleTimeString(),
-      status: isWebhookActive && waWebhookUrl ? 'AUTO_WHATSAPP_DISPATCHED_HTTP_POST' : 'AUTO_WHATSAPP_CHANNEL_SYNCED',
+      status: isWebhookActive && waWebhookUrl ? 'AUTO_SOCIAL_DISPATCHED_HTTP_POST' : 'AUTO_WHATSAPP_AND_TELEGRAM_SYNCED',
       payload: JSON.stringify(payloadObj, null, 2)
     };
     setWebhookLogs(prev => [log, ...prev]);
@@ -206,7 +209,8 @@ export default function AdminConsole({
     }
 
     if (includeJoinLink) {
-      links += `👇 *Join our Verified WhatsApp Channel for daily alerts:* \nhttps://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U\n\n`;
+      links += `👇 *Join our Verified WhatsApp Channel for daily alerts:* \nhttps://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq5U\n\n`;
+      links += `🚀 *Join our Official Telegram Channel for instantly downloadable files & PDFs:* \nhttps://t.me/JobSarkariHubOfficial\n\n`;
     }
 
     links += `_Forward this to friends who need a job!_ 🙏✨`;
@@ -802,7 +806,7 @@ What is the standard pH level of pure distilled water at normal room temperature
             { id: 'jobs', label: 'Government Positions & Vacancies' },
             { id: 'mocks', label: 'Interactive MCQ Test Creator' },
             { id: 'cards', label: 'Admit Cards / Official Results' },
-            { id: 'whatsapp', label: '📢 WhatsApp Channel Broadcast' }
+            { id: 'whatsapp', label: '📢 WhatsApp & Telegram Broadcast' }
           ].map((tab) => (
             <button
               key={tab.id}
@@ -1619,24 +1623,32 @@ What is the standard pH level of pure distilled water at normal room temperature
       {activeAdminTab === 'whatsapp' && (
         <div className="space-y-6">
           {/* Header Description Banner */}
-          <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 rounded-3xl p-6 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="bg-gradient-to-r from-emerald-50 via-teal-50 to-sky-50 border border-emerald-100 rounded-3xl p-6 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="space-y-1">
-              <h3 className="text-base font-white text-slate-900 font-extrabold flex items-center gap-1.5">
-                <span className="p-1 px-2 rounded-lg bg-emerald-500 text-white text-xs font-mono font-black">PRO</span>
+              <h3 className="text-base text-slate-900 font-extrabold flex items-center gap-1.5">
+                <span className="p-1 px-2 rounded-lg bg-emerald-500 text-white text-[9px] font-mono font-black tracking-wider shadow-sm">PRO ACTIVE</span>
                 Sarkari Broadcast Center (WhatsApp & Telegram)
               </h3>
               <p className="text-xs text-slate-600">
-                Generate pre-styled, Hindi-infused vacancy alert cards and sync alerts to your verified WhatsApp channel <strong className="text-emerald-700">(@SarkariJobHub)</strong> or Telegram community instantly.
+                Generate pre-styled, Hindi-infused vacancy alert cards and sync alerts to your verified WhatsApp channel <strong className="text-emerald-700">(@SarkariJobHub)</strong> and Telegram community instantly.
               </p>
             </div>
             <div className="flex gap-2 shrink-0">
               <a 
-                href="https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U" 
+                href="https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq5U" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="rounded-xl px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs flex items-center gap-1.5 transition shadow"
               >
-                <MessageSquare className="h-4 w-4" /> View Live Channel
+                <MessageSquare className="h-4 w-4" /> WhatsApp Channel
+              </a>
+              <a 
+                href="https://t.me/JobSarkariHubOfficial" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="rounded-xl px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs flex items-center gap-1.5 transition shadow"
+              >
+                <Send className="h-4 w-4" /> Telegram Channel
               </a>
             </div>
           </div>
@@ -1731,24 +1743,24 @@ What is the standard pH level of pure distilled water at normal room temperature
                 </div>
               </div>
 
-              {/* Automated WhatsApp Channel Real-Time History Feed */}
+              {/* Automated WhatsApp & Telegram Channel Real-Time History Feed */}
               <div className="bg-white rounded-3xl border border-slate-200 p-5 shadow-xs space-y-4">
                 <div className="flex justify-between items-center pb-2 border-b border-slate-100">
                   <h4 className="font-extrabold text-slate-800 text-xs uppercase tracking-wider flex items-center gap-1.5">
                     <span className="inline-flex rounded-full h-2 w-2 bg-emerald-500 animate-pulse"></span>
-                    WhatsApp Channel Live Feed
+                    Broadcast Feeds Live status
                   </h4>
-                  <span className="text-[10px] bg-emerald-50 text-emerald-700 font-extrabold px-2.5 py-0.5 rounded-full">
-                    {waAutoBroadcasts.length} Sent
+                  <span className="text-[10px] bg-emerald-50 text-emerald-800 font-extrabold px-2.5 py-0.5 rounded-full">
+                    {waAutoBroadcasts.length} Alerts Dispatched
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-500 leading-normal">
-                  These high-priority alerts with detailed parameters were dispatched automatically to the WhatsApp Channel upon publication:
+                  These high-priority alerts with detailed parameters were dispatched automatically to the WhatsApp Channel and Telegram Community Feed upon publication:
                 </p>
 
                 <div className="space-y-3 max-h-[340px] overflow-y-auto pr-1">
                   {waAutoBroadcasts.map((bc, idx) => (
-                    <div key={bc.id || idx} className="p-3 bg-slate-50 border border-slate-150 rounded-2xl space-y-2 hover:border-emerald-200 transition">
+                    <div key={bc.id || idx} className="p-3 bg-slate-50 border border-slate-150 rounded-2xl space-y-2 hover:border-emerald-250 hover:shadow-2xs transition">
                       <div className="flex justify-between items-center text-[10px]">
                         <span className="font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100 uppercase text-[8px]">
                           📢 {bc.type}
@@ -1761,16 +1773,21 @@ What is the standard pH level of pure distilled water at normal room temperature
                       <div className="text-[10px] text-slate-650 bg-white p-2 rounded-xl border border-slate-100 font-mono whitespace-pre-wrap line-clamp-3 leading-normal select-all">
                         {bc.message}
                       </div>
-                      <div className="flex justify-between items-center text-[9px] pt-1">
-                        <span className="text-emerald-600 font-extrabold flex items-center gap-1">
-                          🟢 Delivered ✓✓
-                        </span>
+                      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 text-[9px] pt-1">
+                        <div className="flex flex-wrap gap-1.5 font-bold">
+                          <span className="text-emerald-750 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-100 flex items-center gap-0.5">
+                            🟢 WA: Delivered ✓✓
+                          </span>
+                          <span className="text-sky-750 bg-sky-50 px-1.5 py-0.5 rounded border border-sky-100 flex items-center gap-0.5">
+                            ✈️ TG: Sent ✓
+                          </span>
+                        </div>
                         <button
                           onClick={() => {
                             navigator.clipboard.writeText(bc.message);
-                            triggerMessage("📋 WhatsApp notification text copied with full details!");
+                            triggerMessage("📋 Notification text copied with full details!");
                           }}
-                          className="text-blue-600 hover:underline hover:text-blue-700 font-extrabold flex items-center gap-1"
+                          className="text-blue-600 hover:underline hover:text-blue-700 font-extrabold flex items-center gap-1 shrink-0"
                         >
                           Copy Alert Text
                         </button>
@@ -1911,9 +1928,18 @@ What is the standard pH level of pure distilled water at normal room temperature
                       href={`https://api.whatsapp.com/send?text=${encodeURIComponent(customMsgText)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="rounded-xl p-3 bg-[#25D366] hover:bg-[#20ba5a] text-white font-black text-xs flex items-center justify-center gap-1.5 transition shadow"
+                      className="rounded-xl p-3 bg-[#25D366] hover:bg-[#20ba5a] text-white font-black text-xs flex items-center justify-center gap-1.5 transition shadow text-center"
                     >
-                      <Send className="h-4 w-4" /> Send Channel
+                      <MessageSquare className="h-4 w-4" /> Send WhatsApp
+                    </a>
+
+                    <a
+                      href={`https://t.me/share/url?url=${encodeURIComponent('https://sarkari-job-hub-v595.onrender.com')}&text=${encodeURIComponent(customMsgText)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-xl p-3 bg-[#0088cc] hover:bg-[#007bbf] text-white font-black text-xs flex items-center justify-center gap-1.5 transition shadow text-center"
+                    >
+                      <Send className="h-4 w-4" /> Send Telegram
                     </a>
                   </div>
                 </div>
