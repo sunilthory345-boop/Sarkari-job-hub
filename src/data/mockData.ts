@@ -1,4 +1,5 @@
 import { GovJob, AdmitCard, JobResult, MockTest, CurrentAffair, Blog, AnswerKey } from '../types';
+import { getSSCCGL100Questions } from '../utils/cglMockGenerator';
 
 export const INITIAL_JOBS: GovJob[] = [
   {
@@ -1592,6 +1593,15 @@ export const INITIAL_ANSWER_KEYS: AnswerKey[] = [
 ];
 
 export const INITIAL_MOCK_TESTS: MockTest[] = [
+  {
+    id: 'ssc-cgl-tier1-100q-grand-mock',
+    title: 'SSC CGL Tier-1 100-Question Grand Mock (वास्तविक परीक्षा CBT इंटरफेस)',
+    category: 'SSC CGL Exam Prep',
+    durationMinutes: 60,
+    questions: getSSCCGL100Questions(),
+    totalMarks: 200,
+    negativeMark: 0.50
+  },
   {
     id: 'ssc-cgl-tier1-full-spec-1',
     title: 'SSC CGL Tier-1 High-Quality Mock Test (Tier-1 विशेष परीक्षा)',

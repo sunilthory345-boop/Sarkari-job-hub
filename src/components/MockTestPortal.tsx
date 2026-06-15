@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   Award, Clock, CheckCircle2, AlertTriangle, 
   HelpCircle, RefreshCw, FileText, ChevronRight, 
-  ChevronLeft, BookOpen, Star, Sparkles, Download, Lock
+  ChevronLeft, BookOpen, Star, Sparkles, Download, Lock, Check, Minimize2, Video, Terminal
 } from 'lucide-react';
 import { MockTest, UserProfile, Question } from '../types';
 
@@ -46,6 +46,29 @@ export default function MockTestPortal({
     percentage: number;
   } | null>(null);
 
+  // CBT State Machine Management
+  const [cbtInstructionsActive, setCbtInstructionsActive] = useState(false);
+  const [cbtTermsAccepted, setCbtTermsAccepted] = useState(false);
+  const [cbtViewLanguage, setCbtViewLanguage] = useState<'English' | 'Hindi'>('English');
+  const [questionCBTStates, setQuestionCBTStates] = useState<Record<string, 'not_visited' | 'not_answered' | 'answered' | 'marked_for_review' | 'answered_marked_for_review'>>({});
+
+  // Active question filter by section
+  const getQuestionSection = (idx: number, totalQuestions: number): 'Reasoning' | 'General Awareness' | 'Quantitative Aptitude' | 'English Comprehension' | 'General Practice' => {
+    if (totalQuestions !== 100) return 'General Practice';
+    if (idx < 25) return 'Reasoning';
+    if (idx < 50) return 'General Awareness';
+    if (idx < 75) return 'Quantitative Aptitude';
+    return 'English Comprehension';
+  };
+
+  const getSectionIndices = (section: string) => {
+    if (section === 'Reasoning') return { start: 0, end: 24 };
+    if (section === 'General Awareness') return { start: 25, end: 49 };
+    if (section === 'Quantitative Aptitude') return { start: 50, end: 74 };
+    if (section === 'English Comprehension') return { start: 75, end: 99 };
+    return { start: 0, end: 0 };
+  };
+
   // For PYQ section
   const previousPapers = [
     { id: 'pyq-ssc-2025', title: 'SSC CGL General Awareness 2025 Solved Paper', year: 2025, exam: 'SSC', size: '2.4 MB', premium: false },
@@ -56,8 +79,8 @@ export default function MockTestPortal({
 
   // Timer logic
   useEffect(() => {
-    if (!isTestRunning || timeLeft <= 0) {
-      if (timeLeft === 0 && isTestRunning) {
+    if (!isTestRunning || timeLeft <= 0 || cbtInstructionsActive) {
+      if (timeLeft === 0 && isTestRunning && !cbtInstructionsActive) {
         handleAutoSubmit();
       }
       return;
@@ -68,13 +91,30 @@ export default function MockTestPortal({
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [timeLeft, isTestRunning]);
+  }, [timeLeft, isTestRunning, cbtInstructionsActive]);
 
   const handleStartTest = (test: MockTest) => {
     setActiveTest(test);
     setCurrentQuestionIdx(0);
     setSelectedAnswers({});
+    
+    // Create initial state for CBT palette
+    const initialStates: Record<string, 'not_visited' | 'not_answered' | 'answered' | 'marked_for_review' | 'answered_marked_for_review'> = {};
+    test.questions.forEach((q, idx) => {
+      initialStates[q.id] = idx === 0 ? 'not_answered' : 'not_visited';
+    });
+    setQuestionCBTStates(initialStates);
+    
     setTimeLeft(test.durationMinutes * 60);
+    
+    // Enable CBT Instructions for grand mock
+    if (test.questions.length >= 25) {
+      setCbtInstructionsActive(true);
+      setCbtTermsAccepted(false);
+    } else {
+      setCbtInstructionsActive(false);
+    }
+    
     setIsTestRunning(true);
     setTestCompleted(false);
     setCompletedStats(null);
@@ -92,10 +132,95 @@ export default function MockTestPortal({
     }
   }, [initialActiveTestId, mockTests]);
 
+  const navigateToQuestion = (idx: number) => {
+    if (!activeTest) return;
+    const currentQ = activeTest.questions[currentQuestionIdx];
+    const targetQ = activeTest.questions[idx];
+
+    setQuestionCBTStates(prev => {
+      const updated = { ...prev };
+      // If previous question was visited but still marked unvisited/not_answered, evaluate
+      if (updated[currentQ.id] === 'not_visited') {
+        updated[currentQ.id] = 'not_answered';
+      }
+      // Target question becomes not_answered if it was not_visited
+      if (updated[targetQ.id] === 'not_visited') {
+        updated[targetQ.id] = 'not_answered';
+      }
+      return updated;
+    });
+
+    setCurrentQuestionIdx(idx);
+  };
+
   const handleSelectOption = (questionId: string, optionIndex: number) => {
     setSelectedAnswers(prev => ({
       ...prev,
       [questionId]: optionIndex
+    }));
+  };
+
+  const handleSaveAndNext = () => {
+    if (!activeTest) return;
+    const currentQ = activeTest.questions[currentQuestionIdx];
+    const hasAnswer = selectedAnswers[currentQ.id] !== undefined;
+
+    setQuestionCBTStates(prev => ({
+      ...prev,
+      [currentQ.id]: hasAnswer ? 'answered' : 'not_answered'
+    }));
+
+    if (currentQuestionIdx < activeTest.questions.length - 1) {
+      const nextIdx = currentQuestionIdx + 1;
+      const nextQ = activeTest.questions[nextIdx];
+      setQuestionCBTStates(prev => {
+        const updated = { ...prev };
+        if (updated[nextQ.id] === 'not_visited') {
+          updated[nextQ.id] = 'not_answered';
+        }
+        return updated;
+      });
+      setCurrentQuestionIdx(nextIdx);
+    }
+  };
+
+  const handleMarkForReviewAndNext = () => {
+    if (!activeTest) return;
+    const currentQ = activeTest.questions[currentQuestionIdx];
+    const hasAnswer = selectedAnswers[currentQ.id] !== undefined;
+
+    setQuestionCBTStates(prev => ({
+      ...prev,
+      [currentQ.id]: hasAnswer ? 'answered_marked_for_review' : 'marked_for_review'
+    }));
+
+    if (currentQuestionIdx < activeTest.questions.length - 1) {
+      const nextIdx = currentQuestionIdx + 1;
+      const nextQ = activeTest.questions[nextIdx];
+      setQuestionCBTStates(prev => {
+        const updated = { ...prev };
+        if (updated[nextQ.id] === 'not_visited') {
+          updated[nextQ.id] = 'not_answered';
+        }
+        return updated;
+      });
+      setCurrentQuestionIdx(nextIdx);
+    }
+  };
+
+  const handleClearResponse = () => {
+    if (!activeTest) return;
+    const currentQ = activeTest.questions[currentQuestionIdx];
+
+    setSelectedAnswers(prev => {
+      const updated = { ...prev };
+      delete updated[currentQ.id];
+      return updated;
+    });
+
+    setQuestionCBTStates(prev => ({
+      ...prev,
+      [currentQ.id]: 'not_answered'
     }));
   };
 
@@ -117,7 +242,7 @@ export default function MockTestPortal({
       }
     });
 
-    const marksPerQuestion = 2; // Fixed standard mark per answer
+    const marksPerQuestion = 2; // CGL tier 1 offers +2 marks per correct answer
     const rawScore = correct * marksPerQuestion;
     const penalty = wrong * activeTest.negativeMark;
     const finalScore = Number((rawScore - penalty).toFixed(2));
@@ -153,19 +278,27 @@ export default function MockTestPortal({
   };
 
   const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
+    const hours = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  // Counting state palettes
+  const getCBTStateCount = (stateType: 'not_visited' | 'not_answered' | 'answered' | 'marked_for_review' | 'answered_marked_for_review') => {
+    if (!activeTest) return 0;
+    return Object.values(questionCBTStates).filter(s => s === stateType).length;
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8" id="mock-test-portal-root">
       
       {!isTestRunning && !testCompleted ? (
-        // Test Selection Mode
-        <div className="grid gap-6 md:grid-cols-12">
+        // ==========================================
+        // 1. TEST SELECTION PANEL
+        // ==========================================
+        <div className="grid gap-6 md:grid-cols-12 animate-fadeIn">
           
-          {/* Active MCQs list */}
           <div className="md:col-span-8 space-y-6">
             <div className="rounded-2xl border border-blue-50 bg-white p-5 shadow-xs">
               <h3 className="font-sans text-base font-bold text-slate-900 mb-1">
@@ -196,17 +329,17 @@ export default function MockTestPortal({
                     key={test.id}
                     className="group border border-slate-100 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-blue-200 hover:bg-slate-50/50 transition duration-200"
                   >
-                    <div>
+                    <div className="space-y-1">
                       <div className="flex items-center flex-wrap gap-2">
-                        <span className="inline-block rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-bold text-blue-800">
+                        <span className="inline-block rounded-full bg-blue-50 px-2.5 py-0.5 text-[10px] font-bold text-blue-800">
                           {test.category}
                         </span>
                         <span className="text-xs text-slate-400 font-medium font-mono">
-                          {test.questions.length} Items MCQ
+                          {test.questions.length} Items MCQ (बहुविकल्पीय)
                         </span>
-                        {test.id === 'ssc-cgl-science-mock-1' && (
-                          <span className="inline-block rounded-full bg-emerald-100 text-emerald-800 px-2 py-0.5 text-[10px] font-extrabold border border-emerald-200">
-                            ✨ Clean study mode (PRACTICE MOCK watermark removed)
+                        {test.questions.length === 100 && (
+                          <span className="inline-block rounded-full bg-red-100 text-red-800 px-2 py-0.5 text-[10px] font-extrabold border border-red-200 animate-pulse">
+                            🔥 Real TCS CBT Engine (100 Qs)
                           </span>
                         )}
                       </div>
@@ -227,7 +360,7 @@ export default function MockTestPortal({
 
                     <button
                       onClick={() => handleStartTest(test)}
-                      className="rounded-xl bg-blue-600 py-2.5 px-4 text-xs font-bold text-white shadow-xs hover:bg-blue-700 transition"
+                      className="rounded-xl bg-blue-600 py-2.5 px-5 text-xs font-bold text-white shadow-xs hover:bg-blue-750 transition duration-150 transform hover:-translate-y-0.5 shrink-0"
                     >
                       Begin Assessment
                     </button>
@@ -236,7 +369,7 @@ export default function MockTestPortal({
               </div>
             </div>
 
-            {/* Previous Year Papers download center */}
+            {/* Previous Year Papers */}
             <div className="rounded-2xl border border-blue-50 bg-white p-5 shadow-xs">
               <h3 className="font-sans text-base font-bold text-slate-900 mb-1">
                 📚 Previous Year Question Papers (PYQs)
@@ -271,7 +404,7 @@ export default function MockTestPortal({
                           href="#"
                           onClick={(e) => {
                             e.preventDefault();
-                            alert(`File "${paper.title}" download triggered! Saved PDF to downloads folder.`);
+                            alert(`File "${paper.title}" download triggered! Saved PDF to downloads.`);
                           }}
                           className="text-xs text-blue-600 font-bold flex items-center gap-1 hover:underline cursor-pointer"
                         >
@@ -285,9 +418,8 @@ export default function MockTestPortal({
             </div>
           </div>
 
-          {/* Quick FAQ / Guidelines Sidebar */}
           <div className="md:col-span-4 space-y-6">
-            <div className="rounded-2xl border border-blue-50 bg-linear-to-b from-blue-900 to-indigo-950 p-5 text-white shadow-lg">
+            <div className="rounded-2xl border border-blue-50 bg-gradient-to-b from-blue-900 to-indigo-950 p-5 text-white shadow-lg">
               <h4 className="font-sans text-sm font-extrabold flex items-center gap-1.5">
                 <Sparkles className="h-4.5 w-4.5 text-amber-300 animate-pulse" />
                 Sarkari Hub Leaderboard
@@ -298,16 +430,16 @@ export default function MockTestPortal({
 
               <div className="mt-4 space-y-2 text-xs">
                 <div className="flex justify-between items-center bg-white/10 p-2 rounded-lg">
-                  <span className="font-sans font-semibold">🏆 Rank 1: Pankaj K.</span>
-                  <span className="font-mono text-amber-300">5.8 Marks (96%)</span>
+                  <span className="font-sans font-semibold font-mono">🏆 Rank 1: Pankaj K.</span>
+                  <span className="font-mono text-amber-300">188.5 Marks (94.2%)</span>
                 </div>
                 <div className="flex justify-between items-center bg-white/5 p-2 rounded-lg">
                   <span className="font-sans font-medium text-slate-200">2: Shreya J.</span>
-                  <span className="font-mono text-slate-300">5.5 Marks</span>
+                  <span className="font-mono text-slate-300">181.0 Marks</span>
                 </div>
                 <div className="flex justify-between items-center bg-white/5 p-2 rounded-lg">
                   <span className="font-sans text-slate-200">3: Rohit Raj</span>
-                  <span className="font-mono text-slate-300">5.2 Marks</span>
+                  <span className="font-mono text-slate-300">176.4 Marks</span>
                 </div>
                 <div className="flex justify-between items-center bg-blue-500/10 p-2 rounded-lg border border-blue-400/20">
                   <span className="font-sans font-bold text-amber-100">You ({user.name.split(' ')[0]})</span>
@@ -325,200 +457,468 @@ export default function MockTestPortal({
                 <HelpCircle className="h-4 w-4 text-blue-600" />
                 Assessment Instructions
               </h4>
-              <p>1. Clicking 'Begin Assessment' starts the server-authoritative ticking timer.</p>
-              <p>2. Questions are in MCQ format with 4 possible choices.</p>
-              <p>3. **Negative Marking Rules**: Unanswered questions incur 0 points. Selecting a wrong option deducts points as outlined on the exam banner.</p>
-              <p>4. Upon completion, an assessment breakdown scorecard along with key explanations is immediately loaded.</p>
+              <p>1. Clicking 'Begin Assessment' locks your session and launches the test parameters.</p>
+              <p>2. For 100-Question tests, you will see a detailed TCS CBT panel showing your question statuses.</p>
+              <p>3. **Negative Marking Rules**: Unanswered questions incur 0 points. Selecting a wrong option deducts 0.50 marks.</p>
+              <p>4. Upon completion, a comprehensive answer key worksheet with detailed bilingual answer summaries loaded.</p>
             </div>
+          </div>
+        </div>
+      ) : isTestRunning && activeTest && cbtInstructionsActive ? (
+        // ==========================================
+        // 2. TCS iON CODES / CBT PROTOCOL INSTRUCTIONS SCREEN
+        // ==========================================
+        <div className="bg-[#f4f4f4] border border-slate-300 rounded-3xl p-4 md:p-6 shadow-2xl font-sans max-w-5xl mx-auto animate-fadeIn text-slate-800">
+          
+          {/* Header */}
+          <div className="bg-slate-200 border border-slate-300 rounded-2xl p-4 flex justify-between items-center gap-4 mb-4">
+            <div>
+              <h2 className="text-base font-extrabold tracking-tight text-[#0F172A] uppercase flex items-center gap-1.5 font-mono">
+                <Terminal className="h-5 w-5 text-blue-600 shrink-0" />
+                TCS iON CBT Exam Terminal - Candidate Instructions
+              </h2>
+              <span className="text-xs text-slate-500 font-semibold block mt-0.5">Please read the instructions carefully before entering the examination environment.</span>
+            </div>
+            <div className="bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-300 text-xs text-right font-mono font-extrabold hidden md:block">
+              Language / भाषा: <span className="text-blue-700">Bilingual (हिन्दी/English)</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-start">
+            
+            {/* Left instructions block */}
+            <div className="md:col-span-3 bg-white border border-slate-200 rounded-2xl p-5 overflow-y-auto max-h-[460px] space-y-4 text-xs leading-relaxed text-slate-700 font-sans shadow-xs">
+              <h3 className="font-bold text-slate-900 border-b pb-2 text-sm">General Instructions / सामान्य निर्देश:</h3>
+              
+              <div className="space-y-2">
+                <p className="font-bold text-[#1E3A8A]">1. Total duration of examination is 60 minutes. / परीक्षा की कुल अवधि 60 मिनट है।</p>
+                <p>2. The clock will be set at the server. The countdown timer in the top right corner of screen will display the remaining time available for you to complete the exam. / घड़ी को सर्वर पर सेट किया गया है। स्क्रीन के शीर्ष पर दाईं ओर उल्टी गिनती घड़ी परीक्षा पूरी करने के लिए बचा हुआ समय दिखाएगी।</p>
+              </div>
+
+              <h4 className="font-bold text-slate-900 pt-2 border-b pb-1">Question Status Palette / प्रश्न की स्थिति रंग पैलेट:</h4>
+              <p>The Question Palette displayed on the right side of screen will show the status of each question using one of the following symbols / स्क्रीन के दाईं ओर प्रदर्शित प्रश्न पैलेट प्रत्येक प्रश्न की स्थिति को दर्शाता है:</p>
+
+              <div className="space-y-3 pl-2 pt-1.5">
+                <div className="flex items-center gap-3">
+                  <span className="h-6 w-8 bg-[#f1f5f9] border border-slate-350 rounded-sm flex items-center justify-center font-bold font-mono text-[10px] text-slate-600">1</span>
+                  <span><strong>Not Visited / अभी तक नहीं देखा:</strong> You have not visited the question yet. / आपने इस प्रश्न को अभी तक नहीं देखा है।</span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <span className="h-6 w-8 bg-[#EF4444] border border-[#DC2626] rounded-t-sm rounded-b-lg flex items-center justify-center font-bold font-mono text-[10px] text-white">2</span>
+                  <span><strong>Not Answered / उत्तर नहीं दिया:</strong> You have visited but not answered. / आपने प्रश्न देखा है लेकिन उसका उत्तर नहीं दिया है।</span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <span className="h-6 w-8 bg-[#10B981] border border-[#059669] rounded-b-sm rounded-t-lg flex items-center justify-center font-bold font-mono text-[10px] text-white">3</span>
+                  <span><strong>Answered / उत्तर दिया गया:</strong> You have answered the question. / आपने इस प्रश्न का उत्तर दे दिया है।</span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <span className="h-6 w-6 bg-[#8B5CF6] rounded-full flex items-center justify-center font-bold font-mono text-[10px] text-white">4</span>
+                  <span><strong>Marked for Review / समीक्षा के लिए चिह्नित:</strong> You have marked for review without choosing option. / आपने विकल्प चुने बिना समीक्षा के लिए चिह्नित किया है।</span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="relative h-6 w-6">
+                    <span className="h-6 w-6 bg-[#8B5CF6] rounded-full flex items-center justify-center font-bold font-mono text-[10px] text-white">5</span>
+                    <span className="absolute bottom-0 right-0 h-2.5 w-2.5 bg-[#10B981] rounded-full border border-white"></span>
+                  </div>
+                  <span><strong>Answered & Marked for Review / उत्तर दिया और समीक्षा के लिए चिह्नित:</strong> The question evaluated. / प्रश्न मूल्यांकन के लिए माना जाएगा।</span>
+                </div>
+              </div>
+
+              <h4 className="font-bold text-slate-900 pt-2 border-b pb-1">Navigating & Answering Questions / प्रश्नों का नेविगेशन तथा उत्तर देना:</h4>
+              <ul className="list-disc pl-5 space-y-1">
+                <li>Click on <strong>"Save & Next"</strong> to save your answer and go to the next question. / अपना उत्तर सुरक्षित करने के लिए "Save & Next" पर क्लिक करें और अगले प्रश्न पर जाएं।</li>
+                <li>Click on <strong>"Mark for Review & Next"</strong> to save your response for review. / समीक्षा के लिए चिह्नित करने हेतु "Mark for Review & Next" पर क्लिक करें।</li>
+                <li>Click on <strong>"Clear Response"</strong> to wipe the chosen answer. / चुने गए उत्तर को मिटाने के लिए "Clear Response" पर क्लिक करें।</li>
+              </ul>
+            </div>
+
+            {/* Right side Profile container */}
+            <div className="bg-white border border-slate-200 rounded-2xl p-4 text-center space-y-4 shadow-xs">
+              <div className="mx-auto w-24 h-28 bg-slate-100 border border-slate-300 rounded-lg flex flex-col items-center justify-center text-slate-400 relative overflow-hidden">
+                <Video className="h-7 w-7 text-blue-500 animate-pulse mb-1" />
+                <span className="text-[10px] px-1 bg-blue-500 text-white rounded font-bold uppercase tracking-widest leading-none font-mono">Exam CCTV</span>
+                
+                {/* Visual red recording blinking box */}
+                <div className="absolute top-1 right-1 flex items-center gap-1">
+                  <span className="h-2 w-2 rounded-full bg-red-600 animate-ping"></span>
+                  <span className="text-[7px] text-red-600 font-bold uppercase font-mono">LIVE</span>
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider font-mono">CANDIDATE PROFILE</span>
+                <h4 className="font-extrabold text-slate-800 text-xs">{user.name}</h4>
+                <p className="text-[10px] font-mono text-slate-500 font-bold bg-slate-150 rounded px-2 py-0.5 inline-block">ROLL: SSC-CGL-24589</p>
+              </div>
+
+              <div className="border-t border-slate-100 pt-3">
+                <label className="block text-[10px] font-bold text-slate-400 text-left mb-1 uppercase tracking-wider font-mono">Default Language</label>
+                <select 
+                  value={cbtViewLanguage} 
+                  onChange={(e) => setCbtViewLanguage(e.target.value as 'English' | 'Hindi')}
+                  className="w-full text-xs font-bold border border-slate-300 rounded-xl px-2.5 py-1.5 focus:outline-hidden focus:ring-2 focus:ring-blue-500 bg-slate-50"
+                >
+                  <option value="English">English</option>
+                  <option value="Hindi">हिन्दी (Hindi)</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Terms Declared Checkbox */}
+          <div className="bg-white border border-slate-250 rounded-2xl p-4 mt-5 space-y-3">
+            <label className="flex items-start gap-3 cursor-pointer select-none">
+              <input 
+                type="checkbox" 
+                checked={cbtTermsAccepted} 
+                onChange={(e) => setCbtTermsAccepted(e.target.checked)}
+                className="mt-1 h-4.5 w-4.5 text-blue-600 focus:ring-blue-500 border-slate-300 rounded-md shrink-0 cursor-pointer" 
+              />
+              <span className="text-[11px] font-medium leading-relaxed text-slate-600">
+                <strong>Declaration / स्वघोषणा:</strong> I have read and understood all instructions provided. All my computer accessories and keyboard blocks are properly configured and in working condition. I agree that in case of any malpractice or non-compliance, my candidature evaluated under SSC protocols is subject to cancellation. / मैंने ऊपर दी गई सभी शर्तों व निर्देशों को ध्यान से पढ़ और समझ लिया है। मैं घोषणा करता हूं कि मैं ईमानदारी से परीक्षा पूर्ण करूंगा।
+              </span>
+            </label>
+          </div>
+
+          {/* Start Actions */}
+          <div className="flex justify-between items-center mt-5 pt-3 border-t border-slate-300">
+            <button 
+              onClick={() => {
+                setActiveTest(null);
+                setIsTestRunning(false);
+              }}
+              className="px-5 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-100 text-xs font-extrabold text-slate-600 transition"
+            >
+              Declined / Back
+            </button>
+            <button 
+              disabled={!cbtTermsAccepted}
+              onClick={() => setCbtInstructionsActive(false)}
+              className="px-6 py-3 rounded-xl bg-green-600 hover:bg-green-700 disabled:bg-slate-300 disabled:opacity-50 text-white text-xs font-extrabold shadow-md transition flex items-center gap-1"
+            >
+              I am ready to begin / परीक्षा आरंभ करें <ChevronRight className="h-4 w-4" />
+            </button>
           </div>
 
         </div>
       ) : isTestRunning && activeTest ? (
-        // ACTIVE TEST RUNNING SCREEN
-        <div className="rounded-3xl border border-blue-50 bg-white shadow-xl shadow-blue-50/20 overflow-hidden">
+        // ==========================================
+        // 3. ACTUAL SYSTEM TEST ENVIRONMENT (TCS iON CBT LOOK & FEEL)
+        // ==========================================
+        <div className="bg-[#f0f0f0] border border-slate-300 rounded-3xl overflow-hidden shadow-2xl flex flex-col font-sans text-slate-800 animate-fadeIn min-h-[580px]">
           
-          {/* Header Progress panel */}
-          <div className="bg-linear-to-r from-blue-900 to-indigo-950 p-5 text-white flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] bg-red-500/30 border border-red-400/40 text-rose-300 rounded px-2.5 py-0.5 font-sans font-extrabold uppercase tracking-widest animate-pulse flex items-center gap-1.5">
-                  <span className="h-1.5 w-1.5 rounded-full bg-rose-500"></span>
-                  BILINGUAL TEST ENGINE LIVE
-                </span>
-                <span className="text-[10px] bg-amber-500/30 border border-amber-400/40 text-amber-300 rounded px-2.5 py-0.5 font-sans font-bold uppercase tracking-wide">
-                  Negative Penalized: -{activeTest.negativeMark}
-                </span>
-              </div>
-              <h3 className="font-sans text-base font-extrabold mt-1.5">{activeTest.title}</h3>
+          {/* CBT TOP BLUE STRIP */}
+          <div className="bg-[#e9e9e9] border-b border-slate-300 px-4 py-3 flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
+            <div className="flex items-center gap-2.5">
+              <span className="bg-blue-600 text-white font-black px-2 py-0.5 rounded text-[10px] font-mono tracking-widest uppercase">
+                TCS CBT RUNTIME
+              </span>
+              <h1 className="font-extrabold text-slate-800 text-sm md:text-base font-sans truncate tracking-tight">
+                {activeTest.title}
+              </h1>
             </div>
-            
-            {/* Timer circle badge */}
-            <div className="flex items-center gap-3">
-              <div className="text-right font-sans hidden sm:block">
-                <span className="block text-[10px] text-blue-200 uppercase font-bold tracking-widest">Time Remaining</span>
-                <span className="block text-[11px] text-rose-300 font-medium font-sans">बचा हुआ समय</span>
-              </div>
-              <div className="flex items-center gap-2.5 bg-rose-950/40 px-5 py-2.5 rounded-2xl border border-rose-500/20 backdrop-blur-xs font-mono text-base font-black tracking-widest text-rose-200 animate-fadeIn shrink-0">
-                <Clock className="h-4.5 w-4.5 text-rose-400 animate-spin" style={{ animationDuration: '3s' }} />
-                <span className={timeLeft < 60 ? 'text-red-400 animate-ping font-extrabold' : 'text-rose-100 font-extrabold'}>
-                  {formatTime(timeLeft)}
-                </span>
+
+            {/* Live cctv invigilator strip */}
+            <div className="flex items-center gap-4 flex-wrap">
+              <span className="text-[10px] bg-emerald-100 border border-emerald-200 text-emerald-800 font-extrabold rounded px-2.5 py-0.5 flex items-center gap-1">
+                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-ping"></span>
+                Secure Frame Protection Active
+              </span>
+
+              {/* View Language Dropdown */}
+              <div className="flex items-center gap-1.5 shrink-0 bg-white border border-slate-300 rounded-lg px-2 py-1">
+                <span className="text-[10px] font-bold text-slate-500">View In:</span>
+                <select
+                  value={cbtViewLanguage}
+                  onChange={(e) => setCbtViewLanguage(e.target.value as 'English' | 'Hindi')}
+                  className="font-extrabold text-blue-900 border-none bg-transparent focus:ring-0 p-0 text-[11px] cursor-pointer"
+                >
+                  <option value="English">English Only</option>
+                  <option value="Hindi">हिन्दी / English</option>
+                </select>
               </div>
             </div>
           </div>
 
-          {/* Dynamic Timer Progress Bar */}
-          <div className="h-1.5 w-full bg-slate-100 relative overflow-hidden">
-            <div 
-              className={`h-full transition-all duration-1000 ${
-                (timeLeft / (activeTest.durationMinutes * 60)) < 0.2 ? 'bg-red-500 animate-pulse' : 'bg-blue-600'
-              }`}
-              style={{ width: `${(timeLeft / (activeTest.durationMinutes * 60)) * 100}%` }}
-            ></div>
-          </div>
-
-          {/* Bilingual Live Stats Tracker Box */}
-          <div className="bg-amber-50/70 border-b border-amber-100 px-6 py-3 text-xs font-sans text-slate-700 flex flex-wrap items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
-              <span className="text-sm">📝</span>
-              <span className="font-extrabold text-[#1E3A8A]">Assessment Protocol / नियम:</span>
+          {/* ACTIVE CANDIDATE INFORMATION Ticker */}
+          <div className="bg-[#0f172a] text-slate-200 px-4 py-2.5 text-xs flex flex-col md:flex-row md:items-center justify-between gap-3 font-mono border-b border-[#1e293b]">
+            <div className="flex items-center gap-4 flex-wrap">
+              <span>Candidate: <span className="text-amber-300 font-black">{user.name}</span></span>
+              <span>•</span>
+              <span>Reg: <span className="text-blue-300">SSC2026-98C3</span></span>
+              <span>•</span>
+              <span>Marks Schema: <span className="text-emerald-400 font-bold">+2.0 / -{activeTest.negativeMark}</span></span>
             </div>
-            <div className="flex items-center gap-4 flex-wrap text-[11px]">
-              <span className="bg-emerald-100/85 text-emerald-800 font-extrabold px-2 py-1 rounded-lg border border-emerald-200">
-                🟢 Correct / सही विकल्प: +2.00 Marks
-              </span>
-              <span className="bg-red-100/85 text-red-800 font-extrabold px-2 py-1 rounded-lg border border-red-200">
-                🔴 Incorrect Penalty / गलत उत्तर का नुकसान: -{activeTest.negativeMark} Marks
-              </span>
-              <span className="bg-slate-100/85 text-slate-700 font-extrabold px-2 py-1 rounded-lg border border-slate-200">
-                ⏳ Duration: {activeTest.durationMinutes} Mins
+
+            {/* TIMER badge countdown */}
+            <div className="flex items-center gap-2 bg-red-950/50 border border-red-500/30 px-3.5 py-1.5 rounded-lg text-rose-300 font-black animate-fadeIn">
+              <Clock className="w-4 h-4 text-red-400 animate-spin" style={{ animationDuration: '4s' }} />
+              <span className="tracking-widest font-bold">
+                {formatTime(timeLeft)}
               </span>
             </div>
           </div>
 
-          {activeTest.id === 'ssc-cgl-science-mock-1' && (
-            <div className="bg-emerald-50 text-emerald-800 px-6 py-2 text-[11px] font-sans font-extrabold border-b border-emerald-100 flex items-center gap-2 animate-fadeIn">
-              <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-ping"></span>
-              <span>🔒 Clean Study Mode Active: Original background watermarks & "PRACTICE MOCK" overlay removed. Enjoy distraction-free learning!</span>
+          {/* SECTION TABS FOR 100 QUESTION CBT TEST */}
+          {activeTest.questions.length === 100 && (
+            <div className="bg-slate-200 border-b border-slate-300 p-2 flex gap-1 overflow-x-auto select-none scrollbar-thin">
+              {[
+                { id: 'Reasoning', label: 'General Intelligence & Reasoning' },
+                { id: 'General Awareness', label: 'General Awareness' },
+                { id: 'Quantitative Aptitude', label: 'Quantitative Aptitude' },
+                { id: 'English Comprehension', label: 'English Comprehension' }
+              ].map((sectionTab) => {
+                const currentSection = getQuestionSection(currentQuestionIdx, 100);
+                const isActive = currentSection === sectionTab.id;
+                return (
+                  <button
+                    key={sectionTab.id}
+                    onClick={() => {
+                      const range = getSectionIndices(sectionTab.id);
+                      navigateToQuestion(range.start);
+                    }}
+                    className={`rounded-t-lg px-3.5 py-2 font-sans font-extrabold text-xs shrink-0 transition ${
+                      isActive 
+                        ? 'bg-white text-blue-700 shadow-sm border-t-2 border-blue-600' 
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-50'
+                    }`}
+                  >
+                    {sectionTab.label}
+                  </button>
+                );
+              })}
             </div>
           )}
 
-          <div className="grid gap-6 p-6 md:grid-cols-12 font-sans">
+          {/* MAIN COLUMN WORKSPACE */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 items-start grow min-h-[460px]">
             
-            {/* Left side: Navigation panel matrix */}
-            <div className="md:col-span-3 border-r border-slate-100 pr-4">
-              <span className="block text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3">
-                Question Index
-              </span>
-              <div className="grid grid-cols-4 gap-2">
-                {activeTest.questions.map((q, idx) => {
-                  const answered = selectedAnswers[q.id] !== undefined;
-                  const currentClass = currentQuestionIdx === idx 
-                    ? 'bg-blue-600 text-white ring-2 ring-blue-100' 
-                    : answered 
-                      ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' 
-                      : 'bg-slate-50 text-slate-500 border border-slate-100';
-
-                  return (
-                    <button
-                      key={q.id}
-                      onClick={() => setCurrentQuestionIdx(idx)}
-                      className={`h-10 w-full rounded-lg text-xs font-bold transition flex items-center justify-center ${currentClass}`}
-                    >
-                      Q{idx + 1}
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="mt-5 pt-4 border-t border-slate-50 space-y-2 text-xs">
-                <div className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-emerald-500"></span> <span>Answered</span></div>
-                <div className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-slate-200"></span> <span>Not Attempted</span></div>
-              </div>
-            </div>
-
-            {/* Right side: Dynamic active Question question body */}
-            <div className="md:col-span-9 flex flex-col justify-between min-h-[350px]">
+            {/* LEFT 75% QUESTION PANEL */}
+            <div className="md:col-span-3 bg-white border border-slate-300 rounded-2xl overflow-hidden shadow-xs flex flex-col justify-between min-h-[440px] h-full">
+              
               <div>
-                <span className="text-xs text-blue-600 font-bold uppercase tracking-wider block mb-1">
-                  Question {currentQuestionIdx + 1} of {activeTest.questions.length}
-                </span>
-                
-                <h4 className="text-base font-bold text-slate-800 leading-relaxed mb-6">
-                  {activeTest.questions[currentQuestionIdx].text}
-                </h4>
+                {/* Header title bar */}
+                <div className="bg-[#415b76] text-white px-4 py-2 flex justify-between items-center text-xs font-bold leading-none font-mono">
+                  <span>
+                    SECTION: {getQuestionSection(currentQuestionIdx, activeTest.questions.length).toUpperCase()}
+                  </span>
+                  <span>
+                    QUESTION NO: {currentQuestionIdx + 1}
+                  </span>
+                </div>
 
-                {/* Multiple Options Radio Cards */}
-                <div className="space-y-3">
-                  {activeTest.questions[currentQuestionIdx].options.map((option, oIdx) => {
-                    const qId = activeTest.questions[currentQuestionIdx].id;
-                    const isChecked = selectedAnswers[qId] === oIdx;
+                <div className="p-4 md:p-6 space-y-6">
+                  {/* QUESTION COMPONENT WITH OPTIONAL WATERMARK */}
+                  <div className="relative overflow-hidden p-2 rounded-xl border border-slate-100 bg-slate-50/50">
+                    <p className="font-extrabold text-[#0f172a] text-sm leading-relaxed whitespace-pre-wrap select-all">
+                      {cbtViewLanguage === 'Hindi' 
+                        ? activeTest.questions[currentQuestionIdx].text 
+                        : activeTest.questions[currentQuestionIdx].text.split(' / ')[0]}
+                    </p>
+                    {/* Faint watermarked background to mimic real exam */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-3 select-none pointer-events-none">
+                      <span className="font-black text-3xl tracking-widest text-[#1e293b] rotate-12 uppercase font-mono select-none">
+                        SARKARI JOB HUB
+                      </span>
+                    </div>
+                  </div>
 
-                    return (
-                      <button
-                        key={oIdx}
-                        onClick={() => handleSelectOption(qId, oIdx)}
-                        className={`w-full flex items-center justify-between p-4 rounded-2xl border text-left text-sm font-medium transition duration-150 ${
-                          isChecked 
-                            ? 'bg-blue-50/50 border-blue-500 text-blue-900 shadow-xs' 
-                            : 'border-slate-150 hover:bg-slate-50 text-slate-700'
-                        }`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <span className={`flex h-6 w-6 items-center justify-center rounded-full font-bold text-xs ${
-                            isChecked ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-500'
-                          }`}>
-                            {String.fromCharCode(65 + oIdx)}
-                          </span>
-                          <span>{option}</span>
-                        </div>
-                        <div className={`h-4 w-4 rounded-full border-2 ${isChecked ? 'border-blue-600 bg-blue-600' : 'border-slate-300'}`}></div>
-                      </button>
-                    );
-                  })}
+                  {/* MCQ OPTION CARDS */}
+                  <div className="space-y-3">
+                    {activeTest.questions[currentQuestionIdx].options.map((option, oIdx) => {
+                      const qId = activeTest.questions[currentQuestionIdx].id;
+                      const isChecked = selectedAnswers[qId] === oIdx;
+
+                      return (
+                        <button
+                          key={oIdx}
+                          onClick={() => handleSelectOption(qId, oIdx)}
+                          className={`w-full flex items-center justify-between p-3 px-4 rounded-xl border text-left text-xs font-semibold transition duration-100 select-none ${
+                            isChecked 
+                              ? 'bg-blue-50/70 border-blue-500 text-blue-900 shadow-xs' 
+                              : 'border-slate-200 hover:bg-slate-50 text-slate-700'
+                          }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <span className={`flex h-5 w-5 items-center justify-center rounded-full font-bold text-[10px] ${
+                              isChecked ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-500'
+                            }`}>
+                              {String.fromCharCode(65 + oIdx)}
+                            </span>
+                            <span className="leading-normal">{option}</span>
+                          </div>
+                          <div className={`h-4 w-4 rounded-full border-2 ${isChecked ? 'border-blue-600 bg-blue-650' : 'border-slate-350'}`}></div>
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
 
-              {/* Progress interaction buttons footer */}
-              <div className="mt-8 pt-4 border-t border-slate-100 flex items-center justify-between">
-                <button
-                  disabled={currentQuestionIdx === 0}
-                  onClick={() => setCurrentQuestionIdx(currentQuestionIdx - 1)}
-                  className="rounded-xl px-4 py-2 border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50 disabled:opacity-50 flex items-center gap-1"
-                >
-                  <ChevronLeft className="h-4 w-4" /> Previous
-                </button>
+              {/* FOOTER ACTIONS BAR */}
+              <div className="bg-[#e9e9e9] border-t border-slate-300 p-3 flex flex-wrap items-center justify-between gap-2 text-xs">
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleMarkForReviewAndNext}
+                    className="rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-extrabold px-3 py-2 transition"
+                  >
+                    Mark for Review & Next
+                  </button>
+                  <button
+                    onClick={handleClearResponse}
+                    className="rounded-lg bg-slate-100 border border-slate-300 hover:bg-slate-200 text-slate-705 font-bold px-3 py-2 transition"
+                  >
+                    Clear Response
+                  </button>
+                </div>
 
+                <div className="flex gap-1.5">
+                  <button
+                    disabled={currentQuestionIdx === 0}
+                    onClick={() => navigateToQuestion(currentQuestionIdx - 1)}
+                    className="rounded-lg bg-slate-100 border border-slate-300 hover:bg-slate-200 text-slate-705 font-bold p-2.5 transition shrink-0 disabled:opacity-50"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </button>
+
+                  <button
+                    onClick={handleSaveAndNext}
+                    className="rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-black px-5 py-2.5 transition shadow-xs"
+                  >
+                    Save & Next
+                  </button>
+
+                  <button
+                    disabled={currentQuestionIdx === activeTest.questions.length - 1}
+                    onClick={() => navigateToQuestion(currentQuestionIdx + 1)}
+                    className="rounded-lg bg-slate-100 border border-slate-300 hover:bg-slate-200 text-slate-705 font-bold p-2.5 transition shrink-0 disabled:opacity-50"
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            {/* RIGHT 25% PALETTE PANEL */}
+            <div className="bg-[#e9e9e9] border border-slate-300 rounded-2xl p-3 space-y-4 shadow-xs h-full flex flex-col justify-between">
+              
+              <div className="space-y-4">
+                {/* Simulated Webcam Monitor */}
+                <div className="bg-white border border-slate-300 rounded-xl p-2.5 flex items-center gap-3">
+                  <div className="w-12 h-14 bg-slate-50 border border-slate-250 rounded-lg flex flex-col items-center justify-center text-slate-350 relative overflow-hidden shrink-0">
+                    <Video className="h-4 w-4 text-emerald-500 animate-pulse" />
+                    <span className="text-[7px] bg-red-600 text-white font-black rounded px-1 scale-85 leading-none">REC</span>
+                  </div>
+                  <div className="space-y-0.5 text-left truncate min-w-0">
+                    <span className="text-[8px] uppercase tracking-wider text-slate-400 font-bold font-mono">Invigilator Feed</span>
+                    <h5 className="font-extrabold text-slate-800 text-xs truncate leading-tight">{user.name}</h5>
+                    <p className="text-[9px] font-medium font-mono text-emerald-600 flex items-center gap-0.5">
+                      <span className="h-1.5 w-1.5 bg-emerald-500 rounded-full animate-ping"></span>
+                      Frame Synced
+                    </p>
+                  </div>
+                </div>
+
+                {/* LEGEND SPECIFICATIONS */}
+                <div className="grid grid-cols-2 gap-2 text-[9px] text-slate-600 font-bold pr-1 pt-1">
+                  <div className="flex items-center gap-1.5">
+                    <span className="h-4 w-6 bg-[#10B981] text-white rounded-b-xs rounded-t-md font-mono flex items-center justify-center scale-90 border border-emerald-600 text-[8px]">{getCBTStateCount('answered')}</span>
+                    <span className="truncate">Answered</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="h-4 w-6 bg-[#EF4444] text-white rounded-t-xs rounded-b-md font-mono flex items-center justify-center scale-90 border border-red-600 text-[8px]">{getCBTStateCount('not_answered')}</span>
+                    <span className="truncate">Not Answered</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="h-4 w-6 bg-slate-100 text-slate-600 border border-slate-300 rounded-sm font-mono flex items-center justify-center scale-90 text-[8px]">{getCBTStateCount('not_visited')}</span>
+                    <span className="truncate">Not Visited</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="h-4 w-4 bg-[#8B5CF6] text-white rounded-full font-mono flex items-center justify-center scale-90 text-[8px]">{getCBTStateCount('marked_for_review')}</span>
+                    <span className="truncate">For Review</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 col-span-2">
+                    <div className="relative h-4 w-4 scale-90 shrink-0">
+                      <span className="h-4 w-4 bg-[#8B5CF6] text-white rounded-full font-mono flex items-center justify-center text-[8px]"></span>
+                      <span className="absolute bottom-0 right-0 h-1.5 w-1.5 bg-green-500 rounded-full border border-white"></span>
+                    </div>
+                    <span className="text-[9px]">Answered & Review</span>
+                  </div>
+                </div>
+
+                <div className="border-t border-slate-300 pt-3">
+                  <span className="block text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-2 font-mono">
+                    Question Palette (प्रश्न ग्रिड)
+                  </span>
+
+                  {/* GRID CONTAINER FOR PALETTE */}
+                  <div className="grid grid-cols-5 gap-1.5 max-h-[220px] overflow-y-auto pr-1">
+                    {activeTest.questions.map((q, idx) => {
+                      const cbtState = questionCBTStates[q.id] || 'not_visited';
+                      const isCurrent = currentQuestionIdx === idx;
+                      
+                      let btnClass = '';
+                      if (cbtState === 'answered') {
+                        btnClass = 'bg-[#10B981] text-white border-b-2 border-emerald-600 rounded-b-sm rounded-t-lg';
+                      } else if (cbtState === 'not_answered') {
+                        btnClass = 'bg-[#EF4444] text-white border-t-2 border-red-600 rounded-t-sm rounded-b-lg';
+                      } else if (cbtState === 'marked_for_review') {
+                        btnClass = 'bg-[#8B5CF6] text-white rounded-full';
+                      } else if (cbtState === 'answered_marked_for_review') {
+                        btnClass = 'bg-[#8B5CF6] text-white rounded-full ring-2 ring-emerald-400 ring-offset-1';
+                      } else {
+                        btnClass = 'bg-white text-slate-550 border border-slate-300 hover:bg-slate-50 rounded-sm';
+                      }
+
+                      return (
+                        <button
+                          key={q.id}
+                          onClick={() => navigateToQuestion(idx)}
+                          className={`h-7 w-full text-[10px] font-bold font-mono transition flex items-center justify-center relative shadow-3xs ${btnClass} ${
+                            isCurrent ? 'ring-2 ring-blue-600 ring-offset-1' : ''
+                          }`}
+                        >
+                          {idx + 1}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* FLOATING SUBMIT BUTTON */}
+              <div className="pt-4 border-t border-slate-350">
                 <button
                   onClick={handleAutoSubmit}
-                  className="rounded-xl bg-orange-600 py-2.5 px-5 text-xs font-bold text-white hover:bg-orange-700 shadow-sm"
+                  className="w-full rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs py-3 shadow-md border border-red-700 transition"
                 >
-                  Submit Test & Get Score
-                </button>
-
-                <button
-                  disabled={currentQuestionIdx === activeTest.questions.length - 1}
-                  onClick={() => setCurrentQuestionIdx(currentQuestionIdx + 1)}
-                  className="rounded-xl px-4 py-2 border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50 disabled:opacity-50 flex items-center gap-1"
-                >
-                  Next <ChevronRight className="h-4 w-4" />
+                  Submit Examination
                 </button>
               </div>
 
             </div>
 
           </div>
+
         </div>
       ) : (
-        // COMPLETED TEST DETAILED REVIEW SCORECARD
-        <div className="space-y-6">
+        // ==========================================
+        // 4. ASSESSMENT SCORECARD / REVIEW SOLUTIONS PANEL(COMPLETED)
+        // ==========================================
+        <div className="space-y-6 animate-fadeIn">
           
           <div className="rounded-3xl border border-blue-50 bg-white p-6 shadow-xl relative overflow-hidden">
             
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               
               <div className="space-y-2 text-center md:text-left">
-                <span className="inline-block bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                <span className="inline-block bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                   Test successfully evaluated
                 </span>
                 <h3 className="font-sans text-xl font-extrabold text-slate-900 mt-2">
@@ -531,14 +931,14 @@ export default function MockTestPortal({
 
               {/* Huge performance badge circles */}
               <div className="flex gap-4">
-                <div className="flex flex-col items-center bg-blue-50/50 p-4 rounded-2xl border border-blue-100 min-w-[100px]">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Final score</span>
-                  <span className="text-xl font-extrabold text-blue-950 mt-1">{completedStats?.score}</span>
+                <div className="flex flex-col items-center bg-blue-50/50 p-4 rounded-2xl border border-blue-100 min-w-[110px]">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono">Final score</span>
+                  <span className="text-2xl font-black text-blue-950 mt-1">{completedStats?.score}</span>
                   <span className="text-[10px] text-slate-400 mt-1">/ {activeTest?.questions.length ? activeTest.questions.length * 2 : 0} Marks</span>
                 </div>
-                <div className="flex flex-col items-center bg-emerald-50/50 p-4 rounded-2xl border border-emerald-100 min-w-[100px]">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Accuracy</span>
-                  <span className="text-xl font-extrabold text-emerald-700 mt-1">{completedStats?.percentage}%</span>
+                <div className="flex flex-col items-center bg-emerald-50/50 p-4 rounded-2xl border border-emerald-100 min-w-[110px]">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono">Accuracy</span>
+                  <span className="text-2xl font-black text-emerald-705 mt-1">{completedStats?.percentage}%</span>
                   <span className="text-[10px] text-slate-400 mt-1">Completion rate</span>
                 </div>
               </div>
@@ -551,7 +951,7 @@ export default function MockTestPortal({
                 <span className="block text-base font-bold text-emerald-600 mt-1 font-mono">{completedStats?.correct} Answers</span>
               </div>
               <div className="border border-slate-100 p-3 rounded-2xl bg-slate-50/20">
-                <span className="text-[10px] font-semibold text-slate-400 uppercase">Incorrect Penalty</span>
+                <span className="text-[10px] font-semibold text-slate-400 uppercase font-mono">Incorrect Penalty</span>
                 <span className="block text-base font-bold text-rose-500 mt-1 font-mono">-{completedStats?.wrong} Answers</span>
               </div>
               <div className="border border-slate-100 p-3 rounded-2xl bg-slate-50/20">
@@ -564,10 +964,10 @@ export default function MockTestPortal({
               </div>
             </div>
 
-            {/* Custom interactive Mock achievement certificate download mockup */}
+            {/* Custom interactive Mock achievement certificate download */}
             <div className="mt-6 border-t border-slate-100 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <Award className="h-10 w-10 text-amber-500" />
+                <Award className="h-10 w-10 text-amber-500 animate-bounce" />
                 <div className="text-left">
                   <p className="text-xs font-bold text-slate-800">Sarkari Mock Test Certificate Issued!</p>
                   <p className="text-[10px] text-slate-400">Unique certification verified under candidate email: {user.email}</p>
@@ -575,7 +975,7 @@ export default function MockTestPortal({
               </div>
               <button
                 onClick={() => alert(`Certificate of Achievement downloaded for: ${activeTest?.title} successfully. Saved PDF to files.`)}
-                className="flex items-center gap-1.5 rounded-xl bg-amber-500 px-4 py-2.5 text-xs font-bold text-white hover:bg-amber-600 transition"
+                className="flex items-center gap-1.5 rounded-xl bg-amber-500 px-4 py-2.5 text-xs font-bold text-white hover:bg-amber-600 transition duration-150"
               >
                 <Download className="h-4 w-4" /> Download mock certificate
               </button>
@@ -593,21 +993,24 @@ export default function MockTestPortal({
               {activeTest?.questions.map((q, idx) => {
                 const isCorrect = selectedAnswers[q.id] === q.correctOptionIndex;
                 const wasSkipped = selectedAnswers[q.id] === undefined;
+                const sectionLabel = activeTest.questions.length === 100 ? getQuestionSection(idx, 100) : 'General Practice';
 
                 return (
-                  <div key={q.id} className="border border-slate-50 rounded-2xl p-4 bg-slate-50/30">
-                    <div className="flex items-start justify-between gap-2">
-                      <span className="text-xs font-bold text-blue-800">Question {idx + 1}</span>
-                      <span className={`inline-block px-2 py-0.5 text-[10px] font-bold rounded uppercase ${
+                  <div key={q.id} className="border border-slate-100 rounded-2xl p-4 bg-slate-50/40 relative">
+                    <div className="flex gap-2 items-center flex-wrap justify-between text-xs font-bold border-b border-slate-100 pb-2">
+                      <span className="text-[#1E3A8A] font-mono">
+                        Q{idx + 1}. SECTION: {sectionLabel.toUpperCase()}
+                      </span>
+                      <span className={`inline-block px-2 py-0.5 text-[9px] font-bold rounded uppercase ${
                         wasSkipped ? 'bg-slate-100 text-slate-500' : isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
                       }`}>
                         {wasSkipped ? 'Skipped' : isCorrect ? 'Correct +2.00' : `Incorrect -${activeTest.negativeMark}`}
                       </span>
                     </div>
 
-                    <p className="text-sm font-bold text-slate-700 leading-relaxed mt-2">{q.text}</p>
+                    <p className="text-sm font-extrabold text-slate-800 leading-relaxed mt-3">{q.text}</p>
                     
-                    <div className="mt-3 grid gap-2 sm:grid-cols-2 text-xs font-medium">
+                    <div className="mt-3 grid gap-2 sm:grid-cols-2 text-xs font-semibold">
                       {q.options.map((opt, oIdx) => {
                         const isChosen = selectedAnswers[q.id] === oIdx;
                         const isCorrectOption = q.correctOptionIndex === oIdx;
@@ -617,21 +1020,21 @@ export default function MockTestPortal({
                             key={oIdx} 
                             className={`p-2.5 rounded-lg border ${
                               isCorrectOption 
-                                ? 'bg-emerald-50 border-emerald-300 text-emerald-900' 
+                                ? 'bg-emerald-50 border-emerald-300 text-emerald-950' 
                                 : isChosen 
-                                  ? 'bg-rose-50 border-rose-300 text-rose-900' 
+                                  ? 'bg-rose-50 border-rose-300 text-rose-950' 
                                   : 'bg-white border-slate-100 text-slate-500'
                             }`}
                           >
-                            <span className="font-bold mr-1">{String.fromCharCode(65 + oIdx)}.</span> {opt}
+                            <span className="font-mono font-extrabold mr-1">{String.fromCharCode(65 + oIdx)}.</span> {opt}
                           </div>
                         );
                       })}
                     </div>
 
                     <div className="mt-3 bg-blue-50/50 p-3 rounded-xl border border-blue-100 text-xs text-sky-950">
-                      <p className="font-bold text-blue-900">Explanation & Reference Key:</p>
-                      <p className="mt-1 leading-relaxed">{q.explanation}</p>
+                      <p className="font-extrabold text-blue-900 font-mono">Detailed Explanation / विस्तारपूर्वक हल:</p>
+                      <p className="mt-1 leading-relaxed whitespace-pre-wrap">{q.explanation}</p>
                     </div>
                   </div>
                 );
@@ -644,7 +1047,7 @@ export default function MockTestPortal({
                   setActiveTest(null);
                   setTestCompleted(false);
                 }}
-                className="rounded-xl bg-blue-600 text-white font-sans text-xs font-bold py-2.5 px-6 hover:bg-blue-700 transition"
+                className="rounded-xl bg-blue-600 text-white font-sans text-xs font-bold py-2.5 px-6 hover:bg-blue-700 transition duration-150 shadow"
               >
                 Go back to MCQ Portal
               </button>
