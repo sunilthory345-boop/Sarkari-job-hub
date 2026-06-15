@@ -64,11 +64,33 @@ export default function MockTestPortal({
         { id: 'sec-4', label: 'Economy & IR', start: 75, end: 99 }
       ];
     }
+    if (cat.includes('sbi') && cat.includes('po')) {
+      return [
+        { id: 'sec-1', label: 'English Language', start: 0, end: 29 },
+        { id: 'sec-2', label: 'Quantitative Aptitude', start: 30, end: 64 },
+        { id: 'sec-3', label: 'Reasoning Ability', start: 65, end: 99 }
+      ];
+    }
     if (cat.includes('bank') || cat.includes('ibps')) {
       return [
         { id: 'sec-1', label: 'Quantitative Aptitude', start: 0, end: 34 },
         { id: 'sec-2', label: 'Reasoning Ability', start: 35, end: 69 },
         { id: 'sec-3', label: 'English Language', start: 70, end: 99 }
+      ];
+    }
+    if (cat.includes('rpf') && cat.includes('si')) {
+      return [
+        { id: 'sec-1', label: 'General Awareness', start: 0, end: 49 },
+        { id: 'sec-2', label: 'Arithmetic', start: 50, end: 84 },
+        { id: 'sec-3', label: 'General Intelligence & Reasoning', start: 85, end: 119 }
+      ];
+    }
+    if (cat.includes('group-d') || cat.includes('group d')) {
+      return [
+        { id: 'sec-1', label: 'General Science', start: 0, end: 24 },
+        { id: 'sec-2', label: 'Mathematics', start: 25, end: 49 },
+        { id: 'sec-3', label: 'General Intelligence & Reasoning', start: 50, end: 79 },
+        { id: 'sec-4', label: 'General Awareness & CA', start: 80, end: 99 }
       ];
     }
     if (cat.includes('railway') || cat.includes('ntpc')) {
@@ -87,7 +109,7 @@ export default function MockTestPortal({
   };
 
   const getQuestionSection = (idx: number, totalQuestions: number, category: string = ''): string => {
-    if (totalQuestions !== 100) return 'General Practice';
+    if (totalQuestions < 100) return 'General Practice';
     const sections = getExamSections(category);
     const matched = sections.find(sec => idx >= sec.start && idx <= sec.end);
     return matched ? matched.label : 'General Practice';
@@ -355,7 +377,10 @@ export default function MockTestPortal({
                   { id: 'SSC CGL Exam Prep', label: 'SSC CGL' },
                   { id: 'IBPS PO Exam Prep', label: 'IBPS PO' },
                   { id: 'RRB NTPC Exam Prep', label: 'RRB NTPC' },
-                  { id: 'SSC CHSL Exam Prep', label: 'SSC CHSL' }
+                  { id: 'SSC CHSL Exam Prep', label: 'SSC CHSL' },
+                  { id: 'SBI PO Exam Prep', label: 'SBI PO' },
+                  { id: 'Railway Group-D Exam Prep', label: 'Railway Group D' },
+                  { id: 'Railway RPF SI Exam Prep', label: 'RPF SI' }
                 ].map((catBtn) => {
                   const isSel = selectedCategoryFilter === catBtn.id;
                   return (
@@ -390,9 +415,9 @@ export default function MockTestPortal({
                         <span className="text-xs text-slate-400 font-medium font-mono">
                           {test.questions.length} Items MCQ (बहुविकल्पीय)
                         </span>
-                        {test.questions.length === 100 && (
+                        {test.questions.length >= 100 && (
                           <span className="inline-block rounded-full bg-red-100 text-red-800 px-2 py-0.5 text-[10px] font-extrabold border border-red-200 animate-pulse">
-                            🔥 Real TCS CBT Engine (100 Qs)
+                            🔥 Real CBT Exam Engine ({test.questions.length} Qs)
                           </span>
                         )}
                       </div>
@@ -717,8 +742,8 @@ export default function MockTestPortal({
             </div>
           </div>
 
-          {/* SECTION TABS FOR 100 QUESTION CBT TEST */}
-          {activeTest.questions.length === 100 && (
+          {/* SECTION TABS FOR CBT TEST */}
+          {activeTest.questions.length >= 100 && (
             <div className="bg-slate-200 border-b border-slate-300 p-2 flex gap-1 overflow-x-auto select-none scrollbar-thin">
               {getExamSections(activeTest.category).map((sectionTab) => {
                 const isActive = currentQuestionIdx >= sectionTab.start && currentQuestionIdx <= sectionTab.end;
@@ -1039,7 +1064,7 @@ export default function MockTestPortal({
               {activeTest?.questions.map((q, idx) => {
                 const isCorrect = selectedAnswers[q.id] === q.correctOptionIndex;
                 const wasSkipped = selectedAnswers[q.id] === undefined;
-                const sectionLabel = activeTest.questions.length === 100 ? getQuestionSection(idx, 100, activeTest.category) : 'General Practice';
+                const sectionLabel = activeTest.questions.length >= 100 ? getQuestionSection(idx, activeTest.questions.length, activeTest.category) : 'General Practice';
 
                 return (
                   <div key={q.id} className="border border-slate-100 rounded-2xl p-4 bg-slate-50/40 relative">

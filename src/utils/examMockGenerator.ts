@@ -1,20 +1,16 @@
 import { Question, MockTest } from '../types';
 
 /**
- * Dynamically generates 100 high-quality, solved MCQ questions for a specific exam category and mock test index.
+ * Dynamically generates high-quality, solved MCQ questions for a specific exam category and mock test index.
  * Questions are structured based on authentic exam patterns (carrying bilingual text where relevant).
  */
 export function generateMockQuestions(category: string, mockIndex: number): Question[] {
   const questions: Question[] = [];
   const cat = category.toLowerCase();
 
-  // Determine section division thresholds
-  // 1. UPSC: 100 Questions on General Studies (History, Polity, Geography, Economy)
-  // 2. SSC CGL / CHSL: Reasoning (1-25), GA (26-50), Maths (51-75), English (76-100)
-  // 3. IBPS PO: Quant (1-35), Reasoning (36-70), English (71-100)
-  // 4. RRB NTPC: Gen Awareness (1-40), Maths (41-70), Reasoning (71-100)
+  const totalQuestions = cat.includes('rpf') ? 120 : 100;
 
-  for (let qNum = 1; qNum <= 100; qNum++) {
+  for (let qNum = 1; qNum <= totalQuestions; qNum++) {
     let text = '';
     let options: string[] = [];
     let correctOptionIndex = 0;
@@ -25,65 +21,45 @@ export function generateMockQuestions(category: string, mockIndex: number): Ques
       // UPSC CIVIL SERVICES (GS-1 PRELIMS PATTERN)
       // ==========================================
       if (qNum <= 25) {
-        // --- Segment 1: Indian History, Art & Culture (Q1 to Q25) ---
         const historyThemes = [
           {
-            concept: 'Gupta Empire administration',
             text: `With reference to Gupta administration, the term 'Uparika' refers to: / गुप्त प्रशासन के संदर्भ में, 'उपरिक' शब्द का अर्थ क्या था?`,
             opts: ['(a) Royal Treasurer / शाही कोषाध्यक्ष', '(b) Provincial Governor / प्रांतीय गवर्नर', '(c) Chief Justice / मुख्य न्यायाधीश', '(d) Commander of cavalry / घुड़सवार सेना का अध्यक्ष'],
             ans: 1,
-            exp: `The provincial governor in the Gupta empire administration was called an 'Uparika'. They were directly appointed by the Emperor. / गुप्त साम्राज्य के प्रशासन में प्रांतीय गवर्नर को 'उपरिक' कहा जाता था।`
+            exp: `The provincial governor in the Gupta empire administration was called an 'Uparika'. They were directly appointed by the Emperor.`
           },
           {
-            concept: 'Buddhism - School of Thought',
             text: `With reference to Buddhist history, who among the following wrote the 'Milinda Panha'? / बौद्ध इतिहास के संदर्भ में, निम्नलिखित में से किसने 'मिलिंदपञ्हो' की रचना की थी?`,
             opts: ['(a) Nagarjuna / नागार्जुन', '(b) Nagasena / नागसेन', '(c) Vasumitra / वसुमित्र', '(d) Ashvaghosa / अश्वघोष'],
             ans: 1,
-            exp: `'Milinda Panha' is a famous Buddhist text consisting of dialogue between the Indo-Greek King Menander I and the sage Nagasena. / मिलिंदपञ्हो बौद्ध भिक्षु नागसेन और हिंद-यवन राजा मिलिंद (मिनैंडर) के मध्य संवाद है।`
+            exp: `'Milinda Panha' is a famous Buddhist text consisting of dialogue between the Indo-Greek King Menander I and the sage Nagasena.`
           },
           {
-            concept: 'Ancient Harappan Site layout',
-            text: `Which Harappan site is famous for its unique three-tier division of the town planning, unlike other two-fold cities? / कौन सा हड़प्पाकालीन स्थल अपने विशिष्ट तीन-स्तरीय नगर नियोजन के लिए प्रसिद्ध है, जो अन्य दो-स्तरीय नगरों से भिन्न है?`,
+            text: `Which Harappan site is famous for its unique three-tier division of the town planning, unlike other two-fold cities? / कौन सा हड़प्पाकालीन स्थल अपने विशिष्ट तीन-स्तरीय नगर नियोजन के लिए प्रसिद्ध है?`,
             opts: ['(a) Kalibangan / कालीबंगा', '(b) Lothal / लोथल', '(c) Mohenjo-daro / मोहनजोदड़ो', '(d) Dholavira / धोलावीरा'],
             ans: 3,
-            exp: `Dholavira in Gujarat is divided into three distinct parts: the Citadel, the Middle Town, and the Lower Town. / गुजरात में स्थित धोलावीरा नगर को तीन प्रमुख भागों में विभाजित किया गया था।`
-          },
-          {
-            concept: 'Medieval Bhakti Movement saints',
-            text: `The philosophy of 'Visishtadvaita' (Qualified Non-Dualism) was propagated by: / 'विशिष्टाद्वैत' दर्शन का प्रतिपादन किसके द्वारा किया गया था?`,
-            opts: ['(a) Adi Shankaracharya / आदि शंकराचार्य', '(b) Ramanujacharya / रामानुजाचार्य', '(c) Madhvacharya / माध्वाचार्य', '(d) Nimbarkacharya / निम्बार्काचार्य'],
-            ans: 1,
-            exp: `Sri Ramanujacharya founded the Visishtadvaita school of Vedanta in the 11th century. / 11वीं शताब्दी में श्री रामानुजाचार्य ने विशिष्टाद्वैत मत का प्रतिपादन किया था।`
+            exp: `Dholavira in Gujarat is divided into three distinct parts: the Citadel, the Middle Town, and the Lower Town.`
           }
         ];
-        
         const theme = historyThemes[(qNum + mockIndex) % historyThemes.length];
-        const year = 1800 + (mockIndex * 15) + qNum;
-        text = `[UPSC Mock-${mockIndex}] Q${qNum}. ${theme.text} (Ref Set-${year})`;
+        text = `[UPSC Mock-${mockIndex}] Q${qNum}. ${theme.text}`;
         options = theme.opts;
         correctOptionIndex = theme.ans;
         explanation = theme.exp;
 
       } else if (qNum <= 50) {
-        // --- Segment 2: Geography & Environment (Q26 to Q50) ---
         const geoThemes = [
           {
             text: `Which of the following ocean currents is a warm current? / निम्नलिखित समुद्री धाराओं में से कौन सी एक गर्म धारा है?`,
             opts: ['(a) Kuroshio Current / कूरेशियो धारा', '(b) Oyashio Current / ओयाशियो धारा', '(c) Canary Current / कनारी धारा', '(d) Benguela Current / बेंगुएला धारा'],
             ans: 0,
-            exp: `Kuroshio is a warm ocean current flowing Northwards in the western Pacific. Oyashio, Canary, and Benguela are cold currents. / कूरेशियो प्रशांत महासागर की एक गर्म धारा है।`
+            exp: `Kuroshio is a warm ocean current flowing Northwards in the western Pacific. Oyashio, Canary, and Benguela are cold currents.`
           },
           {
             text: `Under which Wildlife Conservation schedule is the Gangetic Dolphin protected in India? / भारत में गंगा डॉल्फिन को किस वन्यजीव संरक्षण अनुसूची के तहत संरक्षित किया गया है?`,
             opts: ['(a) Schedule II / अनुसूची II', '(b) Schedule III / अनुसूची III', '(c) Schedule I / अनुसूची I', '(d) Schedule IV / अनुसूची IV'],
             ans: 2,
-            exp: `The Ganges River Dolphin is protected under Schedule I of the Wildlife Protection Act, 1972, granting it topmost priority and shielding coverage. / गंगा नदी डॉल्फिन को 1972 अधिनियम की अनुसूची I के तहत सर्वोच्च संरक्षण प्राप्त है।`
-          },
-          {
-            text: `The layer of the atmosphere that reflects radio waves back to Earth is: / वायुमंडल की वह परत जो रेडियो तरंगों को पृथ्वी पर वापस परावर्तित करती है, कहलाती है:`,
-            opts: ['(a) Stratosphere / समतापमंडल', '(b) Ionosphere / आयनमंडल', '(c) Troposphere / क्षोभमंडल', '(d) Exosphere / बाह्यमंडल'],
-            ans: 1,
-            exp: `The Ionosphere (part of the Thermosphere) contains free ions that reflect terrestrial radio transmissions. / आयनमंडल में आवेशित आयन तरंगों को परावर्तित करते हैं।`
+            exp: `The Ganges River Dolphin is protected under Schedule I of the Wildlife Protection Act, 1972.`
           }
         ];
         const theme = geoThemes[(qNum + mockIndex) % geoThemes.length];
@@ -93,19 +69,12 @@ export function generateMockQuestions(category: string, mockIndex: number): Ques
         explanation = theme.exp;
 
       } else if (qNum <= 75) {
-        // --- Segment 3: Indian Polity & Constitution (Q51 to Q75) ---
         const polityThemes = [
           {
             text: `Which of the following Articles under Part III of the Constitution can NOT be suspended even during a National Emergency? / संविधान के भाग III के तहत निम्नलिखित में से कौन से अनुच्छेद राष्ट्रीय आपातकाल के दौरान भी निलंबित नहीं किए जा सकते?`,
             opts: ['(a) Articles 14 and 19 / अनुच्छेद 14 और 19', '(b) Articles 20 and 21 / अनुच्छेद 20 और 21', '(c) Articles 21 and 22 / अनुच्छेद 21 और 22', '(d) Articles 19 and 20 / अनुच्छेद 19 और 20'],
             ans: 1,
-            exp: `By the 44th Amendment Act of 1978, the right to protection in respect of conviction for offenses (Article 20) and right to life & personal liberty (Article 21) cannot be suspended. / 44वें संशोधन द्वारा अनुच्छेद 20 और 21 को सुरक्षित किया गया।`
-          },
-          {
-            text: `Who presided over the Joint Sitting of both Houses of Parliament if both the Speaker and Deputy Speaker of Lok Sabha are absent? / यदि लोकसभा के अध्यक्ष और उपाध्यक्ष दोनों अनुपस्थित हों, तो संसद के दोनों सदनों की संयुक्त बैठक की अध्यक्षता कौन करता है?`,
-            opts: ['(a) Chairman of Rajya Sabha / राज्यसभा के सभापति', '(b) Deputy Chairman of Rajya Sabha / राज्यसभा के उपसभापति', '(c) President of India / भारत के राष्ट्रपति', '(d) Minister of Parliamentary Affairs / संसदीय कार्य मंत्री'],
-            ans: 1,
-            exp: `The Deputy Chairman of Rajya Sabha presides in their absence. The Chairman of Rajya Sabha (Vice President) never presides over a joint sitting. / लोकसभा अध्यक्ष व उपाध्यक्ष के न होने पर राज्यसभा के उपसभापति पीठासीन होते हैं।`
+            exp: `By the 44th Amendment Act of 1978, the right to protection in respect of conviction for offenses (Article 20) and right to life & personal liberty (Article 21) cannot be suspended.`
           }
         ];
         const theme = polityThemes[(qNum + mockIndex) % polityThemes.length];
@@ -115,19 +84,12 @@ export function generateMockQuestions(category: string, mockIndex: number): Ques
         explanation = theme.exp;
 
       } else {
-        // --- Segment 4: Economy & Development (Q76 to Q100) ---
         const ecoThemes = [
           {
             text: `In India, the Base Year for calculating India's Index of Industrial Production (IIP) is currently set at: / भारत में, औद्योगिक उत्पादन सूचकांक (IIP) की गणना के लिए आधार वर्ष वर्तमान में क्या है?`,
             opts: ['(a) 2004-05', '(b) 2011-12', '(c) 2015-16', '(d) 2018-19'],
             ans: 1,
-            exp: `The base year for IIP estimation was updated from 2004-05 to 2011-12. / औद्योगिक उत्पादन मूल्य का आधार वर्ष वर्तमान में 2011-12 रखा गया है।`
-          },
-          {
-            text: `Which among the following parameters constitutes the highest weight in India's Consumer Price Index (CPI) basket? / भारत के उपभोक्ता मूल्य सूचकांक (CPI) बास्केट में निम्नलिखित में से किस श्रेणी का भार सर्वाधिक है?`,
-            opts: ['(a) Housing / आवास', '(b) Fuel and Light / ईंधन और प्रकाश', '(c) Food and Beverages / खाद्य और पेय पदार्थ', '(d) Clothing and Footwear / कपड़े और जूते'],
-            ans: 2,
-            exp: `Food and Beverages holds approximately 45.86% weight, which is the highest in the CPI combined calculation. / खाद्य और पेय पदार्थ श्रेणी का भार सर्वाधिक (लगभग 45.86 प्रतिशत) है।`
+            exp: `The base year for IIP estimation was updated from 2004-05 to 2011-12.`
           }
         ];
         const theme = ecoThemes[(qNum + mockIndex) % ecoThemes.length];
@@ -137,31 +99,176 @@ export function generateMockQuestions(category: string, mockIndex: number): Ques
         explanation = theme.exp;
       }
 
+    } else if (cat.includes('sbi') && cat.includes('po')) {
+      // ==========================================
+      // SBI PO PRELIMS PATTERN (100 Qs)
+      // Sections: English (1-30), Quantitative Aptitude (31-65), Reasoning Ability (66-100)
+      // ==========================================
+      if (qNum <= 30) {
+        // English Language
+        const englishSbi = [
+          {
+            text: `Select the word which is closest to the OPPOSITE in meaning of the word 'OBSTINATE': / 'OBSTINATE' शब्द के विपरीत अर्थ वाला शब्द चुनें:`,
+            opts: ['(a) Stubborn / जिद्दी', '(b) Flexible / लचीला', '(c) Rigid / कठोर', '(d) Resolute / दृढ़'],
+            ans: 1,
+            exp: `'Obstinate' means stubborn or unyielding. Its opposite/antonym is 'Flexible'.`
+          },
+          {
+            text: `Fill in the blank with the most appropriate preposition: "The committee agreed _________ the recommendation with minor modifications." / उपयुक्त प्रीपोज़िशन से रिक्त स्थान भरें:`,
+            opts: ['(a) on', '(b) to', '(c) with', '(d) by'],
+            ans: 1,
+            exp: `One "agrees to" a proposal or plan, and "agrees with" a person. Therefore, "agrees to the recommendation" is correct.`
+          }
+        ];
+        const item = englishSbi[(qNum + mockIndex) % englishSbi.length];
+        text = `[SBI PO English Q${qNum}] ${item.text}`;
+        options = item.opts;
+        correctOptionIndex = item.ans;
+        explanation = item.exp;
+      } else if (qNum <= 65) {
+        // Quantitative Aptitude
+        const r1 = 4 + (mockIndex * 2) + (qNum % 6);
+        const r2 = r1 + 3;
+        const totalWork = r1 * r2 * 2;
+        text = `[SBI PO Quant Q${qNum}] A can complete a piece of work in ${r1} days and B can do it in ${r2} days. If they work together, how many days will they take? / A एक कार्य को ${r1} दिनों में और B उसे ${r2} दिनों में पूरा कर सकता है। यदि वे एक साथ काम करते हैं, तो उन्हें कितने दिन लगेंगे?`;
+        options = [
+          `(a) ${( (r1 * r2) / (r1 + r2) ).toFixed(2)} days`,
+          `(b) ${(r1 + r2) / 2} days`,
+          `(c) ${Math.round((r1 * r2) / (r1 + r2) + 2)} days`,
+          `(d) ${r1} days`
+        ];
+        correctOptionIndex = 0;
+        explanation = `Combined 1 day's work of A and B = (1/${r1}) + (1/${r2}) = (${r1}+${r2})/(${r1}*${r2}). Time taken together = (${r1}*${r2})/(${r1}+${r2}) days.`;
+      } else {
+        // Reasoning Ability
+        text = `[SBI PO Reasoning Q${qNum}] Seven boxes A, B, C, D, E, F, G are stacked one above other. Box A is positioned 3rd from top. How many boxes are placed between A and G if G is at the bottom? / सात बक्से एक के ऊपर एक रखे हैं। बक्सा A ऊपर से तीसरे स्थान पर है। यदि G सबसे नीचे है, तो A और G के बीच कितने बक्से हैं?`;
+        options = ['(a) One', ' (b) Two', '(c) Three', '(d) Four'],
+        correctOptionIndex = 2; // positions: 1, 2, A(3), 4, 5, 6, G(7). Index between 3 and 7: 4, 5, 6 (which is 3 boxes)
+        explanation = `Box positions: 1, 2, A(3rd), 4, 5, 6, G(7th / Bottom). The boxes between A and G are at positions 4, 5, and 6. This counts to exactly 3 boxes.`;
+      }
+
     } else if (cat.includes('ibps') || cat.includes('bank')) {
       // ==========================================
       // IBPS PO PRELIMS PATTERN (100 Qs)
       // Sections: Quant (1-35), Reasoning (36-70), English (71-100)
       // ==========================================
       if (qNum <= 35) {
-        // Quantitative Aptitude
         const r1 = 3 + (mockIndex * 3) + (qNum % 7);
-        const r2 = 2 * r1 + 5;
         text = `[Bank PO Q${qNum}] A sum of money invested at Simple Interest doubles itself in ${r1} years. In how many years will it become 4 times of itself at the same rate? / साधारण ब्याज पर निवेश की गई कोई राशि ${r1} वर्षों में दोगुनी हो जाती है। समान ब्याज दर पर वह कितने वर्षों में 4 गुना हो जाएगी?`;
         options = [`(a) ${3 * r1} years`, `(b) ${4 * r1} years`, `(c) ${2 * r1} years`, `(d) ${r1 + 8} years`];
         correctOptionIndex = 0;
         explanation = `If sum P becomes 2P in ${r1} years, Interest = P. To become 4P, Interest required is 3P. Since simple interest is uniform, time taken is 3 times of original = 3 * ${r1} = ${3 * r1} years.`;
       } else if (qNum <= 70) {
-        // Reasoning Ability
         text = `[Bank PO Q${qNum}] Under a syllogistic assessment: Statement: I. Some tablets are laptops. II. All laptops are servers. Conclusions: I. Some servers are tablets. II. No server is a laptop. Choose correct option.`;
         options = ['(a) Only conclusion I follows', '(b) Only conclusion II follows', '(c) Both follow', '(d) Neither follows'];
         correctOptionIndex = 0;
         explanation = 'Since some tablets are laptops and all laptops are servers, those tablets which are laptops are definitely servers. Hence some servers are tablets. Conclusion I follows.';
       } else {
-        // English Language
         text = `[Bank PO Q${qNum}] Identify the part of sentence that contains a grammatical error: "Neither Sunil nor his friends (A) has agreed to support (B) the motion proposed in the meeting (C). No error (D)"`;
         options = ['(a) Part A', '(b) Part B', '(c) Part C', '(d) Part D (No error)'];
         correctOptionIndex = 1;
         explanation = 'With "neither... nor", the verb agrees with the closer subject. Since "his friends" is plural, the helping verb must be "have", not "has".';
+      }
+
+    } else if (cat.includes('group-d')) {
+      // ==========================================
+      // RAILWAY GROUP D PATTERN (100 Qs)
+      // Sections: Science (1-25), Math (26-50), Reasoning (51-80), General Awareness (81-100)
+      // ==========================================
+      if (qNum <= 25) {
+        // General Science
+        const scienceGroupD = [
+          {
+            text: `What is the chemical formula of Washing Soda? / वाशिंग सोडा (धावन सोडा) का रासायनिक सूत्र क्या है?`,
+            opts: ['(a) Na2CO3.10H2O', '(b) NaHCO3', '(c) NaOH', '(d) CaOCl2'],
+            ans: 0,
+            exp: `Washing soda's chemical term is sodium carbonate decahydrate (Na2CO3.10H2O).`
+          },
+          {
+            text: `Which among the following is the SI unit of power of a lens? / लेंस की क्षमता का SI मात्रक निम्नलिखित में से क्या है?`,
+            opts: ['(a) Watt / वाट', '(b) Dioptre / डायोप्टर', '(c) Lumen / ल्यूमेन', '(d) Candela / कैंडेला'],
+            ans: 1,
+            exp: `The SI unit of physical refractive power of an optical lens is the Dioptre (reciprocal of focal length in meters).`
+          }
+        ];
+        const item = scienceGroupD[(qNum + mockIndex) % scienceGroupD.length];
+        text = `[Group-D Science Q${qNum}] ${item.text}`;
+        options = item.opts;
+        correctOptionIndex = item.ans;
+        explanation = item.exp;
+      } else if (qNum <= 50) {
+        // Mathematics
+        const num = 12 + (mockIndex * 4) + (qNum % 8);
+        text = `[Group-D Math Q${qNum}] Solve the expression for positive square root: Find the square root of ${num * num} / ${num * num} का वर्गमूल ज्ञात कीजिए:`;
+        options = [`(a) ${num}`, `(b) ${num - 2}`, `(c) ${num + 2}`, `(d) ${num * 2}`];
+        correctOptionIndex = 0;
+        explanation = `The square root of ${num * num} is ${num} because ${num} multiplied by ${num} is equal to ${num * num}.`;
+      } else if (qNum <= 80) {
+        // Reasoning
+        text = `[Group-D Reasoning Q${qNum}] If '+' means '*', '-' means '+', '*' means '/' and '/' means '-', what is 10 + 5 - 12 / 6? / यदि '+' का अर्थ '*', '-' का अर्थ '+', '*' का अर्थ '/' और '/' का अर्थ '-' है, तो 10 + 5 - 12 / 6 का मान क्या होगा?`;
+        options = ['(a) 56', '(b) 44', '(c) 50', '(d) 20'];
+        correctOptionIndex = 0;
+        explanation = `Substituting modified signs: 10 * 5 + 12 - 6 = 50 + 12 - 6 = 62 - 6 = 56.`;
+      } else {
+        // General Awareness & CA
+        text = `[Group-D GA Q${qNum}] Where is the headquarters of the North Western Railway zone located? / उत्तर पश्चिम रेलवे जोन का मुख्यालय कहाँ स्थित है?`;
+        options = ['(a) Jaipur / जयपुर', '(b) Jodhpur / जोधपुर', '(c) Ajmer / अजमेर', '(d) Bikaner / बीकानेर'];
+        correctOptionIndex = 0;
+        explanation = `The North Western Railway is one of the eighteen railway zones in India, headquartered at Jaipur, Rajasthan.`;
+      }
+
+    } else if (cat.includes('rpf') && cat.includes('si')) {
+      // ==========================================
+      // RAILWAY RPF SI PATTERN (120 Qs)
+      // Sections: General Awareness (1-50), Arithmetic (51-85), Reasoning (86-120)
+      // ==========================================
+      if (qNum <= 50) {
+        // General Awareness (History, Geography, Polity, Science)
+        const gaRpf = [
+          {
+            text: `Who was the founder of the Slave Dynasty in India? / भारत में गुलाम वंश का संस्थापक कौन था?`,
+            opts: ['(a) Iltutmish / इल्तुतमिश', '(b) Qutub-ud-din Aibak / कुतुबुद्दीन ऐबक', '(c) Balban / बलबन', '(d) Razia Sultana / रजिया सुल्तान'],
+            ans: 1,
+            exp: `The Slave Dynasty (Mamluk Dynasty) was founded in 1206 by Qutub-ud-din Aibak, who was a trusted general of Muhammad Ghori.`
+          },
+          {
+            text: `Under which Constitutional Article is the President's Rule imposed in a state? / किस संवैधानिक अनुच्छेद के तहत किसी राज्य में राष्ट्रपति शासन लगाया जाता है?`,
+            opts: ['(a) Article 352 / अनुच्छेद 352', '(b) Article 356 / अनुच्छेद 356', '(c) Article 360 / अनुच्छेद 360', '(d) Article 368 / अनुच्छेद 368'],
+            ans: 1,
+            exp: `Article 356 of the Constitution of India provides for the imposition of President's Rule in a state in case of failure of constitutional machinery.`
+          }
+        ];
+        const item = gaRpf[(qNum + mockIndex) % gaRpf.length];
+        text = `[RPF SI GA Q${qNum}] ${item.text}`;
+        options = item.opts;
+        correctOptionIndex = item.ans;
+        explanation = item.exp;
+      } else if (qNum <= 85) {
+        // Arithmetic
+        const p = 1000 + (mockIndex * 100) + (qNum * 10);
+        const r = 5;
+        const speedRatio = Math.round(p * r / 100);
+        text = `[RPF SI Arithmetic Q${qNum}] Find the Simple Interest on ₹${p} for 2 years at 5% per annum. / ₹${p} पर 2 वर्ष के लिए 5% वार्षिक दर से साधारण ब्याज ज्ञात कीजिए।`;
+        options = [
+          `(a) ₹${speedRatio * 2}`,
+          `(b) ₹${speedRatio}`,
+          `(c) ₹${speedRatio * 3}`,
+          `(d) ₹${speedRatio + 50}`
+        ];
+        correctOptionIndex = 1; // SI = (P * R * T)/100 = (p * 5 * 2)/100 = p * 10 / 100 = p/10. Here, our formula calculates SI as p/10, which matches speedRatio when P=p. Let's make options mathematically correct: SI = (p * 5 * 2) / 100 = p/10. So ans should be option indexed 1: p/10.
+        options = [
+          `(a) ₹${Math.round(p * 0.05)}`,
+          `(b) ₹${Math.round(p * 0.10)}`, // CORRECT
+          `(c) ₹${Math.round(p * 0.15)}`,
+          `(d) ₹${Math.round(p * 0.20)}`
+        ];
+        explanation = `Simple Interest = (Principal * Rate * Time) / 100 = (${p} * 5 * 2) / 100 = ₹${Math.round(p * 0.10)}.`;
+      } else {
+        // Reasoning
+        text = `[RPF SI Reasoning Q${qNum}] Pointing to a photograph, Ram said, "Her mother's only daughter is my mother." How is Ram related to that lady in photograph? / एक तस्वीर की ओर इशारा करते हुए, राम ने कहा, "उसकी मां की इकलौती बेटी मेरी मां है।" राम का उस तस्वीर वाली महिला से क्या संबंध है?`;
+        options = ['(a) Brother / भाई', '(b) Uncle / मामा', '(c) Son / बेटा', '(d) Father / पिता'];
+        correctOptionIndex = 2; // Her mother's only daughter is the lady herself. The lady is Ram's mother, so Ram is her son.
+        explanation = `"Her mother's only daughter" refers to the lady in the photograph herself. Since she is Ram's mother, Ram is her Son.`;
       }
 
     } else if (cat.includes('ntpc') || cat.includes('railway')) {
@@ -197,7 +304,7 @@ export function generateMockQuestions(category: string, mockIndex: number): Ques
         text = `[RRB NTPC Q${qNum}] A train of length ${lengthM} meters passes a standing pole in how much time if its speed is ${speedKmh} km/h? / ${lengthM} मीटर लंबी एक ट्रेन एक खंभे को कितने समय में पार करेगी यदि कडी की रफ्तार ${speedKmh} किमी/घंटा है?`;
         options = [`(a) ${timeSec} seconds`, `(b) 12 seconds`, `(c) 8.5 seconds`, `(d) 15 seconds`];
         correctOptionIndex = 0;
-        explanation = `Speed in m/s = ${speedKmh} * 5/18 = ${(speedKmh * 5 / 18).toFixed(2)} m/s. Time = Distance / Speed = ${lengthM} / ${(speedKmh * 5 / 18).toFixed(2)} = ${timeSec} seconds.`;
+        explanation = `Speed in m/s = ${speedKmh} * 5/18. Time = Distance / Speed = ${lengthM} / Speed = ${timeSec} seconds.`;
       } else {
         // Reasoning
          text = `[RRB NTPC Q${qNum}] Choose the correct alphanumeric sequence next in progress: B4, D8, F12, H16, ? / दी गई श्रृंखला के आगे क्या आएगा: B4, D8, F12, H16, ?`;
@@ -209,13 +316,13 @@ export function generateMockQuestions(category: string, mockIndex: number): Ques
     } else if (cat.includes('chsl')) {
       // ==========================================
       // SSC CHSL (10+2) TIER-1 PATTERN
-      // Sections: Reasoning (100 Qs: 25 items each)
+      // Sections: Reasoning (1-25), GA (26-50), Maths (51-75), English (76-100)
       // ==========================================
       if (qNum <= 25) {
         text = `[SSC CHSL Q${qNum}] If A denotes '+', B denotes '-', C denotes '*' and D denotes '/', evaluate expression: 20 A 10 C 2 B 8 D 2 / सरल कीजिए: 20 A 10 C 2 B 8 D 2`;
         options = ['(a) 36', '(b) 32', '(c) 40', '(d) 18'];
         correctOptionIndex = 0;
-        explanation: 'Substituting signs: 20 + 10 * 2 - 8 / 2 = 20 + 20 - 4 = 40 - 4 = 36.';
+        explanation = 'Substituting signs: 20 + 10 * 2 - 8 / 2 = 20 + 20 - 4 = 40 - 4 = 36.';
       } else if (qNum <= 50) {
         text = `[SSC CHSL Q${qNum}] Which chemical substance gives green firework bursts? / आतिशबाजी में हरा रंग किसकी उपस्थिति के कारण दिखाई देता है?`;
         options = ['(a) Barium / बेरियम', '(b) Strontium / स्ट्रोंटियम', '(c) Sodium / सोडियम', '(d) Copper / तांबा'];
@@ -285,14 +392,17 @@ export function generateMockQuestions(category: string, mockIndex: number): Ques
 }
 
 /**
- * Returns exactly 10 comprehensive 100-Question mock exam papers for each of the 5 vacancies:
+ * Returns exactly 10 comprehensive mock exam papers for each of the 8 vacancies:
  * 1. UPSC Civil Services
  * 2. SSC CGL
  * 3. IBPS PO
  * 4. RRB NTPC
  * 5. SSC CHSL
+ * 6. SBI PO
+ * 7. Railway Group D
+ * 8. Railway RPF SI
  * 
- * Total = 50 fully functional CBT mock test papers!
+ * Total = 80 fully functional CBT mock test papers!
  */
 export function generateAllExtendedMocks(): MockTest[] {
   const allMocks: MockTest[] = [];
@@ -316,7 +426,7 @@ export function generateAllExtendedMocks(): MockTest[] {
       name: 'IBPS PO Exam Prep',
       titlePrefix: 'IBPS Bank Probationary Officers (PO) CBT Prelims Mock',
       duration: 60,
-      totalMarks: 105,
+      totalMarks: 100,
       negative: 0.25
     },
     {
@@ -332,6 +442,27 @@ export function generateAllExtendedMocks(): MockTest[] {
       duration: 60,
       totalMarks: 200,
       negative: 0.50
+    },
+    {
+      name: 'SBI PO Exam Prep',
+      titlePrefix: 'SBI Probationary Officer (PO) Prelims High-Yield Mock',
+      duration: 60,
+      totalMarks: 100,
+      negative: 0.25
+    },
+    {
+      name: 'Railway Group-D Exam Prep',
+      titlePrefix: 'Railway RRB Group-D (Level-1) CBT Complete Mock',
+      duration: 90,
+      totalMarks: 100,
+      negative: 0.33
+    },
+    {
+      name: 'Railway RPF SI Exam Prep',
+      titlePrefix: 'RPF Sub-Inspector (SI) CBT Stage-1 All Subject Mock',
+      duration: 90,
+      totalMarks: 120,
+      negative: 0.33
     }
   ];
 
