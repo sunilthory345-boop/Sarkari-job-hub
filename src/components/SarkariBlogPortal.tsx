@@ -375,7 +375,7 @@ export default function SarkariBlogPortal({ blogs, onAddBlog, triggerToast }: Sa
     if (typeof window !== 'undefined') {
       return `${window.location.protocol}//${window.location.host}`;
     }
-    return 'https://jobsarkarihub.org';
+    return 'https://sarkari-job-hub-v595.onrender.com';
   });
   const [sitemapRoutes, setSitemapRoutes] = useState<Record<string, { label: string; enabled: boolean; priority: string; changefreq: string }>>({
     'home': { label: 'Home Page (मुख्य पृष्ठ)', enabled: true, priority: '1.0', changefreq: 'daily' },
@@ -387,7 +387,11 @@ export default function SarkariBlogPortal({ blogs, onAddBlog, triggerToast }: Sa
     'current-affairs': { label: 'Bilingual GK Affairs', enabled: true, priority: '0.8', changefreq: 'daily' },
     'blog': { label: 'Strategy Guidelines Blog', enabled: true, priority: '0.7', changefreq: 'weekly' },
     'objections': { label: 'Ans-Key Challenge Desk', enabled: true, priority: '0.6', changefreq: 'monthly' },
-    'upload-vault': { label: 'Vault Folder Directory', enabled: true, priority: '0.7', changefreq: 'monthly' }
+    'upload-vault': { label: 'Vault Folder Directory', enabled: true, priority: '0.7', changefreq: 'monthly' },
+    'railway': { label: 'Railway Jobs (रेलवे भर्ती)', enabled: true, priority: '0.9', changefreq: 'daily' },
+    'banking': { label: 'Banking Jobs (बैंकिंग भर्ती)', enabled: true, priority: '0.9', changefreq: 'daily' },
+    'state-jobs': { label: 'State Government Jobs (राज्य स्तर)', enabled: true, priority: '0.9', changefreq: 'daily' },
+    'police-jobs': { label: 'Police Bharti (पुलिस भर्ती)', enabled: true, priority: '0.9', changefreq: 'daily' }
   });
   const [includeBlogsInSitemap, setIncludeBlogsInSitemap] = useState(true);
 
@@ -407,7 +411,7 @@ export default function SarkariBlogPortal({ blogs, onAddBlog, triggerToast }: Sa
     xml += `<urlset\n  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n  xmlns:xhtml="http://www.w3.org/1999/xhtml"\n>\n`;
     
     // Add active route paths
-    Object.entries(sitemapRoutes).forEach(([key, route]) => {
+    (Object.entries(sitemapRoutes) as any).forEach(([key, route]: [string, any]) => {
       if (route.enabled) {
         const pathSuffix = key === 'home' ? '' : `/${key}`;
         const url = `${cleanDomain}${pathSuffix}`;
@@ -1632,7 +1636,7 @@ export default function SarkariBlogPortal({ blogs, onAddBlog, triggerToast }: Sa
                     
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] max-h-44 overflow-y-auto pr-1">
                       
-                      {Object.entries(sitemapRoutes).map(([key, route]) => (
+                      {(Object.entries(sitemapRoutes) as any).map(([key, route]: [string, any]) => (
                         <div key={key} className="bg-slate-50 p-2 rounded-xl border border-slate-100 flex items-center justify-between gap-1">
                           <label className="flex items-center gap-2 cursor-pointer font-bold text-slate-700 whitespace-nowrap overflow-hidden text-ellipsis">
                             <input 

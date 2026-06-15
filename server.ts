@@ -74,7 +74,11 @@ async function startServer() {
       { path: "current-affairs", priority: "0.8", changefreq: "daily" },
       { path: "blog", priority: "0.7", changefreq: "weekly" },
       { path: "objections", priority: "0.6", changefreq: "monthly" },
-      { path: "upload-vault", priority: "0.7", changefreq: "monthly" }
+      { path: "upload-vault", priority: "0.7", changefreq: "monthly" },
+      { path: "railway", priority: "0.9", changefreq: "daily" },
+      { path: "banking", priority: "0.9", changefreq: "daily" },
+      { path: "state-jobs", priority: "0.9", changefreq: "daily" },
+      { path: "police-jobs", priority: "0.9", changefreq: "daily" }
     ];
     
     let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
