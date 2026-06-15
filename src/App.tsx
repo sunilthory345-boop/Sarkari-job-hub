@@ -202,10 +202,11 @@ export default function App() {
   const [mockTests, setMockTests] = useState<MockTest[]>(() => {
     const deletedSaved = localStorage.getItem('sarkari_deleted_mock_ids');
     let deletedSet = new Set<string>();
+    deletedSet.add('ssc-cgl-quant-1');
     if (deletedSaved) {
       try {
         const deletedIds = JSON.parse(deletedSaved) as string[];
-        deletedSet = new Set(deletedIds);
+        deletedSet = new Set([...deletedIds, 'ssc-cgl-quant-1']);
       } catch (e) {
         console.error(e);
       }

@@ -1683,37 +1683,6 @@ export const INITIAL_MOCK_TESTS: MockTest[] = [
     negativeMark: 0.50
   },
   {
-    id: 'ssc-cgl-quant-1',
-    title: 'SSC CGL Tier-1 Quantitative Aptitude booster',
-    category: 'SSC CGL Exam Prep',
-    durationMinutes: 10,
-    questions: [
-      {
-        id: 'q1',
-        text: 'The average weight of 8 persons increases by 2.5 kg when a new person comes in place of one of them weighing 65 kg. What is the weight of the new person?',
-        options: ['70 kg', '75 kg', '80 kg', '85 kg'],
-        correctOptionIndex: 3,
-        explanation: 'Increase in total weight = 8 * 2.5 = 20 kg. Since the replaced person was 65 kg, the weight of the new person = 65 + 20 = 85 kg.'
-      },
-      {
-        id: 'q2',
-        text: 'If A:B = 2:3 and B:C = 4:5, find the compounded ratio of A:C.',
-        options: ['8:15', '10:12', '12:15', '3:5'],
-        correctOptionIndex: 0,
-        explanation: 'A/C = (A/B) * (B/C) = (2/3) * (4/5) = 8/15. So, the ratio is 8:15.'
-      },
-      {
-        id: 'q3',
-        text: 'A dealer marks his goods 20% costlier than Cost Price, but gives a 10% discount on marked price. What is his net gain or loss percent?',
-        options: ['10% Gain', '8% Gain', '12% Gain', '2% Loss'],
-        correctOptionIndex: 1,
-        explanation: 'Let CP = 100. Marked Price (MP) = 120. Selling Price after 10% discount = 120 - 120*(10/100) = 120 - 12 = 108. Net percentage gain = 108 - 100 = 8% gain.'
-      }
-    ],
-    totalMarks: 6,
-    negativeMark: 0.5
-  },
-  {
     id: 'upsc-gs-1',
     title: 'UPSC Civil Services General Studies Paper I Prelims Mock',
     category: 'UPSC Civil Services Prep',
