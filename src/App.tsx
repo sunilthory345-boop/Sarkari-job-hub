@@ -200,23 +200,35 @@ export default function App() {
   }, [answerKeys]);
 
   const [mockTests, setMockTests] = useState<MockTest[]>(() => {
+    const deletedSaved = localStorage.getItem('sarkari_deleted_mock_ids');
+    let deletedSet = new Set<string>();
+    if (deletedSaved) {
+      try {
+        const deletedIds = JSON.parse(deletedSaved) as string[];
+        deletedSet = new Set(deletedIds);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
     const saved = localStorage.getItem('sarkari_mock_tests');
     if (saved) {
       try {
         const parsed = JSON.parse(saved) as MockTest[];
-        const existingIds = new Set(parsed.map(t => t.id));
-        const missingMocks = INITIAL_MOCK_TESTS.filter(t => !existingIds.has(t.id));
+        const filteredParsed = parsed.filter(t => !deletedSet.has(t.id));
+        const existingIds = new Set(filteredParsed.map(t => t.id));
+        const missingMocks = INITIAL_MOCK_TESTS.filter(t => !existingIds.has(t.id) && !deletedSet.has(t.id));
         if (missingMocks.length > 0) {
-          const merged = [...parsed, ...missingMocks];
+          const merged = [...filteredParsed, ...missingMocks];
           localStorage.setItem('sarkari_mock_tests', JSON.stringify(merged));
           return merged;
         }
-        return parsed;
+        return filteredParsed;
       } catch (e) {
-        return INITIAL_MOCK_TESTS;
+        return INITIAL_MOCK_TESTS.filter(t => !deletedSet.has(t.id));
       }
     }
-    return INITIAL_MOCK_TESTS;
+    return INITIAL_MOCK_TESTS.filter(t => !deletedSet.has(t.id));
   });
 
   useEffect(() => {
@@ -1781,6 +1793,23 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
             onAddResult={(newRes) => setResults([newRes, ...results])}
             onAddMockTest={(newTest) => setMockTests([newTest, ...mockTests])}
             onAddAnswerKey={(newKey) => setAnswerKeys([newKey, ...answerKeys])}
+            onDeleteMockTest={(testId) => {
+              const deletedSaved = localStorage.getItem('sarkari_deleted_mock_ids');
+              let deletedIds: string[] = [];
+              if (deletedSaved) {
+                try {
+                  deletedIds = JSON.parse(deletedSaved);
+                } catch (e) {
+                  console.error(e);
+                }
+              }
+              if (!deletedIds.includes(testId)) {
+                deletedIds.push(testId);
+                localStorage.setItem('sarkari_deleted_mock_ids', JSON.stringify(deletedIds));
+              }
+              setMockTests(prev => prev.filter(t => t.id !== testId));
+              triggerToast('🗑️ Mock test was successfully deleted.');
+            }}
           />
         )}
 

@@ -19,6 +19,7 @@ interface AdminConsoleProps {
   onAddResult: (res: JobResult) => void;
   onAddMockTest: (test: MockTest) => void;
   onAddAnswerKey?: (key: AnswerKey) => void;
+  onDeleteMockTest?: (testId: string) => void;
 }
 
 export default function AdminConsole({
@@ -32,7 +33,8 @@ export default function AdminConsole({
   onAddAdmitCard,
   onAddResult,
   onAddMockTest,
-  onAddAnswerKey
+  onAddAnswerKey,
+  onDeleteMockTest
 }: AdminConsoleProps) {
   const [activeAdminTab, setActiveAdminTab] = useState<'jobs' | 'mocks' | 'cards' | 'whatsapp'>('jobs');
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
@@ -1452,6 +1454,53 @@ What is the standard pH level of pure distilled water at normal room temperature
               </div>
             </div>
           )}
+
+          {/* Published Mocks deletion & list management */}
+          <div className="bg-white rounded-3xl border border-slate-150 p-6 shadow-xs mt-6">
+            <h3 className="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+              📋 currently published mock tests ({mockTests.length} tests)
+            </h3>
+            <p className="text-xs text-slate-500 mb-4">
+              Review and delete old mock tests to remove them permanently from the website's Interactive MCQ lobbymode.
+            </p>
+
+            <div className="space-y-3 overflow-y-auto max-h-[400px]">
+              {mockTests.map((test) => (
+                <div key={test.id} className="p-4 border border-slate-100 rounded-2xl flex items-center justify-between gap-4 bg-slate-50/50 hover:bg-slate-50 transition text-xs">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="p-1 px-1.5 rounded-md bg-orange-100 text-orange-850 font-sans font-bold text-[9px]/none uppercase">
+                        {test.category}
+                      </span>
+                      <span className="text-[10px] text-slate-400 font-medium font-mono">
+                        {test.questions.length} Qs • {test.durationMinutes} mins
+                      </span>
+                    </div>
+                    <h4 className="font-bold text-slate-800 text-xs mt-1">{test.title}</h4>
+                  </div>
+                  {onDeleteMockTest ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (confirm(`Are you sure you want to remove "${test.title}"?`)) {
+                          onDeleteMockTest(test.id);
+                        }
+                      }}
+                      className="rounded-lg p-2 text-rose-500 hover:bg-rose-50 hover:text-rose-700 transition flex-shrink-0"
+                      title="Delete Mock Test"
+                    >
+                      <Trash2 className="h-4.5 w-4.5" />
+                    </button>
+                  ) : (
+                    <span className="text-[10px] text-slate-400 italic">Protected</span>
+                  )}
+                </div>
+              ))}
+              {mockTests.length === 0 && (
+                <p className="text-xs text-slate-400 italic text-center py-6">No mock tests currently published.</p>
+              )}
+            </div>
+          </div>
 
         </div>
       )}
