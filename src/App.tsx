@@ -4,7 +4,7 @@ import {
   Sparkles, Award, ShieldAlert, Clock, Star, Bell, 
   CheckCircle, ArrowUpRight, GraduationCap, FileText, 
   HelpCircle, Download, CheckSquare, Send, Mail, Phone, 
-  Building2, Globe, Heart, ShieldCheck, Zap, CreditCard, Plus, Share2, ChevronDown, ChevronUp, Printer, Link, Camera, X, RefreshCw
+  Building2, Globe, Heart, ShieldCheck, Zap, CreditCard, Plus, Share2, ChevronDown, ChevronUp, Printer, Link, Camera, X, RefreshCw, ExternalLink
 } from 'lucide-react';
 
 import { GovJob, AdmitCard, JobResult, MockTest, CurrentAffair, Blog, UserProfile, AnswerKey, Question } from './types';
@@ -598,12 +598,24 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
       Lifetime: "₹999"
     };
     const price = planPrices[selectedPlan] || "₹999";
+    const activeBusinessUpiId = localStorage.getItem('sarkari_business_upi_id') || 'sarkarihub@upi';
+    const activeBusinessName = localStorage.getItem('sarkari_business_name') || 'JobSarkariHub';
+    const activePaymentLink = localStorage.getItem('sarkari_business_payment_link') || '';
     const referenceId = `SARKARI-PREM-${Math.floor(100000 + Math.random() * 900000)}`;
-    const paymentText = `Job Sarkari Hub Premium Upgrade\n` +
+    
+    let paymentText = `Job Sarkari Hub Premium Upgrade\n` +
       `Plan: ${selectedPlan} Access\n` +
       `Amount: ${price}\n` +
-      `Reference ID: ${referenceId}\n` +
-      `Checkout Link: ${window.location.origin}?ref=${referenceId}&plan=${selectedPlan.toLowerCase()}`;
+      `Payee Recipient: ${activeBusinessName} (${activeBusinessUpiId})\n` +
+      `Reference ID: ${referenceId}\n`;
+      
+    if (activePaymentLink) {
+      paymentText += `Payment Gateway checkout: ${activePaymentLink}\n`;
+    } else {
+      paymentText += `UPI Pay Link: upi://pay?pa=${activeBusinessUpiId}&pn=${encodeURIComponent(activeBusinessName)}&am=${price.replace('₹', '')}&cu=INR&tn=Upgrade+ID+${referenceId}\n`;
+    }
+    
+    paymentText += `Portal Link: ${window.location.origin}?ref=${referenceId}&plan=${selectedPlan.toLowerCase()}`;
 
     try {
       await navigator.clipboard.writeText(paymentText);
@@ -3824,27 +3836,51 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
               ))}
             </div>
 
-            {/* Dynamic UPI Payment Simulator / QR Code */}
-            <div data-testid="upi-qr-card" className="mt-4 bg-slate-50 border border-slate-200/60 p-4 rounded-2xl flex items-center gap-4">
-              <div className="bg-white p-2 rounded-xl border border-slate-200/80 shadow-xs shrink-0 flex items-center justify-center">
-                <img 
-                  src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(`upi://pay?pa=sarkarihub@upi&pn=JobSarkariHub&am=${selectedPlan === 'Monthly' ? '99' : selectedPlan === 'Quarterly' ? '199' : selectedPlan === 'Yearly' ? '499' : '999'}&cu=INR&tn=Upgrade+to+${selectedPlan}+Access`)}`}
-                  alt="Sarkari Upgrade QR"
-                  className="h-20 w-20 object-contain"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-              <div className="space-y-1 text-left font-sans text-xs">
-                <span className="font-extrabold text-slate-800 block">Instant QR Code Scanner</span>
-                <p className="text-[11px] text-slate-500 leading-normal">
-                  Open any UPI app like GPay, PhonePe, or Paytm and scan this dynamic QR to instantly upgrade to <strong className="text-blue-650 font-extrabold">{selectedPlan}</strong> for <strong className="text-slate-900 font-extrabold">{selectedPlan === 'Monthly' ? '₹99' : selectedPlan === 'Quarterly' ? '₹199' : selectedPlan === 'Yearly' ? '₹499' : '₹999'}</strong>.
-                </p>
-                <span className="text-[10px] uppercase font-bold text-emerald-600 flex items-center gap-1.5 mt-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                  Active secure sandbox payment gateway
-                </span>
-              </div>
-            </div>
+            {/* Dynamic UPI Payment Simulator / QR Code with Custom Receiver Parameters */}
+            {(() => {
+              const activeBusinessUpiId = localStorage.getItem('sarkari_business_upi_id') || 'sarkarihub@upi';
+              const activeBusinessName = localStorage.getItem('sarkari_business_name') || 'JobSarkariHub';
+              const activePaymentLink = localStorage.getItem('sarkari_business_payment_link') || '';
+              const planAmount = selectedPlan === 'Monthly' ? '99' : selectedPlan === 'Quarterly' ? '199' : selectedPlan === 'Yearly' ? '499' : '999';
+              
+              return (
+                <div className="space-y-3">
+                  <div data-testid="upi-qr-card" className="mt-4 bg-slate-50 border border-slate-200/60 p-4 rounded-2xl flex flex-col sm:flex-row items-center gap-4">
+                    <div className="bg-white p-2 rounded-xl border border-slate-200/80 shadow-xs shrink-0 flex items-center justify-center">
+                      <img 
+                        src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(`upi://pay?pa=${activeBusinessUpiId}&pn=${activeBusinessName}&am=${planAmount}&cu=INR&tn=Upgrade+to+${selectedPlan}+Access`)}`}
+                        alt="Sarkari Upgrade QR"
+                        className="h-20 w-20 object-contain"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                    <div className="space-y-1 text-left font-sans text-xs flex-1">
+                      <span className="font-extrabold text-slate-800 block">Instant QR Code Scanner</span>
+                      <p className="text-[11px] text-slate-500 leading-normal">
+                        Open any UPI app like GPay, PhonePe, or Paytm and scan this dynamic QR to instantly upgrade to <strong className="text-blue-650 font-extrabold">{selectedPlan}</strong> for <strong className="text-slate-900 font-extrabold">₹{planAmount}</strong>.
+                      </p>
+                      <span className="text-[9px] font-mono text-slate-400 block truncate">Payee: {activeBusinessName} ({activeBusinessUpiId})</span>
+                      <span className="text-[10px] uppercase font-bold text-emerald-600 flex items-center gap-1.5 mt-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        Active direct bank checkout
+                      </span>
+                    </div>
+                  </div>
+
+                  {activePaymentLink && (
+                    <a
+                      href={activePaymentLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-sm transition"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                      Pay via Cards / Netbanking (Online Gateway)
+                    </a>
+                  )}
+                </div>
+              );
+            })()}
 
             {/* Why go Premium? toggle link and collapsible section */}
             <div className="mt-4 border-t border-slate-100 pt-3">

@@ -36,8 +36,13 @@ export default function AdminConsole({
   onAddAnswerKey,
   onDeleteMockTest
 }: AdminConsoleProps) {
-  const [activeAdminTab, setActiveAdminTab] = useState<'jobs' | 'mocks' | 'cards' | 'whatsapp'>('jobs');
+  const [activeAdminTab, setActiveAdminTab] = useState<'jobs' | 'mocks' | 'cards' | 'whatsapp' | 'payments'>('jobs');
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
+
+  // --- PAYMENT AND UPI SETUP STATES ---
+  const [adminUpiId, setAdminUpiId] = useState<string>(() => localStorage.getItem('sarkari_business_upi_id') || 'sarkarihub@upi');
+  const [adminPayeeName, setAdminPayeeName] = useState<string>(() => localStorage.getItem('sarkari_business_name') || 'JobSarkariHub');
+  const [adminPaymentLink, setAdminPaymentLink] = useState<string>(() => localStorage.getItem('sarkari_business_payment_link') || '');
 
   // --- WHATSAPP BROADCAST STATES ---
   const [selectedJobId, setSelectedJobId] = useState<string>('');
@@ -808,7 +813,8 @@ What is the standard pH level of pure distilled water at normal room temperature
             { id: 'jobs', label: 'Government Positions & Vacancies' },
             { id: 'mocks', label: 'Interactive MCQ Test Creator' },
             { id: 'cards', label: 'Admit Cards / Official Results' },
-            { id: 'whatsapp', label: '📢 WhatsApp & Telegram Broadcast' }
+            { id: 'whatsapp', label: '📢 WhatsApp & Telegram Broadcast' },
+            { id: 'payments', label: '💳 UPI ID & Payments Setup' }
           ].map((tab) => (
             <button
               key={tab.id}
@@ -2085,6 +2091,155 @@ What is the standard pH level of pure distilled water at normal room temperature
         </div>
       )}
 
+      {activeAdminTab === 'payments' && (
+        <div className="space-y-6">
+          {/* Header Description Banner */}
+          <div className="bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 border border-blue-100 rounded-3xl p-6 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <h3 className="text-base text-slate-900 font-extrabold flex items-center gap-1.5">
+                <span className="p-1 px-2 rounded-lg bg-blue-600 text-white text-[9px] font-mono font-black tracking-wider shadow-sm">PAYMENT INTEGRATION</span>
+                UPI ID & Premium Plan Setup
+              </h3>
+              <p className="text-xs text-slate-600">
+                Configure your Business UPI ID, display payee name, or external payment gateways (Razorpay, Instamojo) to receive premium plan upgrade collections directly to your bank account bilingually.
+              </p>
+            </div>
+            <div className="flex gap-2 shrink-0">
+              <span className="font-mono text-[9px] font-extrabold bg-blue-100 text-blue-800 rounded px-2 py-1 flex items-center justify-center gap-1">
+                ⭐ 100% DIRECT BANK P2P (0% COMMISSION)
+              </span>
+            </div>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-12">
+            
+            {/* Payment Config Form */}
+            <div className="md:col-span-7 bg-white rounded-2xl border border-blue-50 p-6 shadow-xs space-y-4">
+              <h3 className="text-sm font-bold text-slate-900 flex items-center gap-1.5 border-b border-slate-50 pb-2">
+                <Settings className="h-4.5 w-4.5 text-blue-600" />
+                Configure Direct Payout Parameters
+              </h3>
+
+              <div className="space-y-4 text-xs font-sans">
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-500 mb-1">Your Recipient UPI ID (VPA Address) <span className="text-red-500">*</span></label>
+                  <input 
+                    type="text" 
+                    value={adminUpiId}
+                    onChange={(e) => setAdminUpiId(e.target.value)}
+                    placeholder="e.g. sunilk94411@paytm, or sarkarihub@upi"
+                    className="rounded-lg border border-slate-200 bg-white p-3 text-xs w-full font-mono text-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    required
+                  />
+                  <p className="text-[10px] text-slate-400 mt-1 leading-normal">
+                    This is your unique UPI Address. Multiple payment apps like GPay, PhonePe, Paytm, and BHIM will sweep student premiums directly into your bank account connected with this ID.
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-500 mb-1">Payee/Business Name (Registered Name) <span className="text-red-500">*</span></label>
+                  <input 
+                    type="text" 
+                    value={adminPayeeName}
+                    onChange={(e) => setAdminPayeeName(e.target.value)}
+                    placeholder="e.g. JobSarkariHub, or Sunil Kumar"
+                    className="rounded-lg border border-slate-200 bg-white p-3 text-xs w-full text-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    required
+                  />
+                  <p className="text-[10px] text-slate-400 mt-1 leading-normal">
+                    The payee name candidates see on their mobile screen when they scan your QR code or open the UPI window.
+                  </p>
+                </div>
+
+                <div>
+                  <div className="flex justify-between items-center mb-1">
+                    <label className="block text-[11px] font-bold text-slate-500">Custom Payment Gateway Link (Razorpay/Instamojo URL)</label>
+                    <span className="text-[9px] text-amber-600 bg-amber-50 rounded px-1.5 py-0.2 font-mono uppercase font-extrabold animate-pulse">Optional Upgrade</span>
+                  </div>
+                  <input 
+                    type="url" 
+                    value={adminPaymentLink}
+                    onChange={(e) => setAdminPaymentLink(e.target.value)}
+                    placeholder="e.g. https://pages.razorpay.com/jobsarkari-premium"
+                    className="rounded-lg border border-slate-200 bg-white p-3 text-xs w-full text-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  />
+                  <p className="text-[10px] text-slate-400 mt-1 leading-normal">
+                    If you prefer a structured debit card, credit card, netbanking, or wallet gateway process, paste your custom checkout link here. If provided, the "Buy Premium" buttons will allow users to redirect there, or scan the dynamic UPI QR directly.
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-end">
+                  <button
+                    onClick={() => {
+                      localStorage.setItem('sarkari_business_upi_id', adminUpiId);
+                      localStorage.setItem('sarkari_business_name', adminPayeeName);
+                      localStorage.setItem('sarkari_business_payment_link', adminPaymentLink);
+                      // Trigger normal state sync notification 
+                      setStatusMessage("✅ Payment Setup & UPI Address parameters saved! User app interfaces updated live.");
+                      setTimeout(() => setStatusMessage(null), 4000);
+                    }}
+                    className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-xl transition flex items-center gap-1.5 shadow shadow-blue-500/10 cursor-pointer"
+                  >
+                    <CheckCircle className="h-4 w-4" />
+                    Save Payment Configurations
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Simulated Live Preview of candidate's Checkout */}
+            <div className="md:col-span-5 space-y-6">
+              
+              <div className="bg-slate-55/20 border border-slate-200/60 p-5 rounded-2xl space-y-4">
+                <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">LIVE RECIPIENT QR PREVIEW</span>
+                
+                <div className="bg-white p-4 rounded-xl border border-slate-200/60 shadow-xs flex flex-col items-center justify-center text-center space-y-3">
+                  <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">QR Code generated for students:</span>
+                  
+                  <div className="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-center relative">
+                    <img 
+                      src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(`upi://pay?pa=${adminUpiId}&pn=${adminPayeeName}&am=999&cu=INR&tn=Upgrade+to+Lifetime+Access`)}`}
+                      alt="Merchant QR Live Code"
+                      className="h-28 w-28 object-contain"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <span className="text-xs font-extrabold text-slate-800 block">UPI Payee: {adminPayeeName}</span>
+                    <span className="text-[10px] font-mono text-slate-400 block bg-slate-50 px-2 py-0.5 rounded truncate max-w-xs">{adminUpiId}</span>
+                  </div>
+                </div>
+
+                <div className="text-left text-xs text-slate-600 space-y-2 leading-relaxed">
+                  <span className="font-extrabold text-slate-800 block">How do payments hit your bank?</span>
+                  <p className="text-[11px] text-slate-500">
+                    When a student selects a plan (such as ₹99 Monthly or ₹999 Lifetime), the app converts your recipient details, plan cost, and a custom Candidate Reference ID (e.g. <code className="bg-slate-100 p-0.5 rounded font-mono text-[9px]">SARKARI-PREM-230981</code>) into a secure standardized UPI URL.
+                  </p>
+                  <p className="text-[11px] text-slate-500">
+                    Scanning instantly triggers GPAY / PHONEPE / PAYTM with exact pre-filled payee name, amount and reference text – sending money peer-to-peer 100% free of charge directly to your linked state bank or cooperative account instantly.
+                  </p>
+                </div>
+              </div>
+
+              {/* Quick instructions block */}
+              <div className="bg-blue-50/50 border border-blue-100 rounded-2xl p-5 text-xs text-slate-600 space-y-2">
+                <span className="font-bold text-blue-900 block flex items-center gap-1.5 uppercase tracking-wide">
+                  💡 How to make UPI Link & QR Active:
+                </span>
+                <ol className="list-decimal pl-4 text-[11px] text-slate-600 space-y-1 font-sans">
+                  <li>Input your personal or business UPI ID above (e.g., Sunil's phone linked UPI pay address).</li>
+                  <li>Press <strong>Save Payment Configurations</strong> button.</li>
+                  <li>Go to <strong>Premium Membership</strong> tab and check the QR scanner — it's now updated with your custom ID live!</li>
+                  <li>When you share or send Payment links, the reference text integrates your details automatically.</li>
+                </ol>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      )}
     </div>
   );
 }
