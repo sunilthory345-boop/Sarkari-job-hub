@@ -4,6 +4,252 @@ import { generateAllExtendedMocks } from '../utils/examMockGenerator';
 
 export const INITIAL_JOBS: GovJob[] = [
   {
+    id: 'gsrtc-driver-conductor-recruitment-2026',
+    title: 'GSRTC Driver & Conductor Recruitment 2026',
+    org: 'Gujarat State Road Transport Corporation (GSRTC)',
+    category: 'Others',
+    qualification: '12th Pass',
+    ageLimit: '18 - 34 Years',
+    salary: '₹18,500 / Month',
+    fees: {
+      General: '₹250',
+      OBC: '₹250',
+      SC_ST_Female: '₹100'
+    },
+    totalPosts: 8917,
+    applyUrl: 'https://gsrtc.in',
+    pdfUrl: 'https://gsrtc.in',
+    officialWebsite: 'https://gsrtc.in',
+    postedDate: '2026-06-16',
+    lastDate: '2026-07-15',
+    importantDates: {
+      applyStart: '2026-06-16',
+      applyEnd: '2026-07-15',
+      examDate: 'To be notified',
+      admitCardRelease: 'To be notified'
+    },
+    selectionProcess: [
+      'Written OMR Test / CBT',
+      'Driving Skill Test (for Drivers)',
+      'Document Verification',
+      'Medical Examination'
+    ],
+    location: 'Gujarat',
+    description: '🚌 GSRTC DRIVER/CONDUCTOR RECRUITMENT 2026. Gujarat State Road Transport Corporation has announced 8,917 vacancies for Driver and Conductor positions. Qualification: 10th / 12th Pass, Apply online!',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'apmsrb-staff-nurse-recruitment-2026',
+    title: 'APMSRB Staff Nurse Recruitment 2026',
+    org: 'Andhra Pradesh Medical Services Recruitment Board (APMSRB)',
+    category: 'Others',
+    qualification: 'B.Sc',
+    ageLimit: '18 - 42 Years',
+    salary: '₹29,200 — ₹92,300 / Month',
+    fees: {
+      General: '₹500',
+      OBC: '₹500',
+      SC_ST_Female: '₹300'
+    },
+    totalPosts: 529,
+    applyUrl: 'https://apmsrb.ap.gov.in',
+    pdfUrl: 'https://apmsrb.ap.gov.in',
+    officialWebsite: 'https://apmsrb.ap.gov.in',
+    postedDate: '2026-06-16',
+    lastDate: '2026-07-10',
+    importantDates: {
+      applyStart: '2026-06-16',
+      applyEnd: '2026-07-10',
+      examDate: 'To be notified',
+      admitCardRelease: 'To be notified'
+    },
+    selectionProcess: [
+      'Merit-Based Sorting (GNM/B.Sc score)',
+      'Government Contract weightage marks',
+      'Document Verification'
+    ],
+    location: 'Andhra Pradesh',
+    description: '⚕️ APMSRB STAFF NURSE RECRUITMENT 2026. Andhra Pradesh Medical Services Recruitment Board (APMSRB) has announced 529 vacancies for Staff Nurse. Qualification: B.Sc Nursing / GNM, Apply today!',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'nbems-group-abc-recruitment-2026',
+    title: 'NBEMS Group A, B, & C Recruitment 2026',
+    org: 'National Board of Examinations in Medical Sciences (NBEMS)',
+    category: 'Others',
+    qualification: 'Graduate',
+    ageLimit: '18 - 35 Years',
+    salary: '₹19,900 — ₹1,12,400 / Month (Based on Group Level)',
+    fees: {
+      General: '₹1500 (plus 18% GST)',
+      OBC: '₹1500 (plus 18% GST)',
+      SC_ST_Female: 'Nil'
+    },
+    totalPosts: 53,
+    applyUrl: 'https://natboard.edu.in',
+    pdfUrl: 'https://natboard.edu.in',
+    officialWebsite: 'https://natboard.edu.in',
+    postedDate: '2026-06-16',
+    lastDate: '2026-07-16',
+    importantDates: {
+      applyStart: '2026-06-16',
+      applyEnd: '2026-07-16',
+      examDate: 'To be notified',
+      admitCardRelease: 'To be notified'
+    },
+    selectionProcess: [
+      'Computer Based Test (CBT)',
+      'Skill Test & Descriptive Paper (where applicable)',
+      'Document Verification'
+    ],
+    location: 'All India',
+    description: '🏢 NBEMS GROUP A/B/C RECRUITMENT 2026. National Board of Examinations in Medical Sciences has announced 53 vacancies for Group A, B, and C positions (Junior Assistant, Senior Assistant, etc.). Qualification: Graduate, Apply online today!',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'pspcl-assistant-lineman-recruitment-2026',
+    title: 'PSPCL Assistant Lineman (ALM) Recruitment 2026',
+    org: 'Punjab State Power Corporation Limited (PSPCL)',
+    category: 'Others',
+    qualification: 'ITI',
+    ageLimit: '18 - 37 Years',
+    salary: '₹19,900 / Month',
+    fees: {
+      General: '₹944 (including GST)',
+      OBC: '₹944 (including GST)',
+      SC_ST_Female: '₹590 (including GST)'
+    },
+    totalPosts: 6289,
+    applyUrl: 'https://pspcl.in',
+    pdfUrl: 'https://pspcl.in',
+    officialWebsite: 'https://pspcl.in',
+    postedDate: '2026-06-16',
+    lastDate: '2026-07-09',
+    importantDates: {
+      applyStart: '2026-06-15',
+      applyEnd: '2026-07-09',
+      examDate: 'To be notified',
+      admitCardRelease: 'To be notified'
+    },
+    selectionProcess: [
+      'Online Written Test (CBT)',
+      'Document Verification',
+      'Pre-Appointment Medical Examination'
+    ],
+    location: 'Punjab',
+    description: '⚡ PSPCL ASSISTANT LINEMAN 2026 🏢 Punjab State Power Corporation 👥 Posts: 6,289 Total (NAC Category: 3,289 Posts, ITI Category: 3,000 Posts) 💰 Salary: ₹19,900/month 📅 Last Date: 6-9 July 2026 🎓 Qualification: 10th + ITI. Eligible candidates apply online today!',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'sbi-apprentice-recruitment-2026',
+    title: 'State Bank of India (SBI) Apprentice Recruitment 2026',
+    org: 'State Bank of India',
+    category: 'Bank',
+    qualification: 'Graduate',
+    ageLimit: '20 - 28 Years',
+    salary: '₹15,000 / Month (Stipend)',
+    fees: {
+      General: '₹300',
+      OBC: '₹300',
+      SC_ST_Female: 'Nil'
+    },
+    totalPosts: 7150,
+    applyUrl: 'https://sbi.co.in/web/careers',
+    pdfUrl: 'https://sbi.co.in/web/careers',
+    officialWebsite: 'https://sbi.co.in',
+    postedDate: '2026-06-15',
+    lastDate: '2026-06-15',
+    importantDates: {
+      applyStart: '2026-06-01',
+      applyEnd: '2026-06-15',
+      examDate: 'June 2026',
+      admitCardRelease: 'Released'
+    },
+    selectionProcess: [
+      'Online Written Test',
+      'Test of Local Language',
+      'Medical Examination'
+    ],
+    location: 'All India',
+    description: '🚨 SBI APPRENTICE 2026 — Apply Now! 🚨 State Bank of India has announced 7,150 vacancies for Apprentice posts. Stipend: ₹15,000/month, Qualification: Graduate. Last Date: 15 June 2026 (Apply immediately as today is the last date!).',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'rrb-technician-recruitment-2026',
+    title: 'Railway RRB Technician (Grade I & III) Recruitment 2026',
+    org: 'Railway Recruitment Board',
+    category: 'Railway',
+    qualification: 'ITI',
+    ageLimit: '18 - 33 Years (Grade III), 18 - 36 Years (Grade I)',
+    salary: '₹19,900 — ₹29,200 / Month',
+    fees: {
+      General: '₹500 (₹400 Refundable after CBT)',
+      OBC: '₹500 (₹400 Refundable after CBT)',
+      SC_ST_Female: '₹250 (Full ₹250 Refundable)'
+    },
+    totalPosts: 6565,
+    applyUrl: 'https://www.rrbcdg.gov.in',
+    pdfUrl: 'https://www.rrbcdg.gov.in',
+    officialWebsite: 'https://www.rrbcdg.gov.in',
+    postedDate: '2026-06-16',
+    lastDate: '2026-07-20',
+    importantDates: {
+      applyStart: '2026-06-16',
+      applyEnd: '2026-07-20',
+      examDate: 'August/September 2026',
+      admitCardRelease: 'To be notified'
+    },
+    selectionProcess: [
+      'Computer Based Test (CBT)',
+      'Document Verification (DV)',
+      'Medical Examination'
+    ],
+    location: 'All India',
+    description: '🚂 RRB TECHNICIAN RECRUITMENT 2026. Railway Recruitment Board has announced 6,565 vacancies for Grade I & III post. Qualification: ITI / Diploma, Apply online today!',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'bob-apprentice-recruitment-2026',
+    title: 'Bank of Baroda (BOB) Apprentice Recruitment 2026',
+    org: 'Bank of Baroda',
+    category: 'Bank',
+    qualification: 'Graduate',
+    ageLimit: '18 - 28 Years',
+    salary: '₹15,000 / Month (Stipend)',
+    fees: {
+      General: '₹450',
+      OBC: '₹450',
+      SC_ST_Female: '₹100'
+    },
+    totalPosts: 5000,
+    applyUrl: 'https://www.bankofbaroda.in/careers',
+    pdfUrl: 'https://www.bankofbaroda.in/details-advertisement-apprentice-2026.pdf',
+    officialWebsite: 'https://www.bankofbaroda.in',
+    postedDate: '2026-06-15',
+    lastDate: '2026-06-15',
+    importantDates: {
+      applyStart: '2026-06-01',
+      applyEnd: '2026-06-15',
+      examDate: 'June 2026',
+      admitCardRelease: 'Released'
+    },
+    selectionProcess: [
+      'Online Written Examination (MCQs)',
+      'Local Language Proficiency Test',
+      'Document Verification & Medical Check'
+    ],
+    location: 'All India',
+    description: '🚨 BANK OF BARODA APPRENTICE 2026 🚨 Stipend: ₹15,000/month, Posts: 5000, Qualification: Graduate. Last Date: 15 June 2026 (Contact immediately as time is short/limited).',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
     id: 'rrb-ntpc-recruitment-2026',
     title: 'Railway RRB NTPC Non-Technical Popular Categories (Graduate & Under Graduate) Recruitment 2026',
     org: 'Railway Recruitment Boards (RRB)',
