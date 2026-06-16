@@ -4,6 +4,150 @@ import { generateAllExtendedMocks } from '../utils/examMockGenerator';
 
 export const INITIAL_JOBS: GovJob[] = [
   {
+    id: 'rrb-ntpc-recruitment-2026',
+    title: 'Railway RRB NTPC Non-Technical Popular Categories (Graduate & Under Graduate) Recruitment 2026',
+    org: 'Railway Recruitment Boards (RRB)',
+    category: 'Railway',
+    qualification: 'Graduate',
+    ageLimit: '18 - 36 Years (Age relaxation applicable)',
+    salary: 'Rs. 19,900 - Rs. 35,400 (Initial Pay Scale)',
+    fees: {
+      General: '₹500 (₹400 Refundable after CBT-1)',
+      OBC: '₹500 (₹400 Refundable after CBT-1)',
+      SC_ST_Female: '₹250 (Full ₹250 Refundable)'
+    },
+    totalPosts: 11558,
+    applyUrl: 'https://www.rrbcdg.gov.in',
+    pdfUrl: 'https://rrbcdg.gov.in/CEN_03_2026_NTPC_Official_Note.pdf',
+    officialWebsite: 'https://www.rrbcdg.gov.in',
+    postedDate: '2026-06-15',
+    lastDate: '2026-07-15',
+    importantDates: {
+      applyStart: '2026-06-15',
+      applyEnd: '2026-07-15',
+      examDate: '2026-10-10',
+      admitCardRelease: '2026-09-30'
+    },
+    selectionProcess: [
+      'Computer Based Test Stage-I (CBT-1 Screening)',
+      'Computer Based Test Stage-II (CBT-2 Merit scoring)',
+      'Computer Based Aptitude Test (CBAT) or typing skills matches (where applicable)',
+      'Zonal Medical Exam and Complete Document Matching Verification'
+    ],
+    location: 'All India Zonal Railways',
+    description: 'Massive recruitment notification issued by Railway Recruitment Boards for Clerk, Typist, Station Master, Goods Manager, Ticket Clerk, Apprentice, etc. Online registration starts today!',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'ibps-rrb-xv-2026',
+    title: 'IBPS CRP RRB XV Group A Officers (Scale I, II, III) & Group B Office Assistant Online Form 2026',
+    org: 'Institute of Banking Personnel Selection (IBPS)',
+    category: 'Bank',
+    qualification: 'Graduate',
+    ageLimit: '18 - 40 Years (Depending on post Scale)',
+    salary: 'Rs. 25,000 - Rs. 75,000 (Based on pay-scale rules)',
+    fees: {
+      General: '₹850',
+      OBC: '₹850',
+      SC_ST_Female: '₹175 (Reserved Categories)'
+    },
+    totalPosts: 9923,
+    applyUrl: 'https://ibps.in',
+    pdfUrl: 'https://ibps.in/crp-rrb-xv-notification-details-2026.pdf',
+    officialWebsite: 'https://ibps.in',
+    postedDate: '2026-06-15',
+    lastDate: '2026-07-10',
+    importantDates: {
+      applyStart: '2026-06-15',
+      applyEnd: '2026-07-10',
+      examDate: '2026-08-15',
+      admitCardRelease: '2026-08-05'
+    },
+    selectionProcess: [
+      'Preliminary Examination CBT (For Officers Scale-I & Office Assistant)',
+      'Mains Comprehensive Examination CBT Mode',
+      'Personal Interview Session (Only Scale I, II, III Officer entries)',
+      'Document Matching Verification & Direct Biometrics'
+    ],
+    location: 'All India Banks (Regional Rural Banks)',
+    description: 'IBPS common recruitment process (CRP) RRB XV invites applications bilingually for Officers Scale I, II, III and Office Assistant (Multipurpose) in Rural Banks across India.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'upprpb-si-recruitment-2026',
+    title: 'UP Police Sub Inspector SI (Executive & Platoon Commander) Vacancies 2026',
+    org: 'Uttar Pradesh Police Recruitment & Promotion Board (UPPRPB)',
+    category: 'Police',
+    qualification: 'Graduate',
+    ageLimit: '21 - 28 Years',
+    salary: 'Rs. 35,400 - Rs. 1,12,400 (Pay Matrix Level 6)',
+    fees: {
+      General: '₹400',
+      OBC: '₹400',
+      SC_ST_Female: '₹400'
+    },
+    totalPosts: 9124,
+    applyUrl: 'https://uppbpb.gov.in',
+    pdfUrl: 'https://uppbpb.gov.in/notifications/Sub_Inspector_Detailed_Advt_2026.pdf',
+    officialWebsite: 'https://uppbpb.gov.in',
+    postedDate: '2026-06-15',
+    lastDate: '2026-07-15',
+    importantDates: {
+      applyStart: '2026-06-15',
+      applyEnd: '2026-07-15',
+      examDate: '2026-11-05',
+      admitCardRelease: '2026-10-25'
+    },
+    selectionProcess: [
+      'Online CBT Written Examination (400 Marks, 160 Questions)',
+      'Physical Standards Check (PST- Height, Chest eligibility)',
+      'Physical Efficiency Test (Run 4.8km inside 28 min for Men, 2.4km for Women)',
+      'Medical Checkup at District Level Hospitals & Document Check'
+    ],
+    location: 'Uttar Pradesh',
+    description: 'UPPRPB has launched a grand recruitment campaign for eligible graduates to apply for Sub Inspector (Civil Police) and Platoon Commander posts in Uttar Pradesh Police Force.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'bpsc-71st-cce-2026',
+    title: 'Bihar BPSC 71st Combined Competitive Prelims Exam Online Form 2026',
+    org: 'Bihar Public Service Commission (BPSC)',
+    category: 'State PSC',
+    qualification: 'Graduate',
+    ageLimit: '20 - 37 Years (Relaxation as per Bihar classification rules)',
+    salary: 'Rs. 56,100 - Rs. 1,77,500 (Pay Level 9 General Admin)',
+    fees: {
+      General: '₹600',
+      OBC: '₹600',
+      SC_ST_Female: '₹150 (Bihar Domicile Reserved / PwD / Residents Women)'
+    },
+    totalPosts: 1024,
+    applyUrl: 'https://bpsc.bih.nic.in',
+    pdfUrl: 'https://bpsc.bih.nic.in/Advt/71st_CCE_Official_Notification_2026.pdf',
+    officialWebsite: 'https://bpsc.bih.nic.in',
+    postedDate: '2026-06-15',
+    lastDate: '2026-07-15',
+    importantDates: {
+      applyStart: '2026-06-15',
+      applyEnd: '2026-07-15',
+      examDate: '2026-09-30',
+      admitCardRelease: '2026-09-15'
+    },
+    selectionProcess: [
+      'Preliminary Screening OMR Examination (150 Marks, 1/3 Negative marks)',
+      'Main Descriptive Written Examinations (General Hindi + GS Papers + Essay)',
+      'Personal Personality Evaluation Interview round (120 Marks)',
+      'Document Matching Verification & State Health Panel Medical'
+    ],
+    location: 'Bihar',
+    description: 'Bihar Public Service Commission issued the official brochure and opened registration portals for the 71st Combined Competitive Screening entry for sub-divisional officers, DSPs, etc.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
     id: 'hssc-constable-2026',
     title: 'Haryana HSSC Male & Female Police Constable Recruitment 2026',
     org: 'Haryana Staff Selection Commission (HSSC)',
@@ -1337,6 +1481,26 @@ export const INITIAL_JOBS: GovJob[] = [
 
 export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
   {
+    id: 'ssc-chsl-tier1-admit-2026',
+    title: 'SSC CHSL (10+2) Tier-I Exam Status & e-Admit Card 2026',
+    org: 'Staff Selection Commission (SSC)',
+    examDate: '2026-06-25 to 2026-07-05',
+    examCity: 'All Regional Headquarters Portals Active',
+    downloadUrl: 'https://ssc.gov.in/admit-card',
+    officialLink: 'https://ssc.gov.in',
+    addedDate: '2026-06-15'
+  },
+  {
+    id: 'navy-agniveer-ssr-mr-admit-2026',
+    title: 'Indian Navy Agniveer (SSR & MR) - 02/2026 Batch Admit Card',
+    org: 'Indian Navy (भारतीय नौसेना)',
+    examDate: '2026-07-08 to 2026-07-15',
+    examCity: 'Check Allocated Online CBT Venues status',
+    downloadUrl: 'https://joinindiannavy.gov.in',
+    officialLink: 'https://joinindiannavy.gov.in',
+    addedDate: '2026-06-15'
+  },
+  {
     id: 'upsc-cse-admit-2026',
     title: 'UPSC Civil Services (IAS/IFS) Prelims e-Admit Card 2026',
     org: 'Union Public Service Commission (UPSC)',
@@ -1460,6 +1624,36 @@ export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
 
 export const INITIAL_RESULTS: JobResult[] = [
   {
+    id: 'upsc-prelims-cse-result-2026',
+    title: 'UPSC Civil Services (IAS / IFS) Preliminary Exam 2026 Roll Number Merit List',
+    org: 'Union Public Service Commission (UPSC)',
+    meritListUrl: 'https://upsc.gov.in/sites/default/files/UPSC-Prelims-2026-Result.pdf',
+    scoreCardUrl: 'https://upsc.gov.in/scorecard-prelims-2026',
+    cutOff: {
+      UR: '92.5 Marks (Estimated general index)',
+      OBC: '89.2 Marks',
+      SC: '78.5 Marks',
+      ST: '75.2 Marks'
+    },
+    downloadUrl: 'https://upsc.gov.in',
+    releaseDate: '2026-06-15'
+  },
+  {
+    id: 'upsssc-junior-assistant-result-2026',
+    title: 'UPSSSC Junior Assistant 1262 Posts Merit List & Typing Stage Qualification Status',
+    org: 'Uttar Pradesh Subordinate Services Selection Commission (UPSSSC)',
+    meritListUrl: 'https://upsssc.gov.in/Results/JA-1262-Selected-List.pdf',
+    scoreCardUrl: 'https://upsssc.gov.in/check_scores',
+    cutOff: {
+      UR: '48.25 Marks',
+      OBC: '48.25 Marks',
+      SC: '41.50 Marks',
+      ST: '38.25 Marks'
+    },
+    downloadUrl: 'https://upsssc.gov.in',
+    releaseDate: '2026-06-15'
+  },
+  {
     id: 'nta-neet-ug-final-res-2026',
     title: 'NTA NEET UG 2026 Scorecard, Revised Rank List & All India Cutoffs',
     org: 'National Testing Agency (NTA)',
@@ -1582,6 +1776,7 @@ export const INITIAL_RESULTS: JobResult[] = [
 ];
 
 export const INITIAL_ANSWER_KEYS: AnswerKey[] = [
+  { id: 'ssc-phase-12-answer-key-2026', title: 'SSC Selection Post Phase XII Official Answer Key with Candidate Response Sheets', org: 'Staff Selection Commission (SSC)', released: '2026-06-15', objectionsLimit: '2026-06-20', pdfUrl: 'https://ssc.gov.in/phase-12-response-key-link' },
   { id: 'ugc-net-june-key-2026', title: 'UGC NET June 2026 Provisional Solved Keys (Paper 1 & Paper 2)', org: 'National Testing Agency (NTA)', released: '2026-06-15', objectionsLimit: '2026-06-25', pdfUrl: 'https://ugcnet.nta.ac.in/provisional_key_june_2026.pdf' },
   { id: 'up-bed-jee-key-2026', title: 'UP Joint B.Ed Entrance Exam (JEE) 2026 Official Solved Answer Key', org: 'Bundelkhand University, Jhansi', released: '2026-06-15', objectionsLimit: '2026-06-22', pdfUrl: 'https://bujhansi.ac.in/up-bed-2026-solved-sheet.pdf' },
   { id: 'rsmssb-ldc-key-2026', title: 'RSMSSB Rajasthan LDC / Clerk Grade-II 2026 Provisional Key', org: 'RSMSSB Rajasthan', released: '2026-11-20', objectionsLimit: '2026-11-30', pdfUrl: 'https://rsmssb.rajasthan.gov.in/ldc_provisional_key.pdf' },
