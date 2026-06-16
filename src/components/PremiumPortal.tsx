@@ -605,18 +605,35 @@ export default function PremiumPortal({
             <div className="bg-white rounded-2xl border border-amber-200 p-4 shadow-sm bg-gradient-to-b from-amber-50/20 to-white relative overflow-hidden">
               <span className="absolute -right-4 -top-4 rounded-full w-12 h-12 bg-amber-500/10 text-amber-500 flex items-center justify-center rotate-45 font-mono text-[9px] font-bold">SALE</span>
               
-              <h4 className="text-xs font-extrabold text-slate-900 uppercase">Unlock All Features Instantly</h4>
-              <p className="text-[11px] text-slate-500 leading-relaxed mt-1">Unlock **AI doubt solving**, **mock tests**, and **PYQs** immediately inside this tab by selecting a plan below!</p>
+              <h4 className="text-xs font-extrabold text-slate-900 uppercase">Premium Plans & Pricing</h4>
+              <p className="text-[11px] text-slate-500 leading-relaxed mt-1">Unlock **AI doubt solving**, **mock tests**, and **PYQs** immediately inside this tab. Select your budget plan:</p>
               
-              <div className="mt-3.5 space-y-2 text-xs">
+              <div className="mt-3 space-y-1.5 font-sans">
+                {[
+                  { name: 'Monthly Plan', price: '₹99', subtitle: 'Basic Exam Prep Access (1 Month)' },
+                  { name: 'Quarterly Plan', price: '₹199', subtitle: 'Most Balanced Practice Access (3 Months)' },
+                  { name: 'Yearly Plan', price: '₹499', subtitle: 'Super Saver Syllabus Pack (1 Year)' },
+                  { name: 'Lifetime Premium', price: '₹999', subtitle: 'Infinite Unrestricted VIP Pro Access', highlight: true }
+                ].map((p, idx) => (
+                  <div key={idx} className={`p-2 rounded-xl border flex justify-between items-center text-left text-xs ${p.highlight ? 'border-amber-300 bg-amber-500/5' : 'border-slate-100 bg-slate-50/30'}`}>
+                    <div>
+                      <span className={`block font-bold text-[11px] ${p.highlight ? 'text-amber-800' : 'text-slate-800'}`}>{p.name} {p.highlight && '⭐'}</span>
+                      <span className="text-[9px] text-slate-400 block">{p.subtitle}</span>
+                    </div>
+                    <span className="font-extrabold text-slate-900 text-sm tracking-tight">{p.price}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-4 space-y-2 text-xs">
                 <button
                   onClick={onActivatePremium}
-                  className="w-full rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold py-2.5 flex items-center justify-center gap-1 bg-gradient-to-r from-amber-500 to-yellow-500 shadow-md shadow-amber-500/15"
+                  className="w-full rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold py-2.5 flex items-center justify-center gap-1 bg-gradient-to-r from-amber-500 to-yellow-500 shadow-md shadow-amber-500/15 cursor-pointer"
                 >
-                  <Unlock className="h-3.5 w-3.5" />
-                  Activate Now! (Sandbox Free Checkout)
+                  <Unlock className="h-3.5 w-3.5 animate-bounce" />
+                  Activate Premium Now (Sandbox Free Checkout)
                 </button>
-                <p className="text-[10px] text-center text-slate-450 leading-none">Safe simulated checkout. Upgrades profile instantaneously.</p>
+                <p className="text-[9.5px] text-center text-slate-450 leading-none">Safe simulated checkout. Upgrades profile instantaneously.</p>
               </div>
             </div>
           )}

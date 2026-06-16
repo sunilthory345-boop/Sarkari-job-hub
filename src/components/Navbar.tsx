@@ -135,8 +135,8 @@ export default function Navbar({
                   onClick={() => handleTabClick('premium')}
                   className="flex items-center gap-1 rounded bg-yellow-400 px-3 py-1 text-[10px] font-bold text-blue-900 uppercase tracking-wide hover:bg-yellow-500 transition-all shadow-xs"
                 >
-                  <Sparkles className="h-3 w-3 text-blue-900 fill-blue-900" />
-                  {t.unlockPremium}
+                  <Sparkles className="h-3 w-3 text-blue-900 fill-blue-900 animate-pulse" />
+                  {t.unlockPremium} (₹99)
                 </button>
               )}
             </div>

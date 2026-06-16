@@ -7,12 +7,13 @@ import {
   Building2, Globe, Heart, ShieldCheck, Zap, CreditCard, Plus, Share2, ChevronDown, ChevronUp, Printer, Link, Camera, X, RefreshCw
 } from 'lucide-react';
 
-import { GovJob, AdmitCard, JobResult, MockTest, CurrentAffair, Blog, UserProfile, AnswerKey } from './types';
+import { GovJob, AdmitCard, JobResult, MockTest, CurrentAffair, Blog, UserProfile, AnswerKey, Question } from './types';
 import { 
   INITIAL_JOBS, INITIAL_ADMIT_CARDS, INITIAL_RESULTS, 
   INITIAL_MOCK_TESTS, INITIAL_CURRENT_AFFAIRS, INITIAL_BLOGS,
   INITIAL_ANSWER_KEYS
 } from './data/mockData';
+import { DAILY_CURRENT_AFFAIRS_ITEMS, CURRENT_AFFAIRS_QUIZ_QUESTIONS } from './data/currentAffairsData';
 import { LANGUAGES, TRANSLATIONS, LocaleType } from './utils/lang';
 
 import Navbar from './components/Navbar';
@@ -239,7 +240,14 @@ export default function App() {
     localStorage.setItem('sarkari_mock_tests', JSON.stringify(mockTests));
   }, [mockTests]);
 
-  const [currentAffairs] = useState<CurrentAffair[]>(INITIAL_CURRENT_AFFAIRS);
+  const [currentAffairs, setCurrentAffairs] = useState<CurrentAffair[]>(DAILY_CURRENT_AFFAIRS_ITEMS);
+  const [quizQuestions] = useState<Question[]>(CURRENT_AFFAIRS_QUIZ_QUESTIONS);
+  const [currentQuizIdx, setCurrentQuizIdx] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState<{[key: number]: number}>({}); // maps question Index (0-49) to selected option index (0-3)
+  const [caSearchQuery, setCaSearchQuery] = useState('');
+  const [caSelectedCategory, setCaSelectedCategory] = useState<string>('All');
+  const [caVisibleCount, setCaVisibleCount] = useState(6);
+  const [quizSearchVal, setQuizSearchVal] = useState('');
   const [blogs, setBlogs] = useState<Blog[]>(() => {
     const saved = localStorage.getItem('sarkari_blogs_seo');
     if (saved) {
@@ -2358,57 +2366,321 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
         {/* TAB 11: CURRENT AFFAIRS MODULE */}
         {activeTab === 'current-affairs' && (
           <div className="space-y-6">
-            <div className="border-b border-slate-100 pb-3">
-              <h2 className="font-sans text-xl font-extrabold text-slate-900">
-                Daily General Knowledge & Current Affairs Update
-              </h2>
-              <p className="text-xs text-slate-500 mt-1">
-                Stay updated on latest international and national events for competitive examinations.
-              </p>
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between border-b border-slate-100 pb-3 gap-3">
+              <div>
+                <h2 className="font-sans text-xl font-extrabold text-slate-900 flex items-center gap-2">
+                  <Clock className="text-blue-605 h-5 w-5 inline" />
+                  Daily Current Affairs & General Knowledge (करंट अफेयर्स)
+                </h2>
+                <p className="text-xs text-slate-500 mt-1">
+                  Verified up-to-date bilingual repository of 50 study capsules and interactive quiz bank for SSC, Bank, Railway & UPSC exams.
+                </p>
+              </div>
+              <div className="text-xs bg-blue-50 text-blue-800 font-bold px-3 py-1.5 rounded-full flex items-center gap-1 self-start md:self-auto font-mono">
+                <Sparkles className="h-4 w-4 animate-pulse text-amber-500" /> Active 50+50 Learning Portal
+              </div>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-12">
-              <div className="md:col-span-8 space-y-4">
-                {currentAffairs.map((ca) => (
-                  <div key={ca.id} className="bg-white rounded-2xl border border-slate-100 p-5 space-y-3 font-sans text-xs">
-                    <div className="flex items-center justify-between gap-1">
-                      <span className="text-[10px] bg-emerald-50 text-emerald-800 font-bold px-2 py-0.5 rounded">
-                        {ca.category} Section
-                      </span>
-                      <span className="text-slate-400 font-mono font-semibold">{ca.date}</span>
+            <div className="grid gap-6 lg:grid-cols-12">
+              {/* LEFT COLUMN: 50 NEWS CAPSULES PANEL */}
+              <div className="lg:col-span-7 space-y-4">
+                <div className="bg-slate-50 border border-slate-200/60 rounded-2xl p-4 space-y-3">
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    {/* Search Field */}
+                    <div className="relative flex-1">
+                      <input
+                        type="text"
+                        placeholder="Search daily capsules... (जैसे: 'AI', 'Neeraj', 'RBI')"
+                        value={caSearchQuery}
+                        onChange={(e) => {
+                          setCaSearchQuery(e.target.value);
+                          setCaVisibleCount(6);
+                        }}
+                        className="w-full text-xs bg-white border border-slate-200 rounded-xl pl-9 pr-4 py-2 text-slate-800 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+                      />
+                      <BookOpen className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+                      {caSearchQuery && (
+                        <button 
+                          onClick={() => setCaSearchQuery('')} 
+                          className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600 text-xs font-bold"
+                        >
+                          Clear
+                        </button>
+                      )}
                     </div>
 
-                    <h4 className="text-sm font-extrabold text-slate-900 leading-snug">{ca.title}</h4>
-                    <p className="text-slate-600 leading-relaxed mt-2">{ca.content}</p>
-
-                    <button
-                      onClick={() => alert(`Downloading specialized daily newsletter PDF for "${ca.title}".`)}
-                      className="text-xs text-blue-600 font-bold flex items-center gap-1 hover:underline pt-2"
+                    {/* Category Dropdown */}
+                    <select
+                      value={caSelectedCategory}
+                      onChange={(e) => {
+                        setCaSelectedCategory(e.target.value);
+                        setCaVisibleCount(6);
+                      }}
+                      className="text-xs bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-hidden focus:ring-2 focus:ring-blue-500 font-semibold"
                     >
-                      <Download className="h-4 w-4" /> Get Solved PDF Newsletter
-                    </button>
+                      <option value="All">All Categories (सभी श्रेणियां)</option>
+                      <option value="National">National (राष्ट्रीय)</option>
+                      <option value="International">International (अंतर्राष्ट्रीय)</option>
+                      <option value="Sports">Sports (खेलकूद)</option>
+                      <option value="Economy">Economy (अर्थव्यवस्था)</option>
+                      <option value="Science & Tech">Science & Tech (विज्ञान और तकनीक)</option>
+                      <option value="Awards">Awards (पुरस्कार)</option>
+                    </select>
                   </div>
-                ))}
+
+                  <div className="flex flex-wrap gap-1.5 items-center">
+                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mr-1">Quick Filters:</span>
+                    {['All', 'National', 'International', 'Sports', 'Economy', 'Science & Tech', 'Awards'].map((cat) => (
+                      <button
+                        key={cat}
+                        onClick={() => {
+                          setCaSelectedCategory(cat);
+                          setCaVisibleCount(6);
+                        }}
+                        className={`text-[10px] px-2.5 py-1 rounded-full font-bold transition-all ${
+                          caSelectedCategory === cat
+                            ? 'bg-blue-600 text-white shadow-xs'
+                            : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100'
+                        }`}
+                      >
+                        {cat}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* News Capsules Cards list */}
+                <div className="space-y-4">
+                  {currentAffairs.filter(ca => {
+                    const matchesCat = caSelectedCategory === 'All' || ca.category === caSelectedCategory;
+                    const matchesSearch = ca.title.toLowerCase().includes(caSearchQuery.toLowerCase()) ||
+                                          ca.content.toLowerCase().includes(caSearchQuery.toLowerCase());
+                    return matchesCat && matchesSearch;
+                  }).length === 0 ? (
+                    <div className="bg-white border border-slate-100 rounded-2xl py-12 text-center text-xs text-slate-500">
+                      <p className="font-semibold text-slate-600">No matching current affairs capsules found.</p>
+                      <p className="text-[10px] text-slate-400 mt-1">Try broadening your search query or switching the category filter.</p>
+                      <button
+                        onClick={() => { setCaSearchQuery(''); setCaSelectedCategory('All'); }}
+                        className="mt-3 text-xs text-blue-600 font-bold hover:underline"
+                      >
+                        Reset All Filters
+                      </button>
+                    </div>
+                  ) : (
+                    currentAffairs.filter(ca => {
+                      const matchesCat = caSelectedCategory === 'All' || ca.category === caSelectedCategory;
+                      const matchesSearch = ca.title.toLowerCase().includes(caSearchQuery.toLowerCase()) ||
+                                            ca.content.toLowerCase().includes(caSearchQuery.toLowerCase());
+                      return matchesCat && matchesSearch;
+                    }).slice(0, caVisibleCount).map((ca) => (
+                      <div key={ca.id} className="bg-white rounded-2xl border border-slate-100 p-5 space-y-3 font-sans text-xs transition duration-200 hover:border-blue-100 hover:shadow-xs group relative">
+                        <div className="absolute right-4 top-4 text-[10px] font-mono font-semibold bg-slate-50 text-slate-400 group-hover:bg-blue-50 group-hover:text-blue-600 px-2 py-0.5 rounded transition">
+                          #Capsule {currentAffairs.findIndex(x => x.id === ca.id) + 1} of 50
+                        </div>
+                        <div className="flex items-center justify-between gap-1 pr-16">
+                          <span className="text-[10px] bg-emerald-50 text-emerald-800 font-extrabold px-2 py-0.5 rounded flex items-center gap-1">
+                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            {ca.category}
+                          </span>
+                          <span className="text-slate-400 font-mono font-semibold">{ca.date}</span>
+                        </div>
+
+                        <h4 className="text-sm font-extrabold text-slate-900 leading-snug group-hover:text-blue-700 transition">
+                          {ca.title}
+                        </h4>
+                        <p className="text-slate-600 leading-relaxed mt-2 text-xs">{ca.content}</p>
+
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-t border-slate-50 pt-3 gap-2">
+                          <button
+                            onClick={() => triggerToast(`📥 Downloading official verified PDF bilingually for Capsule #${currentAffairs.findIndex(x => x.id === ca.id) + 1}...`)}
+                            className="text-xs text-blue-600 font-bold flex items-center gap-1 hover:underline self-start"
+                          >
+                            <Download className="h-4 w-4" /> Download Solved PDF (Hindi & English)
+                          </button>
+                          <span className="text-[10px] text-slate-400 italic">Sarkari Hub Exam Approved • 2026</span>
+                        </div>
+                      </div>
+                    ))
+                  )}
+
+                  {currentAffairs.filter(ca => {
+                    const matchesCat = caSelectedCategory === 'All' || ca.category === caSelectedCategory;
+                    const matchesSearch = ca.title.toLowerCase().includes(caSearchQuery.toLowerCase()) ||
+                                          ca.content.toLowerCase().includes(caSearchQuery.toLowerCase());
+                    return matchesCat && matchesSearch;
+                  }).length > caVisibleCount && (
+                    <div className="text-center pt-2">
+                      <button
+                        onClick={() => setCaVisibleCount(prev => prev + 6)}
+                        className="bg-white border border-slate-200 hover:border-slate-300 rounded-xl px-5 py-2.5 text-xs text-slate-700 font-bold transition hover:bg-slate-50 shadow-xs flex items-center gap-1.5 mx-auto cursor-pointer"
+                      >
+                        <RefreshCw className="h-3.5 w-3.5" /> Load More Capsules ({currentAffairs.filter(ca => {
+                          const matchesCat = caSelectedCategory === 'All' || ca.category === caSelectedCategory;
+                          const matchesSearch = ca.title.toLowerCase().includes(caSearchQuery.toLowerCase()) ||
+                                                ca.content.toLowerCase().includes(caSearchQuery.toLowerCase());
+                          return matchesCat && matchesSearch;
+                        }).length - caVisibleCount} remaining)
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
 
-              {/* Quick GA Current Affairs Daily Quiz widget */}
-              <div className="md:col-span-4 bg-linear-to-b from-blue-900 to-indigo-950 text-white rounded-3xl p-5 shadow-lg space-y-4 text-xs font-sans">
-                <span className="text-[10px] bg-blue-500/30 font-bold px-2 py-0.5 rounded uppercase block w-max">
-                  Daily Quick Quizlet
-                </span>
+              {/* RIGHT COLUMN: 50 INTERACTIVE QUIZ CONSOLE */}
+              <div className="lg:col-span-5">
+                <div className="bg-linear-to-b from-slate-900 to-indigo-950 text-white rounded-3xl p-5 shadow-lg space-y-4 text-xs font-sans border border-slate-800 lg:sticky lg:top-4">
+                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                    <div>
+                      <span className="text-[10px] bg-blue-500/30 text-blue-300 font-bold px-2.5 py-1 rounded-full uppercase tracking-wider block w-max">
+                        Bilingual Practice Quiz
+                      </span>
+                      <h4 className="text-xs font-semibold text-slate-300 mt-1">50 High-Yield GA Questions</h4>
+                    </div>
+                    {/* Score Tracker */}
+                    <div className="text-right">
+                      <div className="text-sm font-black text-amber-300 font-mono">
+                        {Object.keys(selectedAnswers).length} / 50 Attempted
+                      </div>
+                      <div className="text-[9px] text-slate-400 font-bold">
+                        Score: {
+                          Object.entries(selectedAnswers).reduce((acc, [qIdx, ansIdx]) => {
+                            return acc + (quizQuestions[parseInt(qIdx)].correctOptionIndex === ansIdx ? 1 : 0);
+                          }, 0)
+                        } Correct
+                      </div>
+                    </div>
+                  </div>
 
-                <h4 className="font-bold text-slate-100 leading-normal">Which nation ratified the "Universal clean Green Sovereign Scheme" during the COP summit (COP-31)?</h4>
-                
-                <div className="space-y-2">
-                  {['Sovereign Germany', 'India Union', 'Japan', 'United Kingdom'].map((opt, oIdx) => (
-                    <button
-                      key={oIdx}
-                      onClick={() => alert(oIdx === 1 ? '🎉 Correct answer! India Union actively ratified details on July meetings.' : '❌ Incorrect. Correct Option contains (India Union).')}
-                      className="w-full text-left bg-white/5 border border-white/10 hover:bg-white/10 rounded-xl p-3 font-medium text-slate-200 transition"
-                    >
-                      {String.fromCharCode(65 + oIdx)}. {opt}
-                    </button>
-                  ))}
+                  {/* Navigator list dropdown or jump box */}
+                  <div className="bg-white/5 rounded-xl p-3 space-y-2 border border-white/10">
+                    <p className="text-[10px] text-slate-400 font-bold flex items-center justify-between">
+                      <span>Jump to any question (1 - 50):</span>
+                      <span className="text-amber-400">Current Q: #{currentQuizIdx + 1}</span>
+                    </p>
+                    <div className="flex gap-1.5">
+                      <select
+                        value={currentQuizIdx}
+                        onChange={(e) => setCurrentQuizIdx(parseInt(e.target.value))}
+                        className="bg-slate-850 border border-slate-750 rounded-lg text-xs leading-none py-1.5 px-2 text-slate-100 flex-1 outline-hidden focus:ring-1 focus:ring-blue-500 font-mono font-bold"
+                      >
+                        {quizQuestions.map((_, idx) => {
+                          const isSolved = selectedAnswers[idx] !== undefined;
+                          const isCorrect = isSolved && selectedAnswers[idx] === quizQuestions[idx].correctOptionIndex;
+                          return (
+                            <option key={idx} value={idx}>
+                              Question #{idx + 1} {isSolved ? (isCorrect ? '✅ (Correct)' : '❌ (Wrong)') : '(Unsolved)'}
+                            </option>
+                          );
+                        })}
+                      </select>
+
+                      <button
+                        onClick={() => {
+                          setSelectedAnswers({});
+                          setCurrentQuizIdx(0);
+                          triggerToast('🧹 Quiz reset! All correct affairs options wiped.');
+                        }}
+                        className="bg-rose-955 hover:bg-rose-900 border border-rose-800 text-[10px] px-2.5 py-1 rounded-lg font-bold text-rose-300 transition cursor-pointer"
+                      >
+                        Reset
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Active Question Box */}
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-mono text-slate-400">Question #{currentQuizIdx + 1} of 50</span>
+                        <span className="text-[10px] bg-amber-400/20 text-amber-300 font-bold px-1.5 py-0.5 rounded">
+                          Bilingual (Eng/Hindi)
+                        </span>
+                      </div>
+                      <h5 className="font-extrabold text-sm text-slate-100 leading-snug">
+                        {quizQuestions[currentQuizIdx].text}
+                      </h5>
+                    </div>
+
+                    {/* Options area */}
+                    <div className="space-y-2">
+                      {quizQuestions[currentQuizIdx].options.map((option, oIdx) => {
+                        const isSelected = selectedAnswers[currentQuizIdx] === oIdx;
+                        const hasAnswered = selectedAnswers[currentQuizIdx] !== undefined;
+                        const isCorrectAnswer = quizQuestions[currentQuizIdx].correctOptionIndex === oIdx;
+
+                        // Visual Feedback Color Assignment
+                        let btnStyle = 'bg-white/5 border border-white/10 hover:bg-white/10 text-slate-200 hover:text-white';
+                        if (hasAnswered) {
+                          if (isCorrectAnswer) {
+                            btnStyle = 'bg-emerald-600 border-emerald-500 text-white shadow-xs font-bold';
+                          } else if (isSelected) {
+                            btnStyle = 'bg-rose-600 border-rose-500 text-white shadow-xs font-bold';
+                          } else {
+                            btnStyle = 'bg-white/2 border border-white/5 text-slate-400 pointer-events-none opacity-50';
+                          }
+                        }
+
+                        return (
+                          <button
+                            key={oIdx}
+                            disabled={hasAnswered}
+                            onClick={() => {
+                              setSelectedAnswers(prev => ({
+                                ...prev,
+                                [currentQuizIdx]: oIdx
+                              }));
+                            }}
+                            className={`w-full text-left rounded-xl p-3 font-medium transition cursor-pointer text-xs ${btnStyle}`}
+                          >
+                            <div className="flex items-start justify-between gap-1">
+                              <span>{option}</span>
+                              {hasAnswered && isCorrectAnswer && <CheckCircle className="h-4 w-4 shrink-0 text-emerald-200 inline ml-1" />}
+                              {hasAnswered && isSelected && !isCorrectAnswer && <ShieldAlert className="h-4 w-4 shrink-0 text-rose-200 inline ml-1" />}
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {/* Answer Explanation Box (Displays ONLY if attempted) */}
+                    {selectedAnswers[currentQuizIdx] !== undefined && (
+                      <div className="bg-white/5 border border-white/10 rounded-2xl p-4 space-y-2 transition-all">
+                        <div className="flex items-center gap-1.5 text-amber-400 font-bold text-xs uppercase tracking-wider">
+                          <CheckSquare className="h-4 w-4 inline" /> Explanation (व्याख्या):
+                        </div>
+                        <p className="text-slate-300 leading-relaxed font-sans text-xs">
+                          {quizQuestions[currentQuizIdx].explanation}
+                        </p>
+                        <p className="text-[10px] text-emerald-400 font-bold">
+                          Correct Choice Index: ({String.fromCharCode(65 + quizQuestions[currentQuizIdx].correctOptionIndex)})
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Controls Footer */}
+                    <div className="flex items-center justify-between pt-3 border-t border-white/10">
+                      <button
+                        onClick={() => setCurrentQuizIdx(prev => Math.max(0, prev - 1))}
+                        disabled={currentQuizIdx === 0}
+                        className="bg-white/10 hover:bg-white/15 text-white border border-white/15 disabled:opacity-30 rounded-xl px-3.5 py-2 font-bold transition flex items-center gap-1 text-xs cursor-pointer"
+                      >
+                        &larr; Prev Q
+                      </button>
+
+                      <div className="text-[10px] font-mono text-slate-400 font-bold">
+                        {currentQuizIdx + 1} / 50
+                      </div>
+
+                      <button
+                        onClick={() => setCurrentQuizIdx(prev => Math.min(quizQuestions.length - 1, prev + 1))}
+                        disabled={currentQuizIdx === quizQuestions.length - 1}
+                        className="bg-blue-600 hover:bg-blue-500 text-white disabled:bg-white/10 disabled:text-white/30 rounded-xl px-4 py-2 font-bold transition flex items-center gap-1 text-xs cursor-pointer"
+                      >
+                        Next Q &rarr;
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
