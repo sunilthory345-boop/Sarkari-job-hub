@@ -335,7 +335,7 @@ export default function Navbar({
               href="https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-emerald-50 text-emerald-700 font-black rounded-xl hover:bg-emerald-100 border border-emerald-200 text-xs shadow-xs"
+              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-emerald-50 text-emerald-700 font-extrabold rounded-xl hover:bg-emerald-100 border border-emerald-200 text-xs shadow-xs"
             >
               <span>🟢</span> WhatsApp
             </a>
@@ -343,9 +343,9 @@ export default function Navbar({
               href="https://t.me/SarkariJobHubOfficial" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-blue-50 text-blue-700 font-black rounded-xl hover:bg-blue-100 border border-blue-200 text-xs shadow-xs"
+              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-blue-50 text-blue-700 font-extrabold rounded-xl hover:bg-blue-100 border border-blue-200 text-xs shadow-xs"
             >
-              <span>✈️</span> Telegram
+              <span>✈️</span> Telegram Channel
             </a>
           </div>
           <p className="font-mono text-[9px] text-center text-slate-400 font-semibold">

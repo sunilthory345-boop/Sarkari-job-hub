@@ -886,13 +886,13 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                 </div>
                 <div>
                   <h4 className="font-sans font-bold text-sm sm:text-base text-slate-800 flex items-center gap-2 flex-wrap">
-                    <span>{locale === 'hi' ? 'व्हाट्सएप चैनल और टेलीग्राम ग्रुप जॉइन लिंक' : 'Official WhatsApp & Telegram Join Channels'}</span>
+                    <span>{locale === 'hi' ? 'व्हाट्सएप और टेलीग्राम चैनल' : 'Official WhatsApp & Telegram Channels'}</span>
                     <span className="text-[9px] font-bold bg-rose-600 text-white px-2 py-0.5 rounded-sm animate-pulse uppercase tracking-wider">MEMBER JOIN ACTIVE</span>
                   </h4>
                   <p className="font-sans text-xs text-slate-500 mt-1">
                     {locale === 'hi' 
-                        ? 'नवीनतम सरकारी नौकरियों (Govt Jobs), एडमिट कार्ड और सरकारी रिजल्ट प्राप्त करने के लिए आज ही जुड़ें!' 
-                        : 'Get real-time notification updates, solved PDF booklets, syllabus guidelines, and news on your phone.'}
+                        ? 'नवीनतम सरकारी नौकरियों (Govt Jobs), एडमिट कार्ड और सरकारी रिजल्ट की सूचना सीधे अपने फोन पर प्राप्त करें!' 
+                        : 'Get real-time notification updates, solved PDF booklets, syllabus guidelines, and news directly on your phone.'}
                   </p>
                 </div>
               </div>
@@ -905,16 +905,16 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                   onClick={() => triggerToast("📲 WhatsApp: Opening verified Sarkari updates feed channel...")}
                   className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 text-xs font-bold transition duration-200 shadow-md shadow-emerald-600/10"
                 >
-                  <span className="text-sm">🟢</span> {locale === 'hi' ? 'WhatsApp चैनल जॉइन करें' : 'Join WhatsApp Channel'}
+                  <span className="text-sm">🟢</span> {locale === 'hi' ? 'WhatsApp चैनल' : 'Join WhatsApp'}
                 </a>
                 <a 
                   href="https://t.me/SarkariJobHubOfficial" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  onClick={() => triggerToast("✈️ Telegram: Redirecting to verified Sarkari Job Hub channel for PDF notes...")}
+                  onClick={() => triggerToast("✈️ Telegram: Redirecting to verified Sarkari Job Hub channel for official notes...")}
                   className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 text-xs font-bold transition duration-200 shadow-md shadow-blue-600/10"
                 >
-                  <Send className="h-4 w-4 fill-white text-white" /> {locale === 'hi' ? 'Telegram ग्रुप जॉइन करें' : 'Join Telegram Group'}
+                  <Send className="h-4 w-4 fill-white text-white" /> {locale === 'hi' ? 'Telegram चैनल' : 'Join Telegram Channel'}
                 </a>
               </div>
             </div>
@@ -3032,13 +3032,13 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
             {/* Social Sharing elements */}
             <div className="space-y-3">
               <h4 className="text-white font-bold text-xs uppercase tracking-widest border-b border-slate-800 pb-1">Broadcast Channels</h4>
-              <p className="text-slate-500 leading-normal">Subscribe to verified Telegram / WhatsApp feeds for direct 24x7 notifications updates.</p>
+              <p className="text-slate-500 leading-normal">Subscribe to our verified Telegram & WhatsApp feeds for direct 24x7 notifications updates.</p>
               <div className="flex flex-wrap gap-2">
                 <a 
                   href="https://t.me/SarkariJobHubOfficial" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  onClick={() => triggerToast("✈️ Telegram: Redirecting to official @JobSarkariHubOfficial channel...")}
+                  onClick={() => triggerToast("✈️ Telegram: Redirecting to official @SarkariJobHubOfficial channel...")}
                   className="inline-flex items-center gap-1 bg-blue-600/20 border border-blue-500/30 text-blue-400 px-3 py-1.5 rounded-lg font-bold hover:bg-blue-600/30 transition text-xs"
                 >
                   <Send className="h-3 w-3 fill-blue-400 text-blue-400" /> Telegram Channel
@@ -3048,7 +3048,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                   target="_blank" 
                   rel="noopener noreferrer" 
                   onClick={() => triggerToast("📲 WhatsApp: Opening verified broadcast newsletter...")}
-                  className="inline-flex items-center gap-1 bg-emerald-600/20 border border-emerald-500/30 text-emerald-400 px-3 py-1.5 rounded-lg font-bold hover:bg-emerald-600/30 transition text-xs"
+                  className="inline-flex items-center gap-1.5 bg-emerald-600/20 border border-emerald-500/30 text-emerald-400 px-3 py-1.5 rounded-lg font-bold hover:bg-emerald-600/30 transition text-xs"
                 >
                   <span>🟢</span> WhatsApp Feed
                 </a>
@@ -4143,27 +4143,27 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
         onClose={() => setTrafficOpen(false)}
       />
 
-      {/* Floating Join Telegram Button */}
+      {/* Floating Join WhatsApp Button */}
       <a
-        href="https://t.me/JobSarkariHub"
+        href="https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-full px-5 py-3 text-white shadow-2xl transition-all duration-300 hover:scale-115 hover:shadow-cyan-500/20 active:scale-95 group font-sans text-xs sm:text-sm font-bold border border-sky-400/20"
-        style={{ backgroundColor: '#229ED9' }}
-        id="telegram-floating-join-btn"
+        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-full px-5 py-3 text-white shadow-2xl transition-all duration-300 hover:scale-115 hover:shadow-emerald-500/20 active:scale-95 group font-sans text-xs sm:text-sm font-bold border border-emerald-400/20"
+        style={{ backgroundColor: '#25D366' }}
+        id="whatsapp-floating-join-btn"
       >
         <span className="relative flex h-2.5 w-2.5">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-yellow-400"></span>
         </span>
         <svg 
           className="h-4.5 w-4.5 fill-white transition-transform duration-500 group-hover:rotate-[15deg] group-hover:scale-110" 
           viewBox="0 0 24 24"
         >
-          <path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701-.332 4.965c.487 0 .702-.223.974-.485l2.337-2.27 4.861 3.591c.896.494 1.541.24 1.764-.83l3.189-15.02c.326-1.309-.499-1.902-1.359-1.513z" />
+          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.453L0 24zm6.59-4.846c1.6.95 3.1 1.4 4.8 1.4 5.25 0 9.5-4.25 9.5-9.5s-4.25-9.5-9.5-9.5-9.5 4.25-9.5 9.5c0 1.93.56 3.65 1.5 5.23l-.99 3.6 3.73-.98M16.5 13.9c-.24-.12-1.43-.7-1.65-.79-.22-.09-.38-.13-.54.12-.16.24-.61.79-.75.94-.14.15-.27.17-.5.06-2.07-1.06-3.15-1.92-4.14-3.63-.26-.45.26-.42.74-1.38.08-.16.04-.3-.02-.42s-.54-1.3-.74-1.78c-.2-.48-.38-.4-.54-.4h-.46c-.16 0-.42.06-.64.3-.22.24-.84.83-.84 2.02s.87 2.33.99 2.5c.12.16 1.7 2.54 4.11 3.59.57.25 1.02.4 1.37.5.58.18 1.1.16 1.5.1.46-.07 1.43-.58 1.63-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28" />
         </svg>
         <span>
-          {locale === 'hi' ? 'टेलीग्राम ज्वाइन करें' : 'Join Telegram'}
+          {locale === 'hi' ? 'व्हाट्सएप ज्वाइन करें' : 'Join WhatsApp'}
         </span>
       </a>
 
