@@ -4,6 +4,76 @@ import { generateAllExtendedMocks } from '../utils/examMockGenerator';
 
 export const INITIAL_JOBS: GovJob[] = [
   {
+    id: 'india-post-gds-recruitment-2026',
+    title: 'India Post Gramin Dak Sevak (GDS) Recruitment 2026',
+    org: 'Department of Posts, India',
+    category: 'Others',
+    qualification: '10th Pass',
+    ageLimit: '18 - 40 Years',
+    salary: '₹12,000 — ₹29,380 / Month',
+    fees: {
+      General: '₹100',
+      OBC: '₹100',
+      SC_ST_Female: 'Nil'
+    },
+    totalPosts: 40220,
+    applyUrl: 'https://indiapostgdsonline.gov.in',
+    pdfUrl: 'https://indiapostgdsonline.gov.in',
+    officialWebsite: 'https://indiapostgdsonline.gov.in',
+    postedDate: '2026-06-17',
+    lastDate: '2026-07-17',
+    importantDates: {
+      applyStart: '2026-06-17',
+      applyEnd: '2026-07-17',
+      examDate: 'No Exam (Merit List Based)',
+      admitCardRelease: 'N/A'
+    },
+    selectionProcess: [
+      'Shortlisting based on Class 10th Marks',
+      'Document Verification',
+      'Direct Circle Joining / Appointment'
+    ],
+    location: 'All India',
+    description: '📬 INDIA POST GDS RECRUITMENT 2026. India Post has announced a massive 40,220 vacancies for Gramin Dak Sevak (GDS), Branch Postmaster (BPM), and Assistant Branch Postmaster (ABPM) posts across all circles. No examination is conducted; selection is purely based on the Class 10th merit list score. Apply online today!',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'idbi-bank-executive-recruitment-2026',
+    title: 'IDBI Bank Executive (On Contract) Recruitment 2026',
+    org: 'IDBI Bank',
+    category: 'Bank',
+    qualification: 'Graduate',
+    ageLimit: '20 - 25 Years',
+    salary: '₹29,000 — ₹31,000 / Month',
+    fees: {
+      General: '₹1000',
+      OBC: '₹1000',
+      SC_ST_Female: '₹200'
+    },
+    totalPosts: 1300,
+    applyUrl: 'https://www.idbibank.in',
+    pdfUrl: 'https://www.idbibank.in',
+    officialWebsite: 'https://www.idbibank.in',
+    postedDate: '2026-06-17',
+    lastDate: '2026-07-08',
+    importantDates: {
+      applyStart: '2026-06-17',
+      applyEnd: '2026-07-08',
+      examDate: 'July 2026',
+      admitCardRelease: 'July 2026'
+    },
+    selectionProcess: [
+      'Online Written Test (CBT)',
+      'Document Verification (DV)',
+      'Pre-Recruitment Medical Examination'
+    ],
+    location: 'All India',
+    description: '💼 IDBI BANK EXECUTIVE RECRUITMENT 2026. IDBI Bank has announced 1,300 contract Executive positions. Stipend starts at ₹29,000 in Year 1 to ₹31,000 in Year 2. Graduation degree required. Apply now!',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
     id: 'gsrtc-driver-conductor-recruitment-2026',
     title: 'GSRTC Driver & Conductor Recruitment 2026',
     org: 'Gujarat State Road Transport Corporation (GSRTC)',
@@ -1727,6 +1797,26 @@ export const INITIAL_JOBS: GovJob[] = [
 
 export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
   {
+    id: 'csir-ugc-net-june-admit-2026',
+    title: 'CSIR UGC NET June 2026 Exam City Slip / Hall Ticket',
+    org: 'National Testing Agency (NTA)',
+    examDate: '2026-06-25 to 2026-06-27',
+    examCity: 'Check Allotted Specialized Online Exam Venues',
+    downloadUrl: 'https://csirnet.nta.ac.in',
+    officialLink: 'https://csirnet.nta.ac.in',
+    addedDate: '2026-06-17'
+  },
+  {
+    id: 'ibps-rrb-pet-admit-2026',
+    title: 'IBPS RRB XV Clerk & PO Pre-Exam Training Call Letter 2026',
+    org: 'Institute of Banking Personnel Selection (IBPS)',
+    examDate: '2026-07-10 to 2026-07-15',
+    examCity: 'Check Detailed PET Centers list with Call Letter',
+    downloadUrl: 'https://www.ibps.in',
+    officialLink: 'https://www.ibps.in',
+    addedDate: '2026-06-17'
+  },
+  {
     id: 'ssc-chsl-tier1-admit-2026',
     title: 'SSC CHSL (10+2) Tier-I Exam Status & e-Admit Card 2026',
     org: 'Staff Selection Commission (SSC)',
@@ -1869,6 +1959,36 @@ export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
 ];
 
 export const INITIAL_RESULTS: JobResult[] = [
+  {
+    id: 'jee-advanced-result-2026',
+    title: 'JEE Advanced 2026 Final Score Card, Cut Off & Rank Merit List',
+    org: 'IIT Delhi (Organizing Body)',
+    meritListUrl: 'https://jeeadv.ac.in',
+    scoreCardUrl: 'https://jeeadv.ac.in',
+    cutOff: {
+      UR: '109 Marks Aggregate Cutoff',
+      OBC: '98 Marks Cutoff',
+      SC: '54 Marks Cutoff',
+      ST: '54 Marks Cutoff'
+    },
+    downloadUrl: 'https://jeeadv.ac.in',
+    releaseDate: '2026-06-17'
+  },
+  {
+    id: 'ssc-cgl-2025-final-result',
+    title: 'SSC CGL 2025 Final Merit & Rank Select List (Out Today)',
+    org: 'Staff Selection Commission (SSC)',
+    meritListUrl: 'https://ssc.gov.in',
+    scoreCardUrl: 'https://ssc.gov.in',
+    cutOff: {
+      UR: '312.5 Marks (Assistant Section Officer)',
+      OBC: '304.0 Marks (Tax Assistant)',
+      SC: '286.0 Marks',
+      ST: '277.5 Marks'
+    },
+    downloadUrl: 'https://ssc.gov.in',
+    releaseDate: '2026-06-17'
+  },
   {
     id: 'upsc-prelims-cse-result-2026',
     title: 'UPSC Civil Services (IAS / IFS) Preliminary Exam 2026 Roll Number Merit List',
