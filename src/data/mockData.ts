@@ -4,6 +4,41 @@ import { generateAllExtendedMocks } from '../utils/examMockGenerator';
 
 export const INITIAL_JOBS: GovJob[] = [
   {
+    id: 'aai-junior-executive-recruitment-2026',
+    title: 'AAI Junior Executive (Air Traffic Control & Information Tech) Recruitment 2026',
+    org: 'Airport Authority of India (AAI)',
+    category: 'Others',
+    qualification: 'Graduate',
+    ageLimit: '18 - 27 Years',
+    salary: '₹40,000 — ₹1,40,000 / Month',
+    fees: {
+      General: '₹1000',
+      OBC: '₹1000',
+      SC_ST_Female: 'Nil'
+    },
+    totalPosts: 996,
+    applyUrl: 'https://aai.aero',
+    pdfUrl: 'https://aai.aero',
+    officialWebsite: 'https://aai.aero',
+    postedDate: '2026-06-21',
+    lastDate: '2026-07-25',
+    importantDates: {
+      applyStart: '2026-06-22',
+      applyEnd: '2026-07-25',
+      examDate: 'August 2026',
+      admitCardRelease: 'To be notified'
+    },
+    selectionProcess: [
+      'Online Written Test (CBT - no negative marking)',
+      'Voice Test & Application Verification',
+      'Psychoactive Substances Testing & Medical check'
+    ],
+    location: 'All India',
+    description: '✈️ AIRPORT AUTHORITY OF INDIA (AAI) JUNIOR EXECUTIVE 2026. Recruitment announced for 996 Junior Executive post in Air Traffic Control (ATC) and Information Technology branches. Qualification: Graduate (B.Sc with Physics/Maths or B.E/B.Tech). Apply online immediately!',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
     id: 'india-post-gds-recruitment-2026',
     title: 'India Post Gramin Dak Sevak (GDS) Recruitment 2026',
     org: 'Department of Posts, India',
@@ -1797,6 +1832,16 @@ export const INITIAL_JOBS: GovJob[] = [
 
 export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
   {
+    id: 'idbi-bank-executive-admit-card-2026',
+    title: 'IDBI Bank Executive (On Contract) Exam Admit Card & Call Letter 2026',
+    org: 'IDBI Bank',
+    examDate: '2026-07-02 to 2026-07-05',
+    examCity: 'Check Detailed CBT Venue & Shift details',
+    downloadUrl: 'https://www.idbibank.in',
+    officialLink: 'https://www.idbibank.in',
+    addedDate: '2026-06-21'
+  },
+  {
     id: 'csir-ugc-net-june-admit-2026',
     title: 'CSIR UGC NET June 2026 Exam City Slip / Hall Ticket',
     org: 'National Testing Agency (NTA)',
@@ -1959,6 +2004,21 @@ export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
 ];
 
 export const INITIAL_RESULTS: JobResult[] = [
+  {
+    id: 'india-post-gds-first-merit-list-2026',
+    title: 'India Post GDS 2026 Circle Wise First Merit List & Cutoff Marks',
+    org: 'Department of Posts, India',
+    meritListUrl: 'https://indiapostgdsonline.gov.in',
+    scoreCardUrl: 'https://indiapostgdsonline.gov.in',
+    cutOff: {
+      UR: '96.8% Average Circle Cutoff',
+      OBC: '95.4% Circle Cutoff',
+      SC: '91.2% Circle Cutoff',
+      ST: '88.6% Circle Cutoff'
+    },
+    downloadUrl: 'https://indiapostgdsonline.gov.in',
+    releaseDate: '2026-06-21'
+  },
   {
     id: 'jee-advanced-result-2026',
     title: 'JEE Advanced 2026 Final Score Card, Cut Off & Rank Merit List',

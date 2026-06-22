@@ -38,6 +38,8 @@ import { fetchWithRetry } from './utils/fetchHelper';
 
 const INITIAL_PYQS = [
   // 2026 Series
+  { title: 'Railway RRB Technician Grade I & III Solved Civil & Mech Paper 2026', type: 'Solved PDF Booklet', size: '3.1 MB', year: 2026, exam: 'Railway', premium: false, downloadUrl: 'https://www.rrbcdg.gov.in/rrb_technician_solved_2026.pdf' },
+  { title: 'Punjab State Power Corporation (PSPCL) Assistant Lineman (ALM) Trade & Numerical Aptitude Paper 2026', type: 'Official Solved Key', size: '2.5 MB', year: 2026, exam: 'Others', premium: false, downloadUrl: 'https://pspcl.in/alm_solved_paper_2026.pdf' },
   { title: 'National Health Mission (NHM) Vaccinator & Immunization Specialist Exam Paper 2026', type: 'Solved PDF Booklet', size: '2.8 MB', year: 2026, exam: 'Health/Vaccine', premium: false, downloadUrl: 'https://nhm.gov.in/vaccinator_exam_paper_2026.pdf' },
   { title: 'SSC CGL Tier-1 General Intelligence & Quantitative Aptitude Solved Booklet 2026', type: 'Official Solved Key', size: '3.4 MB', year: 2026, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/cgl_tier1_solved_2026.pdf' },
   { title: 'SSC CHSL (10+2) Tier-1 English Language & Reasoning Solved Sheets 2026', type: 'Solved Booklet', size: '2.9 MB', year: 2026, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/chsl_tier1_solved_2026.pdf' },
