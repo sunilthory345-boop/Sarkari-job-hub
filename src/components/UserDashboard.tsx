@@ -494,6 +494,56 @@ export default function UserDashboard({
               </div>
             )}
 
+            {/* Topper Spotlight Scoreboard */}
+            {rankedLeaderboard.length > 0 && (
+              <div className="bg-linear-to-r from-amber-500/10 via-yellow-500/5 to-amber-500/10 border-2 border-amber-400/60 rounded-2xl p-4 sm:p-5 relative overflow-hidden shadow-xs">
+                {/* Gold shining badge decorative absolute */}
+                <div className="absolute -top-6 -right-6 h-20 w-20 bg-amber-400/20 rounded-full blur-xl"></div>
+                
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
+                  <div className="flex items-center gap-3.5 text-center sm:text-left flex-col sm:flex-row">
+                    <div className="h-14 w-14 rounded-full bg-amber-100 border-2 border-amber-400 flex items-center justify-center text-3xl shadow-sm animate-bounce">
+                      🏆
+                    </div>
+                    <div>
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-400 text-amber-950 text-[10px] font-black tracking-wider uppercase mb-1.5">
+                        🌟 TOPPER SCOREBOARD SPOTLIGHT 🌟
+                      </div>
+                      <h4 className="font-sans text-lg sm:text-xl font-black text-slate-900 tracking-tight flex items-center gap-2 justify-center sm:justify-start">
+                        <span>{rankedLeaderboard[0].name}</span>
+                        {rankedLeaderboard[0].isCurrentUser && (
+                          <span className="bg-blue-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded-sm">
+                            YOU / आप
+                          </span>
+                        )}
+                      </h4>
+                      <p className="text-xs text-slate-500 font-medium mt-0.5">
+                        📍 State: <strong className="text-slate-800">{rankedLeaderboard[0].state}</strong> • Achieved on: <span className="font-mono">{rankedLeaderboard[0].date}</span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center border-t sm:border-t-0 border-amber-200/50 pt-3.5 sm:pt-0 w-full sm:w-auto gap-2">
+                    <div className="text-left sm:text-right">
+                      <span className="text-[10px] text-amber-800 font-extrabold uppercase tracking-wider block">NATIONAL RANK</span>
+                      <span className="font-sans text-xl sm:text-2xl font-black text-amber-600 tracking-tight block">
+                        🏅 RANK #1 (टॉपर)
+                      </span>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-[10px] text-slate-500 font-extrabold uppercase tracking-wider block">TOPPER SCORE</span>
+                      <span className="font-mono text-base sm:text-lg font-black text-emerald-600 block">
+                        {rankedLeaderboard[0].score} / 20 Marks
+                      </span>
+                      <span className="text-[9px] text-slate-400 font-bold block">
+                        Accuracy: {Math.round((rankedLeaderboard[0].score / 20) * 100)}%
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* List Table of Competitors */}
             <div className="divide-y divide-slate-100 border border-slate-100 rounded-xl overflow-hidden bg-slate-50/20">
               {rankedLeaderboard.map((aspirant) => {
