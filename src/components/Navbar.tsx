@@ -20,6 +20,7 @@ interface NavbarProps {
   locale: string;
   setLocale: (val: LocaleType) => void;
   onOpenAuthModal?: () => void;
+  liveNotifications?: any[];
 }
 
 export default function Navbar({ 
@@ -33,7 +34,8 @@ export default function Navbar({
   setIsLoggedIn,
   locale,
   setLocale,
-  onOpenAuthModal
+  onOpenAuthModal,
+  liveNotifications = []
 }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
@@ -195,8 +197,45 @@ export default function Navbar({
                       </button>
                     )}
                   </div>
-                  <div className="space-y-2 font-sans text-xs">
-                    {notificationCount > 0 ? (
+                  <div className="space-y-2 font-sans text-xs max-h-80 overflow-y-auto pr-1">
+                    {liveNotifications.length > 0 ? (
+                      liveNotifications.map((n: any, idx: number) => {
+                        let badgeBg = "bg-blue-50 text-blue-900 border border-blue-100";
+                        let emoji = "🔥";
+                        if (n.category === 'Admit Card') {
+                          badgeBg = "bg-orange-50 text-orange-900 border border-orange-100";
+                          emoji = "⏱️";
+                        } else if (n.category === 'Result') {
+                          badgeBg = "bg-emerald-50 text-emerald-900 border border-emerald-100";
+                          emoji = "🏆";
+                        } else if (n.category === 'Answer Key') {
+                          badgeBg = "bg-amber-55/10 text-amber-900 border border-amber-200/50";
+                          emoji = "🔑";
+                        }
+                        return (
+                          <div 
+                            key={n.id || idx} 
+                            onClick={() => {
+                              if (n.url) {
+                                if (n.url.includes('tab=jobs')) setActiveTab('jobs');
+                                else if (n.url.includes('tab=admit-cards')) setActiveTab('admit-cards');
+                                else if (n.url.includes('tab=results')) setActiveTab('results');
+                                else if (n.url.includes('tab=answer-key')) setActiveTab('answer-key');
+                              }
+                              setNotificationsOpen(false);
+                            }}
+                            className={`rounded-lg p-2.5 text-left cursor-pointer transition hover:bg-slate-50 ${badgeBg}`}
+                          >
+                            <p className="font-extrabold flex items-center gap-1.5">
+                              <span>{emoji}</span>
+                              <span>{n.category} Alert</span>
+                              {n.timestamp && <span className="ml-auto text-[8px] font-mono text-slate-400 font-semibold">{n.timestamp}</span>}
+                            </p>
+                            <p className="text-[10px] text-slate-700 font-bold mt-1 leading-tight">{n.title}</p>
+                          </div>
+                        );
+                      })
+                    ) : (
                       <>
                         <div className="rounded-lg bg-blue-50 p-2 text-blue-900 border border-blue-100 text-left">
                           <p className="font-bold">🔥 New Jobs uploaded!</p>
@@ -211,10 +250,6 @@ export default function Navbar({
                           <p className="text-[10px] text-emerald-700 mt-0.5">UPSC Civil Services 2025 final scorecards and cut-off list released. Check merit rank list.</p>
                         </div>
                       </>
-                    ) : (
-                      <div className="py-4 text-center text-slate-400">
-                        {t.noNotifications}
-                      </div>
                     )}
                   </div>
                 </div>

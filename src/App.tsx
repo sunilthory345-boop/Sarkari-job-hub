@@ -483,6 +483,256 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
   });
 
   const [notificationCount, setNotificationCount] = useState(3);
+  
+  // --- REAL-TIME LIVE AUTO-UPDATES AND NOTIFICATIONS ---
+  const [notificationSoundEnabled, setNotificationSoundEnabled] = useState<boolean>(() => {
+    const saved = localStorage.getItem('sarkari_notif_sound');
+    return saved === null ? true : saved === 'true';
+  });
+  const [browserPushEnabled, setBrowserPushEnabled] = useState<boolean>(() => {
+    const saved = localStorage.getItem('sarkari_notif_push');
+    return saved === 'true';
+  });
+  const [liveSyncEnabled, setLiveSyncEnabled] = useState<boolean>(() => {
+    const saved = localStorage.getItem('sarkari_notif_sync');
+    return saved === null ? true : saved === 'true';
+  });
+  const [alertTone, setAlertTone] = useState<string>(() => {
+    return localStorage.getItem('sarkari_notif_tone') || 'melody';
+  });
+  const [liveNotifications, setLiveNotifications] = useState<any[]>(() => {
+    const saved = localStorage.getItem('sarkari_live_notifications');
+    if (saved) {
+      try { return JSON.parse(saved); } catch (e) { return []; }
+    }
+    return [
+      { id: 'init-1', category: 'Vacancy', title: 'India Post GDS Recruitment 2026 - 40,220 Posts', timestamp: '10:30 AM', url: '?tab=jobs' },
+      { id: 'init-2', category: 'Admit Card', title: 'CSIR UGC NET June 2026 Exam City Slip', timestamp: '11:15 AM', url: '?tab=admit-cards' },
+      { id: 'init-3', category: 'Result', title: 'JEE Advanced 2026 Final Score Card & Rank List', timestamp: 'Yesterday', url: '?tab=results' },
+    ];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('sarkari_notif_sound', String(notificationSoundEnabled));
+  }, [notificationSoundEnabled]);
+
+  useEffect(() => {
+    localStorage.setItem('sarkari_notif_push', String(browserPushEnabled));
+  }, [browserPushEnabled]);
+
+  useEffect(() => {
+    localStorage.setItem('sarkari_notif_sync', String(liveSyncEnabled));
+  }, [liveSyncEnabled]);
+
+  useEffect(() => {
+    localStorage.setItem('sarkari_notif_tone', alertTone);
+  }, [alertTone]);
+
+  useEffect(() => {
+    localStorage.setItem('sarkari_live_notifications', JSON.stringify(liveNotifications));
+  }, [liveNotifications]);
+
+  const playNotificationSound = (toneType = 'melody') => {
+    try {
+      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioContextClass) return;
+      const ctx = new AudioContextClass();
+      const now = ctx.currentTime;
+      
+      if (toneType === 'melody') {
+        const osc1 = ctx.createOscillator();
+        const gain1 = ctx.createGain();
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(523.25, now); // C5
+        gain1.gain.setValueAtTime(0.12, now);
+        gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+        osc1.connect(gain1);
+        gain1.connect(ctx.destination);
+        osc1.start(now);
+        osc1.stop(now + 0.4);
+        
+        const osc2 = ctx.createOscillator();
+        const gain2 = ctx.createGain();
+        osc2.type = 'sine';
+        osc2.frequency.setValueAtTime(659.25, now + 0.12); // E5
+        gain2.gain.setValueAtTime(0.12, now + 0.12);
+        gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+        osc2.connect(gain2);
+        gain2.connect(ctx.destination);
+        osc2.start(now + 0.12);
+        osc2.stop(now + 0.5);
+      } else if (toneType === 'standard') {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(880, now); // A5
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.25);
+      } else if (toneType === 'retro') {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(330, now);
+        osc.frequency.exponentialRampToValueAtTime(660, now + 0.25);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.3);
+      }
+    } catch (e) {
+      console.error("Web Audio playback failed:", e);
+    }
+  };
+
+  const triggerDesktopNotification = (category: string, title: string) => {
+    if (!("Notification" in window)) return;
+    if (Notification.permission === "granted") {
+      try {
+        new Notification(`📢 Sarkari Live Update: ${category}`, {
+          body: title,
+          icon: "https://cdn-icons-png.flaticon.com/512/3602/3602145.png"
+        });
+      } catch (err) {
+        console.error("Desktop notification failed", err);
+      }
+    }
+  };
+
+  const requestNotificationPermission = async () => {
+    if (!("Notification" in window)) {
+      triggerToast("⚠️ Notifications not supported on this browser.");
+      return;
+    }
+    try {
+      const permission = await Notification.requestPermission();
+      if (permission === "granted") {
+        setBrowserPushEnabled(true);
+        triggerToast("✅ Browser Push Notifications Enabled successfully!");
+        triggerDesktopNotification("System Check", "Live Alerts are active & listening on this machine!");
+      } else {
+        setBrowserPushEnabled(false);
+        triggerToast("❌ Push Notifications permission denied.");
+      }
+    } catch (err) {
+      console.error(err);
+      triggerToast("❌ Error requesting permission.");
+    }
+  };
+
+  // Synchronize across multiple open tabs in real-time
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (!liveSyncEnabled) return;
+      if (e.key === 'sarkari_jobs') {
+        try {
+          if (e.newValue) setJobs(JSON.parse(e.newValue));
+        } catch (err) { console.error(err); }
+      } else if (e.key === 'sarkari_admit_cards') {
+        try {
+          if (e.newValue) setAdmitCards(JSON.parse(e.newValue));
+        } catch (err) { console.error(err); }
+      } else if (e.key === 'sarkari_results') {
+        try {
+          if (e.newValue) setResults(JSON.parse(e.newValue));
+        } catch (err) { console.error(err); }
+      } else if (e.key === 'sarkari_answer_keys') {
+        try {
+          if (e.newValue) setAnswerKeys(JSON.parse(e.newValue));
+        } catch (err) { console.error(err); }
+      } else if (e.key === 'sarkari_live_notifications') {
+        try {
+          if (e.newValue) setLiveNotifications(JSON.parse(e.newValue));
+        } catch (err) { console.error(err); }
+      } else if (e.key === 'sarkari_latest_launch_alert') {
+        try {
+          if (e.newValue) {
+            const data = JSON.parse(e.newValue);
+            // 1. Play alert sound
+            if (notificationSoundEnabled) {
+              playNotificationSound(alertTone);
+            }
+            // 2. Trigger browser desktop notification
+            if (browserPushEnabled) {
+              triggerDesktopNotification(data.category, data.title);
+            }
+            // 3. Trigger visual toast
+            triggerToast(`🔔 LIVE UPDATE: [${data.category}] ${data.title} is now Live!`);
+            // 4. Update notification badge count
+            setNotificationCount(prev => prev + 1);
+            
+            // 5. Reload and update states from localStorage to maintain 100% coherence
+            const savedJobs = localStorage.getItem('sarkari_jobs');
+            if (savedJobs) setJobs(JSON.parse(savedJobs));
+            const savedAdmit = localStorage.getItem('sarkari_admit_cards');
+            if (savedAdmit) setAdmitCards(JSON.parse(savedAdmit));
+            const savedResults = localStorage.getItem('sarkari_results');
+            if (savedResults) setResults(JSON.parse(savedResults));
+            const savedKeys = localStorage.getItem('sarkari_answer_keys');
+            if (savedKeys) setAnswerKeys(JSON.parse(savedKeys));
+            const savedNotifs = localStorage.getItem('sarkari_live_notifications');
+            if (savedNotifs) setLiveNotifications(JSON.parse(savedNotifs));
+          }
+        } catch (err) { console.error(err); }
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, [liveSyncEnabled, notificationSoundEnabled, alertTone, browserPushEnabled]);
+
+  const handleNewLaunch = (category: string, title: string, org: string, itemType: 'jobs' | 'admitCards' | 'results' | 'answerKeys', item: any) => {
+    // 1. Update list state
+    if (itemType === 'jobs') setJobs(prev => [item, ...prev]);
+    else if (itemType === 'admitCards') setAdmitCards(prev => [item, ...prev]);
+    else if (itemType === 'results') setResults(prev => [item, ...prev]);
+    else if (itemType === 'answerKeys') setAnswerKeys(prev => [item, ...prev]);
+
+    // 2. Add to live notification log
+    const newNotif = {
+      id: `live-notif-${Date.now()}`,
+      category,
+      title: `${org} - ${title}`,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      url: `?tab=${itemType === 'jobs' ? 'jobs' : itemType === 'admitCards' ? 'admit-cards' : itemType === 'results' ? 'results' : 'answer-key'}`
+    };
+    
+    setLiveNotifications(prev => {
+      const updated = [newNotif, ...prev].slice(0, 50);
+      localStorage.setItem('sarkari_live_notifications', JSON.stringify(updated));
+      return updated;
+    });
+
+    // 3. Play local sound
+    if (notificationSoundEnabled) {
+      playNotificationSound(alertTone);
+    }
+
+    // 4. Send native desktop push notification
+    if (browserPushEnabled) {
+      triggerDesktopNotification(category, `${org} - ${title}`);
+    }
+
+    // 5. Update local storage event key for multi-tab sync
+    localStorage.setItem('sarkari_latest_launch_alert', JSON.stringify({
+      id: newNotif.id,
+      category,
+      title: `${org} - ${title}`,
+      timestamp: Date.now()
+    }));
+
+    // 6. Increase notification badge count
+    setNotificationCount(prev => prev + 1);
+
+    // 7. Toast alert
+    triggerToast(`🔔 Auto-Refreshed: New ${category} is now Live!`);
+  };
+
   const [premiumModalOpen, setPremiumModalOpen] = useState(false);
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
   const [showWhyPremium, setShowWhyPremium] = useState(false);
@@ -867,6 +1117,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
         locale={locale}
         setLocale={setLocale}
         onOpenAuthModal={() => setAuthModalOpen(true)}
+        liveNotifications={liveNotifications}
       />
 
       {/* Main Body wrap */}
@@ -1021,6 +1272,266 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                   </p>
                 </div>
               ))}
+            </div>
+
+            {/* Real-time Live Updates & Auto-Notification Desk */}
+            <div className="bg-slate-900 text-white rounded-3xl border border-slate-800 p-6 shadow-xl relative overflow-hidden">
+              {/* background decorative lines */}
+              <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+              
+              <div className="relative z-10 flex flex-col lg:flex-row gap-8 items-stretch">
+                
+                {/* Left side: Config Center & Simulation */}
+                <div className="flex-1 space-y-6 text-left">
+                  <div className="flex items-center gap-3">
+                    <div className="relative flex h-3 w-3 shrink-0">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-rose-500"></span>
+                    </div>
+                    <div>
+                      <h3 className="font-sans text-base sm:text-lg font-black tracking-tight text-white flex items-center gap-2">
+                        <span>{locale === 'hi' ? 'लाइव ऑटो-अपडेट एवं अलर्ट डेस्क' : 'Sarkari Real-time Alert & Auto-Update Hub'}</span>
+                        <span className="bg-emerald-500/20 text-emerald-400 text-[9px] font-black px-2 py-0.5 rounded-full border border-emerald-500/30 uppercase animate-pulse">
+                          SYSTEM SECURE
+                        </span>
+                      </h3>
+                      <p className="text-xs text-slate-400 mt-0.5">
+                        {locale === 'hi' 
+                          ? 'कोई भी नया भर्ती अपडेट आते ही बिना पेज रीलोड किए तुरंत सूचना प्राप्त करें।' 
+                          : 'Receive instant audio-visual alerts and automatic page sync when new postings go live.'}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Settings toggles */}
+                  <div className="grid gap-3 sm:grid-cols-2 bg-slate-950/60 p-4 rounded-2xl border border-slate-800">
+                    {/* Toggle Sound */}
+                    <div className="flex items-center justify-between p-2.5 bg-slate-900/40 rounded-xl">
+                      <div>
+                        <span className="text-[10px] text-slate-400 font-extrabold uppercase block tracking-wider font-mono">Audio Alerts</span>
+                        <span className="text-xs font-bold text-slate-200">🔊 Play alert sound</span>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setNotificationSoundEnabled(!notificationSoundEnabled);
+                          triggerToast(notificationSoundEnabled ? "🔇 Sound alerts disabled." : "🔊 Sound alerts enabled!");
+                          if (!notificationSoundEnabled) playNotificationSound(alertTone);
+                        }}
+                        className={`w-10 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors duration-200 ${
+                          notificationSoundEnabled ? 'bg-blue-600' : 'bg-slate-700'
+                        }`}
+                      >
+                        <div className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-200 ${
+                          notificationSoundEnabled ? 'translate-x-4' : 'translate-x-0'
+                        }`}></div>
+                      </button>
+                    </div>
+
+                    {/* Toggle Web Browser Push */}
+                    <div className="flex items-center justify-between p-2.5 bg-slate-900/40 rounded-xl">
+                      <div>
+                        <span className="text-[10px] text-slate-400 font-extrabold uppercase block tracking-wider font-mono">Push alerts</span>
+                        <span className="text-xs font-bold text-slate-200">🖥️ Desktop notification</span>
+                      </div>
+                      <button
+                        onClick={() => {
+                          if (!browserPushEnabled) {
+                            requestNotificationPermission();
+                          } else {
+                            setBrowserPushEnabled(false);
+                            triggerToast("🔇 Desktop push alerts disabled.");
+                          }
+                        }}
+                        className={`w-10 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors duration-200 ${
+                          browserPushEnabled ? 'bg-blue-600' : 'bg-slate-700'
+                        }`}
+                      >
+                        <div className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-200 ${
+                          browserPushEnabled ? 'translate-x-4' : 'translate-x-0'
+                        }`}></div>
+                      </button>
+                    </div>
+
+                    {/* Alert Tone Selector */}
+                    <div className="sm:col-span-2 flex flex-col sm:flex-row items-center justify-between gap-3 p-2.5 bg-slate-900/40 rounded-xl border-t border-slate-800/40">
+                      <div className="text-left w-full sm:w-auto">
+                        <span className="text-[10px] text-slate-400 font-extrabold uppercase block tracking-wider font-mono">Select Alert tone</span>
+                        <span className="text-xs font-bold text-slate-200">🎵 Customize beep sound</span>
+                      </div>
+                      <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+                        <select
+                          value={alertTone}
+                          onChange={(e) => setAlertTone(e.target.value)}
+                          className="bg-slate-900 border border-slate-700 rounded-lg text-xs font-bold py-1 px-2.5 text-white focus:outline-none focus:border-blue-500 cursor-pointer"
+                        >
+                          <option value="melody">🔔 Melody Chime (Premium)</option>
+                          <option value="standard">⚡ Standard Notify (Beep)</option>
+                          <option value="retro">🎮 Retro Synthesizer</option>
+                        </select>
+                        <button
+                          type="button"
+                          onClick={() => playNotificationSound(alertTone)}
+                          className="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-2.5 py-1 rounded-lg border border-slate-700 transition active:scale-95 cursor-pointer"
+                        >
+                          Test 🔊
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Manual simulation actions */}
+                  <div className="space-y-2">
+                    <span className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest block font-mono">
+                      ⚡ DEMONSTRATION SIMULATOR / लाइव टेस्ट सिम्युलेटर
+                    </span>
+                    <div className="grid gap-2.5 sm:grid-cols-3">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const demoJob = {
+                            id: `demo-job-${Date.now()}`,
+                            title: 'Railway Recruitment Board (RRB) Group-D Vacancies 2026',
+                            org: 'RRB / रेलवे बोर्ड',
+                            category: 'Railway',
+                            qualification: '10th Pass / ITI',
+                            salary: '₹22,000 - ₹63,200/-',
+                            fees: { General: 500, OBC: 500, SC_ST_Female: 250 },
+                            totalPosts: 12500,
+                            applyUrl: 'https://rrbcdg.gov.in',
+                            pdfUrl: 'https://rrbcdg.gov.in/pdf',
+                            postedDate: new Date().toISOString().split('T')[0],
+                            lastDate: '2026-08-30',
+                            location: 'All India Slots'
+                          };
+                          handleNewLaunch('Vacancy', demoJob.title, demoJob.org, 'jobs', demoJob);
+                          triggerToast("🚀 Demo Vacancy added and synchronized in real-time!");
+                        }}
+                        className="bg-blue-600/30 hover:bg-blue-600/45 text-blue-200 font-bold border border-blue-500/30 rounded-xl px-3 py-2 text-xs transition duration-150 active:scale-95 cursor-pointer"
+                      >
+                        ➕ Demo Vacancy
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const demoCard = {
+                            id: `demo-card-${Date.now()}`,
+                            title: 'SSC CGL Tier-1 Combined Graduate Level e-Admit Card 2026',
+                            org: 'Staff Selection Commission (SSC)',
+                            examDate: '2026-07-28',
+                            examCity: 'All India Regional Capitals',
+                            downloadUrl: 'https://ssc.gov.in/admit-card',
+                            officialLink: 'https://ssc.gov.in',
+                            addedDate: new Date().toISOString().split('T')[0]
+                          };
+                          handleNewLaunch('Admit Card', demoCard.title, demoCard.org, 'admitCards', demoCard);
+                          triggerToast("🚀 Demo Admit Card published and sync triggered!");
+                        }}
+                        className="bg-orange-600/30 hover:bg-orange-600/45 text-orange-200 font-bold border border-orange-500/30 rounded-xl px-3 py-2 text-xs transition duration-150 active:scale-95 cursor-pointer"
+                      >
+                        ➕ Demo Admit Card
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const demoResult = {
+                            id: `demo-res-${Date.now()}`,
+                            title: 'UPSC Civil Services Prelims 2026 Qualified Candidate Merit List',
+                            org: 'Union Public Service Commission (UPSC)',
+                            meritListUrl: 'https://upsc.gov.in/merit.pdf',
+                            scoreCardUrl: 'https://upsc.gov.in/scores',
+                            cutOff: { UR: '96.5 Marks', OBC: '94.2 Marks', SC: '84.0 Marks', ST: '83.5 Marks' },
+                            downloadUrl: 'https://upsc.gov.in',
+                            releaseDate: new Date().toISOString().split('T')[0]
+                          };
+                          handleNewLaunch('Result', demoResult.title, demoResult.org, 'results', demoResult);
+                          triggerToast("🚀 Demo Result declared & broadcast alerts fired!");
+                        }}
+                        className="bg-emerald-600/30 hover:bg-emerald-600/45 text-emerald-200 font-bold border border-emerald-500/30 rounded-xl px-3 py-2 text-xs transition duration-150 active:scale-95 cursor-pointer"
+                      >
+                        ➕ Demo Result List
+                      </button>
+                    </div>
+                    <p className="text-[10px] text-slate-500 italic mt-1 leading-snug">
+                      Clicking these simulator buttons mimics an admin launching new posts. It plays the chosen audio chime, throws a toast, adds to the live log, and updates the jobs/admit/result boards instantly!
+                    </p>
+                  </div>
+                </div>
+
+                {/* Right side: Live stream terminal */}
+                <div className="w-full lg:w-96 bg-slate-950 border border-slate-800 rounded-2xl p-4 flex flex-col h-[320px] lg:h-auto justify-between">
+                  <div className="shrink-0 border-b border-slate-800 pb-2 mb-3 flex items-center justify-between">
+                    <span className="font-sans text-xs font-black text-slate-200 flex items-center gap-1.5 uppercase">
+                      <span className="h-2 w-2 rounded-full bg-rose-500 animate-ping"></span>
+                      {locale === 'hi' ? 'लाइव अलर्ट स्ट्रीम' : 'Live Broadcast Feed'}
+                    </span>
+                    <span className="font-mono text-[9px] text-slate-500 font-bold">UPDATED LIVE</span>
+                  </div>
+
+                  <div className="flex-1 overflow-y-auto space-y-2 pr-1 text-left scrollbar-thin max-h-56">
+                    {liveNotifications.map((n: any, idx: number) => {
+                      let badge = "bg-blue-500/15 text-blue-300 border border-blue-500/20";
+                      let short = "JOB";
+                      if (n.category === 'Admit Card') {
+                        badge = "bg-orange-500/15 text-orange-300 border border-orange-500/20";
+                        short = "ADMIT";
+                      } else if (n.category === 'Result') {
+                        badge = "bg-emerald-500/15 text-emerald-300 border border-emerald-500/20";
+                        short = "RESULT";
+                      } else if (n.category === 'Answer Key') {
+                        badge = "bg-amber-500/15 text-amber-300 border border-amber-500/20";
+                        short = "KEY";
+                      }
+
+                      return (
+                        <div 
+                          key={n.id || idx}
+                          onClick={() => {
+                            if (n.url) {
+                              if (n.url.includes('tab=jobs')) setActiveTab('jobs');
+                              else if (n.url.includes('tab=admit-cards')) setActiveTab('admit-cards');
+                              else if (n.url.includes('tab=results')) setActiveTab('results');
+                              else if (n.url.includes('tab=answer-key')) setActiveTab('answer-key');
+                            }
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                          }}
+                          className="bg-slate-900/60 hover:bg-slate-900 border border-slate-800/80 hover:border-slate-700 p-2 rounded-xl transition duration-150 cursor-pointer flex items-start gap-2 text-xs"
+                        >
+                          <span className={`text-[8px] font-black font-mono px-1.5 py-0.5 rounded-sm shrink-0 mt-0.5 tracking-wider uppercase ${badge}`}>
+                            {short}
+                          </span>
+                          <div className="flex-1 leading-tight min-w-0">
+                            <p className="font-bold text-slate-200 truncate">{n.title}</p>
+                            <span className="text-[9px] text-slate-500 font-semibold block mt-0.5">{n.timestamp || 'Just now'} • Click to view »</span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div className="shrink-0 border-t border-slate-800 pt-2.5 mt-3 flex items-center justify-between text-[10px] text-slate-400 font-sans">
+                    <span className="flex items-center gap-1">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> 
+                      {locale === 'hi' ? 'कनेक्टेड' : 'Live Sync Connected'}
+                    </span>
+                    <button
+                      onClick={() => {
+                        setLiveNotifications([
+                          { id: 'init-1', category: 'Vacancy', title: 'India Post GDS Recruitment 2026 - 40,220 Posts', timestamp: '10:30 AM', url: '?tab=jobs' },
+                          { id: 'init-2', category: 'Admit Card', title: 'CSIR UGC NET June 2026 Exam City Slip', timestamp: '11:15 AM', url: '?tab=admit-cards' },
+                          { id: 'init-3', category: 'Result', title: 'JEE Advanced 2026 Final Score Card & Rank List', timestamp: 'Yesterday', url: '?tab=results' },
+                        ]);
+                        triggerToast("🧹 Notifications log reset to defaults.");
+                      }}
+                      className="hover:underline text-slate-500 font-bold cursor-pointer"
+                    >
+                      {locale === 'hi' ? 'रीसेट' : 'Reset Logs'}
+                    </button>
+                  </div>
+                </div>
+
+              </div>
             </div>
 
             {/* Dedicated Multi-lingual Selection & Preparation Zone Section */}
@@ -1823,12 +2334,12 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
             results={results}
             mockTests={mockTests}
             answerKeys={answerKeys}
-            onAddJob={(newJob) => setJobs([newJob, ...jobs])}
+            onAddJob={(newJob) => handleNewLaunch('Vacancy', newJob.title, newJob.org, 'jobs', newJob)}
             onDeleteJob={(jobId) => setJobs(jobs.filter(j => j.id !== jobId))}
-            onAddAdmitCard={(newCard) => setAdmitCards([newCard, ...admitCards])}
-            onAddResult={(newRes) => setResults([newRes, ...results])}
+            onAddAdmitCard={(newCard) => handleNewLaunch('Admit Card', newCard.title, newCard.org, 'admitCards', newCard)}
+            onAddResult={(newRes) => handleNewLaunch('Result', newRes.title, newRes.org, 'results', newRes)}
             onAddMockTest={(newTest) => setMockTests([newTest, ...mockTests])}
-            onAddAnswerKey={(newKey) => setAnswerKeys([newKey, ...answerKeys])}
+            onAddAnswerKey={(newKey) => handleNewLaunch('Answer Key', newKey.title, newKey.org, 'answerKeys', newKey)}
             onDeleteMockTest={(testId) => {
               const deletedSaved = localStorage.getItem('sarkari_deleted_mock_ids');
               let deletedIds: string[] = [];
