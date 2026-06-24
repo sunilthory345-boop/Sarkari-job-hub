@@ -4,6 +4,41 @@ import { generateAllExtendedMocks } from '../utils/examMockGenerator';
 
 export const INITIAL_JOBS: GovJob[] = [
   {
+    id: 'delhi-metro-dmrc-recruitment-2026',
+    title: 'DMRC Junior Engineer, Station Controller & Executive Recruitment 2026',
+    org: 'Delhi Metro Rail Corporation (DMRC)',
+    category: 'Others',
+    qualification: 'Graduate',
+    ageLimit: '18 - 30 Years',
+    salary: '₹37,000 — ₹1,15,000 / Month',
+    fees: {
+      General: '₹850',
+      OBC: '₹850',
+      SC_ST_Female: '₹350'
+    },
+    totalPosts: 612,
+    applyUrl: 'https://delhimetrorail.com',
+    pdfUrl: 'https://delhimetrorail.com',
+    officialWebsite: 'https://delhimetrorail.com',
+    postedDate: '2026-06-23',
+    lastDate: '2026-07-28',
+    importantDates: {
+      applyStart: '2026-06-24',
+      applyEnd: '2026-07-28',
+      examDate: 'September 2026',
+      admitCardRelease: 'August 2026'
+    },
+    selectionProcess: [
+      'Computer Based Test (CBT - Paper 1 & 2)',
+      'Document Verification & Bio-medical review',
+      'Psycho Test (for Station Controller posts)'
+    ],
+    location: 'Delhi NCR',
+    description: '🚇 DELHI METRO RAIL CORPORATION (DMRC) RECRUITMENT 2026. Official Notification out for 612 vacancies of Junior Engineers, Station Controllers, and Senior Section Supervisors. Qualifications: 3 Years Engineering Diploma or B.E./B.Tech in Civil/EE/EC/ME. Real-time online application link activates on 24th June 2026.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
     id: 'aai-junior-executive-recruitment-2026',
     title: 'AAI Junior Executive (Air Traffic Control & Information Tech) Recruitment 2026',
     org: 'Airport Authority of India (AAI)',
@@ -1832,6 +1867,16 @@ export const INITIAL_JOBS: GovJob[] = [
 
 export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
   {
+    id: 'ssc-cgl-tier1-admit-card-2026',
+    title: 'SSC CGL Tier-1 Exam 2026 Admission Certificate & Application Status (Out Now)',
+    org: 'Staff Selection Commission (SSC)',
+    examDate: '2026-07-10 to 2026-07-25',
+    examCity: 'Check CR, MPR, NR, ER, WR, SR, NWR, KKR Region Wise Details',
+    downloadUrl: 'https://ssc.gov.in',
+    officialLink: 'https://ssc.gov.in',
+    addedDate: '2026-06-23'
+  },
+  {
     id: 'idbi-bank-executive-admit-card-2026',
     title: 'IDBI Bank Executive (On Contract) Exam Admit Card & Call Letter 2026',
     org: 'IDBI Bank',
@@ -2004,6 +2049,21 @@ export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
 ];
 
 export const INITIAL_RESULTS: JobResult[] = [
+  {
+    id: 'rbi-grade-b-phase1-result-2026',
+    title: 'Reserve Bank of India (RBI) Grade B Officer General/DEPR/DSIM Phase-I Result (Out Now)',
+    org: 'Reserve Bank of India (RBI)',
+    meritListUrl: 'https://www.rbi.org.in',
+    scoreCardUrl: 'https://www.rbi.org.in',
+    cutOff: {
+      UR: '82.5 Marks Out of 200',
+      OBC: '78.0 Marks',
+      SC: '69.5 Marks',
+      ST: '66.0 Marks'
+    },
+    downloadUrl: 'https://www.rbi.org.in',
+    releaseDate: '2026-06-23'
+  },
   {
     id: 'india-post-gds-first-merit-list-2026',
     title: 'India Post GDS 2026 Circle Wise First Merit List & Cutoff Marks',
@@ -2202,6 +2262,7 @@ export const INITIAL_RESULTS: JobResult[] = [
 ];
 
 export const INITIAL_ANSWER_KEYS: AnswerKey[] = [
+  { id: 'upsc-prelims-gs-answer-key-2026', title: 'UPSC Civil Services (IAS/IFS) Prelims GS & CSAT 2026 Final Solved Answer Keys', org: 'Union Public Service Commission (UPSC)', released: '2026-06-23', objectionsLimit: '2026-06-30', pdfUrl: 'https://upsc.gov.in/prelims_answer_sheet_2026.pdf' },
   { id: 'ssc-phase-12-answer-key-2026', title: 'SSC Selection Post Phase XII Official Answer Key with Candidate Response Sheets', org: 'Staff Selection Commission (SSC)', released: '2026-06-15', objectionsLimit: '2026-06-20', pdfUrl: 'https://ssc.gov.in/phase-12-response-key-link' },
   { id: 'ugc-net-june-key-2026', title: 'UGC NET June 2026 Provisional Solved Keys (Paper 1 & Paper 2)', org: 'National Testing Agency (NTA)', released: '2026-06-15', objectionsLimit: '2026-06-25', pdfUrl: 'https://ugcnet.nta.ac.in/provisional_key_june_2026.pdf' },
   { id: 'up-bed-jee-key-2026', title: 'UP Joint B.Ed Entrance Exam (JEE) 2026 Official Solved Answer Key', org: 'Bundelkhand University, Jhansi', released: '2026-06-15', objectionsLimit: '2026-06-22', pdfUrl: 'https://bujhansi.ac.in/up-bed-2026-solved-sheet.pdf' },

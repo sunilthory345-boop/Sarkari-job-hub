@@ -30,6 +30,7 @@ export interface TranslationDictionary {
   userDashboard: string;
   adminConsole: string;
   contactUs: string;
+  whatsappChannel: string;
   
   // Sections
   heroTitle: string;
@@ -85,6 +86,7 @@ export const TRANSLATIONS: Record<LocaleType, TranslationDictionary> = {
     userDashboard: "User Dashboard",
     adminConsole: "Admin Console",
     contactUs: "Contact Us",
+    whatsappChannel: "WhatsApp Channel Alerts 📱",
     
     heroTitle: "India's #1 Secure Sarkari Updates & Exam Prep Portal",
     heroSub: "Real-time updates on Rajya Sabha, Lok Sabha, SSC CGL, UPSC Civil Services, RPSC, Teaching, and Banking exams under secure sandbox guidelines.",
@@ -129,6 +131,7 @@ export const TRANSLATIONS: Record<LocaleType, TranslationDictionary> = {
     userDashboard: "यूज़र डैशबोर्ड",
     adminConsole: "एडमिन कंसोल",
     contactUs: "संपर्क करें",
+    whatsappChannel: "व्हाट्सएप अलर्ट चैनल 📱",
     
     heroTitle: "भारत का #1 सुरक्षित सरकारी अपडेट और परीक्षा तैयारी पोर्टल",
     heroSub: "राज्यसभा, लोकसभा, एसएससी सीजीएल, यूपीएससी सिविल सेवा, आरपीएससी, शिक्षण और बैंकिंग परीक्षाओं की वास्तविक समय पर सुरक्षित अपडेट।",
@@ -173,6 +176,7 @@ export const TRANSLATIONS: Record<LocaleType, TranslationDictionary> = {
     userDashboard: "वापरकर्ता डॅशबोर्ड",
     adminConsole: "अ‍ॅडमिन कंसोल",
     contactUs: "संपर्क साधा",
+    whatsappChannel: "व्हाट्सएप अलर्ट चॅनेल 📱",
     
     heroTitle: "भारतातील #1 सुरक्षित सरकारी नोकरी आणि परीक्षा तयारी पोर्टल",
     heroSub: "एसएससी सीजीएल, यूपीएससी, एमपीएससी, रेल्वे आणि बँकिंग परीक्षांच्या नवीनतम घडामोडी आणि अधिकृत अभ्यासक्रम थेट मिळवा.",
@@ -217,6 +221,7 @@ export const TRANSLATIONS: Record<LocaleType, TranslationDictionary> = {
     userDashboard: "म्हारो डैशबोर्ड",
     adminConsole: "प्रशासक री कुर्सी",
     contactUs: "म्हाने खबर करो (Contact)",
+    whatsappChannel: "व्हाट्सएप न्यूज़ अलर्ट 📱",
     
     heroTitle: "धरती धोरां री सबसूं सुरक्षित सरकारी नौकरिया री वेबसाइट",
     heroSub: "आरपीएससी, यूपीएससी, एसएससी, पटवार, ग्राम सेवक री पल-पल री सची जानकारी एकदम सुरक्षित तरीके सूं मिले।",

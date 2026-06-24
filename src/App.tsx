@@ -32,6 +32,7 @@ import AuthModal from './components/AuthModal';
 import PrivacyPolicyModal from './components/PrivacyPolicyModal';
 import AboutUsModal from './components/AboutUsModal';
 import TrafficDashboardModal from './components/TrafficDashboardModal';
+import WhatsAppChannelHub from './components/WhatsAppChannelHub';
 import { initializeGA, trackPageView } from './utils/analytics';
 import { updateSEOMetadata } from './utils/seoHelper';
 import { fetchWithRetry } from './utils/fetchHelper';
@@ -391,7 +392,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
     const path = window.location.pathname.replace(/^\//, '');
     const validTabs = [
       'jobs', 'admit-cards', 'results', 'mock-tests', 'syllabus', 
-      'calendar', 'current-affairs', 'blog', 'premium', 'contact', 'dashboard', 'admin'
+      'calendar', 'current-affairs', 'blog', 'premium', 'contact', 'dashboard', 'admin', 'whatsapp-alerts'
     ];
     if (validTabs.includes(path)) {
       return path;
@@ -411,7 +412,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
       const path = window.location.pathname.replace(/^\//, '');
       const validTabs = [
         'jobs', 'admit-cards', 'results', 'mock-tests', 'syllabus', 
-        'calendar', 'current-affairs', 'blog', 'premium', 'contact', 'dashboard', 'admin'
+        'calendar', 'current-affairs', 'blog', 'premium', 'contact', 'dashboard', 'admin', 'whatsapp-alerts'
       ];
       if (validTabs.includes(path)) {
         setActiveTab(path);
@@ -900,6 +901,15 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
               </div>
               
               <div className="flex flex-wrap gap-2.5 w-full md:w-auto shrink-0 justify-end">
+                <button
+                  onClick={() => {
+                    setActiveTab('whatsapp-alerts');
+                    triggerToast("⚙️ Opening WhatsApp Alert Customizer Desk...");
+                  }}
+                  className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white px-4 py-2.5 text-xs font-bold transition duration-200 shadow-md shadow-orange-550/15 cursor-pointer"
+                >
+                  ⚙️ {locale === 'hi' ? 'अलर्ट चुनें' : 'Setup Custom Alerts'}
+                </button>
                 <a 
                   href="https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U" 
                   target="_blank" 
@@ -907,7 +917,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                   onClick={() => triggerToast("📲 WhatsApp: Opening verified Sarkari updates feed channel...")}
                   className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 text-xs font-bold transition duration-200 shadow-md shadow-emerald-600/10"
                 >
-                  <span className="text-sm">🟢</span> {locale === 'hi' ? 'WhatsApp चैनल' : 'Join WhatsApp'}
+                  <span className="text-sm">🟢</span> {locale === 'hi' ? 'WhatsApp चैनल' : 'Direct Join Channel'}
                 </a>
                 <a 
                   href="https://t.me/SarkariJobHubOfficial" 
@@ -2886,6 +2896,13 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                 </div>
               </div>
             )}
+          </div>
+        )}
+
+        {/* TAB 15: WHATSAPP ALERT DESK */}
+        {activeTab === 'whatsapp-alerts' && (
+          <div className="space-y-8">
+            <WhatsAppChannelHub locale={locale} triggerToast={triggerToast} />
           </div>
         )}
 

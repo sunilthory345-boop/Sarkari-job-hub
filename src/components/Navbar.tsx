@@ -47,6 +47,7 @@ export default function Navbar({
     { id: 'admit-cards', label: t.admitCard, icon: FileText, category: 'Main' },
     { id: 'results', label: t.result, icon: Award, category: 'Main' },
     { id: 'answer-key', label: t.answerKey, icon: CheckSquare, category: 'Main' },
+    { id: 'whatsapp-alerts', label: t.whatsappChannel, icon: MessageSquare, category: 'Main', highlight: true },
     
     { id: 'syllabus', label: t.syllabusAdmission, icon: GraduationCap, category: 'Prep Zone' },
     { id: 'pyqs', label: t.pyqPapers, icon: FileDown, category: 'Prep Zone' },
@@ -101,7 +102,7 @@ export default function Navbar({
 
           {/* Desktop Horizontal Navigation Links (High Density Layout) */}
           <div className="hidden md:flex items-center gap-5 text-xs font-semibold">
-            {menuItems.filter(item => ['home', 'jobs', 'calendar', 'admit-cards', 'results', 'premium'].includes(item.id)).map((item) => {
+            {menuItems.filter(item => ['home', 'jobs', 'calendar', 'admit-cards', 'results', 'whatsapp-alerts', 'premium'].includes(item.id)).map((item) => {
               const isSelected = activeTab === item.id;
               return (
                 <button
@@ -110,7 +111,11 @@ export default function Navbar({
                   className={`hover:text-blue-200 transition-all cursor-pointer pb-0.5 border-b-2 ${
                     isSelected 
                       ? 'border-white text-white font-extrabold' 
-                      : item.highlight ? 'border-transparent text-yellow-300 hover:text-yellow-400 font-bold uppercase' : 'border-transparent text-blue-100'
+                      : item.id === 'whatsapp-alerts' 
+                        ? 'border-transparent text-emerald-400 hover:text-emerald-300 font-bold uppercase animate-pulse'
+                        : item.highlight 
+                          ? 'border-transparent text-yellow-300 hover:text-yellow-400 font-bold uppercase' 
+                          : 'border-transparent text-blue-100'
                   }`}
                 >
                   {item.label}
