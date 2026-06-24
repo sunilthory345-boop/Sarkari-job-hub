@@ -755,5 +755,355 @@ export const CURRENT_AFFAIRS_QUIZ_QUESTIONS: Question[] = [
     options: ['(a) ASEAN Nations / आसियान देश (ASEAN)', '(b) European Union / यूरोपीय संघ', '(c) East Africa Alliance / पूर्वी अफ्रीका गठबंधन', '(d) South American Bloc / दक्षिण अमेरिकी ब्लॉक'],
     correctOptionIndex: 0,
     explanation: 'India conducted strategic maritime safety drills bilingually alongside ASEAN naval forces across vital shipping lines.'
+  },
+  {
+    id: 'ca-q-51',
+    text: 'Which space agency is ISRO partnering with for the Lunar Polar Exploration (LUPEX) mission slated for late 2026? / इसरो वर्ष 2026 के अंत में निर्धारित चंद्र ध्रुवीय अन्वेषण (LUPEX) मिशन के लिए किस अंतरिक्ष एजेंसी के साथ भागीदारी कर रहा है?',
+    options: ['(a) NASA / नासा', '(b) JAXA / जाक्सा', '(c) ESA / ईएसए', '(d) Roscosmos / रॉसकॉसमॉस'],
+    correctOptionIndex: 1,
+    explanation: 'ISRO is partnering with Japan Aerospace Exploration Agency (JAXA) for the LUPEX mission, which will explore water-ice presence on the Moon.'
+  },
+  {
+    id: 'ca-q-52',
+    text: 'Which countries are co-hosting the ICC Men\'s T20 World Cup in 2026? / कौन से देश वर्ष 2026 में आईसीसी पुरुष टी20 विश्व कप की सह-मेजबानी कर रहे हैं?',
+    options: ['(a) West Indies & USA / वेस्टइंडीज और यूएसए', '(b) India & Sri Lanka / भारत और श्रीलंका', '(c) Australia & New Zealand / ऑस्ट्रेलिया और न्यूजीलैंड', '(d) England & Wales / इंग्लैंड और वेल्स'],
+    correctOptionIndex: 1,
+    explanation: 'The 2026 ICC Men\'s T20 World Cup will be co-hosted by India and Sri Lanka.'
+  },
+  {
+    id: 'ca-q-53',
+    text: 'Which city was officially inaugurated as Indonesia\'s new capital city, replacing Jakarta in 2026? / वर्ष 2026 में जकार्ता के स्थान पर किस शहर को आधिकारिक तौर पर इंडोनेशिया की नई राजधानी के रूप में उद्घाटित किया गया है?',
+    options: ['(a) Nusantara / नुसंतारा', '(b) Bandung / बांडुंग', '(c) Surabaya / सुराबाया', '(d) Bali / बाली'],
+    correctOptionIndex: 0,
+    explanation: 'Nusantara, located on East Kalimantan on the Bornean island, has been planned and inaugurated to replace the sinking Jakarta.'
+  },
+  {
+    id: 'ca-q-54',
+    text: 'Which country is hosting the 21st G20 Summit in 2026? / वर्ष 2026 में 21वें G-20 शिखर सम्मेलन की मेजबानी कौन सा देश कर रहा है?',
+    options: ['(a) South Africa / दक्षिण अफ्रीका', '(b) Brazil / ब्राजील', '(c) United States / संयुक्त राज्य अमेरिका', '(d) India / भारत'],
+    correctOptionIndex: 2,
+    explanation: 'The G20 Summit of 2026 is hosted by the United States. Note that Brazil hosted in 2024, South Africa in 2025, and USA in 2026.'
+  },
+  {
+    id: 'ca-q-55',
+    text: 'Who is the Chief Justice of India (CJI) as of mid-2026? / मध्य-2026 तक भारत के मुख्य न्यायाधीश (CJI) कौन हैं?',
+    options: ['(a) Justice Sanjiv Khanna / न्यायमूर्ति संजीव खन्ना', '(b) Justice B.R. Gavai / न्यायमूर्ति बी.आर. गवई', '(c) Justice Surya Kant / न्यायमूर्ति सूर्यकांत', '(d) Justice DY Chandrachud / न्यायमूर्ति डी.वाई. चंद्रचूड़'],
+    correctOptionIndex: 0,
+    explanation: 'Justice Sanjiv Khanna succeeded Justice DY Chandrachud as the Chief Justice of India.'
+  },
+  {
+    id: 'ca-q-56',
+    text: 'Han Kang, who won the Nobel Prize in Literature, belongs to which country? / साहित्य में नोबेल पुरस्कार जीतने वाली हान कांग किस देश से संबंधित हैं?',
+    options: ['(a) Japan / जापान', '(b) South Korea / दक्षिण कोरिया', '(c) China / चीन', '(d) Singapore / सिंगापुर'],
+    correctOptionIndex: 1,
+    explanation: 'South Korean author Han Kang won the Nobel Prize in Literature for her intense poetic prose.'
+  },
+  {
+    id: 'ca-q-57',
+    text: 'Which city is scheduled to host the 2026 Commonwealth Games? / 2026 राष्ट्रमंडल खेलों की मेजबानी करने के लिए कौन सा शहर निर्धारित है?',
+    options: ['(a) Glasgow, Scotland / ग्लासगो, स्कॉटलैंड', '(b) Victoria, Australia / विक्टोरिया, ऑस्ट्रेलिया', '(c) Birmingham, UK / बर्मिंघम, यूके', '(d) New Delhi, India / नई दिल्ली, भारत'],
+    correctOptionIndex: 0,
+    explanation: 'Glasgow has stepped in to host the scaled-down 2026 Commonwealth Games after Victoria (Australia) withdrew.'
+  },
+  {
+    id: 'ca-q-58',
+    text: 'Which country is selected as the global host for World Environment Day 2026? / विश्व पर्यावरण दिवस 2026 के लिए किस देश को वैश्विक मेजबान के रूप में चुना गया है?',
+    options: ['(a) India / भारत', '(b) Azerbaijan / अज़रबैजान', '(c) Saudi Arabia / सऊदी अरब', '(d) Republic of Korea / दक्षिण कोरिया'],
+    correctOptionIndex: 3,
+    explanation: 'The Republic of Korea is selected as the global host for World Environment Day 2026 with a focus on ending plastic pollution.'
+  },
+  {
+    id: 'ca-q-59',
+    text: 'In which Indian state is India\'s first semiconductor fabrication plant (Fab) being constructed by Tata Electronics and PSMC? / टाटा इलेक्ट्रॉनिक्स और पीएसएमसी द्वारा भारत का पहला सेमीकंडक्टर फैब्रिकेशन प्लांट (Fab) किस भारतीय राज्य में बनाया जा रहा है?',
+    options: ['(a) Gujarat / गुजरात', '(b) Tamil Nadu / तमिलनाडु', '(c) Maharashtra / महाराष्ट्र', '(d) Karnataka / कर्नाटक'],
+    correctOptionIndex: 0,
+    explanation: 'Tata Electronics is setting up India\'s first semiconductor fab in Dholera, Gujarat, in partnership with Taiwan\'s Powerchip Semiconductor Manufacturing Corporation (PSMC).'
+  },
+  {
+    id: 'ca-q-60',
+    text: 'Which country is partnering with India to build the Mumbai-Ahmedabad High-Speed Rail Corridor (Bullet Train)? / मुंबई-अहमदाबाद हाई-स्पीड रेल कॉरिडोर (बुलेट ट्रेन) के निर्माण के लिए कौन सा देश भारत के साथ भागीदारी कर रहा है?',
+    options: ['(a) Germany / जर्मनी', '(b) France / फ्रांस', '(c) Japan / जापान', '(d) South Korea / दक्षिण कोरिया'],
+    correctOptionIndex: 2,
+    explanation: 'The Mumbai-Ahmedabad High-Speed Rail project is being built with technical and financial assistance from Japan using Shinkansen technology.'
+  },
+  {
+    id: 'ca-q-61',
+    text: 'Which country has proposed to host the COP31 UN Climate Change Conference in 2026? / किस देश ने 2026 में COP31 संयुक्त राष्ट्र जलवायु परिवर्तन सम्मेलन की मेजबानी करने का प्रस्ताव दिया है?',
+    options: ['(a) India / भारत', '(b) Australia / ऑस्ट्रेलिया', '(c) Brazil / ब्राजील', '(d) Switzerland / स्विट्जरलैंड'],
+    correctOptionIndex: 1,
+    explanation: 'Australia has officially bid to host COP31 in 2026 in partnership with Pacific Island nations.'
+  },
+  {
+    id: 'ca-q-62',
+    text: 'Which European nation became the first to accept UPI payments at the iconic Eiffel Tower? / कौन सा यूरोपीय देश प्रतिष्ठित एफिल टॉवर पर यूपीआई (UPI) भुगतान स्वीकार करने वाला पहला देश बना?',
+    options: ['(a) Germany / जर्मनी', '(b) France / फ्रांस', '(c) United Kingdom / यूनाइटेड किंगडम', '(d) Italy / इटली'],
+    correctOptionIndex: 1,
+    explanation: 'France officially launched UPI payments at the Eiffel Tower, allowing Indian tourists to pay via scanned QR codes.'
+  },
+  {
+    id: 'ca-q-63',
+    text: 'India ranked in which position in the Global Innovation Index (GII) 2025 released by WIPO? / डब्ल्यूआईपीओ (WIPO) द्वारा जारी वैश्विक नवाचार सूचकांक (GII) 2025 में भारत किस स्थान पर रहा?',
+    options: ['(a) 35th / 35वें', '(b) 39th / 39वें', '(c) 40th / 40वें', '(d) 45th / 45वें'],
+    correctOptionIndex: 1,
+    explanation: 'India maintained its progress to rank 39th among 133 economies in the Global Innovation Index.'
+  },
+  {
+    id: 'ca-q-64',
+    text: 'The joint military exercise \'Sada Tanseeq\' is conducted bilingually between India and which country? / संयुक्त सैन्य अभ्यास \'सदा तंसीक\' भारत और किस देश के बीच आयोजित किया जाता है?',
+    options: ['(a) Oman / ओमान', '(b) Saudi Arabia / सऊदी अरब', '(c) UAE / यूएई', '(d) Qatar / कतर'],
+    correctOptionIndex: 1,
+    explanation: 'Sada Tanseeq is an inaugural joint military exercise conducted between the Royal Saudi Land Forces and Indian Army.'
+  },
+  {
+    id: 'ca-q-65',
+    text: 'Where will the 2026 Winter Olympics be hosted? / वर्ष 2026 के शीतकालीन ओलंपिक का आयोजन कहाँ किया जाएगा?',
+    options: ['(a) Milan-Cortina, Italy / मिलान-कोर्टिना, इटली', '(b) Beijing, China / बीजिंग, चीन', '(c) Vancouver, Canada / वैंकूवर, कनाडा', '(d) Sapporo, Japan / सपोरो, जापान'],
+    correctOptionIndex: 0,
+    explanation: 'The XXV Olympic Winter Games will be hosted in Milan and Cortina d\'Ampezzo in Italy in February 2026.'
+  },
+  {
+    id: 'ca-q-66',
+    text: 'Who was conferred with the prestigious Dadasaheb Phalke Award for lifetime contribution to Indian cinema recently? / हाल ही में भारतीय सिनेमा में आजीवन योगदान के लिए प्रतिष्ठित दादा साहब फाल्के पुरस्कार से किसे सम्मानित किया गया है?',
+    options: ['(a) Mithun Chakraborty / मिथुन चक्रवर्ती', '(b) Waheeda Rehman / वहीदा रहमान', '(c) Amitabh Bachchan / अमिताभ बच्चन', '(d) Asha Parekh / आशा पारेख'],
+    correctOptionIndex: 0,
+    explanation: 'Veteran actor Mithun Chakraborty was honored with the Dadasaheb Phalke Award for his outstanding contributions to Indian cinema.'
+  },
+  {
+    id: 'ca-q-67',
+    text: 'As of 2026, which state has the highest number of Ramsar (Wetland) sites in India? / वर्ष 2026 तक, भारत में किस राज्य में रामसर (आर्द्रभूमि) स्थलों की संख्या सबसे अधिक है?',
+    options: ['(a) Uttar Pradesh / उत्तर प्रदेश', '(b) Tamil Nadu / तमिलनाडु', '(c) West Bengal / पश्चिम बंगाल', '(d) Kerala / केरल'],
+    correctOptionIndex: 1,
+    explanation: 'Tamil Nadu has the highest number of Ramsar sites in India (18 sites), followed by Uttar Pradesh (10 sites).'
+  },
+  {
+    id: 'ca-q-68',
+    text: 'Where is India\'s largest solar power park being developed by NTPC Green Energy? / एनटीपीसी ग्रीन एनर्जी द्वारा भारत का सबसे बड़ा सौर ऊर्जा पार्क कहाँ विकसित किया जा रहा है?',
+    options: ['(a) Khavda, Gujarat / खावड़ा, गुजरात', '(b) Bhadla, Rajasthan / भादला, राजस्थान', '(c) Pavagada, Karnataka / पावागढ़, कर्नाटक', '(d) Rewa, Madhya Pradesh / रीवा, मध्य प्रदेश'],
+    correctOptionIndex: 0,
+    explanation: 'NTPC is developing India\'s largest ultra-mega renewable energy park at Khavda in the Kutch district of Gujarat.'
+  },
+  {
+    id: 'ca-q-69',
+    text: 'Who has been selected for the prestigious 58th Jnanpith Award? / प्रतिष्ठित 58वें ज्ञानपीठ पुरस्कार के लिए किसे चुना गया है?',
+    options: ['(a) Gulzar & Jagadguru Rambhadracharya / गुलज़ार और जगद्गुरु रामभद्राचार्य', '(b) Damodar Mauzo / दामोदर माऊज़ो', '(c) Nilmani Phookan / नीलमणि फूकन', '(d) Gyan Chaturvedi / ज्ञान चतुर्वेदी'],
+    correctOptionIndex: 0,
+    explanation: 'The 58th Jnanpith Award was conferred upon Urdu poet Gulzar and Sanskrit scholar Jagadguru Rambhadracharya.'
+  },
+  {
+    id: 'ca-q-70',
+    text: 'The recently launched "PM-E-DRIVE" scheme targets the promotion of: / हाल ही में शुरू की गई "PM-E-DRIVE" योजना का उद्देश्य किसे बढ़ावा देना है?',
+    options: ['(a) Electric Vehicles (EVs) / इलेक्ट्रिक वाहन', '(b) Drone Technology / ड्रोन तकनीक', '(c) Digital Education / डिजिटल शिक्षा', '(d) Organic Farming / जैविक खेती'],
+    correctOptionIndex: 0,
+    explanation: 'The PM-E-DRIVE (PM Electric Drive Revolution in Innovative Vehicle Enhancement) scheme replaces the FAME scheme to accelerate EV adoption.'
+  },
+  {
+    id: 'ca-q-71',
+    text: 'Which country ranked first in the World Press Freedom Index 2025? / विश्व प्रेस स्वतंत्रता सूचकांक 2025 में किस देश ने पहला स्थान प्राप्त किया?',
+    options: ['(a) Norway / नॉर्वे', '(b) Finland / फिनलैंड', '(c) Denmark / डेनमार्क', '(d) Sweden / स्वीडन'],
+    correctOptionIndex: 0,
+    explanation: 'Norway continued its streak at the top of the World Press Freedom Index compiled by Reporters Without Borders.'
+  },
+  {
+    id: 'ca-q-72',
+    text: 'Who was the Chief Guest at India\'s 77th Republic Day parade on 26 January 2026? / 26 जनवरी 2026 को भारत के 77वें गणतंत्र दिवस परेड में मुख्य अतिथि कौन थे?',
+    options: ['(a) Keir Starmer (UK PM) / कीर स्टारमर', '(b) Emmanuel Macron (France) / इमैनुएल मैक्रॉन', '(c) Lula da Silva (Brazil) / लुला डी सिल्वा', '(d) Anthony Albanese (Australia) / एंथनी अल्बनीज'],
+    correctOptionIndex: 3,
+    explanation: 'Australian Prime Minister Anthony Albanese attended the spectacular 77th Republic Day Parade as chief guest celebrating bilateral and Quad ties.'
+  },
+  {
+    id: 'ca-q-73',
+    text: 'Which city inaugurated India\'s first underwater/under-river metro service? / किस शहर ने भारत की पहली अंडरवाटर/अंडर-रिवर मेट्रो सेवा का उद्घाटन किया?',
+    options: ['(a) Mumbai / मुंबई', '(b) Kolkata / कोलकाता', '(c) Kochi / कोच्चि', '(d) Chennai / चेन्नई'],
+    correctOptionIndex: 1,
+    explanation: 'India\'s first under-river metro tunnel was built under the Hooghly River in Kolkata as part of the East-West Metro corridor.'
+  },
+  {
+    id: 'ca-q-74',
+    text: 'Who was crowned Miss Universe 2024? / मिस यूनिवर्स 2024 का ताज किसे पहनाया गया?',
+    options: ['(a) Victoria Kjær Theilvig (Denmark) / विक्टोरिया कजेर थिलविग', '(b) Sheynnis Palacios (Nicaragua) / शैनिस पलासियोस', '(c) R\'Bonney Gabriel (USA) / आर\'बोनी गेब्रियल', '(d) Harnaaz Sandhu (India) / हरनाज़ संधू'],
+    correctOptionIndex: 0,
+    explanation: 'Victoria Kjær Theilvig of Denmark was crowned Miss Universe 2024 at the annual pageant in Mexico.'
+  },
+  {
+    id: 'ca-q-75',
+    text: 'What is the name of India\'s upcoming high-altitude research station in Antarctica? / अंटार्कटिका में भारत के आगामी उच्च ऊंचाई अनुसंधान केंद्र का नाम क्या है?',
+    options: ['(a) Maitri-II / मैत्री-II', '(b) Dakshin Gangotri / दक्षिण गंगोत्री', '(c) Bharati-II / भारती-II', '(d) Sagar-I / सागर-I'],
+    correctOptionIndex: 0,
+    explanation: 'India is constructing Maitri-II in Antarctica to replace the aging Maitri research station established in 1989.'
+  },
+  {
+    id: 'ca-q-76',
+    text: 'Exercise \'Tarang Shakti\' is the largest multi-national air exercise hosted by which branch of India\'s armed forces? / अभ्यास \'तरंग शक्ति\' भारत के सशस्त्र बलों की किस शाखा द्वारा आयोजित सबसे बड़ा बहुराष्ट्रीय हवाई अभ्यास है?',
+    options: ['(a) Indian Air Force / भारतीय वायु सेना', '(b) Indian Navy / भारतीय नौसेना', '(c) Indian Army / भारतीय सेना', '(d) Indian Coast Guard / भारतीय तटरक्षक बल'],
+    correctOptionIndex: 0,
+    explanation: 'The Indian Air Force hosted "Tarang Shakti", inviting air wings from dozens of friendly countries to collaborate.'
+  },
+  {
+    id: 'ca-q-77',
+    text: 'Who was awarded the prestigious Abel Prize for mathematics in 2024? / वर्ष 2024 में गणित के प्रतिष्ठित एबेल पुरस्कार से किसे सम्मानित किया गया?',
+    options: ['(a) Michel Talagrand / मिशेल तालाग्रैंड', '(b) Luis Caffarelli / लुइस कैफरेली', '(c) Dennis Sullivan / डेनिस सुलिवन', '(d) Avi Wigderson / एवी विगडरसन'],
+    correctOptionIndex: 0,
+    explanation: 'Michel Talagrand of France was awarded the Abel Prize for his groundbreaking work in probability theory and stochastic processes.'
+  },
+  {
+    id: 'ca-q-78',
+    text: 'Who is the current Chairman of the Indian Space Research Organisation (ISRO) as of mid-2026? / मध्य-2026 तक भारतीय अंतरिक्ष अनुसंधान संगठन (ISRO) के वर्तमान अध्यक्ष कौन हैं?',
+    options: ['(a) Dr. S. Somanath / डॉ. एस. सोमनाथ', '(b) Dr. K. Sivan / डॉ. के. सिवन', '(c) Dr. Sameer V. Kamat / डॉ. समीर वी. कामत', '(d) Dr. G. Satheesh Reddy / डॉ. जी. सतीश रेड्डी'],
+    correctOptionIndex: 0,
+    explanation: 'Dr. S. Somanath serves as the Secretary of the Department of Space and Chairman of ISRO.'
+  },
+  {
+    id: 'ca-q-79',
+    text: 'Which city was ranked cleanest in India for the 7th consecutive time in the Swachh Survekshan awards? / स्वच्छ सर्वेक्षण पुरस्कारों में किस शहर को लगातार 7वीं बार भारत का सबसे स्वच्छ शहर घोषित किया गया है?',
+    options: ['(a) Surat / सूरत', '(b) Indore / इंदौर', '(c) Navi Mumbai / नवी मुंबई', '(d) Mysuru / मैसूरु'],
+    correctOptionIndex: 1,
+    explanation: 'Indore has consistently secured the top position as India\'s cleanest city in the Swachh Survekshan awards.'
+  },
+  {
+    id: 'ca-q-80',
+    text: 'Who is the President of the 79th session of the United Nations General Assembly (UNGA)? / संयुक्त राष्ट्र महासभा (UNGA) के 79वें सत्र के अध्यक्ष कौन हैं?',
+    options: ['(a) Philemon Yang / फिलेमोन यांग', '(b) Dennis Francis / डेनिस फ्रांसिस', '(c) Csaba Kőrösi / साबा कोरोसी', '(d) Abdulla Shahid / अब्दुल्ला शाहिद'],
+    correctOptionIndex: 0,
+    explanation: 'Philemon Yang, former Prime Minister of Cameroon, was elected as the President of the 79th session of the UN General Assembly.'
+  },
+  {
+    id: 'ca-q-81',
+    text: 'Which Indian consortium launched the multilingual "Hanooman" GenAI model series supporting Indian languages? / किस भारतीय संघ ने भारतीय भाषाओं का समर्थन करने वाली बहुभाषी "हनुमान" (Hanooman) GenAI मॉडल श्रृंखला शुरू की है?',
+    options: ['(a) BharatGPT / भारतजीपीटी', '(b) Krutrim AI / कृत्रिम एआई', '(c) Sarvam AI / सर्वम एआई', '(d) Ola Group / ओला ग्रुप'],
+    correctOptionIndex: 0,
+    explanation: 'BharatGPT consortium, supported by Reliance Industries and IIT Bombay, unveiled "Hanooman", a series of large language models trained in 22 Indian languages.'
+  },
+  {
+    id: 'ca-q-82',
+    text: 'Which state capital is being planned as India\'s first "AI City" to foster artificial intelligence technology ecosystems? / किस राज्य की राजधानी को कृत्रिम बुद्धिमत्ता (AI) पारिस्थितिकी प्रणालियों को बढ़ावा देने के लिए भारत के पहले "एआई सिटी" के रूप में नियोजित किया जा रहा है?',
+    options: ['(a) Hyderabad / हैदराबाद', '(b) Lucknow / लखनऊ', '(c) Bengaluru / बेंगलुरु', '(d) Gandhinagar / गांधीनगर'],
+    correctOptionIndex: 1,
+    explanation: 'Uttar Pradesh is developing Lucknow as India\'s first AI City to aggregate research hubs, tech giants, and incubation centers.'
+  },
+  {
+    id: 'ca-q-83',
+    text: 'The "Pradhan Mantri Suryodaya Yojana" launched recently targets to install rooftop solar systems on how many households? / हाल ही में शुरू की गई "प्रधानमंत्री सूर्योदय योजना" का लक्ष्य कितने घरों पर रूफटॉप सोलर सिस्टम स्थापित करना है?',
+    options: ['(a) 1 Crore households / 1 करोड़ घर', '(b) 50 Lakh households / 50 लाख घर', '(c) 2 Crore households / 2 करोड़ घर', '(d) 10 Lakh households / 10 लाख घर'],
+    correctOptionIndex: 0,
+    explanation: 'The PM Suryodaya Yojana aims to install rooftop solar panels for 1 crore poor and middle-income families, providing up to 300 units of free electricity monthly.'
+  },
+  {
+    id: 'ca-q-84',
+    text: 'Which country ranked first (most peaceful) in the Global Peace Index 2025? / वैश्विक शांति सूचकांक 2025 में कौन सा देश पहले स्थान पर (सबसे शांतिपूर्ण) रहा है?',
+    options: ['(a) Iceland / आइसलैंड', '(b) New Zealand / न्यूजीलैंड', '(c) Ireland / आयरलैंड', '(d) Austria / ऑस्ट्रिया'],
+    correctOptionIndex: 0,
+    explanation: 'Iceland remains the most peaceful country in the world, a position it has held since the index was created.'
+  },
+  {
+    id: 'ca-q-85',
+    text: 'The famous "Cuttack Rupa Tarakasi" (Silver Filigree) which received a GI tag recently belongs to which state? / प्रसिद्ध "कटक रूपा तारकशी" (सिल्वर फिलीग्री) जिसे हाल ही में जीआई टैग प्राप्त हुआ है, किस राज्य से संबंधित है?',
+    options: ['(a) West Bengal / पश्चिम बंगाल', '(b) Odisha / ओडिशा', '(c) Andhra Pradesh / आंध्र प्रदेश', '(d) Bihar / बिहार'],
+    correctOptionIndex: 1,
+    explanation: 'Odisha\'s Cuttack Rupa Tarakasi (Silver Filigree work) was awarded the Geographical Indication (GI) tag for its exquisite silver craftsmanship.'
+  },
+  {
+    id: 'ca-q-86',
+    text: 'Who is India\'s current Foreign Secretary as of mid-2026? / मध्य-2026 तक भारत के वर्तमान विदेश सचिव कौन हैं?',
+    options: ['(a) Vikram Misri / विक्रम मिस्री', '(b) Vinay Mohan Kwatra / विनय मोहन क्वात्रा', '(c) Harsh Vardhan Shringla / हर्षवर्धन श्रृंगला', '(d) Dr. S. Jaishankar / डॉ. एस. जयशंकर'],
+    correctOptionIndex: 0,
+    explanation: 'Senior diplomat Vikram Misri succeeded Vinay Mohan Kwatra as India\'s Foreign Secretary.'
+  },
+  {
+    id: 'ca-q-87',
+    text: 'What is India\'s global rank in crude steel production as of latest reports? / नवीनतम रिपोर्टों के अनुसार कच्चे इस्पात (crude steel) उत्पादन में भारत का वैश्विक स्थान क्या है?',
+    options: ['(a) 1st / पहला', '(b) 2nd / दूसरा', '(c) 3rd / तीसरा', '(d) 4th / चौथा'],
+    correctOptionIndex: 1,
+    explanation: 'India is the second-largest producer of crude steel in the world, with China being the largest.'
+  },
+  {
+    id: 'ca-q-88',
+    text: 'The Shinkun La Tunnel, which is set to become the world\'s highest highway tunnel, connects Ladakh with which state? / शिंकुन ला टनल, जो दुनिया की सबसे ऊंची राजमार्ग सुरंग बनने जा रही है, लद्दाख को किस राज्य से जोड़ती है?',
+    options: ['(a) Himachal Pradesh / हिमाचल प्रदेश', '(b) Uttarakhand / उत्तराखंड', '(c) Jammu & Kashmir / जम्मू और कश्मीर', '(d) Punjab / पंजाब'],
+    correctOptionIndex: 0,
+    explanation: 'The Shinkun La Tunnel constructed by Border Roads Organisation (BRO) connects Ladakh\'s Zanskar Valley with Lahaul Valley in Himachal Pradesh.'
+  },
+  {
+    id: 'ca-q-89',
+    text: 'The joint military exercise \'Dharma Guardian\' is conducted bilingually between India and which nation? / संयुक्त सैन्य अभ्यास \'धर्म गार्जियन\' भारत और किस देश के बीच आयोजित किया जाता है?',
+    options: ['(a) Japan / जापान', '(b) France / फ्रांस', '(c) USA / यूएसए', '(d) Australia / ऑस्ट्रेलिया'],
+    correctOptionIndex: 0,
+    explanation: 'Dharma Guardian is an annual joint military training exercise conducted bilingually between India and Japan.'
+  },
+  {
+    id: 'ca-q-90',
+    text: 'Which body confers the prestigious Sahitya Akademi Awards for outstanding literary works in Indian languages? / भारतीय भाषाओं में उत्कृष्ट साहित्यिक कार्यों के लिए प्रतिष्ठित दादा साहब फाल्के पुरस्कार कौन सी संस्था प्रदान करती है?',
+    options: ['(a) Ministry of Culture / संस्कृति मंत्रालय', '(b) Sahitya Akademi / साहित्य अकादमी', '(c) Ministry of Education / शिक्षा मंत्रालय', '(d) Bharatiya Jnanpith / भारतीय ज्ञानपीठ'],
+    correctOptionIndex: 1,
+    explanation: 'The Sahitya Akademi, India\'s National Academy of Letters, confers these annual awards across 24 Indian languages.'
+  },
+  {
+    id: 'ca-q-91',
+    text: 'India\'s first indigenous green hydrogen fuel cell inland waterway vessel was launched in which state? / भारत का पहला स्वदेशी हरित हाइड्रोजन ईंधन सेल अंतर्देशीय जलमार्ग जहाज किस राज्य में लॉन्च किया गया?',
+    options: ['(a) Tamil Nadu / तमिलनाडु', '(b) Kerala / केरल', '(c) Gujarat / गुजरात', '(d) Maharashtra / महाराष्ट्र'],
+    correctOptionIndex: 0,
+    explanation: 'Prime Minister Narendra Modi launched India\'s first indigenous green hydrogen fuel cell vessel at Thoothukudi, Tamil Nadu.'
+  },
+  {
+    id: 'ca-q-92',
+    text: 'Where is the annual meeting of the World Economic Forum (WEF) 2026 hosted? / विश्व आर्थिक मंच (WEF) 2026 की वार्षिक बैठक कहाँ आयोजित की गई है?',
+    options: ['(a) Geneva, Switzerland / जिनेवा', '(b) Davos, Switzerland / दावोस', '(c) Zurich, Switzerland / ज़्यूरिख', '(d) Paris, France / पेरिस'],
+    correctOptionIndex: 1,
+    explanation: 'The World Economic Forum annual meeting takes place in Davos-Klosters, Switzerland, bringing global leaders together.'
+  },
+  {
+    id: 'ca-q-93',
+    text: 'The traditional "Majuli Masks" which received a GI tag recently belong to which state? / पारंपरिक "माजुली मास्क" (Majuli Masks) जिन्हें हाल ही में जीआई टैग प्राप्त हुआ है, किस राज्य से संबंधित हैं?',
+    options: ['(a) Assam / असम', '(b) Manipur / मणिपुर', '(c) Mizoram / मिजोरम', '(d) Nagaland / नागालैंड'],
+    correctOptionIndex: 0,
+    explanation: 'The Majuli manuscript paintings and traditional masks of Majuli island, Assam, were awarded the Geographical Indication (GI) tag.'
+  },
+  {
+    id: 'ca-q-94',
+    text: 'Which country ranks as the world\'s most powerful passport in the Henley Passport Index 2025/2026? / दुनिया के सबसे शक्तिशाली पासपोर्ट के रूप में हेनले पासपोर्ट इंडेक्स 2025/2026 में कौन सा देश पहले स्थान पर है?',
+    options: ['(a) Singapore / सिंगापुर', '(b) Japan / जापान', '(c) Germany / जर्मनी', '(d) France / फ्रांस'],
+    correctOptionIndex: 0,
+    explanation: 'Singapore ranks as the most powerful passport globally, allowing visa-free entry to 195 destinations.'
+  },
+  {
+    id: 'ca-q-95',
+    text: 'India ranked in which position in the latest Human Development Index (HDI) report published by UNDP? / यूएनडीपी (UNDP) द्वारा प्रकाशित नवीनतम मानव विकास सूचकांक (HDI) रिपोर्ट में भारत किस स्थान पर रहा है?',
+    options: ['(a) 130th / 130वें', '(b) 132nd / 132वें', '(c) 134th / 134वें', '(d) 136th / 136वें'],
+    correctOptionIndex: 2,
+    explanation: 'India ranked 134th out of 193 countries in the latest UNDP Human Development Index reporting steady medium category improvements.'
+  },
+  {
+    id: 'ca-q-96',
+    text: 'Which organisation publishes the annual Global Gender Gap Report? / वार्षिक वैश्विक लैंगिक अंतराल रिपोर्ट (Global Gender Gap Report) कौन सा संगठन प्रकाशित करता है?',
+    options: ['(a) World Economic Forum / विश्व आर्थिक मंच (WEF)', '(b) World Bank / विश्व बैंक', '(c) IMF / अंतर्राष्ट्रीय मुद्रा कोष', '(d) UNDP / यूएनडीपी'],
+    correctOptionIndex: 0,
+    explanation: 'The World Economic Forum (WEF) compiles the Global Gender Gap Index to track gender parity benchmarks globally.'
+  },
+  {
+    id: 'ca-q-97',
+    text: 'Which city features India\'s deepest metro station at Civil Court, built 108 feet below ground level? / किस शहर में सिविल कोर्ट में भारत का सबसे गहरा मेट्रो स्टेशन है, जो जमीन से 108 फीट नीचे बना है?',
+    options: ['(a) New Delhi / नई दिल्ली', '(b) Pune / पुणे', '(c) Mumbai / मुंबई', '(d) Bengaluru / बेंगलुरु'],
+    correctOptionIndex: 1,
+    explanation: 'The Civil Court interchange station of Pune Metro is India\'s deepest metro station, reaching 33.1 meters (108.5 feet) underground.'
+  },
+  {
+    id: 'ca-q-98',
+    text: 'Which regional bloc is introducing the Carbon Border Adjustment Mechanism (CBAM) / Carbon Border Tax from 2026? / कौन सा क्षेत्रीय ब्लॉक 2026 से कार्बन बॉर्डर एडजस्टमेंट मैकेनिज्म (CBAM) / कार्बन बॉर्डर टैक्स लागू कर रहा है?',
+    options: ['(a) G20 / जी-20', '(b) European Union / यूरोपीय संघ', '(c) ASEAN / आसियान', '(d) BRICS / ब्रिक्स'],
+    correctOptionIndex: 1,
+    explanation: 'The European Union (EU) will fully implement its Carbon Border Adjustment Mechanism (CBAM) to tax carbon-intensive imports from 2026.'
+  },
+  {
+    id: 'ca-q-99',
+    text: 'Which university clinched the overall championship title at the 4th Khelo India University Games? / चौथे खेलो इंडिया यूनिवर्सिटी गेम्स में किस विश्वविद्यालय ने समग्र चैंपियनशिप का खिताब जीता?',
+    options: ['(a) Chandigarh University / चंडीगढ़ विश्वविद्यालय', '(b) Lovely Professional University / लवली प्रोफेशनल', '(c) Panjab University / पंजाब विश्वविद्यालय', '(d) Guru Nanak Dev University / गुरु नानक देव विश्वविद्यालय'],
+    correctOptionIndex: 0,
+    explanation: 'Chandigarh University won the Khelo India University Games overall championship title with 26 gold, 17 silver, and 28 bronze medals.'
+  },
+  {
+    id: 'ca-q-100',
+    text: 'Which ministry launched the "Cyber Surakshit Bharat" initiative to strengthen cybersecurity awareness? / साइबर सुरक्षा जागरूकता को मजबूत करने के लिए किस मंत्रालय ने "साइबर सुरक्षित भारत" पहल शुरू की है?',
+    options: ['(a) Ministry of Electronics and Information Technology (MeitY) / इलेक्ट्रॉनिक्स और सूचना प्रौद्योगिकी मंत्रालय', '(b) Ministry of Home Affairs / गृह मंत्रालय', '(c) Ministry of Defence / रक्षा मंत्रालय', '(d) Ministry of Science and Technology / विज्ञान और प्रौद्योगिकी मंत्रालय'],
+    correctOptionIndex: 0,
+    explanation: 'MeitY launched "Cyber Surakshit Bharat" in association with industry partners to train CISOs and IT staff on securing digital public infrastructure.'
   }
 ];

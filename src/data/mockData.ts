@@ -2261,7 +2261,7 @@ export const INITIAL_RESULTS: JobResult[] = [
   }
 ];
 
-export const INITIAL_ANSWER_KEYS: AnswerKey[] = [
+const BASE_ANSWER_KEYS = [
   { id: 'upsc-prelims-gs-answer-key-2026', title: 'UPSC Civil Services (IAS/IFS) Prelims GS & CSAT 2026 Final Solved Answer Keys', org: 'Union Public Service Commission (UPSC)', released: '2026-06-23', objectionsLimit: '2026-06-30', pdfUrl: 'https://upsc.gov.in/prelims_answer_sheet_2026.pdf' },
   { id: 'ssc-phase-12-answer-key-2026', title: 'SSC Selection Post Phase XII Official Answer Key with Candidate Response Sheets', org: 'Staff Selection Commission (SSC)', released: '2026-06-15', objectionsLimit: '2026-06-20', pdfUrl: 'https://ssc.gov.in/phase-12-response-key-link' },
   { id: 'ugc-net-june-key-2026', title: 'UGC NET June 2026 Provisional Solved Keys (Paper 1 & Paper 2)', org: 'National Testing Agency (NTA)', released: '2026-06-15', objectionsLimit: '2026-06-25', pdfUrl: 'https://ugcnet.nta.ac.in/provisional_key_june_2026.pdf' },
@@ -2274,6 +2274,103 @@ export const INITIAL_ANSWER_KEYS: AnswerKey[] = [
   { id: 'rrb-alp-key-2026', title: 'RRB ALP General Science Provisional Solved Keys', org: 'RRB Railways', released: '2026-06-05', objectionsLimit: '2026-06-15', pdfUrl: 'https://rrbcdg.gov.in/alp_provisional_keys.pdf' },
   { id: 'upsc-cse-key-2026', title: 'UPSC Civil Services CSE Prelims GS Booklet Correct Keys', org: 'UPSC', released: '2026-06-01', objectionsLimit: '2026-06-11', pdfUrl: 'https://upsc.gov.in/cse_prelims_key_2026.pdf' }
 ];
+
+export const INITIAL_ANSWER_KEYS: AnswerKey[] = BASE_ANSWER_KEYS.map(key => {
+  const releaseDateObj = new Date(key.released);
+  const d1 = new Date(releaseDateObj);
+  d1.setDate(releaseDateObj.getDate() - 3);
+  const d2 = new Date(releaseDateObj);
+  d2.setDate(releaseDateObj.getDate() - 2);
+  const d3 = new Date(releaseDateObj);
+  d3.setDate(releaseDateObj.getDate() - 1);
+
+  const dates = [
+    d1.toISOString().split('T')[0],
+    d2.toISOString().split('T')[0],
+    d3.toISOString().split('T')[0]
+  ];
+
+  const shifts = [
+    'Shift 1 (09:00 AM - 11:00 AM)',
+    'Shift 2 (12:30 PM - 02:30 PM)',
+    'Shift 3 (04:00 PM - 06:00 PM)'
+  ];
+
+  const questionsList: { [key: string]: any[] } = {};
+  
+  dates.forEach(date => {
+    shifts.forEach(shift => {
+      const listKey = `${date}_${shift}`;
+      // Add a slight variance based on key's title or ID to make it feel super dynamic and customized
+      const isMts = key.id.includes('mts');
+      const isRas = key.id.includes('ras') || key.id.includes('rsmssb');
+      
+      questionsList[listKey] = [
+        { 
+          qNo: 1, 
+          question: isRas 
+            ? `Which ruler is credited with building the Vijay Stambha of Chittorgarh? / चित्तौड़गढ़ के विजय स्तम्भ का निर्माण किस शासक ने करवाया था?`
+            : `Which article of the Constitution pertains to the fundamental duties? / संविधान का कौन सा अनुच्छेद मौलिक कर्तव्यों से संबंधित है?`, 
+          correctOption: isRas ? 'Option C (Maharana Kumbha)' : 'Option A (Article 51A)' 
+        },
+        { 
+          qNo: 2, 
+          question: `Identify the interest / math logic for ₹10,000 for 2 years at 10% per annum compound rate. / ₹10,000 पर 10% वार्षिक की दर से 2 वर्ष का चक्रवृद्धि ब्याज ज्ञात करें।`, 
+          correctOption: 'Option B (₹2,100)' 
+        },
+        { 
+          qNo: 3, 
+          question: `Choose the synonym of 'IMPECCABLE'. / 'IMPECCABLE' का पर्यायवाची शब्द चुनें।`, 
+          correctOption: 'Option C (Flawless)' 
+        },
+        { 
+          qNo: 4, 
+          question: `The national emblem of India was officially adopted on: / भारत का राष्ट्रीय प्रतीक आधिकारिक तौर पर कब अपनाया गया था?`, 
+          correctOption: 'Option B (26 January 1950)' 
+        },
+        { 
+          qNo: 5, 
+          question: `Who is known as the father of Indian Constitution? / भारतीय संविधान के जनक के रूप में किसे जाना जाता है?`, 
+          correctOption: 'Option D (Dr. B.R. Ambedkar)' 
+        },
+        { 
+          qNo: 6, 
+          question: `What is the scientific formula or chemical name of normal water? / सामान्य पानी का वैज्ञानिक नाम क्या है?`, 
+          correctOption: 'Option A (Dihydrogen Monoxide)' 
+        },
+        { 
+          qNo: 7, 
+          question: `Which of the following numbers is prime? / निम्नलिखित में से कौन सी संख्या अभाज्य है?`, 
+          correctOption: 'Option C (97)' 
+        },
+        { 
+          qNo: 8, 
+          question: `The term 'Double Fault' is associated with which sport? / 'डबल फॉल्ट' शब्द किस खेल से संबंधित है?`, 
+          correctOption: 'Option A (Tennis)' 
+        },
+        { 
+          qNo: 9, 
+          question: `Identify the correctly spelled English vocabulary word: / सही वर्तनी वाले शब्द की पहचान करें:`, 
+          correctOption: 'Option B (Accommodation)' 
+        },
+        { 
+          qNo: 10, 
+          question: isRas 
+            ? `Which state has highest reserves of copper in India? / भारत में तांबे का सर्वाधिक भंडार किस राज्य में है?`
+            : `Which state ranks first in saffron production in India? / भारत में केसर उत्पादन में कौन सा राज्य प्रथम स्थान पर है?`, 
+          correctOption: isRas ? 'Option D (Rajasthan)' : 'Option D (Jammu & Kashmir)' 
+        }
+      ];
+    });
+  });
+
+  return {
+    ...key,
+    dates,
+    shifts,
+    questionsList
+  };
+});
 
 const ALL_MOCK_TESTS: MockTest[] = [
   {

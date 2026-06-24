@@ -122,5 +122,15 @@ export interface AnswerKey {
   released: string;
   objectionsLimit: string;
   pdfUrl?: string;
+  dates?: string[];
+  shifts?: string[];
+  questionsList?: {
+    [dateShiftKey: string]: {
+      qNo: number;
+      question: string;
+      correctOption: string;
+      status?: string;
+    }[];
+  };
 }
 
