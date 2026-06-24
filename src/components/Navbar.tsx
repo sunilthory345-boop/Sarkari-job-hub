@@ -345,7 +345,7 @@ export default function Navbar({
               <span>🟢</span> WhatsApp
             </a>
             <a 
-              href="https://t.me/SarkariJobHubOfficial" 
+              href="https://t.me/JobSarkariHub" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-blue-50 text-blue-700 font-extrabold rounded-xl hover:bg-blue-100 border border-blue-200 text-xs shadow-xs"
