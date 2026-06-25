@@ -117,7 +117,7 @@ export default function AdminConsole({
     }
 
     links += `👇 *Join our Verified WhatsApp Channel for daily alerts:* \nhttps://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U\n\n`;
-    links += `🚀 *Join our Official Telegram Channel for instantly downloadable files & PDFs:* \nhttps://t.me/JobSarkariHubOfficial\n\n`;
+    links += `🚀 *Join our Official Telegram Channel for instantly downloadable files & PDFs:* \nhttps://t.me/JobSarkariHub\n\n`;
     links += `_Forward this to friends who need an update!_ 🙏✨`;
 
     const fullMessage = `${header}${body}${links}`;
@@ -217,7 +217,7 @@ export default function AdminConsole({
 
     if (includeJoinLink) {
       links += `👇 *Join our Verified WhatsApp Channel for daily alerts:* \nhttps://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq5U\n\n`;
-      links += `🚀 *Join our Official Telegram Channel for instantly downloadable files & PDFs:* \nhttps://t.me/JobSarkariHubOfficial\n\n`;
+      links += `🚀 *Join our Official Telegram Channel for instantly downloadable files & PDFs:* \nhttps://t.me/JobSarkariHub\n\n`;
     }
 
     links += `_Forward this to friends who need a job!_ 🙏✨`;
@@ -1698,7 +1698,7 @@ What is the standard pH level of pure distilled water at normal room temperature
                 <MessageSquare className="h-4 w-4" /> WhatsApp Channel
               </a>
               <a 
-                href="https://t.me/JobSarkariHubOfficial" 
+                href="https://t.me/JobSarkariHub" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="rounded-xl px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs flex items-center gap-1.5 transition shadow"

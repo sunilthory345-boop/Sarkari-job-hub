@@ -138,7 +138,7 @@ export default function WhatsAppChannelHub({ locale, triggerToast }: WhatsAppCha
   const copyChannelLink = () => {
     const link = selectedPlatform === 'whatsapp' 
       ? "https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U" 
-      : "https://t.me/JobSarkariHubOfficial";
+      : "https://t.me/JobSarkariHub";
     
     navigator.clipboard.writeText(link).then(
       () => {
@@ -200,7 +200,7 @@ export default function WhatsAppChannelHub({ locale, triggerToast }: WhatsAppCha
             </a>
           ) : (
             <a
-              href="https://t.me/JobSarkariHubOfficial"
+              href="https://t.me/JobSarkariHub"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => triggerToast("✨ Forwarding to verified Telegram updates channel...")}
@@ -551,7 +551,7 @@ export default function WhatsAppChannelHub({ locale, triggerToast }: WhatsAppCha
                   </a>
                 ) : (
                   <a
-                    href="https://t.me/JobSarkariHubOfficial"
+                    href="https://t.me/JobSarkariHub"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-[#2b96cc] hover:bg-[#2081b3] text-white px-3 py-1 rounded-full font-black text-[9.5px] tracking-wide flex items-center gap-1 shadow-xs transition"

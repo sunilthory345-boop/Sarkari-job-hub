@@ -1175,10 +1175,10 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                   <span className="text-sm">🟢</span> {locale === 'hi' ? 'WhatsApp चैनल' : 'Direct Join Channel'}
                 </a>
                 <a 
-                  href="https://t.me/JobSarkariHubOfficial" 
+                  href="https://t.me/JobSarkariHub" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  onClick={() => triggerToast("✈️ Telegram: Redirecting to verified Sarkari Job Hub channel (@JobSarkariHubOfficial)...")}
+                  onClick={() => triggerToast("✈️ Telegram: Redirecting to verified Sarkari Job Hub channel (@JobSarkariHub)...")}
                   className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 text-xs font-bold transition duration-200 shadow-md shadow-blue-600/10"
                 >
                   <Send className="h-4 w-4 fill-white text-white" /> {locale === 'hi' ? 'Telegram चैनल' : 'Join Telegram Channel'}
@@ -3573,10 +3573,10 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
               <p className="text-slate-500 leading-normal">Subscribe to our verified Telegram & WhatsApp feeds for direct 24x7 notifications updates.</p>
               <div className="flex flex-wrap gap-2">
                 <a 
-                  href="https://t.me/JobSarkariHubOfficial" 
+                  href="https://t.me/JobSarkariHub" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  onClick={() => triggerToast("✈️ Telegram: Redirecting to official @JobSarkariHubOfficial channel...")}
+                  onClick={() => triggerToast("✈️ Telegram: Redirecting to official @JobSarkariHub channel...")}
                   className="inline-flex items-center gap-1 bg-blue-600/20 border border-blue-500/30 text-blue-400 px-3 py-1.5 rounded-lg font-bold hover:bg-blue-600/30 transition text-xs"
                 >
                   <Send className="h-3 w-3 fill-blue-400 text-blue-400" /> Telegram Channel
