@@ -4,6 +4,41 @@ import { generateAllExtendedMocks } from '../utils/examMockGenerator';
 
 export const INITIAL_JOBS: GovJob[] = [
   {
+    id: 'sbi-po-probationary-officers-recruitment-2026',
+    title: 'SBI Probationary Officers (PO) 2026-27 Mega Recruitment Notification (Out Now)',
+    org: 'State Bank of India (SBI)',
+    category: 'Bank',
+    qualification: 'Graduate',
+    ageLimit: '21 - 30 Years',
+    salary: '₹41,960 — ₹63,840 / Month',
+    fees: {
+      General: '₹750',
+      OBC: '₹750',
+      SC_ST_Female: 'Nil'
+    },
+    totalPosts: 2350,
+    applyUrl: 'https://sbi.co.in/careers',
+    pdfUrl: 'https://sbi.co.in/careers',
+    officialWebsite: 'https://sbi.co.in',
+    postedDate: '2026-06-24',
+    lastDate: '2026-07-24',
+    importantDates: {
+      applyStart: '2026-06-25',
+      applyEnd: '2026-07-24',
+      examDate: 'November 2026',
+      admitCardRelease: 'October 2026'
+    },
+    selectionProcess: [
+      'Phase I: Preliminary Examination (CBT)',
+      'Phase II: Main Examination (Objective + Descriptive)',
+      'Phase III: Psychometric Test, Group Exercise & Interview'
+    ],
+    location: 'All India Slots',
+    description: '🏦 STATE BANK OF INDIA (SBI) PROBATIONARY OFFICERS (PO) RECRUITMENT 2026. SBI has released the much-awaited official notification for the selection of 2,350 Probationary Officers for FY 2026-27. Candidates with any Graduation degree from a recognized university are fully eligible. Excellent career progression, with initial basic pay starting at ₹41,960 plus 4 advance increments.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
     id: 'delhi-metro-dmrc-recruitment-2026',
     title: 'DMRC Junior Engineer, Station Controller & Executive Recruitment 2026',
     org: 'Delhi Metro Rail Corporation (DMRC)',
@@ -1867,6 +1902,16 @@ export const INITIAL_JOBS: GovJob[] = [
 
 export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
   {
+    id: 'ibps-clerk-prelims-admit-card-2026',
+    title: 'IBPS CRP Clerks-XIV Preliminary Exam e-Admit Card / Call Letter (Out Now)',
+    org: 'Institute of Banking Personnel Selection (IBPS)',
+    examDate: '2026-08-12 to 2026-08-20',
+    examCity: 'Check Registered Examination Centers Across India',
+    downloadUrl: 'https://www.ibps.in',
+    officialLink: 'https://www.ibps.in',
+    addedDate: '2026-06-24'
+  },
+  {
     id: 'ssc-cgl-tier1-admit-card-2026',
     title: 'SSC CGL Tier-1 Exam 2026 Admission Certificate & Application Status (Out Now)',
     org: 'Staff Selection Commission (SSC)',
@@ -2049,6 +2094,21 @@ export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
 ];
 
 export const INITIAL_RESULTS: JobResult[] = [
+  {
+    id: 'upsc-civil-services-prelims-result-2026',
+    title: 'UPSC Civil Services Prelims Exam 2026 Qualified Candidates Merit List & Scorecard (Out Now)',
+    org: 'Union Public Service Commission (UPSC)',
+    meritListUrl: 'https://upsc.gov.in',
+    scoreCardUrl: 'https://upsc.gov.in',
+    cutOff: {
+      UR: '94.8 Marks Out of 200',
+      OBC: '92.3 Marks',
+      SC: '83.5 Marks',
+      ST: '81.0 Marks'
+    },
+    downloadUrl: 'https://upsc.gov.in',
+    releaseDate: '2026-06-24'
+  },
   {
     id: 'rbi-grade-b-phase1-result-2026',
     title: 'Reserve Bank of India (RBI) Grade B Officer General/DEPR/DSIM Phase-I Result (Out Now)',
@@ -2262,6 +2322,7 @@ export const INITIAL_RESULTS: JobResult[] = [
 ];
 
 const BASE_ANSWER_KEYS = [
+  { id: 'neet-ug-answer-key-2026', title: 'NEET UG 2026 Official Answer Key with Scanned OMR Response Sheet PDF (Out Now)', org: 'National Testing Agency (NTA)', released: '2026-06-24', objectionsLimit: '2026-07-02', pdfUrl: 'https://exams.nta.ac.in/NEET' },
   { id: 'upsc-prelims-gs-answer-key-2026', title: 'UPSC Civil Services (IAS/IFS) Prelims GS & CSAT 2026 Final Solved Answer Keys', org: 'Union Public Service Commission (UPSC)', released: '2026-06-23', objectionsLimit: '2026-06-30', pdfUrl: 'https://upsc.gov.in/prelims_answer_sheet_2026.pdf' },
   { id: 'ssc-phase-12-answer-key-2026', title: 'SSC Selection Post Phase XII Official Answer Key with Candidate Response Sheets', org: 'Staff Selection Commission (SSC)', released: '2026-06-15', objectionsLimit: '2026-06-20', pdfUrl: 'https://ssc.gov.in/phase-12-response-key-link' },
   { id: 'ugc-net-june-key-2026', title: 'UGC NET June 2026 Provisional Solved Keys (Paper 1 & Paper 2)', org: 'National Testing Agency (NTA)', released: '2026-06-15', objectionsLimit: '2026-06-25', pdfUrl: 'https://ugcnet.nta.ac.in/provisional_key_june_2026.pdf' },

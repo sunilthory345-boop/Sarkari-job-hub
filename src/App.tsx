@@ -127,7 +127,7 @@ export default function App() {
         const existingIds = new Set(parsed.map(j => j.id));
         const missingJobs = INITIAL_JOBS.filter(j => !existingIds.has(j.id));
         if (missingJobs.length > 0) {
-          const merged = [...parsed, ...missingJobs];
+          const merged = [...missingJobs, ...parsed];
           localStorage.setItem('sarkari_jobs', JSON.stringify(merged));
           return merged;
         }
@@ -147,7 +147,7 @@ export default function App() {
         const existingIds = new Set(parsed.map(c => c.id));
         const missingCards = INITIAL_ADMIT_CARDS.filter(c => !existingIds.has(c.id));
         if (missingCards.length > 0) {
-          const merged = [...parsed, ...missingCards];
+          const merged = [...missingCards, ...parsed];
           localStorage.setItem('sarkari_admit_cards', JSON.stringify(merged));
           return merged;
         }
@@ -167,7 +167,7 @@ export default function App() {
         const existingIds = new Set(parsed.map(r => r.id));
         const missingResults = INITIAL_RESULTS.filter(r => !existingIds.has(r.id));
         if (missingResults.length > 0) {
-          const merged = [...parsed, ...missingResults];
+          const merged = [...missingResults, ...parsed];
           localStorage.setItem('sarkari_results', JSON.stringify(merged));
           return merged;
         }
@@ -187,7 +187,7 @@ export default function App() {
         const existingIds = new Set(parsed.map(k => k.id));
         const missingKeys = INITIAL_ANSWER_KEYS.filter(k => !existingIds.has(k.id));
         if (missingKeys.length > 0) {
-          const merged = [...parsed, ...missingKeys];
+          const merged = [...missingKeys, ...parsed];
           localStorage.setItem('sarkari_answer_keys', JSON.stringify(merged));
           return merged;
         }
@@ -506,6 +506,10 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
       try { return JSON.parse(saved); } catch (e) { return []; }
     }
     return [
+      { id: 'init-neet-key', category: 'Answer Key', title: 'National Testing Agency (NTA) - NEET UG 2026 Official Answer Key with Scanned OMR Response Sheet PDF (Out Now)', timestamp: 'Just now', url: '?tab=answer-key' },
+      { id: 'init-upsc-res', category: 'Result', title: 'Union Public Service Commission (UPSC) - UPSC Civil Services Prelims Exam 2026 Qualified Candidates Merit List & Scorecard (Out Now)', timestamp: 'Just now', url: '?tab=results' },
+      { id: 'init-ibps-card', category: 'Admit Card', title: 'Institute of Banking Personnel Selection (IBPS) - IBPS CRP Clerks-XIV Preliminary Exam e-Admit Card / Call Letter (Out Now)', timestamp: '2 mins ago', url: '?tab=admit-cards' },
+      { id: 'init-sbi-po', category: 'Vacancy', title: 'State Bank of India (SBI) - SBI Probationary Officers (PO) 2026-27 Mega Recruitment Notification (Out Now)', timestamp: '10 mins ago', url: '?tab=jobs' },
       { id: 'init-1', category: 'Vacancy', title: 'India Post GDS Recruitment 2026 - 40,220 Posts', timestamp: '10:30 AM', url: '?tab=jobs' },
       { id: 'init-2', category: 'Admit Card', title: 'CSIR UGC NET June 2026 Exam City Slip', timestamp: '11:15 AM', url: '?tab=admit-cards' },
       { id: 'init-3', category: 'Result', title: 'JEE Advanced 2026 Final Score Card & Rank List', timestamp: 'Yesterday', url: '?tab=results' },
@@ -1518,6 +1522,10 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                     <button
                       onClick={() => {
                         setLiveNotifications([
+                          { id: 'init-neet-key', category: 'Answer Key', title: 'National Testing Agency (NTA) - NEET UG 2026 Official Answer Key with Scanned OMR Response Sheet PDF (Out Now)', timestamp: 'Just now', url: '?tab=answer-key' },
+                          { id: 'init-upsc-res', category: 'Result', title: 'Union Public Service Commission (UPSC) - UPSC Civil Services Prelims Exam 2026 Qualified Candidates Merit List & Scorecard (Out Now)', timestamp: 'Just now', url: '?tab=results' },
+                          { id: 'init-ibps-card', category: 'Admit Card', title: 'Institute of Banking Personnel Selection (IBPS) - IBPS CRP Clerks-XIV Preliminary Exam e-Admit Card / Call Letter (Out Now)', timestamp: '2 mins ago', url: '?tab=admit-cards' },
+                          { id: 'init-sbi-po', category: 'Vacancy', title: 'State Bank of India (SBI) - SBI Probationary Officers (PO) 2026-27 Mega Recruitment Notification (Out Now)', timestamp: '10 mins ago', url: '?tab=jobs' },
                           { id: 'init-1', category: 'Vacancy', title: 'India Post GDS Recruitment 2026 - 40,220 Posts', timestamp: '10:30 AM', url: '?tab=jobs' },
                           { id: 'init-2', category: 'Admit Card', title: 'CSIR UGC NET June 2026 Exam City Slip', timestamp: '11:15 AM', url: '?tab=admit-cards' },
                           { id: 'init-3', category: 'Result', title: 'JEE Advanced 2026 Final Score Card & Rank List', timestamp: 'Yesterday', url: '?tab=results' },
