@@ -2,9 +2,21 @@ import React, { useEffect } from 'react';
 
 interface GoogleAdSenseProps {
   premium?: boolean;
+  adFormat?: 'fluid' | 'autorelaxed';
+  adSlot?: string;
+  adLayoutKey?: string;
 }
 
-export default function GoogleAdSense({ premium = false }: GoogleAdSenseProps) {
+export default function GoogleAdSense({ 
+  premium = false,
+  adFormat = 'fluid',
+  adSlot,
+  adLayoutKey
+}: GoogleAdSenseProps) {
+  // Determine standard fallback values based on the requested format
+  const resolvedSlot = adSlot || (adFormat === 'autorelaxed' ? '6627237654' : '9329422615');
+  const resolvedLayoutKey = adLayoutKey || (adFormat === 'fluid' ? '-fb+5w+4e-db+86' : undefined);
+
   useEffect(() => {
     if (premium) return;
 
@@ -15,7 +27,7 @@ export default function GoogleAdSense({ premium = false }: GoogleAdSenseProps) {
     } catch (e) {
       console.warn('Google AdSense push warning (Expected in sandbox/local preview):', e);
     }
-  }, [premium]);
+  }, [premium, resolvedSlot]);
 
   if (premium) return null;
 
@@ -29,10 +41,10 @@ export default function GoogleAdSense({ premium = false }: GoogleAdSenseProps) {
         <ins
           className="adsbygoogle"
           style={{ display: 'block', minHeight: '100px' }}
-          data-ad-format="fluid"
-          data-ad-layout-key="-fb+5w+4e-db+86"
+          data-ad-format={adFormat}
+          {...(resolvedLayoutKey ? { 'data-ad-layout-key': resolvedLayoutKey } : {})}
           data-ad-client="ca-pub-3632365628717784"
-          data-ad-slot="9329422615"
+          data-ad-slot={resolvedSlot}
         />
       </div>
     </div>

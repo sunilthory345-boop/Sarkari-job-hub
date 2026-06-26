@@ -419,8 +419,8 @@ export default function SarkariAds({
 
       </div>
 
-      {/* Real Live Google AdSense Integration */}
-      <GoogleAdSense premium={user.premiumUser} />
+      {/* Real Live Google AdSense Integration (Autorelaxed Format) */}
+      <GoogleAdSense premium={user.premiumUser} adFormat="autorelaxed" />
 
       {/* Footer promotion disclaimer */}
       <div className="pt-2 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 text-[10.5px] text-slate-400">
