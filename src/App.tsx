@@ -4,7 +4,8 @@ import {
   Sparkles, Award, ShieldAlert, Clock, Star, Bell, 
   CheckCircle, ArrowUpRight, GraduationCap, FileText, 
   HelpCircle, Download, CheckSquare, Send, Mail, Phone, 
-  Building2, Globe, Heart, ShieldCheck, Zap, CreditCard, Plus, Share2, ChevronDown, ChevronUp, Printer, Link, Camera, X, RefreshCw, ExternalLink
+  Building2, Globe, Heart, ShieldCheck, Zap, CreditCard, Plus, Share2, ChevronDown, ChevronUp, Printer, Link, Camera, X, RefreshCw, ExternalLink,
+  ChevronLeft, ChevronRight, CheckCircle2, Flame
 } from 'lucide-react';
 
 import { GovJob, AdmitCard, JobResult, MockTest, CurrentAffair, Blog, UserProfile, AnswerKey, Question } from './types';
@@ -247,6 +248,9 @@ export default function App() {
   const [quizQuestions] = useState<Question[]>(CURRENT_AFFAIRS_QUIZ_QUESTIONS);
   const [currentQuizIdx, setCurrentQuizIdx] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<{[key: number]: number}>({}); // maps question Index (0-49) to selected option index (0-3)
+  const [todayQuizIdx, setTodayQuizIdx] = useState(0);
+  const [todayAnswers, setTodayAnswers] = useState<{[key: string]: number}>({}); // maps question ID to selected option index
+  const [todayActiveSubTab, setTodayActiveSubTab] = useState<'questions' | 'capsules'>('questions');
   const [caSearchQuery, setCaSearchQuery] = useState('');
   const [caSelectedCategory, setCaSelectedCategory] = useState<string>('All');
   const [caVisibleCount, setCaVisibleCount] = useState(6);
@@ -1131,6 +1135,234 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
         {activeTab === 'home' && (
           <div className="space-y-10">
             
+            {/* 🔥 TODAY'S CURRENT AFFAIRS & DAILY QUIZ SECTION (SUBSE UPER WEBSITES ME) */}
+            <div data-testid="today-current-affairs-hub" className="bg-gradient-to-br from-slate-900 via-slate-950 to-blue-950 text-white rounded-3xl p-5 sm:p-7 shadow-xl border border-blue-900/60 relative overflow-hidden animate-fade-in text-left">
+              {/* Backglow glow decorations */}
+              <div className="absolute -top-12 -right-12 h-44 w-44 rounded-full bg-blue-600/20 blur-3xl pointer-events-none"></div>
+              <div className="absolute -bottom-12 -left-12 h-44 w-44 rounded-full bg-emerald-600/10 blur-3xl pointer-events-none"></div>
+
+              {/* Header block */}
+              <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-amber-400 text-slate-950 rounded-2xl animate-pulse">
+                    <Flame className="h-6 w-6 fill-slate-950" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] bg-amber-500/20 text-amber-300 font-extrabold px-2.5 py-0.5 rounded-full border border-amber-500/30 uppercase tracking-widest">
+                      Live Update • {locale === 'hi' ? 'आज के विशेष' : 'Today\'s Special'}
+                    </span>
+                    <h3 className="font-sans text-lg sm:text-xl font-black text-white mt-1">
+                      {locale === 'hi' ? '🔥 दैनिक करंट अफेयर्स और लाइव प्रश्नोत्तरी (2026)' : '🔥 Today\'s Current Affairs & Interactive Daily Quiz (2026)'}
+                    </h3>
+                  </div>
+                </div>
+
+                {/* Live Calendar Date Tag */}
+                <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-3 py-1.5 self-start md:self-auto">
+                  <Calendar className="h-4 w-4 text-blue-300" />
+                  <span className="font-sans text-xs font-bold text-slate-200">
+                    {locale === 'hi' ? 'शुक्रवार, 26 जून 2026' : 'Friday, 26 June 2026'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Sub-Tabs Selector */}
+              <div className="relative z-10 flex gap-2 mt-4 border-b border-white/5 pb-3">
+                <button
+                  onClick={() => setTodayActiveSubTab('questions')}
+                  className={`flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold transition-all cursor-pointer ${
+                    todayActiveSubTab === 'questions'
+                      ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20'
+                      : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'
+                  }`}
+                >
+                  <HelpCircle className="h-4 w-4" />
+                  <span>{locale === 'hi' ? '📝 आज के प्रश्न (Interactive Quiz)' : '📝 Today\'s Questions (Interactive Quiz)'}</span>
+                </button>
+                <button
+                  onClick={() => setTodayActiveSubTab('capsules')}
+                  className={`flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold transition-all cursor-pointer ${
+                    todayActiveSubTab === 'capsules'
+                      ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20'
+                      : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'
+                  }`}
+                >
+                  <BookOpen className="h-4 w-4" />
+                  <span>{locale === 'hi' ? '📰 आज के समाचार कैप्सूल' : '📰 Today\'s News Capsules'}</span>
+                </button>
+              </div>
+
+              {/* Content Panel */}
+              <div className="relative z-10 mt-5">
+                {todayActiveSubTab === 'questions' ? (
+                  (() => {
+                    const todayQs = quizQuestions.filter(q => q.id.includes('today'));
+                    const q = todayQs[todayQuizIdx];
+                    if (!q) return <p className="text-slate-400 text-xs text-center py-6">No questions found for today.</p>;
+
+                    const answeredIdx = todayAnswers[q.id];
+                    const isAnswered = answeredIdx !== undefined;
+                    const isCorrect = isAnswered && answeredIdx === q.correctOptionIndex;
+
+                    return (
+                      <div className="bg-slate-900/60 rounded-2xl border border-white/5 p-4 sm:p-6 space-y-4">
+                        {/* Q Info & Navigation */}
+                        <div className="flex items-center justify-between gap-2 border-b border-white/5 pb-3">
+                          <span className="text-[10px] font-mono text-slate-400 font-bold uppercase tracking-wider">
+                            {locale === 'hi' ? `प्रश्न ${todayQuizIdx + 1} / ${todayQs.length}` : `Question ${todayQuizIdx + 1} of ${todayQs.length}`}
+                          </span>
+                          
+                          <div className="flex gap-1.5 items-center">
+                            <button
+                              disabled={todayQuizIdx === 0}
+                              onClick={() => setTodayQuizIdx(prev => prev - 1)}
+                              className="p-1 rounded bg-white/5 hover:bg-white/10 text-slate-300 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+                              title="Previous Question"
+                            >
+                              <ChevronLeft className="h-4 w-4" />
+                            </button>
+                            <button
+                              disabled={todayQuizIdx === todayQs.length - 1}
+                              onClick={() => setTodayQuizIdx(prev => prev + 1)}
+                              className="p-1 rounded bg-white/5 hover:bg-white/10 text-slate-300 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+                              title="Next Question"
+                            >
+                              <ChevronRight className="h-4 w-4" />
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Question Text */}
+                        <h4 className="text-sm sm:text-base font-extrabold text-white leading-relaxed">
+                          {q.text}
+                        </h4>
+
+                        {/* Options */}
+                        <div className="grid gap-2.5 sm:grid-cols-2 mt-3">
+                          {q.options.map((option, oIdx) => {
+                            const isSelected = answeredIdx === oIdx;
+                            const isOptionCorrect = q.correctOptionIndex === oIdx;
+
+                            let btnStyle = "bg-white/5 border border-white/10 hover:bg-white/10 text-slate-200";
+                            if (isAnswered) {
+                              if (isOptionCorrect) {
+                                btnStyle = "bg-emerald-600/90 border-emerald-500 text-white font-extrabold";
+                              } else if (isSelected) {
+                                btnStyle = "bg-rose-600/90 border-rose-500 text-white font-extrabold";
+                              } else {
+                                btnStyle = "bg-white/2 border-white/5 text-slate-500 pointer-events-none opacity-40";
+                              }
+                            }
+
+                            return (
+                              <button
+                                key={oIdx}
+                                disabled={isAnswered}
+                                onClick={() => {
+                                  setTodayAnswers(prev => ({ ...prev, [q.id]: oIdx }));
+                                  triggerToast(oIdx === q.correctOptionIndex ? "🎉 Right Answer! शानदार!" : "❌ Wrong Answer! Learn from the explanation.");
+                                }}
+                                className={`text-xs text-left p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-2 duration-150 ${btnStyle}`}
+                              >
+                                <span>{option}</span>
+                                {isAnswered && isOptionCorrect && <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-200" />}
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        {/* Explanation block */}
+                        {isAnswered && (
+                          <div className="bg-blue-950/40 border border-blue-900/40 rounded-xl p-4 text-xs text-blue-200 space-y-2 animate-fade-in mt-4 leading-relaxed">
+                            <p className="font-extrabold text-blue-300 flex items-center gap-1">
+                              <Sparkles className="h-4 w-4 text-amber-400" />
+                              <span>{locale === 'hi' ? 'विस्तृत विवरण (Bilingual Explanation):' : 'Bilingual Explanation:'}</span>
+                            </p>
+                            <p className="font-sans text-slate-300">{q.explanation}</p>
+                            <div className="text-[10px] text-blue-400 font-mono font-bold pt-1.5 border-t border-white/5 flex justify-between">
+                              <span>Correct Key: ({String.fromCharCode(65 + q.correctOptionIndex)})</span>
+                              <span className="text-emerald-400 font-bold">Solved bilingually for Sarkari Hub Aspirants</span>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Score and Reset Bar */}
+                        <div className="flex items-center justify-between gap-4 pt-3 border-t border-white/5 text-[10px] text-slate-400">
+                          <div>
+                            <span className="font-bold text-slate-300">
+                              Today's Attempted: {Object.keys(todayAnswers).length} / {todayQs.length}
+                            </span>
+                            <span className="mx-2">•</span>
+                            <span className="text-emerald-400 font-bold">
+                              Correct: {Object.entries(todayAnswers).filter(([id, ans]) => quizQuestions.find(q => q.id === id)?.correctOptionIndex === ans).length}
+                            </span>
+                          </div>
+                          <button
+                            onClick={() => {
+                              setTodayAnswers({});
+                              setTodayQuizIdx(0);
+                              triggerToast("🧹 Today's practice questions have been reset!");
+                            }}
+                            className="text-xs text-rose-400 font-bold hover:underline bg-transparent border-none cursor-pointer"
+                          >
+                            Reset Quiz
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })()
+                ) : (
+                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {currentAffairs.slice(0, 3).map((ca) => (
+                      <div key={ca.id} className="bg-slate-900/60 rounded-2xl border border-white/5 p-4 flex flex-col justify-between hover:border-blue-500/40 transition duration-200">
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between gap-2 text-[10px]">
+                            <span className="bg-blue-500/20 text-blue-300 font-bold px-2 py-0.5 rounded-full border border-blue-500/30">
+                              {ca.category}
+                            </span>
+                            <span className="text-slate-400 font-semibold">{ca.date}</span>
+                          </div>
+                          <h4 className="text-xs sm:text-sm font-extrabold text-white line-clamp-2 leading-snug">
+                            {ca.title}
+                          </h4>
+                          <p className="text-slate-300 text-[11px] line-clamp-3 leading-relaxed">
+                            {ca.content}
+                          </p>
+                        </div>
+
+                        <div className="border-t border-white/5 pt-3 mt-3 flex items-center justify-between">
+                          <button
+                            onClick={() => triggerToast(`📥 Downloading PDF for capsule: ${ca.title}`)}
+                            className="text-[10px] text-blue-400 font-bold hover:underline flex items-center gap-1 cursor-pointer"
+                          >
+                            <Download className="h-3 w-3" /> Download PDF
+                          </button>
+                          <span className="text-[9px] text-slate-500 italic">Bilingual GK</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Redirection CTA */}
+              <div className="relative z-10 mt-5 pt-3 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+                <span className="text-slate-400 text-[11px]">
+                  {locale === 'hi' ? '🎯 कुल 50 दैनिक समाचार कैप्सूल और 50 अभ्यास प्रश्न उपलब्ध हैं।' : '🎯 Access full bilingual 50 news capsules & 50 interactive exam questions.'}
+                </span>
+                <button
+                  onClick={() => {
+                    setActiveTab('current-affairs');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs px-4 py-2 rounded-xl transition shadow-md shadow-blue-600/20 cursor-pointer flex items-center gap-1"
+                >
+                  <span>{locale === 'hi' ? 'पूरा करंट अफेयर्स पोर्टल खोलें' : 'Open Complete Current Affairs Portal'}</span>
+                  <ArrowUpRight className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+
             {/* OFFICIAL BROADCAST ALERT BANNER */}
             <div data-testid="broadcast-join-card" className="bg-gradient-to-r from-emerald-500/10 via-blue-500/11 to-[#1E3A8A]/10 rounded-2xl border border-blue-100 p-4 sm:p-5 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xs animate-fade-in">
               <div className="flex items-center gap-3.5 text-left">

@@ -104,7 +104,7 @@ export default function Navbar({
 
           {/* Desktop Horizontal Navigation Links (High Density Layout) */}
           <div className="hidden md:flex items-center gap-5 text-xs font-semibold">
-            {menuItems.filter(item => ['home', 'jobs', 'calendar', 'admit-cards', 'results', 'whatsapp-alerts', 'premium'].includes(item.id)).map((item) => {
+            {menuItems.filter(item => ['home', 'jobs', 'calendar', 'admit-cards', 'results', 'current-affairs', 'whatsapp-alerts', 'premium'].includes(item.id)).map((item) => {
               const isSelected = activeTab === item.id;
               return (
                 <button
@@ -113,11 +113,13 @@ export default function Navbar({
                   className={`hover:text-blue-200 transition-all cursor-pointer pb-0.5 border-b-2 ${
                     isSelected 
                       ? 'border-white text-white font-extrabold' 
-                      : item.id === 'whatsapp-alerts' 
-                        ? 'border-transparent text-emerald-400 hover:text-emerald-300 font-bold uppercase animate-pulse'
-                        : item.highlight 
-                          ? 'border-transparent text-yellow-300 hover:text-yellow-400 font-bold uppercase' 
-                          : 'border-transparent text-blue-100'
+                      : item.id === 'current-affairs'
+                        ? 'border-transparent text-amber-300 hover:text-amber-200 font-extrabold uppercase animate-pulse'
+                        : item.id === 'whatsapp-alerts' 
+                          ? 'border-transparent text-emerald-400 hover:text-emerald-300 font-bold uppercase animate-pulse'
+                          : item.highlight 
+                            ? 'border-transparent text-yellow-300 hover:text-yellow-400 font-bold uppercase' 
+                            : 'border-transparent text-blue-100'
                   }`}
                 >
                   {item.label}
