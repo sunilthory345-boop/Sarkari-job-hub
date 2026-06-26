@@ -5,6 +5,7 @@ import {
   Sparkle, ShoppingBag, ThumbsUp, ShieldCheck
 } from 'lucide-react';
 import { UserProfile } from '../types';
+import GoogleAdSense from './GoogleAdSense';
 
 interface AdItem {
   id: string;
@@ -248,6 +249,9 @@ export default function SarkariAds({
           </button>
         </div>
 
+        {/* Real Live Google AdSense Integration */}
+        <GoogleAdSense premium={user.premiumUser} />
+
         {/* Info Line prompting for premium */}
         <div className="bg-amber-50 rounded-xl p-2.5 border border-amber-100 text-center space-y-1.5">
           <p className="text-[9.5px] text-amber-800 leading-normal font-semibold">
@@ -414,6 +418,9 @@ export default function SarkariAds({
         </div>
 
       </div>
+
+      {/* Real Live Google AdSense Integration */}
+      <GoogleAdSense premium={user.premiumUser} />
 
       {/* Footer promotion disclaimer */}
       <div className="pt-2 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 text-[10.5px] text-slate-400">
