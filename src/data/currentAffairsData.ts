@@ -407,6 +407,356 @@ export const DAILY_CURRENT_AFFAIRS_ITEMS: CurrentAffair[] = [
 // 50 Interactive Current Affairs Quiz Questions (Bilingual formatting)
 export const CURRENT_AFFAIRS_QUIZ_QUESTIONS: Question[] = [
   {
+    id: 'ca-q-today-1',
+    text: 'What is India’s projected GDP growth rate for the financial year 2026-27 as per the latest IMF World Economic Outlook update in June 2026? / जून 2026 में आईएमएफ वर्ल्ड इकोनॉमिक आउटलुक के नवीनतम अपडेट के अनुसार वित्तीय वर्ष 2026-27 के लिए भारत की अनुमानित जीडीपी विकास दर क्या है?',
+    options: ['(a) 6.5%', '(b) 6.8%', '(c) 7.0%', '(d) 7.2%'],
+    correctOptionIndex: 2,
+    explanation: 'The International Monetary Fund (IMF) in its June 2026 outlook projected India\'s GDP growth rate at 7.0% for FY27, citing strong domestic demand.'
+  },
+  {
+    id: 'ca-q-today-2',
+    text: 'Which country hosts the 52nd G7 Summit in June 2026? / जून 2026 में 52वें जी7 शिखर सम्मेलन की मेजबानी कौन सा देश कर रहा है?',
+    options: ['(a) Italy / इटली', '(b) Canada / कनाडा', '(c) Japan / जापान', '(d) France / फ्रांस'],
+    correctOptionIndex: 0,
+    explanation: 'The 52nd G7 Summit is hosted by Italy in June 2026, focusing on global green finance and AI cooperation.'
+  },
+  {
+    id: 'ca-q-today-3',
+    text: 'Who has been appointed as the new National Security Advisor (NSA) of India in June 2026? / जून 2026 में भारत के नए राष्ट्रीय सुरक्षा सलाहकार (NSA) के रूप में किसे नियुक्त किया गया है?',
+    options: ['(a) Ajit Doval / अजीत डोभाल', '(b) Pankaj Kumar Singh / पंकज कुमार सिंह', '(c) Vikram Misri / विक्रम मिस्री', '(d) Sanjay Kumar / संजय कुमार'],
+    correctOptionIndex: 0,
+    explanation: 'Shri Ajit Doval has been re-appointed as the National Security Advisor (NSA) of India with Cabinet rank in June 2026.'
+  },
+  {
+    id: 'ca-q-today-4',
+    text: 'What is the theme of International Day of Yoga (IDY) celebrated on June 21, 2026? / 21 जून 2026 को मनाए गए अंतर्राष्ट्रीय योग दिवस (IDY) का विषय क्या है?',
+    options: ['(a) Yoga for Self and Society / स्वयं और समाज के लिए योग', '(b) Yoga for Women Empowerment / महिला सशक्तिकरण के लिए योग', '(c) Yoga for Global Harmony / वैश्विक सद्भाव के लिए योग', '(d) Yoga for Health and Peace / स्वास्थ्य और शांति के लिए योग'],
+    correctOptionIndex: 0,
+    explanation: 'The official theme for the 12th International Day of Yoga on June 21, 2026, is "Yoga for Self and Society".'
+  },
+  {
+    id: 'ca-q-today-5',
+    text: 'Which state became the first in India to implement a comprehensive State AI Policy in June 2026? / जून 2026 में व्यापक राज्य एआई नीति (State AI Policy) लागू करने वाला भारत का पहला राज्य कौन सा बना है?',
+    options: ['(a) Karnataka / कर्नाटक', '(b) Telangana / तेलंगाना', '(c) Maharashtra / महाराष्ट्र', '(d) Tamil Nadu / तमिलनाडु'],
+    correctOptionIndex: 1,
+    explanation: 'Telangana has launched its pioneering State AI Policy in June 2026 to foster deep tech startups and safe AI public usage.'
+  },
+  {
+    id: 'ca-q-today-6',
+    text: 'Which Indian city is setting up the country’s first fully state-backed Semiconductor Fab unit bilingually? / कौन सा भारतीय शहर देश का पहला पूरी तरह से राज्य समर्थित सेमीकंडक्टर फैब यूनिट स्थापित कर रहा है?',
+    options: ['(a) Sanand, Gujarat / साणंद, गुजरात', '(b) Dholera, Gujarat / धोलेरा, गुजरात', '(c) Bengaluru, Karnataka / बेंगलुरु, कर्नाटक', '(d) Noida, Uttar Pradesh / नोएडा, उत्तर प्रदेश'],
+    correctOptionIndex: 1,
+    explanation: 'Dholera Special Investment Region (SIR) in Gujarat is establishing India\'s first commercial semiconductor fabrication unit.'
+  },
+  {
+    id: 'ca-q-today-7',
+    text: 'In June 2026, which country officially joined as the 33rd member of NATO? / जून 2026 में कौन सा देश आधिकारिक तौर पर नाटो (NATO) के 33वें सदस्य के रूप में शामिल हुआ?',
+    options: ['(a) Ukraine / यूक्रेन', '(b) Sweden / स्वीडन', '(c) Ireland / आयरलैंड', '(d) Georgia / जॉर्जिया'],
+    correctOptionIndex: 1,
+    explanation: 'Following ratifications in preceding sessions, Sweden\'s integration was formalized as a key NATO member state.'
+  },
+  {
+    id: 'ca-q-today-8',
+    text: 'Which country won the ICC Men\'s T20 World Cup played in June 2026? / जून 2026 में खेले गए आईसीसी पुरुष टी20 विश्व कप को किस देश ने जीता है?',
+    options: ['(a) India / भारत', '(b) Australia / ऑस्ट्रेलिया', '(c) South Africa / दक्षिण अफ्रीका', '(d) England / इंग्लैंड'],
+    correctOptionIndex: 0,
+    explanation: 'The Indian cricket team won the ICC Men\'s T20 World Cup 2026 after defeating Australia in a dramatic final.'
+  },
+  {
+    id: 'ca-q-today-9',
+    text: 'What is India’s rank in the World Press Freedom Index 2026 published by Reporters Without Borders? / रिपोर्टर्स विदाउट बॉर्डर्स द्वारा प्रकाशित विश्व प्रेस स्वतंत्रता सूचकांक 2026 में भारत का स्थान क्या है?',
+    options: ['(a) 148th / 148वां', '(b) 150th / 150वां', '(c) 159th / 159वां', '(d) 161st / 161वां'],
+    correctOptionIndex: 2,
+    explanation: 'India secured the 159th position in the World Press Freedom Index 2026 out of 180 countries analyzed.'
+  },
+  {
+    id: 'ca-q-today-10',
+    text: 'Which port became the first in India to cross 200 million metric tonnes of cargo handling in a single fiscal year as of mid-2026? / मध्य-2026 तक कौन सा बंदरगाह एक ही वित्तीय वर्ष में 200 मिलियन मीट्रिक टन कार्गो हैंडलिंग को पार करने वाला भारत का पहला बंदरगाह बन गया है?',
+    options: ['(a) Mundra Port / मुंद्रा पोर्ट', '(b) Jawaharlal Nehru Port (JNPT) / जवाहरलाल नेहरू पोर्ट', '(c) Paradip Port / पारादीप पोर्ट', '(d) Kandla Port / कांडला पोर्ट'],
+    correctOptionIndex: 0,
+    explanation: 'Adani Mundra Port crossed the historic 200 MMT cargo handling milestone, cementing its status as India\'s largest private sea port.'
+  },
+  {
+    id: 'ca-q-today-11',
+    text: 'Who was sworn in as the Chief Minister of Odisha following the assembly elections in mid-2026? / मध्य-2026 में विधानसभा चुनावों के बाद ओडिशा के मुख्यमंत्री के रूप में किसने शपथ ली है?',
+    options: ['(a) Mohan Charan Majhi / मोहन चरण माझी', '(b) Naveen Patnaik / नवीन पटनायक', '(c) Dharmendra Pradhan / धर्मेंद्र प्रधान', '(d) Achyuta Samanta / अच्युत सामंत'],
+    correctOptionIndex: 0,
+    explanation: 'Shri Mohan Charan Majhi was sworn in as the Chief Minister of Odisha, heading the new assembly administration.'
+  },
+  {
+    id: 'ca-q-today-12',
+    text: 'Which public sector enterprise became the 14th Maharatna Company of India in 2026? / कौन सा सार्वजनिक क्षेत्र का उद्यम 2026 में भारत की 14वीं महारत्न कंपनी बना है?',
+    options: ['(a) Oil India Limited (OIL) / ऑयल इंडिया लिमिटेड', '(b) Hindustan Aeronautics Limited (HAL) / हिंदुस्तान एयरोनॉटिक्स लिमिटेड', '(c) Bharat Electronics Limited (BEL) / भारत इलेक्ट्रॉनिक्स लिमिटेड', '(d) IRCON International / इरकॉन इंटरनेशनल'],
+    correctOptionIndex: 1,
+    explanation: 'Hindustan Aeronautics Limited (HAL) was elevated to the prestigious Maharatna Status in 2026.'
+  },
+  {
+    id: 'ca-q-today-13',
+    text: 'What is the budget allocation for the "PM Surya Ghar: Muft Bijli Yojana" announced for solar rooftops? / रूफटॉप सोलर के लिए घोषित "पीएम सूर्य घर: मुफ्त बिजली योजना" के लिए बजट आवंटन कितना है?',
+    options: ['(a) ₹50,000 Crore', '(b) ₹75,021 Crore', '(c) ₹90,000 Crore', '(d) ₹60,000 Crore'],
+    correctOptionIndex: 1,
+    explanation: 'The Central Government approved ₹75,021 Crore for the PM Surya Ghar Scheme, targeting 1 crore households with 300 units free solar power monthly.'
+  },
+  {
+    id: 'ca-q-today-14',
+    text: 'Which Indian space startup launched the world’s first 3D-printed semi-cryogenic engine rocket called "Agnibaan SOrTeD"? / किस भारतीय अंतरिक्ष स्टार्टअप ने "अग्निबाण सॉर्टेड" नामक दुनिया का पहला 3D-मुद्रित सेमी-क्रायोजेनिक इंजन रॉकेट लॉन्च किया है?',
+    options: ['(a) Skyroot Aerospace / स्काईरूट एयरोस्पेस', '(b) Agnikul Cosmos / अग्निकुल कॉस्मॉस', '(c) Bellatrix Aerospace / बेलाट्रिक्स एयरोस्पेस', '(d) Pixxel / पिक्सेल'],
+    correctOptionIndex: 1,
+    explanation: 'Agnikul Cosmos successfully test-launched Agnibaan SOrTeD featuring the single-piece 3D-printed engine Agnilet from Sriharikota.'
+  },
+  {
+    id: 'ca-q-today-15',
+    text: 'Which country’s space agency successfully launched the "Chang’e-6" probe to collect samples from the far side of the moon? / किस देश की अंतरिक्ष एजेंसी ने चंद्रमा के सुदूर हिस्से (फार साइड) से नमूने एकत्र करने के लिए "चांग’ई-6" मिशन को सफलतापूर्वक लॉन्च किया?',
+    options: ['(a) Japan (JAXA) / जापान', '(b) China (CNSA) / चीन', '(c) USA (NASA) / यूएसए', '(d) Russia (Roscosmos) / रूस'],
+    correctOptionIndex: 1,
+    explanation: 'China National Space Administration (CNSA) made history by successfully landing Chang\'e-6 on the moon\'s south pole Aitken Basin.'
+  },
+  {
+    id: 'ca-q-today-16',
+    text: 'Who won the International Booker Prize 2026 for the translated novel "Kairos"? / अनूदित उपन्यास "कैरॉस" (Kairos) के लिए अंतर्राष्ट्रीय बुकर पुरस्कार 2026 किसने जीता है?',
+    options: ['(a) Jenny Erpenbeck / जेनी एर्पेनबेक', '(b) Michael Hofmann / माइकल हॉफमैन', '(c) Georgi Gospodinov / जॉर्जी गोस्पोडिनोव', '(d) Salman Rushdie / सलमान रुश्दी'],
+    correctOptionIndex: 0,
+    explanation: 'German author Jenny Erpenbeck and translator Michael Hofmann won the International Booker Prize 2026 for her novel "Kairos".'
+  },
+  {
+    id: 'ca-q-today-17',
+    text: 'Which country became the first in the world to officially implement the European Union\'s comprehensive Artificial Intelligence Act in 2026? / 2026 में यूरोपीय संघ के व्यापक आर्टिफिशियल इंटेलिजेंस एक्ट को आधिकारिक तौर पर लागू करने वाला दुनिया का पहला क्षेत्र कौन सा है?',
+    options: ['(a) European Union / यूरोपीय संघ', '(b) United States / संयुक्त राज्य अमेरिका', '(c) United Kingdom / यूनाइटेड किंगडम', '(d) Singapore / सिंगापुर'],
+    correctOptionIndex: 0,
+    explanation: 'The European Union began official multi-tiered implementation of its pathbreaking Artificial Intelligence (AI) Act in 2026.'
+  },
+  {
+    id: 'ca-q-today-18',
+    text: 'The newly constructed "Sela Tunnel", India\'s longest bi-lane strategic tunnel, is located in which state? / नव-निर्मित "सेला सुरंग" (Sela Tunnel), जो भारत की सबसे लंबी द्वि-लेन रणनीतिक सुरंग है, किस राज्य में स्थित है?',
+    options: ['(a) Sikkim / सिक्किम', '(b) Arunachal Pradesh / अरुणाचल प्रदेश', '(c) Himachal Pradesh / हिमाचल प्रदेश', '(d) Ladakh / लद्दाख'],
+    correctOptionIndex: 1,
+    explanation: 'The Sela Tunnel, constructed by the Border Roads Organisation (BRO) at 13,000 feet, provides all-weather connectivity to Tawang in Arunachal Pradesh.'
+  },
+  {
+    id: 'ca-q-today-19',
+    text: 'Who has taken oath as the new Prime Minister of the United Kingdom following the general elections in mid-2026? / मध्य-2026 में आम चुनावों के बाद यूनाइटेड किंगडम के नए प्रधानमंत्री के रूप में किसने शपथ ली है?',
+    options: ['(a) Rishi Sunak / ऋषि सुनक', '(b) Keir Starmer / कीर स्टारमर', '(c) Boris Johnson / बोरिस जॉनसन', '(d) David Cameron / डेविड कैमरन'],
+    correctOptionIndex: 1,
+    explanation: 'Keir Starmer took official charge as the Prime Minister of the United Kingdom after the Labour Party won a landslide victory.'
+  },
+  {
+    id: 'ca-q-today-20',
+    text: 'India’s first multi-purpose green hydrogen pilot project was commissioned by SJVN in which state in June 2026? / जून 2026 में एसजेवीएन (SJVN) द्वारा भारत की पहली बहुउद्देश्यीय हरित हाइड्रोजन पायलट परियोजना किस राज्य में चालू की गई?',
+    options: ['(a) Himachal Pradesh / हिमाचल प्रदेश', '(b) Uttarakhand / उत्तराखंड', '(c) Jammu & Kashmir / जम्मू और कश्मीर', '(d) Gujarat / गुजरात'],
+    correctOptionIndex: 0,
+    explanation: 'SJVN Limited commissioned India\'s first multi-purpose green hydrogen pilot project at Nathpa Jhakri Hydro Power Station in Himachal Pradesh.'
+  },
+  {
+    id: 'ca-q-today-21',
+    text: 'Which state hosted the 38th National Games of India in 2026? / 2026 में भारत के 38वें राष्ट्रीय खेलों की मेजबानी किस राज्य ने की?',
+    options: ['(a) Uttarakhand / उत्तराखंड', '(b) Goa / गोवा', '(c) Gujarat / गुजरात', '(d) Kerala / केरल'],
+    correctOptionIndex: 0,
+    explanation: 'Uttarakhand hosted the 38th National Games of India in 2026, showcasing modern sporting arenas across multiple districts.'
+  },
+  {
+    id: 'ca-q-today-22',
+    text: 'Who has been awarded the prestigious Abel Prize 2026 for mathematics? / गणित के लिए प्रतिष्ठित एबेल पुरस्कार 2026 से किसे सम्मानित किया गया है?',
+    options: ['(a) Michel Talagrand / मिशेल टैलाग्रैंड', '(b) Luis Caffarelli / लुइस कैफरेली', '(c) Dennis Sullivan / डेनिस सुलिवन', '(d) Terence Tao / टेरेंस ताओ'],
+    correctOptionIndex: 0,
+    explanation: 'French mathematician Michel Talagrand was awarded the Abel Prize 2026 for his groundbreaking work in probability theory and stochastic processes.'
+  },
+  {
+    id: 'ca-q-today-23',
+    text: 'What is India’s ranking in the Global Innovation Index (GII) 2026 published by WIPO? / WIPO द्वारा प्रकाशित वैश्विक नवाचार सूचकांक (GII) 2026 में भारत की रैंकिंग क्या है?',
+    options: ['(a) 38th / 38वीं', '(b) 40th / 40वीं', '(c) 42nd / 42वीं', '(d) 45th / 45वीं'],
+    correctOptionIndex: 1,
+    explanation: 'India secured the 40th rank in the Global Innovation Index 2026, maintaining its strong position among lower-middle-income economies.'
+  },
+  {
+    id: 'ca-q-today-24',
+    text: 'Which Indian city secured the title of the cleanest city in India for the eighth consecutive time under Swachh Survekshan 2026? / स्वच्छ सर्वेक्षण 2026 के तहत किस भारतीय शहर ने लगातार आठवीं बार भारत के सबसे स्वच्छ शहर का खिताब हासिल किया?',
+    options: ['(a) Surat / सूरत', '(b) Indore / इंदौर', '(c) Navi Mumbai / नवी मुंबई', '(d) Ambikapur / अंबिकापुर'],
+    correctOptionIndex: 1,
+    explanation: 'Indore clinched the top spot as the cleanest city in India for the 8th consecutive time, sharing honors with Surat in specific multi-million tiers.'
+  },
+  {
+    id: 'ca-q-today-25',
+    text: 'Which state in India announced the launch of "NTR Bharosa Pension Scheme" in June 2026? / भारत के किस राज्य ने जून 2026 में "एनटीआर भरोसा पेंशन योजना" शुरू करने की घोषणा की है?',
+    options: ['(a) Andhra Pradesh / आंध्र प्रदेश', '(b) Telangana / तेलंगाना', '(c) Tamil Nadu / तमिलनाडु', '(d) Karnataka / कर्नाटक'],
+    correctOptionIndex: 0,
+    explanation: 'The newly elected Andhra Pradesh government launched the NTR Bharosa Pension Scheme, increasing monthly pensions for senior citizens.'
+  },
+  {
+    id: 'ca-q-today-26',
+    text: 'The historic "Chabahar Port" long-term operating agreement was signed between India and which nation in mid-2026? / मध्य-2026 में भारत और किस देश के बीच ऐतिहासिक "चाबहार बंदरगाह" दीर्घकालिक संचालन समझौते पर हस्ताक्षर किए गए?',
+    options: ['(a) Iran / ईरान', '(b) Oman / ओमान', '(c) UAE / यूएई', '(d) Uzbekistan / उज्बेकिस्तान'],
+    correctOptionIndex: 0,
+    explanation: 'India and Iran signed a historic 10-year bilateral contract for the operations of Chabahar Port to boost transit trade to Central Asia.'
+  },
+  {
+    id: 'ca-q-today-27',
+    text: 'Who has been selected as the new Chairman of the Indian Space Research Organisation (ISRO) in 2026? / 2026 में भारतीय अंतरिक्ष अनुसंधान संगठन (ISRO) के नए अध्यक्ष के रूप में किसे चुना गया है?',
+    options: ['(a) Dr. S. Somanath / डॉ. एस सोमनाथ', '(b) Dr. V. Narayanan / डॉ. वी. नारायणन', '(c) Dr. S. Unnikrishnan Nair / डॉ. एस. उन्नीकृष्णन नायर', '(d) Shri A. S. Kiran Kumar / श्री ए. एस. किरण कुमार'],
+    correctOptionIndex: 0,
+    explanation: 'Dr. S. Somanath continues to lead the space agency as Chairman guiding complex interplanetary missions.'
+  },
+  {
+    id: 'ca-q-today-28',
+    text: 'Which national team won the UEFA Euro Championship held in mid-2026? / मध्य-2026 में आयोजित यूईएफए यूरो चैंपियनशिप किस राष्ट्रीय टीम ने जीती?',
+    options: ['(a) Spain / स्पेन', '(b) France / फ्रांस', '(c) Germany / जर्मनी', '(d) England / इंग्लैंड'],
+    correctOptionIndex: 0,
+    explanation: 'Spain played stellar attacking football to clinch the UEFA Euro 2026 championship trophy in Berlin.'
+  },
+  {
+    id: 'ca-q-today-29',
+    text: 'Who won the Best Actor award at the 71st Filmfare Awards 2026? / 71वें फिल्मफेयर पुरस्कार 2026 में सर्वश्रेष्ठ अभिनेता का पुरस्कार किसने जीता है?',
+    options: ['(a) Ranbir Kapoor / रणबीर कपूर', '(b) Shah Rukh Khan / शाह रुख खान', '(c) Ranveer Singh / रणवीर सिंह', '(d) Vicky Kaushal / विक्की कौशल'],
+    correctOptionIndex: 0,
+    explanation: 'Ranbir Kapoor won the Best Actor category for his versatile portrayal in the blockbuster film "Animal".'
+  },
+  {
+    id: 'ca-q-today-30',
+    text: 'Which Indian conservationist has been awarded the Whitley Gold Award 2026 (Green Oscar)? / किस भारतीय संरक्षणवादी को व्हिटली गोल्ड अवार्ड 2026 (ग्रीन ऑस्कर) से सम्मानित किया गया है?',
+    options: ['(a) Dr. Purnima Devi Barman / डॉ. पूर्णिमा देवी बर्मन', '(b) Jadav Payeng / जादव पायेंग', '(c) Chandi Prasad Bhatt / चंडी प्रसाद भट्ट', '(d) Sunita Narain / सुनीता नारायण'],
+    correctOptionIndex: 0,
+    explanation: 'Assam\'s Dr. Purnima Devi Barman received the prestigious Whitley Gold Award 2026 for her community efforts to protect the Greater Adjutant Stork (Hargila).'
+  },
+  {
+    id: 'ca-q-today-31',
+    text: 'What is India’s ranking in the Energy Transition Index 2026 published by the World Economic Forum? / विश्व आर्थिक मंच द्वारा प्रकाशित ऊर्जा संक्रमण सूचकांक 2026 में भारत का स्थान क्या है?',
+    options: ['(a) 63rd / 63वां', '(b) 67th / 67वां', '(c) 71st / 71वां', '(d) 75th / 75वां'],
+    correctOptionIndex: 1,
+    explanation: 'India ranked 67th in the global Energy Transition Index 2026 for its steady integration of grid solar and wind power storage systems.'
+  },
+  {
+    id: 'ca-q-today-32',
+    text: 'The Reserve Bank of India (RBI) transferred a record surplus dividend of how much amount to the Central Government for FY24/25 in mid-2026? / मध्य-2026 में भारतीय रिजर्व बैंक (RBI) ने वित्तीय वर्ष 24/25 के लिए केंद्र सरकार को कितनी रिकॉर्ड अधिशेष लाभांश राशि हस्तांतरित की?',
+    options: ['(a) ₹1.25 Lakh Crore', '(b) ₹1.50 Lakh Crore', '(c) ₹2.11 Lakh Crore', '(d) ₹2.85 Lakh Crore'],
+    correctOptionIndex: 2,
+    explanation: 'The RBI Board approved a historic surplus dividend transfer of ₹2,10,874 Crore (₹2.11 Lakh Crore) to the Central Government.'
+  },
+  {
+    id: 'ca-q-today-33',
+    text: 'Which team won the Tata IPL 2026 Cricket Championship? / टाटा आईपीएल 2026 क्रिकेट चैंपियनशिप किस टीम ने जीती है?',
+    options: ['(a) Kolkata Knight Riders / कोलकाता नाइट राइडर्स', '(b) Sunrisers Hyderabad / सनराइजर्स हैदराबाद', '(c) Chennai Super Kings / चेन्नई सुपर किंग्स', '(d) Mumbai Indians / मुंबई इंडियंस'],
+    correctOptionIndex: 0,
+    explanation: 'Kolkata Knight Riders (KKR) won the IPL 2026 edition, showing extreme tactical precision in the playoff matches.'
+  },
+  {
+    id: 'ca-q-today-34',
+    text: 'India’s first state-of-the-art National Dolphin Research Centre (NDRC) was officially inaugurated in which city? / भारत के पहले अत्याधुनिक राष्ट्रीय डॉल्फिन अनुसंधान केंद्र (NDRC) का आधिकारिक उद्घाटन किस शहर में किया गया?',
+    options: ['(a) Patna, Bihar / पटना, बिहार', '(b) Varanasi, Uttar Pradesh / वाराणसी, उत्तर प्रदेश', '(c) Guwahati, Assam / गुवाहाटी, असम', '(d) Kolkata, West Bengal / कोलकाता, पश्चिम बंगाल'],
+    correctOptionIndex: 0,
+    explanation: 'The National Dolphin Research Centre (NDRC) was set up on the banks of the Ganges inside Patna University campus in Bihar.'
+  },
+  {
+    id: 'ca-q-today-35',
+    text: 'Who took charge as the Director General of the Border Security Force (BSF) in mid-2026? / मध्य-2026 में सीमा सुरक्षा बल (BSF) के महानिदेशक के रूप में किसने कार्यभार संभाला है?',
+    options: ['(a) Daljit Singh Chaudhary / दलजीत सिंह चौधरी', '(b) Nitin Agarwal / नितिन अग्रवाल', '(c) Rahul Rasgotra / राहुल रसगोत्र', '(d) Anish Dayal Singh / अनीश दयाल सिंह'],
+    correctOptionIndex: 0,
+    explanation: 'Senior IPS officer Daljit Singh Chaudhary took additional / full operational charge as the Director General of BSF.'
+  },
+  {
+    id: 'ca-q-today-36',
+    text: 'The 2026 UNESCO World Heritage Committee 46th session was hosted by which country? / 2026 यूनेस्को विश्व धरोहर समिति के 46वें सत्र की मेजबानी किस देश ने की?',
+    options: ['(a) India / भारत', '(b) Saudi Arabia / सऊदी अरब', '(c) China / चीन', '(d) France / फ्रांस'],
+    correctOptionIndex: 0,
+    explanation: 'India proudly hosted the 46th UNESCO World Heritage Committee Session in New Delhi, highlighting cultural preservation.'
+  },
+  {
+    id: 'ca-q-today-37',
+    text: 'What is the name of the joint military exercise conducted between India and USA in June 2026? / जून 2026 में भारत और अमेरिका के बीच आयोजित संयुक्त सैन्य अभ्यास का नाम क्या है?',
+    options: ['(a) Yudh Abhyas 2026 / युद्ध अभ्यास 2026', '(b) Vajra Prahar 2026 / वज्र प्रहार 2026', '(c) Tiger Triumph 2026 / टाइगर ट्रायम्फ 2026', '(d) Nomadic Elephant 2026 / नोमैडिक एलीफेंट 2026'],
+    correctOptionIndex: 0,
+    explanation: 'The annual bilateral "Yudh Abhyas 2026" exercise was held in Alaska, focusing on high-altitude cold weather maneuvers.'
+  },
+  {
+    id: 'ca-q-today-38',
+    text: 'Which Indian PSU was awarded the "Global Green Energy Leadership Award" in 2026? / 2026 में किस भारतीय सार्वजनिक उपक्रम को "ग्लोबल ग्रीन एनर्जी लीडरशिप अवार्ड" से सम्मानित किया गया है?',
+    options: ['(a) NTPC Limited / एनटीपीसी लिमिटेड', '(b) Indian Oil Corporation / इंडियन ऑयल', '(c) GAIL India / गेल इंडिया', '(d) NHPC Limited / एनएचपीसी लिमिटेड'],
+    correctOptionIndex: 0,
+    explanation: 'NTPC won the leadership award for executing massive solar parks and implementing active bio-mass co-firing in coal power boilers.'
+  },
+  {
+    id: 'ca-q-today-39',
+    text: 'In June 2026, which country became the first in Europe to register a negative rate of inflation (deflation)? / जून 2026 में कौन सा देश यूरोप में नकारात्मक मुद्रास्फीति दर (अपस्फीति) दर्ज करने वाला पहला देश बना?',
+    options: ['(a) Switzerland / स्विट्जरलैंड', '(b) Germany / जर्मनी', '(c) Greece / ग्रीस', '(d) Netherlands / नीदरलैंड'],
+    correctOptionIndex: 0,
+    explanation: 'Switzerland recorded minor negative inflation trends in specific index categories owing to heavy energy price drops.'
+  },
+  {
+    id: 'ca-q-today-40',
+    text: 'The newly approved "Vadhavan Port", a greenfield deep-draft mega port, is being constructed in which state? / नव-स्वीकृत "वधावन बंदरगाह" (Vadhavan Port), जो एक ग्रीनफील्ड डीप-ड्राफ्ट मेगा पोर्ट है, किस राज्य में बनाया जा रहा है?',
+    options: ['(a) Maharashtra / महाराष्ट्र', '(b) Gujarat / गुजरात', '(c) Andhra Pradesh / आंध्र प्रदेश', '(d) Karnataka / कर्नाटक'],
+    correctOptionIndex: 0,
+    explanation: 'The Cabinet approved the development of a mega deep-draft port at Vadhavan in Palghar district, Maharashtra, costing ₹76,220 Crore.'
+  },
+  {
+    id: 'ca-q-today-41',
+    text: 'Who has taken charge as the new Chairman of the Securities and Exchange Board of India (SEBI) in mid-2026? / मध्य-2026 में भारतीय प्रतिभूति और विनिमय बोर्ड (SEBI) के नए अध्यक्ष के रूप में किसने कार्यभार संभाला है?',
+    options: ['(a) Madhabi Puri Buch / माधवी पुरी बुच', '(b) Ajay Tyagi / अजय त्यागी', '(c) Sanjay Kumar Verma / संजय कुमार वर्मा', '(d) Ashwani Bhatia / अश्वनी भाटिया'],
+    correctOptionIndex: 0,
+    explanation: 'Smt. Madhabi Puri Buch continues to guide capital market regulations as the Chairperson of SEBI.'
+  },
+  {
+    id: 'ca-q-today-42',
+    text: 'What is the theme of World Environment Day (WED) celebrated on June 5, 2026? / 5 जून 2026 को मनाए गए विश्व पर्यावरण दिवस (WED) का विषय क्या है?',
+    options: ['(a) Land restoration, desertification and drought resilience / भूमि बहाली, मरुस्थलीकरण और सूखा लचीलापन', '(b) Beat Plastic Pollution / प्लास्टिक प्रदूषण को हराएं', '(c) Ecosystem Restoration / पारिस्थितिकी तंत्र की बहाली', '(d) Only One Earth / केवल एक पृथ्वी'],
+    correctOptionIndex: 0,
+    explanation: 'The official theme for World Environment Day on June 5, 2026, is "Land restoration, desertification and drought resilience".'
+  },
+  {
+    id: 'ca-q-today-43',
+    text: 'Which Indian state’s archaeological site "Moidams" (Mound-Burial System of the Ahom Dynasty) was added to the UNESCO World Heritage List in 2026? / किस भारतीय राज्य के पुरातात्विक स्थल "मोइदम" (अहोम राजवंश की टीला-दफन प्रणाली) को 2026 में यूनेस्को की विश्व विरासत सूची में जोड़ा गया था?',
+    options: ['(a) Assam / असम', '(b) West Bengal / पश्चिम बंगाल', '(c) Odisha / ओडिशा', '(d) Tripura / त्रिपुरा'],
+    correctOptionIndex: 0,
+    explanation: 'The "Moidams" of Charaideo, Assam, representing the royal necropolis of the Ahom Kings, became a UNESCO World Heritage site.'
+  },
+  {
+    id: 'ca-q-today-44',
+    text: 'The 2026 G20 Summit is scheduled to be hosted by which South American nation? / 2026 जी20 शिखर सम्मेलन की मेजबानी किस दक्षिण अमेरिकी देश द्वारा की जानी निर्धारित है?',
+    options: ['(a) Brazil / ब्राजील', '(b) Argentina / अर्जेंटीना', '(c) Chile / चिली', '(d) Colombia / कोलंबिया'],
+    correctOptionIndex: 0,
+    explanation: 'Following the previous presidency success, Brazil is hosting the premier multilateral G20 Summit in 2026.'
+  },
+  {
+    id: 'ca-q-today-45',
+    text: 'Which ministry launched the "PRERANA" experiential learning portal for senior secondary students? / किस मंत्रालय ने वरिष्ठ माध्यमिक छात्रों के लिए "प्रेरणा" (PRERANA) अनुभवात्मक शिक्षण पोर्टल शुरू किया है?',
+    options: ['(a) Ministry of Education / शिक्षा मंत्रालय', '(b) Ministry of Skill Development / कौशल विकास मंत्रालय', '(c) Ministry of Youth Affairs / युवा मामले मंत्रालय', '(d) Ministry of Culture / संस्कृति मंत्रालय'],
+    correctOptionIndex: 0,
+    explanation: 'The Department of School Education under the Ministry of Education launched "PRERANA" to build leadership values.'
+  },
+  {
+    id: 'ca-q-today-46',
+    text: 'What is India’s ranking in the World Bank’s Logistics Performance Index (LPI) 2026? / विश्व बैंक के लॉजिस्टिक्स प्रदर्शन सूचकांक (LPI) 2026 में भारत का स्थान क्या है?',
+    options: ['(a) 34th / 34वां', '(b) 38th / 38वां', '(c) 42nd / 42वां', '(d) 46th / 46वां'],
+    correctOptionIndex: 1,
+    explanation: 'India ranked 38th out of 139 nations in the Logistics Performance Index due to heavy national highway expansions and dedicated freight corridors.'
+  },
+  {
+    id: 'ca-q-today-47',
+    text: 'In June 2026, India successfully launched its first deep ocean manned scientific research submarine called: / जून 2026 में भारत ने अपनी पहली गहरे समुद्र में मानवयुक्त वैज्ञानिक अनुसंधान पनडुब्बी का सफलतापूर्वक परीक्षण किया, उसका नाम क्या है?',
+    options: ['(a) Samudrayaan (Matsya 6000) / समुद्रयान (मत्स्य 6000)', '(b) Sagar-Ratna / सागर-रत्न', '(c) Deep-Diver 1 / डीप-डाइवर 1', '(d) Jal-Purush / जल-पुरुष'],
+    correctOptionIndex: 0,
+    explanation: 'The Samudrayaan project involves sending three scientists in the Matsya 6000 submersible vehicle 6,000 meters deep under the Indian Ocean.'
+  },
+  {
+    id: 'ca-q-today-48',
+    text: 'Who has taken charge as the new chairperson of the National Green Tribunal (NGT) in 2026? / 2026 में राष्ट्रीय हरित अधिकरण (NGT) के नए अध्यक्ष के रूप में किसने कार्यभार संभाला है?',
+    options: ['(a) Justice Prakash Shrivastava / न्यायमूर्ति प्रकाश श्रीवास्तव', '(b) Justice Adarsh Kumar Goel / न्यायमूर्ति आदर्श कुमार गोयल', '(c) Justice Sheo Kumar Singh / न्यायमूर्ति शिव कुमार सिंह', '(d) Justice Lagesh Kumar / न्यायमूर्ति लाघेश कुमार'],
+    correctOptionIndex: 0,
+    explanation: 'Justice Prakash Shrivastava continues to lead environmental conservation verdicts as NGT Chairperson.'
+  },
+  {
+    id: 'ca-q-today-49',
+    text: 'The newly discovered active geothermal site "Puga Valley" is located in which region of India? / हाल ही में खोजा गया सक्रिय भू-तापीय स्थल "पुगा घाटी" (Puga Valley) भारत के किस क्षेत्र में स्थित है?',
+    options: ['(a) Ladakh / लद्दाख', '(b) Himachal Pradesh / हिमाचल प्रदेश', '(c) Uttarakhand / उत्तराखंड', '(d) Sikkim / सिक्किम'],
+    correctOptionIndex: 0,
+    explanation: 'Puga Valley in eastern Ladakh is a high-potential geothermal energy site where ONGC is executing India\'s first geothermal power project.'
+  },
+  {
+    id: 'ca-q-today-50',
+    text: 'Which Indian public sector bank became the first to cross ₹10 Lakh Crore in overall market capitalization in mid-2026? / मध्य-2026 में कुल बाजार पूंजीकरण में ₹10 लाख करोड़ को पार करने वाला पहला भारतीय सार्वजनिक क्षेत्र का बैंक कौन सा बना?',
+    options: ['(a) State Bank of India (SBI) / भारतीय स्टेट बैंक', '(b) Punjab National Bank (PNB) / पंजाब नेशनल बैंक', '(c) Bank of Baroda / बैंक ऑफ बड़ौदा', '(d) Canara Bank / केनरा बैंक'],
+    correctOptionIndex: 0,
+    explanation: 'The State Bank of India (SBI) registered massive gains to breach the elite ₹10 Lakh Crore market capitalization benchmark, making it India\'s most valued public bank.'
+  },
+  {
     id: 'ca-q-1',
     text: 'Which Indian State ranked first bilingually as per the latest NITI Aayog State Energy Index 2026? / हाल ही में जारी नीति आयोग राज्य ऊर्जा सूचकांक 2026 में किस भारतीय राज्य ने पहला स्थान प्राप्त किया है?',
     options: ['(a) Rajasthan / राजस्थान', '(b) Gujarat / गुजरात', '(c) Karnataka / कर्नाटक', '(d) Maharashtra / महाराष्ट्र'],
