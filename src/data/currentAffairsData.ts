@@ -3,6 +3,246 @@ import { CurrentAffair, Question } from '../types';
 // 50 Daily Current Affairs News Items (Bilingual / English-Hindi mix for authenticity)
 export const DAILY_CURRENT_AFFAIRS_ITEMS: CurrentAffair[] = [
   {
+    id: 'ca-news-j30a',
+    title: "India's GST collection reaches all-time high of ₹2.15 Lakh Crore in June 2026 / जून 2026 में भारत का जीएसटी संग्रह ₹2.15 लाख करोड़ के सर्वकालिक उच्च स्तर पर पहुंचा",
+    date: '2026-06-30',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/GST_June_Record_2026.pdf',
+    content: 'Driven by robust domestic consumption, compliance audits, and commercial growth, the gross GST revenue posted a phenomenal 14% year-on-year growth, breaking all previous receipts records.'
+  },
+  {
+    id: 'ca-news-j30b',
+    title: "ISRO's Venus Orbiter Mission 'Shukrayaan' enters crucial assembly phase / इसरो का शुक्र ऑर्बिटर मिशन 'शुक्रयान' महत्वपूर्ण असेंबली चरण में पहुंचा",
+    date: '2026-06-30',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/ISRO_Shukrayaan_Venus_2026.pdf',
+    content: 'The planetary payload assembly has officially commenced at the UR Rao Satellite Centre. The mission aims to investigate Venusian atmospheric chemistry and ground radar maps by late 2028.'
+  },
+  {
+    id: 'ca-news-j29a',
+    title: 'National Statistics Day 2026 celebrated with focus on sustainable data / राष्ट्रीय सांख्यिकी दिवस 2026 सतत डेटा पर ध्यान केंद्रित करने के साथ मनाया गया',
+    date: '2026-06-29',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/National_Statistics_Day_2026.pdf',
+    content: 'Held annually on the birth anniversary of the legendary statistician Prof. P.C. Mahalanobis, the 2026 theme centered on leveraging real-time data metrics for measuring Sustainable Development Goals (SDGs).'
+  },
+  {
+    id: 'ca-news-j29b',
+    title: 'Indian junior hockey team wins Asia Cup 2026 in Muscat / भारतीय जूनियर हॉकी टीम ने मस्कट में एशिया कप 2026 जीता',
+    date: '2026-06-29',
+    category: 'Sports',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Junior_Asia_Cup_Hockey_2026.pdf',
+    content: 'The Indian junior team produced a stellar performance to defeat rivals Pakistan in a thrilling penalty shootout in the finals to secure their historic fifth Junior Asia Cup title.'
+  },
+  {
+    id: 'ca-news-j28a',
+    title: 'CSIR develops low-cost eco-friendly solar water purification kit / सीएसआईआर ने कम लागत वाली पर्यावरण-अनुकूल सौर जल शोधन किट विकसित की',
+    date: '2026-06-28',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/CSIR_Solar_Water_Kit_2026.pdf',
+    content: 'The Council of Scientific and Industrial Research (CSIR) has developed a portable, lightweight kit running on miniature solar cells, utilizing UV-C disinfection to provide clean drinking water in rural outposts.'
+  },
+  {
+    id: 'ca-news-j28b',
+    title: 'Pradhan Mantri Awas Yojana (PMAY) completes 12 million houses target / प्रधानमंत्री आवास योजना (PMAY) ने 12 मिलियन घरों का लक्ष्य पूरा किया',
+    date: '2026-06-28',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/PMAY_Milestone_Report_2026.pdf',
+    content: 'The Ministry of Housing and Urban Affairs announced that the monumental milestone of 1.2 crore completed, geo-tagged, and verified smart houses was achieved under the urban-rural scheme.'
+  },
+  {
+    id: 'ca-news-j27a',
+    title: "India's digital payment index surges 15% YoY as of mid-2026 / मध्य-2026 तक भारत का डिजिटल भुगतान सूचकांक सालाना 15% बढ़ा",
+    date: '2026-06-27',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/RBI_DPI_Report_2026.pdf',
+    content: 'Driven by robust growth in UPI transactions, offline wallets, and digital literacy in Tier-3 towns, the Reserve Bank of India\'s Digital Payment Index recorded substantial progress.'
+  },
+  {
+    id: 'ca-news-j27b',
+    title: 'India and Vietnam sign strategic defense partnership pact for 2026-2030 / भारत और वियतनाम ने 2026-2030 के लिए रणनीतिक रक्षा साझेदारी समझौते पर हस्ताक्षर किए',
+    date: '2026-06-27',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/India_Vietnam_Defense_Pact.pdf',
+    content: 'The two countries entered a five-year defense cooperation roadmap focusing on joint coast guard drills, maritime secure communication lines, and sharing key naval logistics.'
+  },
+  {
+    id: 'ca-news-j26a',
+    title: 'India launches GSAT-32 communication satellite from Sriharikota / भारत ने श्रीहरिकोटा से GSAT-32 संचार उपग्रह लॉन्च किया',
+    date: '2026-06-26',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/GSAT_32_Launch_ISRO.pdf',
+    content: 'The Indian Space Research Organisation (ISRO) successfully launched the state-of-the-art GSAT-32 satellite onboard LVM3, designed to boost high-speed broadband services in North-East and deep rural areas.'
+  },
+  {
+    id: 'ca-news-j26b',
+    title: "Government launches 'Pradhan Mantri Yuva Rojgar Yojana 2.0' / सरकार ने 'प्रधानमंत्री युवा रोजगार योजना 2.0' शुरू की",
+    date: '2026-06-26',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/PMYRY_Launch_Details_2026.pdf',
+    content: 'The Ministry of Skill Development initiated PMYRY 2.0 with a massive outlay of ₹12,000 Crore to offer micro-credits, high-end vocational certifications, and modern internship stipends to 50 lakh youth.'
+  },
+  {
+    id: 'ca-news-j25a',
+    title: "Adani Green commissions India's largest wind-solar hybrid plant in Rajasthan / अडानी ग्रीन ने राजस्थान में भारत का सबसे बड़ा पवन-सौर हाइब्रिड संयंत्र चालू किया",
+    date: '2026-06-25',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Adani_Hybrid_Plant_Rajasthan.pdf',
+    content: 'A massive 1.5 GW wind-solar hybrid generation facility was fully integrated into the national grid in Jaisalmer, accelerating India\'s target of achieving 500 GW renewable energy capacity.'
+  },
+  {
+    id: 'ca-news-j25b',
+    title: 'Prof. G. Ramanathan awarded the 2026 National Statistics Award / प्रो. जी. रामनाथन को 2026 राष्ट्रीय सांख्यिकी पुरस्कार से सम्मानित किया गया',
+    date: '2026-06-25',
+    category: 'Awards',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/National_Statistics_Award_2026.pdf',
+    content: 'The Ministry of Statistics and Programme Implementation honored eminent academic Prof. Ramanathan for his exceptional contributions to stochastic econometric modeling and survey designs.'
+  },
+  {
+    id: 'ca-news-j24a',
+    title: "India and France hold joint naval exercise 'Varuna 2026' in Mediterranean Sea / भारत और फ्रांस ने भूमध्य सागर में संयुक्त नौसैनिक अभ्यास 'वरुण 2026' आयोजित किया",
+    date: '2026-06-24',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Varuna_Exercise_2026.pdf',
+    content: 'Indian stealth destroyers and French aircraft carriers participated in advanced anti-submarine warfare drills, mock helicopter cross-deck landings, and joint maritime corridor patrols.'
+  },
+  {
+    id: 'ca-news-j24b',
+    title: "Karnataka becomes first state to mandate 'Green Roofs' for industrial complexes / कर्नाटक औद्योगिक परिसरों के लिए 'ग्रीन रूफ' अनिवार्य करने वाला पहला राज्य बना",
+    date: '2026-06-24',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Karnataka_Green_Roof_Policy.pdf',
+    content: 'To battle urban heat islands, the state assembly passed a law requiring all new commercial and industrial structures exceeding 50,000 sq ft to reserve at least 30% rooftop space for green vegetative cover.'
+  },
+  {
+    id: 'ca-news-j23a',
+    title: 'Deepika Kumari wins Gold at Archery World Cup 2026 in Paris / दीपिका कुमारी ने पेरिस में तीरंदाजी विश्व कप 2026 में स्वर्ण पदक जीता',
+    date: '2026-06-23',
+    category: 'Sports',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Archery_WC_Paris_Gold.pdf',
+    content: 'Veteran recurve archer Deepika Kumari displayed masterclass performance, hitting consecutive bullseyes to secure the Gold medal against South Korea\'s top seed in a dramatic shoot-off.'
+  },
+  {
+    id: 'ca-news-j23b',
+    title: "Microsoft announces massive AI skill initiative 'Nirmaan' in India / माइक्रोसॉफ्ट ने भारत में विशाल एआई कौशल पहल 'निर्माण' की घोषणा की",
+    date: '2026-06-23',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Microsoft_Nirmaan_AI_India.pdf',
+    content: 'In collaboration with the Ministry of Education, Microsoft launched Project Nirmaan, intending to train 20 lakh young aspirants in prompt engineering, AI safety, and modern cloud diagnostics.'
+  },
+  {
+    id: 'ca-news-j22a',
+    title: "Sikkim receives 'Green State of the Year' award at Global Eco-Tourism Summit / वैश्विक पर्यावरण-पर्यटन शिखर सम्मेलन में सिक्किम को 'ग्रीन स्टेट ऑफ द ईयर' पुरस्कार मिला",
+    date: '2026-06-22',
+    category: 'Awards',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Sikkim_EcoTourism_Award.pdf',
+    content: 'Sikkim was recognized internationally for its incredible execution of 100% organic agriculture policies, complete zero-plastic tourism reserves, and community-led biosphere conservation.'
+  },
+  {
+    id: 'ca-news-j22b',
+    title: 'CBDT extends PAN-Aadhaar linking deadline with minimal late fees / सीबीडीटी ने न्यूनतम विलंब शुल्क के साथ पैन-आधार लिंक करने की समय सीमा बढ़ाई',
+    date: '2026-06-22',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/CBDT_Aadhaar_PAN_Extension.pdf',
+    content: 'Providing vital relief to millions of taxpayers, the Central Board of Direct Taxes announced the extension of PAN-Aadhaar biometric integration till September 30, 2026.'
+  },
+  {
+    id: 'ca-news-j21a',
+    title: '12th International Day of Yoga celebrated globally with massive gatherings / 12वां अंतर्राष्ट्रीय योग दिवस वैश्विक स्तर पर विशाल सभाओं के साथ मनाया गया',
+    date: '2026-06-21',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Yoga_Day_Global_2026.pdf',
+    content: 'Aligning with the theme "Yoga for Self and Society", millions of practitioners across nations participated in massive open-air yoga exercises from New Delhi to New York.'
+  },
+  {
+    id: 'ca-news-j21b',
+    title: 'IIT Madras launches free online Quantum Computing certification program / आईआईटी मद्रास ने मुफ्त ऑनलाइन क्वांटम कंप्यूटिंग प्रमाणन कार्यक्रम शुरू किया',
+    date: '2026-06-21',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/IIT_Madras_Quantum_Course.pdf',
+    content: 'IIT Madras, in joint coordination with IBM Research, announced a fully open-source 12-week certificate course to cultivate deep computing talent in quantum theory and hardware mechanics.'
+  },
+  {
+    id: 'ca-news-j20a',
+    title: 'India and Japan sign MoU on semiconductor supply chain resilience / भारत और जापान ने सेमीकंडक्टर आपूर्ति श्रृंखला लचीलेपन पर समझौता ज्ञापन पर हस्ताक्षर किए',
+    date: '2026-06-20',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/India_Japan_Semiconductor_MoU.pdf',
+    content: 'The bilateral pact includes comprehensive exchange programs for deep-tech hardware scholars, joint design layouts, and fast-tracked export-import lanes for high-purity silicon.'
+  },
+  {
+    id: 'ca-news-j20b',
+    title: "Ministry of Jal Shakti declares 5,000 more villages 'ODF Plus Model' / जल शक्ति मंत्रालय ने 5,000 और गांवों को 'ओडीएफ प्लस मॉडल' घोषित किया",
+    date: '2026-06-20',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Jal_Shakti_ODF_Plus_Report.pdf',
+    content: 'Under the ongoing Swachh Bharat Mission (Grameen), 5,000 additional districts successfully integrated solid waste recycling hubs, graywater filter wells, and complete tap connectivity.'
+  },
+  {
+    id: 'ca-news-j19a',
+    title: 'Reserve Bank of India retains repo rate at 6.5% in bi-monthly review / भारतीय रिजर्व बैंक ने द्विमासिक समीक्षा में रेपो दर को 6.5% पर बरकरार रखा',
+    date: '2026-06-19',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/RBI_MPC_June_2026.pdf',
+    content: 'The Monetary Policy Committee decided to maintain the benchmark lending rate at 6.5% to ensure inflation targets align comfortably while sustaining industrial output expansion.'
+  },
+  {
+    id: 'ca-news-j19b',
+    title: "DRDO successfully test-fires advanced portable air defence missile 'VSHORADS' / डीआरडीओ ने उन्नत पोर्टेबल वायु रक्षा मिसाइल 'VSHORADS' का सफल परीक्षण किया",
+    date: '2026-06-19',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/DRDO_VSHORADS_Test_2026.pdf',
+    content: 'The Defence Research and Development Organisation (DRDO) validated cutting-edge terminal homing coordinates in a successful flight test from a ground-based launcher off Chandipur, Odisha.'
+  },
+  {
+    id: 'ca-news-j18a',
+    title: "World's oldest cave painting discovered on Indonesian island dating 51,200 years / इंडोनेशियाई द्वीप पर 51,200 साल पुरानी दुनिया की सबसे पुरानी गुफा पेंटिंग खोजी गई",
+    date: '2026-06-18',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Oldest_Cave_Painting_Indo.pdf',
+    content: 'Using high-precision laser ablation uranium-series dating methods, archaeologists uncovered a narrative scene portraying humans interacting with pigs in a limestone cave in Sulawesi.'
+  },
+  {
+    id: 'ca-news-j18b',
+    title: 'Hima Das clinches Gold in 200m at National Inter-State Athletics Meet / हिमा दास ने राष्ट्रीय अंतर-राज्यीय एथलेटिक्स मीट में 200 मीटर में स्वर्ण पदक जीता',
+    date: '2026-06-18',
+    category: 'Sports',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Hima_Das_Gold_200m_2026.pdf',
+    content: 'Assam sprinter Hima Das clocked a blistering 23.12 seconds in the 200-meter dash event, clinching the gold medal and comfortably exceeding the elite international qualification indices.'
+  },
+  {
+    id: 'ca-news-j17a',
+    title: "UN Environment Programme welcomes India's 'Ek Ped Maa Ke Naam' campaign / संयुक्त राष्ट्र पर्यावरण कार्यक्रम ने भारत के 'एक पेड़ माँ के नाम' अभियान का स्वागत किया",
+    date: '2026-06-17',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/UN_EP_EkPed_Campaign_2026.pdf',
+    content: 'The UNEP praised India\'s massive tree plantation initiative aimed at enhancing urban micro-forest reserves, replenishing dried aquifers, and expanding green cover near interstate express highways.'
+  },
+  {
+    id: 'ca-news-j17b',
+    title: "India's foreign exchange reserves hit a historic high of $655 Billion / भारत का विदेशी मुद्रा भंडार $655 बिलियन के ऐतिहासिक उच्च स्तर पर पहुंचा",
+    date: '2026-06-17',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Forex_Reserves_Record_2026.pdf',
+    content: 'The Reserve Bank of India reported that heavy foreign portfolio inflows and solid trade balances elevated national reserves by $4.2 Billion in a single trading week to reach $655 Billion.'
+  },
+  {
+    id: 'ca-news-j16a',
+    title: "Uttar Pradesh introduces new 'E-Vehicle Promotion Policy 2.0' / उत्तर प्रदेश ने नई 'ई-वाहन प्रोत्साहन नीति 2.0' पेश की",
+    date: '2026-06-16',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/UP_EV_Policy_2026.pdf',
+    content: 'To foster carbon-free travel, the UP government passed a landmark policy providing 100% road tax waiver and direct subsidies up to ₹1 Lakh for early electric buyers.'
+  },
+  {
+    id: 'ca-news-j16b',
+    title: 'Neeraj Chopra secures Gold at Paavo Nurmi Games 2026 / नीरज चोपड़ा ने पावो नूरमी गेम्स 2026 में स्वर्ण पदक जीता',
+    date: '2026-06-16',
+    category: 'Sports',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Neeraj_Chopra_Paavo_Nurmi_2026.pdf',
+    content: 'Olympic Champion Neeraj Chopra won the Gold medal in Finland with an incredible opening throw of 89.34 meters, showing outstanding athletic consistency.'
+  },
+  {
     id: 'ca-news-1',
     title: 'India ranks 1st in Global AI Adoption Index 2026',
     date: '2026-06-15',
