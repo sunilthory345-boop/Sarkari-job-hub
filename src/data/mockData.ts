@@ -1902,6 +1902,56 @@ export const INITIAL_JOBS: GovJob[] = [
 
 export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
   {
+    id: 'ssc-mts-havaldar-admit-card-2026',
+    title: 'SSC Multi-Tasking Staff (MTS) & Havaldar Exam 2026 e-Admit Card & Application Status (All Regions Out Now)',
+    org: 'Staff Selection Commission (SSC)',
+    examDate: '2026-07-15 to 2026-08-10',
+    examCity: 'Check CR, NR, WR, SR, ER, NWR, KKR, MPR Region Wise Details',
+    downloadUrl: 'https://ssc.gov.in',
+    officialLink: 'https://ssc.gov.in',
+    addedDate: '2026-06-26'
+  },
+  {
+    id: 'csir-net-june-final-admit-2026',
+    title: 'CSIR NET June 2026 Joint CSIR-UGC National Eligibility Test Final Admit Card / Call Letter',
+    org: 'National Testing Agency (NTA)',
+    examDate: '2026-06-27 to 2026-06-30',
+    examCity: 'Allotted CBT Centres Across All States',
+    downloadUrl: 'https://csirnet.nta.ac.in',
+    officialLink: 'https://csirnet.nta.ac.in',
+    addedDate: '2026-06-26'
+  },
+  {
+    id: 'ibps-rrb-officer-assistant-pet-admit-2026',
+    title: 'IBPS RRB Officer Scale I & Office Assistant 2026 Online Pre-Exam Training (PET) Call Letter',
+    org: 'Institute of Banking Personnel Selection (IBPS)',
+    examDate: '2026-07-08 to 2026-07-13',
+    examCity: 'Registered Centers for PET Scheduled Candidates',
+    downloadUrl: 'https://www.ibps.in',
+    officialLink: 'https://www.ibps.in',
+    addedDate: '2026-06-26'
+  },
+  {
+    id: 'up-police-constable-reexam-admit-2026',
+    title: 'UP Police Constable Re-Exam 2026 City Intimation Slip & Admit Card Server Link',
+    org: 'Uttar Pradesh Police Recruitment and Promotion Board (UPPRPB)',
+    examDate: '2026-07-20 to 2026-07-25',
+    examCity: 'Check Allotted District in Uttar Pradesh',
+    downloadUrl: 'https://uppbpb.gov.in',
+    officialLink: 'https://uppbpb.gov.in',
+    addedDate: '2026-06-26'
+  },
+  {
+    id: 'rrb-alp-cbt1-hall-ticket-2026',
+    title: 'Railway Recruitment Board (RRB) Assistant Loco Pilot (ALP) CBT-1 Hall Ticket 2026',
+    org: 'RRB Railway Recruitment Boards',
+    examDate: '2026-07-18 to 2026-07-23',
+    examCity: 'Check Registered Regional CBT Centers',
+    downloadUrl: 'https://rrbcdg.gov.in',
+    officialLink: 'https://rrbcdg.gov.in',
+    addedDate: '2026-06-26'
+  },
+  {
     id: 'ibps-clerk-prelims-admit-card-2026',
     title: 'IBPS CRP Clerks-XIV Preliminary Exam e-Admit Card / Call Letter (Out Now)',
     org: 'Institute of Banking Personnel Selection (IBPS)',
@@ -2094,6 +2144,66 @@ export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
 ];
 
 export const INITIAL_RESULTS: JobResult[] = [
+  {
+    id: 'ssc-chsl-tier1-result-2026',
+    title: 'SSC CHSL (10+2) Tier-1 Exam 2026 Merit List PDF & Region-wise Cut-off Marks (Released)',
+    org: 'Staff Selection Commission (SSC)',
+    meritListUrl: 'https://ssc.gov.in',
+    scoreCardUrl: 'https://ssc.gov.in',
+    cutOff: {
+      UR: '142.5 Marks Out of 200',
+      OBC: '138.0 Marks',
+      SC: '124.5 Marks',
+      ST: '118.0 Marks'
+    },
+    downloadUrl: 'https://ssc.gov.in',
+    releaseDate: '2026-06-26'
+  },
+  {
+    id: 'nta-neet-ug-result-2026',
+    title: 'NTA NEET UG 2026 Final All India Merit Rank, Category Rank & Scorecard (Declared)',
+    org: 'National Testing Agency (NTA)',
+    meritListUrl: 'https://exams.nta.ac.in/NEET',
+    scoreCardUrl: 'https://exams.nta.ac.in/NEET',
+    cutOff: {
+      UR: '164 Marks (General/EWS)',
+      OBC: '129 Marks (OBC-NCL)',
+      SC: '129 Marks',
+      ST: '129 Marks'
+    },
+    downloadUrl: 'https://exams.nta.ac.in/NEET',
+    releaseDate: '2026-06-26'
+  },
+  {
+    id: 'upsc-nda-na1-result-2026',
+    title: 'UPSC NDA & NA (I) 2026 Written Examination Qualified Candidates List / Merit PDF',
+    org: 'Union Public Service Commission (UPSC)',
+    meritListUrl: 'https://upsc.gov.in',
+    scoreCardUrl: 'https://upsc.gov.in',
+    cutOff: {
+      UR: '360 Marks Out of 900',
+      OBC: 'N/A',
+      SC: 'N/A',
+      ST: 'N/A'
+    },
+    downloadUrl: 'https://upsc.gov.in',
+    releaseDate: '2026-06-26'
+  },
+  {
+    id: 'ibps-rrb-clerk-xv-result-2026',
+    title: 'IBPS RRB Clerk XV Preliminary Online Written Test Result Status & Shortlist',
+    org: 'Institute of Banking Personnel Selection (IBPS)',
+    meritListUrl: 'https://www.ibps.in',
+    scoreCardUrl: 'https://www.ibps.in',
+    cutOff: {
+      UR: '76.5 Marks Out of 80 (State Wise)',
+      OBC: '74.0 Marks',
+      SC: '68.5 Marks',
+      ST: '63.0 Marks'
+    },
+    downloadUrl: 'https://www.ibps.in',
+    releaseDate: '2026-06-26'
+  },
   {
     id: 'upsc-civil-services-prelims-result-2026',
     title: 'UPSC Civil Services Prelims Exam 2026 Qualified Candidates Merit List & Scorecard (Out Now)',
@@ -2322,6 +2432,10 @@ export const INITIAL_RESULTS: JobResult[] = [
 ];
 
 const BASE_ANSWER_KEYS = [
+  { id: 'ugc-net-june-key-today-2026', title: 'UGC NET June 2026 Joint CSIR-UGC Test Paper 1 & 2 Provisional Solved Answer Key & OMR Sheet PDF (Declared)', org: 'National Testing Agency (NTA)', released: '2026-06-26', objectionsLimit: '2026-07-03', pdfUrl: 'https://ugcnet.nta.ac.in' },
+  { id: 'ssc-gd-constable-key-2026', title: 'SSC GD Constable Exam 2026 Provisional Solved Answer Sheets with Candidate Response Key (Out Now)', org: 'Staff Selection Commission (SSC)', released: '2026-06-26', objectionsLimit: '2026-07-02', pdfUrl: 'https://ssc.gov.in' },
+  { id: 'bihar-civil-court-key-2026', title: 'Bihar Civil Court Clerk & Stenographer Exam 2026 Solved Booklet Keys (All Sets out)', org: 'Patna High Court / Bihar Civil Court', released: '2026-06-26', objectionsLimit: '2026-07-05', pdfUrl: 'https://patnahighcourt.gov.in' },
+  { id: 'mppeb-mp-police-key-2026', title: 'MPPEB MP Police Constable Exam 2026 Official Key with Objection Form Link', org: 'Madhya Pradesh Professional Examination Board (MPPEB)', released: '2026-06-26', objectionsLimit: '2026-07-01', pdfUrl: 'https://esb.mp.gov.in' },
   { id: 'neet-ug-answer-key-2026', title: 'NEET UG 2026 Official Answer Key with Scanned OMR Response Sheet PDF (Out Now)', org: 'National Testing Agency (NTA)', released: '2026-06-24', objectionsLimit: '2026-07-02', pdfUrl: 'https://exams.nta.ac.in/NEET' },
   { id: 'upsc-prelims-gs-answer-key-2026', title: 'UPSC Civil Services (IAS/IFS) Prelims GS & CSAT 2026 Final Solved Answer Keys', org: 'Union Public Service Commission (UPSC)', released: '2026-06-23', objectionsLimit: '2026-06-30', pdfUrl: 'https://upsc.gov.in/prelims_answer_sheet_2026.pdf' },
   { id: 'ssc-phase-12-answer-key-2026', title: 'SSC Selection Post Phase XII Official Answer Key with Candidate Response Sheets', org: 'Staff Selection Commission (SSC)', released: '2026-06-15', objectionsLimit: '2026-06-20', pdfUrl: 'https://ssc.gov.in/phase-12-response-key-link' },

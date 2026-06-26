@@ -1388,7 +1388,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                     <span className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest block font-mono">
                       ⚡ DEMONSTRATION SIMULATOR / लाइव टेस्ट सिम्युलेटर
                     </span>
-                    <div className="grid gap-2.5 sm:grid-cols-3">
+                    <div className="grid gap-2.5 grid-cols-2 lg:grid-cols-4">
                       <button
                         type="button"
                         onClick={() => {
@@ -1408,11 +1408,11 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                             location: 'All India Slots'
                           };
                           handleNewLaunch('Vacancy', demoJob.title, demoJob.org, 'jobs', demoJob);
-                          triggerToast("🚀 Demo Vacancy added and synchronized in real-time!");
+                          triggerToast("🚀 Today Vacancy added and synchronized in real-time!");
                         }}
                         className="bg-blue-600/30 hover:bg-blue-600/45 text-blue-200 font-bold border border-blue-500/30 rounded-xl px-3 py-2 text-xs transition duration-150 active:scale-95 cursor-pointer"
                       >
-                        ➕ Demo Vacancy
+                        ➕ Today Vacancy
                       </button>
 
                       <button
@@ -1429,11 +1429,11 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                             addedDate: new Date().toISOString().split('T')[0]
                           };
                           handleNewLaunch('Admit Card', demoCard.title, demoCard.org, 'admitCards', demoCard);
-                          triggerToast("🚀 Demo Admit Card published and sync triggered!");
+                          triggerToast("🚀 Today Admit Card published and sync triggered!");
                         }}
                         className="bg-orange-600/30 hover:bg-orange-600/45 text-orange-200 font-bold border border-orange-500/30 rounded-xl px-3 py-2 text-xs transition duration-150 active:scale-95 cursor-pointer"
                       >
-                        ➕ Demo Admit Card
+                        ➕ Today Admit Card
                       </button>
 
                       <button
@@ -1450,15 +1450,34 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                             releaseDate: new Date().toISOString().split('T')[0]
                           };
                           handleNewLaunch('Result', demoResult.title, demoResult.org, 'results', demoResult);
-                          triggerToast("🚀 Demo Result declared & broadcast alerts fired!");
+                          triggerToast("🚀 Today Result declared & broadcast alerts fired!");
                         }}
                         className="bg-emerald-600/30 hover:bg-emerald-600/45 text-emerald-200 font-bold border border-emerald-500/30 rounded-xl px-3 py-2 text-xs transition duration-150 active:scale-95 cursor-pointer"
                       >
-                        ➕ Demo Result List
+                        ➕ Today Result List
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const demoKey = {
+                            id: `demo-key-${Date.now()}`,
+                            title: 'NEET UG 2026 Official Answer Key & Scanned OMR Response Sheet PDF',
+                            org: 'National Testing Agency (NTA)',
+                            released: new Date().toISOString().split('T')[0],
+                            objectionsLimit: '2026-07-05',
+                            pdfUrl: 'https://exams.nta.ac.in/NEET'
+                          };
+                          handleNewLaunch('Answer Key', demoKey.title, demoKey.org, 'answerKeys', demoKey);
+                          triggerToast("🚀 Today Answer Key published & notification alert broadcasted!");
+                        }}
+                        className="bg-purple-600/30 hover:bg-purple-600/45 text-purple-200 font-bold border border-purple-500/30 rounded-xl px-3 py-2 text-xs transition duration-150 active:scale-95 cursor-pointer"
+                      >
+                        ➕ Today Answer Key
                       </button>
                     </div>
                     <p className="text-[10px] text-slate-500 italic mt-1 leading-snug">
-                      Clicking these simulator buttons mimics an admin launching new posts. It plays the chosen audio chime, throws a toast, adds to the live log, and updates the jobs/admit/result boards instantly!
+                      Clicking these simulator buttons mimics an admin launching new posts. It plays the chosen audio chime, throws a toast, adds to the live log, and updates the jobs/admit/result/answer key boards instantly!
                     </p>
                   </div>
                 </div>
