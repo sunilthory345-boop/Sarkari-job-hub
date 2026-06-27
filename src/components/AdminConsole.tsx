@@ -62,6 +62,11 @@ export default function AdminConsole({
   const [tgEnabled, setTgEnabled] = useState<boolean>(() => localStorage.getItem('sarkari_tg_enabled') === 'true');
   const [tgLogs, setTgLogs] = useState<{timestamp: string, status: string, payload: string}[]>([]);
 
+  // AI Auto-Poster Assistant states
+  const [aiRawInput, setAiRawInput] = useState<string>('');
+  const [isAiProcessing, setIsAiProcessing] = useState<boolean>(false);
+  const [aiParsedResult, setAiParsedResult] = useState<any>(null);
+
   const handleSaveTelegram = () => {
     localStorage.setItem('sarkari_tg_bot_token', tgBotToken);
     localStorage.setItem('sarkari_tg_chat_id', tgChatId);
@@ -496,6 +501,221 @@ export default function AdminConsole({
   const triggerMessage = (msg: string) => {
     setStatusMessage(msg);
     setTimeout(() => setStatusMessage(null), 3500);
+  };
+
+  // --- AI AUTO-POSTER HANDLER ENGINE ---
+  const handleAiParse = async () => {
+    if (!aiRawInput.trim()) {
+      setStatusMessage("❌ Please enter some raw update text, news, or notice copy first.");
+      return;
+    }
+
+    setIsAiProcessing(true);
+    setAiParsedResult(null);
+    setStatusMessage(null);
+
+    try {
+      const response = await fetch("/api/ai-parse-post", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ rawText: aiRawInput })
+      });
+
+      if (!response.ok) {
+        const errData = await response.json();
+        throw new Error(errData.error || "Failed to process text via AI");
+      }
+
+      const data = await response.json();
+      setAiParsedResult(data);
+      setStatusMessage("✨ AI parsed the notification successfully! Review the parsed fields below to edit or instantly publish.");
+    } catch (error: any) {
+      console.error("AI Auto-Poster error:", error);
+      setStatusMessage(`❌ AI Error: ${error.message || "Failed to connect to AI server. Please make sure GEMINI_API_KEY is active."}`);
+    } finally {
+      setIsAiProcessing(false);
+    }
+  };
+
+  const handleApproveAndPublish = () => {
+    if (!aiParsedResult) return;
+
+    const { category, jobDetails, admitCardDetails, resultDetails, answerKeyDetails } = aiParsedResult;
+
+    if (category === 'jobs' && jobDetails) {
+      const newJob: GovJob = {
+        id: `ai-job-${Date.now()}`,
+        title: jobDetails.title || 'Unknown Vacancy',
+        org: jobDetails.org || 'Government Department',
+        category: (jobDetails.category as any) || 'Others',
+        qualification: (jobDetails.qualification as any) || 'Graduate',
+        ageLimit: jobDetails.ageLimit || '18 - 30 Years',
+        salary: jobDetails.salary || 'N/A',
+        fees: {
+          General: jobDetails.fees?.General || '₹0',
+          OBC: jobDetails.fees?.OBC || '₹0',
+          SC_ST_Female: jobDetails.fees?.SC_ST_Female || '₹0'
+        },
+        totalPosts: Number(jobDetails.totalPosts || 0),
+        applyUrl: jobDetails.applyUrl || 'https://google.com',
+        pdfUrl: jobDetails.pdfUrl || 'https://google.com',
+        officialWebsite: jobDetails.officialWebsite || 'https://google.com',
+        postedDate: new Date().toISOString().split('T')[0],
+        lastDate: jobDetails.lastDate || new Date().toISOString().split('T')[0],
+        importantDates: {
+          applyStart: jobDetails.importantDates?.applyStart || new Date().toISOString().split('T')[0],
+          applyEnd: jobDetails.importantDates?.applyEnd || jobDetails.lastDate || new Date().toISOString().split('T')[0],
+          examDate: jobDetails.importantDates?.examDate || 'To be notified',
+          admitCardRelease: jobDetails.importantDates?.admitCardRelease || 'Before Exam'
+        },
+        selectionProcess: jobDetails.selectionProcess || ['Written Exam', 'Interview'],
+        location: jobDetails.location || 'All India',
+        description: jobDetails.description || 'AI Auto-Generated Vacancy Post.'
+      };
+
+      onAddJob(newJob);
+      dispatchAutoWhatsAppAlert('jobs', newJob.title, newJob.org, {
+        totalPosts: newJob.totalPosts,
+        qualification: newJob.qualification,
+        salary: newJob.salary,
+        location: newJob.location,
+        lastDate: newJob.lastDate,
+        applyUrl: newJob.applyUrl
+      });
+      triggerMessage(`🚀 [AI Bot Success] Published "${newJob.title}" vacancy & auto-broadcasted alerts!`);
+    } else if (category === 'admit-card' && admitCardDetails) {
+      const newCard: AdmitCard = {
+        id: `ai-card-${Date.now()}`,
+        title: admitCardDetails.title || 'Unknown Admit Card',
+        org: admitCardDetails.org || 'Government Commission',
+        examDate: admitCardDetails.examDate || 'To be notified',
+        examCity: admitCardDetails.examCity || 'Assigned Exam Centers',
+        downloadUrl: admitCardDetails.downloadUrl || 'https://google.com',
+        officialLink: admitCardDetails.officialLink || 'https://google.com',
+        addedDate: new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })
+      };
+
+      onAddAdmitCard(newCard);
+      dispatchAutoWhatsAppAlert('admit-card', newCard.title, newCard.org, {
+        examDate: newCard.examDate,
+        examCity: newCard.examCity,
+        downloadUrl: newCard.downloadUrl
+      });
+      triggerMessage(`🚀 [AI Bot Success] Published "${newCard.title}" admit card & auto-broadcasted alerts!`);
+    } else if (category === 'result' && resultDetails) {
+      const newRes: JobResult = {
+        id: `ai-res-${Date.now()}`,
+        title: resultDetails.title || 'Unknown Result',
+        org: resultDetails.org || 'Government Commission',
+        meritListUrl: resultDetails.meritListUrl || 'https://google.com',
+        scoreCardUrl: resultDetails.scoreCardUrl || 'https://google.com',
+        cutOff: {
+          UR: resultDetails.cutOff?.UR || 'N/A',
+          OBC: resultDetails.cutOff?.OBC || 'N/A',
+          SC: resultDetails.cutOff?.SC || 'N/A',
+          ST: resultDetails.cutOff?.ST || 'N/A'
+        },
+        downloadUrl: resultDetails.downloadUrl || 'https://google.com',
+        releaseDate: resultDetails.releaseDate || new Date().toISOString().split('T')[0]
+      };
+
+      onAddResult(newRes);
+      dispatchAutoWhatsAppAlert('result', newRes.title, newRes.org, {
+        releaseDate: newRes.releaseDate,
+        downloadUrl: newRes.downloadUrl
+      });
+      triggerMessage(`🚀 [AI Bot Success] Published "${newRes.title}" exam result & auto-broadcasted alerts!`);
+    } else if (category === 'answer-key' && answerKeyDetails) {
+      const newKey: AnswerKey = {
+        id: `ai-key-${Date.now()}`,
+        title: answerKeyDetails.title || 'Unknown Answer Key',
+        org: answerKeyDetails.org || 'Government Commission',
+        released: answerKeyDetails.released || new Date().toISOString().split('T')[0],
+        objectionsLimit: answerKeyDetails.objectionsLimit || 'N/A',
+        pdfUrl: answerKeyDetails.pdfUrl || 'https://google.com'
+      };
+
+      if (onAddAnswerKey) {
+        onAddAnswerKey(newKey);
+      }
+      dispatchAutoWhatsAppAlert('answer-key', newKey.title, newKey.org, {
+        released: newKey.released,
+        objectionsLimit: newKey.objectionsLimit,
+        pdfUrl: newKey.pdfUrl
+      });
+      triggerMessage(`🚀 [AI Bot Success] Published "${newKey.title}" answer key & auto-broadcasted alerts!`);
+    }
+
+    setAiParsedResult(null);
+    setAiRawInput('');
+  };
+
+  const handleLoadIntoForm = () => {
+    if (!aiParsedResult) return;
+
+    const { category, jobDetails, admitCardDetails, resultDetails, answerKeyDetails } = aiParsedResult;
+
+    if (category === 'jobs' && jobDetails) {
+      setJobForm({
+        title: jobDetails.title || '',
+        org: jobDetails.org || '',
+        category: jobDetails.category || 'Others',
+        qualification: jobDetails.qualification || 'Graduate',
+        ageLimit: jobDetails.ageLimit || '18 - 30 Years',
+        salary: jobDetails.salary || '',
+        GeneralFee: jobDetails.fees?.General || '₹0',
+        OBCFee: jobDetails.fees?.OBC || '₹0',
+        SCSTFee: jobDetails.fees?.SC_ST_Female || '₹0',
+        totalPosts: Number(jobDetails.totalPosts || 0),
+        applyUrl: jobDetails.applyUrl || 'https://google.com',
+        pdfUrl: jobDetails.pdfUrl || 'https://google.com',
+        officialWebsite: jobDetails.officialWebsite || 'https://google.com',
+        lastDate: jobDetails.lastDate || new Date().toISOString().split('T')[0],
+        location: jobDetails.location || 'All India',
+        description: jobDetails.description || ''
+      });
+      setActiveAdminTab('jobs');
+      triggerMessage("📥 Vacancy data loaded into the manual form below. Scroll down to review and submit!");
+    } else if (category === 'admit-card' && admitCardDetails) {
+      setCardForm({
+        title: admitCardDetails.title || '',
+        org: admitCardDetails.org || '',
+        examDate: admitCardDetails.examDate || new Date().toISOString().split('T')[0],
+        examCity: admitCardDetails.examCity || 'Assigned Regional Hubs',
+        downloadUrl: admitCardDetails.downloadUrl || '',
+        officialLink: admitCardDetails.officialLink || ''
+      });
+      setActiveAdminTab('cards');
+      triggerMessage("📥 Admit card data loaded into the Cards/Results tab below. Scroll to review and submit!");
+    } else if (category === 'result' && resultDetails) {
+      setResultForm({
+        title: resultDetails.title || '',
+        org: resultDetails.org || '',
+        meritListUrl: resultDetails.meritListUrl || '',
+        scoreCardUrl: resultDetails.scoreCardUrl || '',
+        cutOffUR: resultDetails.cutOff?.UR || '',
+        cutOffOBC: resultDetails.cutOff?.OBC || '',
+        cutOffSC: resultDetails.cutOff?.SC || '',
+        cutOffST: resultDetails.cutOff?.ST || '',
+        downloadUrl: resultDetails.downloadUrl || ''
+      });
+      setActiveAdminTab('cards');
+      triggerMessage("📥 Result scorecard data loaded into the Cards/Results tab below. Scroll to review and submit!");
+    } else if (category === 'answer-key' && answerKeyDetails) {
+      setKeyForm({
+        title: answerKeyDetails.title || '',
+        org: answerKeyDetails.org || '',
+        released: answerKeyDetails.released || new Date().toISOString().split('T')[0],
+        objectionsLimit: answerKeyDetails.objectionsLimit || '',
+        pdfUrl: answerKeyDetails.pdfUrl || ''
+      });
+      setActiveAdminTab('cards');
+      triggerMessage("📥 Answer key data loaded into the Cards/Results tab below. Scroll to review and submit!");
+    }
+
+    setAiParsedResult(null);
   };
 
   const handleJobSubmit = (e: React.FormEvent) => {
@@ -967,6 +1187,141 @@ What is the standard pH level of pure distilled water at normal room temperature
           {statusMessage}
         </div>
       )}
+
+      {/* AI Auto-Poster Wizard Panel */}
+      <div className="bg-slate-900 text-white rounded-2xl p-5 border border-slate-800 shadow-lg relative overflow-hidden">
+        {/* Subtle glowing ambient lighting */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div className="relative z-10">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-sm font-bold flex items-center gap-2 tracking-wide text-blue-400">
+              <Sparkles className="h-5 w-5 text-blue-400 animate-pulse" />
+              SARKARI AI AUTO-POSTER BOT (एआई बोट से तुरंत पोस्ट करें)
+            </h3>
+            <span className="bg-blue-500/20 text-blue-300 text-[10px] font-mono px-2 py-0.5 rounded-full border border-blue-500/30">
+              POWERED BY GEMINI 3.5
+            </span>
+          </div>
+          
+          <p className="text-slate-300 text-xs mb-4 leading-relaxed">
+            अपनी टेलीग्राम सूचना, समाचार पत्र की कॉपी-पेस्ट, या परीक्षा की किसी भी अनफॉर्मेटेड डिटेल को नीचे पेस्ट करें। AI तुरंत केटेगरी पहचानकर, विवरण को हिंदी/अंग्रेजी में अनुवादित व व्यवस्थित कर सीधे वेबसाइट पर अपलोड कर देगा!
+          </p>
+
+          <div className="space-y-3">
+            <textarea
+              value={aiRawInput}
+              onChange={(e) => setAiRawInput(e.target.value)}
+              placeholder="Paste raw unformatted text here (e.g., 'UPPSC PCS Prelims Exam answer key published. Candidates can check correct responses online. Objections can be raised till 24 July. official portal is uppsc.up.nic.in')"
+              className="w-full h-24 rounded-xl bg-slate-950 border border-slate-800 p-3 text-xs text-slate-100 placeholder-slate-500 focus:outline-hidden focus:border-blue-500 transition resize-none font-mono"
+            />
+
+            <div className="flex justify-between items-center gap-3">
+              <span className="text-[10px] text-slate-400 font-mono">
+                Supports: Vacancies, Admit Cards, Exam Results, Answer Keys
+              </span>
+              <button
+                type="button"
+                onClick={handleAiParse}
+                disabled={isAiProcessing}
+                className="bg-blue-600 hover:bg-blue-500 disabled:bg-slate-800 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md shadow-blue-900/20 disabled:cursor-not-allowed"
+              >
+                {isAiProcessing ? (
+                  <>
+                    <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                    Analyzing Content via AI...
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="h-3.5 w-3.5" />
+                    Auto-Parse & Prepare Update ⚡
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* AI Parsed Results Dashboard */}
+          {aiParsedResult && (
+            <div className="mt-5 border-t border-slate-800 pt-5 space-y-4 animate-fade-in">
+              <div className="bg-blue-950/40 border border-blue-900/50 rounded-xl p-4">
+                <div className="flex items-center justify-between mb-3 pb-2 border-b border-blue-900/30">
+                  <span className="text-xs font-bold text-blue-300 flex items-center gap-1.5">
+                    <Database className="h-4 w-4" />
+                    AI Detected Category: <span className="uppercase text-white bg-blue-600/30 px-2 py-0.5 rounded text-[10px] tracking-wider">{aiParsedResult.category}</span>
+                  </span>
+                  <span className="text-[10px] text-emerald-400 font-bold flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Ready to Sync
+                  </span>
+                </div>
+
+                {/* Show details depending on category */}
+                <div className="text-xs text-slate-300 grid gap-3 sm:grid-cols-2">
+                  {aiParsedResult.category === 'jobs' && aiParsedResult.jobDetails && (
+                    <>
+                      <div><strong className="text-slate-400">Title:</strong> {aiParsedResult.jobDetails.title}</div>
+                      <div><strong className="text-slate-400">Department:</strong> {aiParsedResult.jobDetails.org}</div>
+                      <div><strong className="text-slate-400">Total Posts:</strong> {aiParsedResult.jobDetails.totalPosts || 'N/A'}</div>
+                      <div><strong className="text-slate-400">Qualifications:</strong> {aiParsedResult.jobDetails.qualification}</div>
+                      <div><strong className="text-slate-400">Last Date to Apply:</strong> {aiParsedResult.jobDetails.lastDate}</div>
+                      <div><strong className="text-slate-400">Location:</strong> {aiParsedResult.jobDetails.location}</div>
+                    </>
+                  )}
+
+                  {aiParsedResult.category === 'admit-card' && aiParsedResult.admitCardDetails && (
+                    <>
+                      <div><strong className="text-slate-400">Title:</strong> {aiParsedResult.admitCardDetails.title}</div>
+                      <div><strong className="text-slate-400">Department:</strong> {aiParsedResult.admitCardDetails.org}</div>
+                      <div><strong className="text-slate-400">Exam Date:</strong> {aiParsedResult.admitCardDetails.examDate}</div>
+                      <div><strong className="text-slate-400">Exam Center Cities:</strong> {aiParsedResult.admitCardDetails.examCity}</div>
+                      <div className="sm:col-span-2 truncate"><strong className="text-slate-400">Direct Download Link:</strong> {aiParsedResult.admitCardDetails.downloadUrl}</div>
+                    </>
+                  )}
+
+                  {aiParsedResult.category === 'result' && aiParsedResult.resultDetails && (
+                    <>
+                      <div><strong className="text-slate-400">Title:</strong> {aiParsedResult.resultDetails.title}</div>
+                      <div><strong className="text-slate-400">Department:</strong> {aiParsedResult.resultDetails.org}</div>
+                      <div><strong className="text-slate-400">Release Date:</strong> {aiParsedResult.resultDetails.releaseDate}</div>
+                      <div><strong className="text-slate-400">UR Cut-off:</strong> {aiParsedResult.resultDetails.cutOff?.UR} | <strong className="text-slate-400">OBC:</strong> {aiParsedResult.resultDetails.cutOff?.OBC}</div>
+                      <div className="sm:col-span-2 truncate"><strong className="text-slate-400">Download Link:</strong> {aiParsedResult.resultDetails.downloadUrl}</div>
+                    </>
+                  )}
+
+                  {aiParsedResult.category === 'answer-key' && aiParsedResult.answerKeyDetails && (
+                    <>
+                      <div><strong className="text-slate-400">Title:</strong> {aiParsedResult.answerKeyDetails.title}</div>
+                      <div><strong className="text-slate-400">Department:</strong> {aiParsedResult.answerKeyDetails.org}</div>
+                      <div><strong className="text-slate-400">Released On:</strong> {aiParsedResult.answerKeyDetails.released}</div>
+                      <div><strong className="text-slate-400">Objection Deadline:</strong> {aiParsedResult.answerKeyDetails.objectionsLimit}</div>
+                      <div className="sm:col-span-2 truncate"><strong className="text-slate-400">PDF Key Link:</strong> {aiParsedResult.answerKeyDetails.pdfUrl}</div>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {/* Action Choices */}
+              <div className="flex flex-wrap gap-3 justify-end">
+                <button
+                  type="button"
+                  onClick={handleLoadIntoForm}
+                  className="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs px-4 py-2 rounded-xl transition flex items-center gap-1"
+                >
+                  Load into Form to Edit ✍️
+                </button>
+                <button
+                  type="button"
+                  onClick={handleApproveAndPublish}
+                  className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md shadow-emerald-950/30"
+                >
+                  Instantly Publish to Website 🚀
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
 
       {/* Dynamic Tabs Content */}
       {activeAdminTab === 'jobs' && (

@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI, Type } from "@google/genai";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -148,6 +148,163 @@ Sitemap: ${protocol}://${host}/sitemap.xml`);
       res.json({ success: true, message: "Document deleted successfully" });
     } else {
       res.status(404).json({ error: "Document not found" });
+    }
+  });
+
+  // AI Government Post Auto-Parser and Structurer endpoint
+  app.post("/api/ai-parse-post", async (req, res) => {
+    const { rawText } = req.body;
+    
+    if (!rawText) {
+      return res.status(400).json({ error: "Input text is required." });
+    }
+
+    try {
+      const apiKey = process.env.GEMINI_API_KEY;
+      if (!apiKey) {
+        return res.status(400).json({ 
+          error: "GEMINI_API_KEY is not configured in Server Secrets. Please configure it to use the AI Auto-Poster." 
+        });
+      }
+
+      const ai = new GoogleGenAI({
+        apiKey: apiKey,
+        httpOptions: {
+          headers: {
+            "User-Agent": "aistudio-build",
+          }
+        }
+      });
+
+      const systemInstruction = 
+        "You are an advanced, bilingual (English and Hindi) Indian Government Exams AI Auto-Poster bot. " +
+        "Your job is to read raw input text (such as unformatted official notifications, news bulletins, " +
+        "or short summaries) and convert it into a perfectly structured JSON object matching the requested schema. " +
+        "Determine if the content represents a new job/vacancy ('jobs'), an admit card ('admit-card'), " +
+        "a result list/scorecard ('result'), or an exam answer key ('answer-key'). " +
+        "Generate clean bilingual (English and Hindi) titles, and extract important dates, organizations, fees, " +
+        "and URLs. If a specific field is not mentioned or cannot be inferred, provide a sensible placeholder " +
+        "or empty string/zero, but ensure the structure is complete and conforms exactly to the schema.";
+
+      const response = await ai.models.generateContent({
+        model: "gemini-3.5-flash",
+        contents: `Parse this raw text into a structured exam notification:\n\n${rawText}`,
+        config: {
+          systemInstruction: systemInstruction,
+          temperature: 0.1,
+          responseMimeType: "application/json",
+          responseSchema: {
+            type: Type.OBJECT,
+            properties: {
+              category: {
+                type: Type.STRING,
+                description: "Must be exactly one of: 'jobs', 'admit-card', 'result', 'answer-key'"
+              },
+              jobDetails: {
+                type: Type.OBJECT,
+                properties: {
+                  title: { type: Type.STRING },
+                  org: { type: Type.STRING },
+                  category: { type: Type.STRING },
+                  qualification: { type: Type.STRING },
+                  ageLimit: { type: Type.STRING },
+                  salary: { type: Type.STRING },
+                  fees: {
+                    type: Type.OBJECT,
+                    properties: {
+                      General: { type: Type.STRING },
+                      OBC: { type: Type.STRING },
+                      SC_ST_Female: { type: Type.STRING }
+                    },
+                    required: ["General", "OBC", "SC_ST_Female"]
+                  },
+                  totalPosts: { type: Type.INTEGER },
+                  applyUrl: { type: Type.STRING },
+                  pdfUrl: { type: Type.STRING },
+                  officialWebsite: { type: Type.STRING },
+                  lastDate: { type: Type.STRING },
+                  importantDates: {
+                    type: Type.OBJECT,
+                    properties: {
+                      applyStart: { type: Type.STRING },
+                      applyEnd: { type: Type.STRING },
+                      examDate: { type: Type.STRING },
+                      admitCardRelease: { type: Type.STRING }
+                    },
+                    required: ["applyStart", "applyEnd", "examDate", "admitCardRelease"]
+                  },
+                  selectionProcess: {
+                    type: Type.ARRAY,
+                    items: { type: Type.STRING }
+                  },
+                  location: { type: Type.STRING },
+                  description: { type: Type.STRING }
+                },
+                required: [
+                  "title", "org", "category", "qualification", "ageLimit", "salary", 
+                  "fees", "totalPosts", "applyUrl", "pdfUrl", "officialWebsite", "lastDate", 
+                  "importantDates", "selectionProcess", "location", "description"
+                ]
+              },
+              admitCardDetails: {
+                type: Type.OBJECT,
+                properties: {
+                  title: { type: Type.STRING },
+                  org: { type: Type.STRING },
+                  examDate: { type: Type.STRING },
+                  examCity: { type: Type.STRING },
+                  downloadUrl: { type: Type.STRING },
+                  officialLink: { type: Type.STRING }
+                },
+                required: ["title", "org", "examDate", "examCity", "downloadUrl", "officialLink"]
+              },
+              resultDetails: {
+                type: Type.OBJECT,
+                properties: {
+                  title: { type: Type.STRING },
+                  org: { type: Type.STRING },
+                  meritListUrl: { type: Type.STRING },
+                  scoreCardUrl: { type: Type.STRING },
+                  cutOff: {
+                    type: Type.OBJECT,
+                    properties: {
+                      UR: { type: Type.STRING },
+                      OBC: { type: Type.STRING },
+                      SC: { type: Type.STRING },
+                      ST: { type: Type.STRING }
+                    },
+                    required: ["UR", "OBC", "SC", "ST"]
+                  },
+                  downloadUrl: { type: Type.STRING },
+                  releaseDate: { type: Type.STRING }
+                },
+                required: ["title", "org", "meritListUrl", "scoreCardUrl", "cutOff", "downloadUrl", "releaseDate"]
+              },
+              answerKeyDetails: {
+                type: Type.OBJECT,
+                properties: {
+                  title: { type: Type.STRING },
+                  org: { type: Type.STRING },
+                  released: { type: Type.STRING },
+                  objectionsLimit: { type: Type.STRING },
+                  pdfUrl: { type: Type.STRING }
+                },
+                required: ["title", "org", "released", "objectionsLimit", "pdfUrl"]
+              }
+            },
+            required: ["category"]
+          }
+        }
+      });
+
+      const parsedJson = JSON.parse(response.text || "{}");
+      res.json(parsedJson);
+    } catch (error: any) {
+      console.error("AI Post Parsing Error:", error);
+      res.status(500).json({ 
+        error: "Failed to parse content using AI.", 
+        details: error.message || error 
+      });
     }
   });
 
