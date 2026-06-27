@@ -2553,6 +2553,7 @@ export const INITIAL_RESULTS: JobResult[] = [
 ];
 
 const BASE_ANSWER_KEYS = [
+  { id: 'rrb-ntpc-ug-key-2026', title: 'RRB NTPC Under Graduate (UG) CEN 04/2026 CBT-1 Official Provisional Answer Key & OMR Response Sheets (Declared) / RRB NTPC अंडर ग्रेजुएट (UG) CBT-1 अनंतिम उत्तर कुंजी और रिस्पॉन्स शीट जारी', org: 'Railway Recruitment Boards (RRB)', released: '2026-06-27', objectionsLimit: '2026-07-06', pdfUrl: 'https://www.rrbcdg.gov.in/ntpc-ug-cbt1-key-2026.pdf' },
   { id: 'uppsc-pcs-prelims-key-2026', title: 'UPPSC PCS Prelims Exam 2026 Solved Answer Key & Candidate Response Sheet (All Sets Out)', org: 'Uttar Pradesh Public Service Commission (UPPSC)', released: '2026-06-26', objectionsLimit: '2026-07-04', pdfUrl: 'https://uppsc.up.nic.in' },
   { id: 'ugc-net-june-key-today-2026', title: 'UGC NET June 2026 Joint CSIR-UGC Test Paper 1 & 2 Provisional Solved Answer Key & OMR Sheet PDF (Declared)', org: 'National Testing Agency (NTA)', released: '2026-06-26', objectionsLimit: '2026-07-03', pdfUrl: 'https://ugcnet.nta.ac.in' },
   { id: 'ssc-gd-constable-key-2026', title: 'SSC GD Constable Exam 2026 Provisional Solved Answer Sheets with Candidate Response Key (Out Now)', org: 'Staff Selection Commission (SSC)', released: '2026-06-26', objectionsLimit: '2026-07-02', pdfUrl: 'https://ssc.gov.in' },

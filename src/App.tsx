@@ -505,11 +505,8 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
     return localStorage.getItem('sarkari_notif_tone') || 'melody';
   });
   const [liveNotifications, setLiveNotifications] = useState<any[]>(() => {
-    const saved = localStorage.getItem('sarkari_live_notifications');
-    if (saved) {
-      try { return JSON.parse(saved); } catch (e) { return []; }
-    }
-    return [
+    const defaultNotifs = [
+      { id: 'init-rrb-ntpc-ug-key', category: 'Answer Key', title: 'Railway Recruitment Board - RRB NTPC Under Graduate (UG) CEN 04/2026 CBT-1 Official Provisional Answer Key & OMR Candidate Response Sheets (Released) / RRB NTPC अंडर ग्रेजुएट (UG) CBT-1 अनंतिम उत्तर कुंजी और रिस्पॉन्स शीट जारी', timestamp: 'Just now', url: '?tab=answer-key' },
       { id: 'init-neet-key', category: 'Answer Key', title: 'National Testing Agency (NTA) - NEET UG 2026 Official Answer Key with Scanned OMR Response Sheet PDF (Out Now)', timestamp: 'Just now', url: '?tab=answer-key' },
       { id: 'init-upsc-res', category: 'Result', title: 'Union Public Service Commission (UPSC) - UPSC Civil Services Prelims Exam 2026 Qualified Candidates Merit List & Scorecard (Out Now)', timestamp: 'Just now', url: '?tab=results' },
       { id: 'init-ibps-card', category: 'Admit Card', title: 'Institute of Banking Personnel Selection (IBPS) - IBPS CRP Clerks-XIV Preliminary Exam e-Admit Card / Call Letter (Out Now)', timestamp: '2 mins ago', url: '?tab=admit-cards' },
@@ -518,6 +515,23 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
       { id: 'init-2', category: 'Admit Card', title: 'CSIR UGC NET June 2026 Exam City Slip', timestamp: '11:15 AM', url: '?tab=admit-cards' },
       { id: 'init-3', category: 'Result', title: 'JEE Advanced 2026 Final Score Card & Rank List', timestamp: 'Yesterday', url: '?tab=results' },
     ];
+    const saved = localStorage.getItem('sarkari_live_notifications');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved) as any[];
+        const existingIds = new Set(parsed.map(n => n.id));
+        const missingNotifs = defaultNotifs.filter(n => !existingIds.has(n.id));
+        if (missingNotifs.length > 0) {
+          const merged = [...missingNotifs, ...parsed];
+          localStorage.setItem('sarkari_live_notifications', JSON.stringify(merged));
+          return merged;
+        }
+        return parsed;
+      } catch (e) {
+        return defaultNotifs;
+      }
+    }
+    return defaultNotifs;
   });
 
   useEffect(() => {
