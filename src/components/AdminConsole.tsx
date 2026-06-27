@@ -2234,6 +2234,27 @@ What is the standard pH level of pure distilled water at normal room temperature
                   Connect your real Telegram channel <strong className="text-sky-600">(@JobSarkariHub)</strong> using a custom Bot. Any time a new vacancy, admit card, result, or answer key is published, a beautifully formatted alert is automatically sent!
                 </p>
 
+                {/* Step-by-Step Interactive Guide */}
+                <div className="bg-sky-50/50 rounded-2xl p-4 border border-sky-100 space-y-2.5 text-left font-sans">
+                  <h5 className="text-xs font-extrabold text-sky-900 flex items-center gap-1.5">
+                    ⚙️ 2-Minute Telegram Bot Guide (बॉट गाइड)
+                  </h5>
+                  <ol className="text-[11px] text-slate-700 space-y-1.5 list-decimal pl-4 font-semibold leading-relaxed">
+                    <li>
+                      Telegram पर <strong className="text-sky-800">@BotFather</strong> सर्च करें और चैट में <code className="bg-white px-1 py-0.5 rounded border border-slate-200">/newbot</code> भेजें।
+                    </li>
+                    <li>
+                      अपने बोट का <strong>नाम</strong> (जैसे: <code className="bg-white px-1 py-0.5 rounded border">Sarkari Hub Bot</code>) और <strong>यूज़रनेम</strong> (जैसे: <code className="bg-white px-1 py-0.5 rounded border">JobSarkariHub_bot</code>) डालें।
+                    </li>
+                    <li>
+                      वहां से मिले <strong className="text-indigo-800">HTTP API Token</strong> को कॉपी करें और नीचे दिए गए बॉक्स में पेस्ट करें।
+                    </li>
+                    <li>
+                      <strong>महत्वपूर्ण (Most Important):</strong> अपने टेलीग्राम चैनल <strong className="text-sky-800">@JobSarkariHub</strong> के Settings ➔ Administrators में जाकर अपने बोट को <strong>Admin</strong> बनाएं और "Post Messages" की अनुमति दें।
+                    </li>
+                  </ol>
+                </div>
+
                 <div className="space-y-3 text-xs">
                   <div>
                     <label className="block text-[10px] font-bold text-slate-500 mb-1 flex items-center gap-1">
