@@ -2988,7 +2988,7 @@ export const INITIAL_CURRENT_AFFAIRS: CurrentAffair[] = [
   {
     id: 'ca-today-1',
     title: 'ISRO Successfully Launches Aditya-L2 Solar Mission Probe Expansion',
-    date: '2026-06-26',
+    date: '2026-06-27',
     category: 'Science & Tech',
     pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Aditya_L2_Solar_Mission_Expansion.pdf',
     content: 'The Indian Space Research Organisation (ISRO) successfully launched the Aditya-L2 solar observatory probe from Sriharikota. This crucial expansion mission is set to analyze solar corona flares, high-speed solar winds, and solar magnetic fields in deep space.'
@@ -2996,7 +2996,7 @@ export const INITIAL_CURRENT_AFFAIRS: CurrentAffair[] = [
   {
     id: 'ca-today-2',
     title: 'RBI Monetary Policy Committee Retains Repo Rate at 6.25%',
-    date: '2026-06-26',
+    date: '2026-06-27',
     category: 'Economy',
     pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/RBI_MPC_Repo_Rate_June_2026.pdf',
     content: 'The Reserve Bank of India (RBI) Monetary Policy Committee (MPC) voted unanimously to retain the policy repo rate unchanged at 6.25% in its June bi-monthly review. Governor Shaktikanta Das noted that this decision aims to stabilize domestic CPI inflation while reinforcing robust GDP growth rates.'
@@ -3004,7 +3004,7 @@ export const INITIAL_CURRENT_AFFAIRS: CurrentAffair[] = [
   {
     id: 'ca-today-3',
     title: 'India Declared Official Host for ICC Men’s T20 World Cup 2026',
-    date: '2026-06-26',
+    date: '2026-06-27',
     category: 'Sports',
     pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/ICC_T20_World_Cup_2026_Hosts.pdf',
     content: 'The International Cricket Council (ICC) announced India as the primary host country alongside Sri Lanka for the upcoming ICC Men’s T20 World Cup edition. Extensive upgrades have officially commenced across key cricket stadiums in Mumbai, Delhi, and Bengaluru.'

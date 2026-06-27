@@ -1161,7 +1161,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                 <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-3 py-1.5 self-start md:self-auto">
                   <Calendar className="h-4 w-4 text-blue-300" />
                   <span className="font-sans text-xs font-bold text-slate-200">
-                    {locale === 'hi' ? 'शुक्रवार, 26 जून 2026' : 'Friday, 26 June 2026'}
+                    {locale === 'hi' ? 'शनिवार, 27 जून 2026' : 'Saturday, 27 June 2026'}
                   </span>
                 </div>
               </div>
