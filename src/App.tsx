@@ -40,13 +40,13 @@ import { fetchWithRetry } from './utils/fetchHelper';
 
 const INITIAL_PYQS = [
   // 2026 Series
-  { title: 'Railway RRB Technician Grade I & III Solved Civil & Mech Paper 2026', type: 'Solved PDF Booklet', size: '3.1 MB', year: 2026, exam: 'Railway', premium: false, downloadUrl: 'https://www.rrbcdg.gov.in/rrb_technician_solved_2026.pdf' },
-  { title: 'Punjab State Power Corporation (PSPCL) Assistant Lineman (ALM) Trade & Numerical Aptitude Paper 2026', type: 'Official Solved Key', size: '2.5 MB', year: 2026, exam: 'Others', premium: false, downloadUrl: 'https://pspcl.in/alm_solved_paper_2026.pdf' },
-  { title: 'National Health Mission (NHM) Vaccinator & Immunization Specialist Exam Paper 2026', type: 'Solved PDF Booklet', size: '2.8 MB', year: 2026, exam: 'Health/Vaccine', premium: false, downloadUrl: 'https://nhm.gov.in/vaccinator_exam_paper_2026.pdf' },
-  { title: 'SSC CGL Tier-1 General Intelligence & Quantitative Aptitude Solved Booklet 2026', type: 'Official Solved Key', size: '3.4 MB', year: 2026, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/cgl_tier1_solved_2026.pdf' },
-  { title: 'SSC CHSL (10+2) Tier-1 English Language & Reasoning Solved Sheets 2026', type: 'Solved Booklet', size: '2.9 MB', year: 2026, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/chsl_tier1_solved_2026.pdf' },
-  { title: 'SSC MTS Multi-Tasking Staff Numerical Aptitude & GK Solved Key 2026', type: 'Solved Key', size: '2.1 MB', year: 2026, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/mts_solved_key_2026.pdf' },
-  { title: 'SSC GD Constable General Duty Elementary Mathematics Booklet 2026', type: 'Solved PDF Booklet', size: '4.0 MB', year: 2026, exam: 'SSC', premium: true, downloadUrl: 'https://ssc.gov.in/gd_math_solved_2026.pdf' },
+  { title: 'Railway RRB Technician Grade I & III Solved Civil & Mech Paper 2026 / रेलवे RRB तकनीशियन ग्रेड I और III हल किया गया सिविल और मैकेनिकल पेपर 2026', type: 'Solved PDF Booklet', size: '3.1 MB', year: 2026, exam: 'Railway', premium: false, downloadUrl: 'https://www.rrbcdg.gov.in/rrb_technician_solved_2026.pdf' },
+  { title: 'Punjab State Power Corporation (PSPCL) Assistant Lineman (ALM) Trade & Numerical Aptitude Paper 2026 / पंजाब स्टेट पावर कॉर्पोरेशन (PSPCL) सहायक लाइनमैन (ALM) ट्रेड पेपर 2026', type: 'Official Solved Key', size: '2.5 MB', year: 2026, exam: 'Others', premium: false, downloadUrl: 'https://pspcl.in/alm_solved_paper_2026.pdf' },
+  { title: 'National Health Mission (NHM) Vaccinator & Immunization Specialist Exam Paper 2026 / राष्ट्रीय स्वास्थ्य मिशन (NHM) टीकाकरण और प्रतिरक्षण विशेषज्ञ परीक्षा पेपर 2026', type: 'Solved PDF Booklet', size: '2.8 MB', year: 2026, exam: 'Health/Vaccine', premium: false, downloadUrl: 'https://nhm.gov.in/vaccinator_exam_paper_2026.pdf' },
+  { title: 'SSC CGL Tier-1 General Intelligence & Quantitative Aptitude Solved Booklet 2026 / SSC CGL टायर-1 सामान्य बुद्धिमत्ता और संख्यात्मक योग्यता हल पुस्तिका 2026', type: 'Official Solved Key', size: '3.4 MB', year: 2026, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/cgl_tier1_solved_2026.pdf' },
+  { title: 'SSC CHSL (10+2) Tier-1 English Language & Reasoning Solved Sheets 2026 / SSC CHSL (10+2) टायर-1 अंग्रेजी भाषा और तर्क हल पत्रक 2026', type: 'Solved Booklet', size: '2.9 MB', year: 2026, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/chsl_tier1_solved_2026.pdf' },
+  { title: 'SSC MTS Multi-Tasking Staff Numerical Aptitude & GK Solved Key 2026 / SSC MTS मल्टी-टास्किंग स्टाफ संख्यात्मक योग्यता और सामान्य ज्ञान हल कुंजी 2026', type: 'Solved Key', size: '2.1 MB', year: 2026, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/mts_solved_key_2026.pdf' },
+  { title: 'SSC GD Constable General Duty Elementary Mathematics Booklet 2026 / SSC GD कांस्टेबल सामान्य ड्यूटी प्रारंभिक गणित पुस्तिका 2026', type: 'Solved PDF Booklet', size: '4.0 MB', year: 2026, exam: 'SSC', premium: true, downloadUrl: 'https://ssc.gov.in/gd_math_solved_2026.pdf' },
 
   // 2025 Papers
   { title: 'UPSSSC ANM Health Worker & Vaccine Administrator Solved Question Paper 2025', type: 'Official Solved Key', size: '3.1 MB', year: 2025, exam: 'Health/Vaccine', premium: false, downloadUrl: 'https://upsssc.gov.in/anm_vaccine_solved_2025.pdf' },
@@ -1089,10 +1089,32 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setContactSuccess(true);
+
+    const ticketId = `SH-TKT-2026-${Math.floor(10000 + Math.random() * 90000)}`;
+    const saved = localStorage.getItem('sarkari_support_tickets');
+    let existing = [];
+    if (saved) {
+      try {
+        existing = JSON.parse(saved);
+      } catch (err) {}
+    }
+    const newTkt = {
+      id: ticketId,
+      subject: `Helpdesk Query: ${contactForm.query.slice(0, 35)}...`,
+      category: 'Other Inquiry',
+      message: contactForm.query,
+      status: 'RESOLVED',
+      createdDate: new Date().toLocaleString('en-US', { hour12: true, dateStyle: 'medium', timeStyle: 'short' }),
+      adminReply: 'Hello Candidate! Thank you for writing to Job Sarkari Hub support. We have parsed your inquiry. We recommend checking our active vacancies and admit card mirror links. We have flagged your query as resolved in our central ticketing corridor.',
+      repliedDate: new Date().toLocaleString('en-US', { hour12: true, dateStyle: 'medium', timeStyle: 'short' })
+    };
+    existing.unshift(newTkt);
+    localStorage.setItem('sarkari_support_tickets', JSON.stringify(existing));
+
     setTimeout(() => {
       setContactSuccess(false);
       setContactForm({ name: '', email: '', query: '' });
-      triggerToast('📧 Message Sent! Our Helpdesk has filed ticket successfully. We will reach out within 24 business hours.');
+      triggerToast(`📧 Message Sent! Filed Support Ticket ${ticketId} in your Helpdesk Dashboard.`);
     }, 1500);
   };
 

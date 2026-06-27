@@ -134,3 +134,15 @@ export interface AnswerKey {
   };
 }
 
+export interface SupportTicket {
+  id: string;
+  subject: string;
+  category: 'Admit Card Download' | 'Mock Test & Scorecard' | 'Premium Access' | 'Vacancy Syllabus' | 'Other Inquiry';
+  message: string;
+  status: 'PENDING' | 'UNDER_REVIEW' | 'RESOLVED';
+  createdDate: string;
+  adminReply?: string;
+  repliedDate?: string;
+}
+
+

@@ -5,6 +5,7 @@ import {
   ChevronLeft, BookOpen, Star, Sparkles, Download, Lock, Check, Minimize2, Video, Terminal
 } from 'lucide-react';
 import { MockTest, UserProfile, Question } from '../types';
+import CertificateModal from './CertificateModal';
 
 interface MockTestPortalProps {
   mockTests: MockTest[];
@@ -32,6 +33,7 @@ export default function MockTestPortal({
   onClearInitialActiveTestId
 }: MockTestPortalProps) {
   const [activeTest, setActiveTest] = useState<MockTest | null>(null);
+  const [isCertificateOpen, setIsCertificateOpen] = useState(false);
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({});
   const [timeLeft, setTimeLeft] = useState(0);
@@ -1045,10 +1047,10 @@ export default function MockTestPortal({
                 </div>
               </div>
               <button
-                onClick={() => alert(`Certificate of Achievement downloaded for: ${activeTest?.title} successfully. Saved PDF to files.`)}
+                onClick={() => setIsCertificateOpen(true)}
                 className="flex items-center gap-1.5 rounded-xl bg-amber-500 px-4 py-2.5 text-xs font-bold text-white hover:bg-amber-600 transition duration-150"
               >
-                <Download className="h-4 w-4" /> Download mock certificate
+                <Download className="h-4 w-4" /> View & Download score card
               </button>
             </div>
           </div>
@@ -1126,6 +1128,19 @@ export default function MockTestPortal({
           </div>
         </div>
       )}
+
+      <CertificateModal
+        isOpen={isCertificateOpen}
+        onClose={() => setIsCertificateOpen(false)}
+        candidateName={user.name}
+        candidateEmail={user.email}
+        testTitle={activeTest?.title || "Sarkari Mock Test"}
+        score={completedStats?.score || 0}
+        totalQuestions={activeTest?.questions.length || 0}
+        correctAnswers={completedStats?.correct || 0}
+        timeTaken={completedStats?.timeSpentStr || "00:00"}
+        date={new Date().toLocaleDateString('en-GB')}
+      />
 
     </div>
   );

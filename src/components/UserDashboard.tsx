@@ -3,12 +3,12 @@ import {
   User, Sparkles, GraduationCap, Mail, 
   Bookmark, Award, Download, Clock, Star, 
   Trash2, ArrowUpRight, Check, CreditCard, LogOut, TrendingUp,
-  Trophy, Medal
+  Trophy, Medal, Plus, MessageSquare, Send, CornerDownRight
 } from 'lucide-react';
 import { 
   ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend
 } from 'recharts';
-import { UserProfile, GovJob } from '../types';
+import { UserProfile, GovJob, SupportTicket } from '../types';
 import LoginPortal from './LoginPortal';
 import AspirantAnalytics from './AspirantAnalytics';
 
@@ -40,6 +40,109 @@ export default function UserDashboard({
     email: user.email,
     qualification: user.qualification
   });
+
+  // Support Tickets State
+  const [tickets, setTickets] = useState<SupportTicket[]>(() => {
+    const saved = localStorage.getItem('sarkari_support_tickets');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error("Error parsing support tickets", e);
+      }
+    }
+    
+    // Seed initial support tickets for visual fidelity
+    const initialTickets: SupportTicket[] = [
+      {
+        id: 'SH-TKT-2026-98421',
+        subject: 'SSC CGL Admit card server link timeout',
+        category: 'Admit Card Download',
+        message: "I clicked on the SSC Northern Region Admit Card download link but the regional website shows 504 Gateway Timeout. Is there any alternate portal link available to fetch my admission certificate?",
+        status: 'RESOLVED',
+        createdDate: '2026-06-11 09:30 AM',
+        adminReply: 'Greetings Aspirant! Due to sudden heavy traffic on the SSC server, regional gateways can timeout. We have updated our server mirror corridor in the "Admit Cards" section. Please use "Mirror Link Server 3" which pulls card details directly from the backup server. Best of luck for your SSC CGL exam!',
+        repliedDate: '2026-06-11 11:15 AM'
+      },
+      {
+        id: 'SH-TKT-2026-10452',
+        subject: 'Mock test score not saving on mobile tab change',
+        category: 'Mock Test & Scorecard',
+        message: "I completed the UPSC IAS Prelims paper but when I switched tabs, the dashboard score progression graph did not update immediately. Is this a sync lag?",
+        status: 'RESOLVED',
+        createdDate: '2026-06-12 10:00 AM',
+        adminReply: 'Hello Sunil, thanks for reaching out. Yes, when taking mock tests in multiple tabs, the state synchronizes via standard storage triggers. We recommend finishing your test fully in one tab. Your latest score is now successfully registered and displayed on your dynamic progress chart and national competitive leaderboard!',
+        repliedDate: '2026-06-12 10:15 AM'
+      }
+    ];
+    localStorage.setItem('sarkari_support_tickets', JSON.stringify(initialTickets));
+    return initialTickets;
+  });
+
+  const [showNewTicketForm, setShowNewTicketForm] = useState(false);
+  const [newTicket, setNewTicket] = useState({
+    subject: '',
+    category: 'Admit Card Download' as SupportTicket['category'],
+    message: ''
+  });
+
+  const handleCreateTicket = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newTicket.subject.trim() || !newTicket.message.trim()) return;
+
+    const ticketId = `SH-TKT-2026-${Math.floor(10000 + Math.random() * 90000)}`;
+    const ticketObj: SupportTicket = {
+      id: ticketId,
+      subject: newTicket.subject.trim(),
+      category: newTicket.category,
+      message: newTicket.message.trim(),
+      status: 'PENDING',
+      createdDate: new Date().toLocaleString('en-US', { hour12: true, dateStyle: 'medium', timeStyle: 'short' })
+    };
+
+    const updatedTickets = [ticketObj, ...tickets];
+    setTickets(updatedTickets);
+    localStorage.setItem('sarkari_support_tickets', JSON.stringify(updatedTickets));
+    
+    setNewTicket({
+      subject: '',
+      category: 'Admit Card Download',
+      message: ''
+    });
+    setShowNewTicketForm(false);
+    triggerToast(`🎫 Support Ticket ${ticketId} created successfully! Our Helpdesk has queued it.`);
+
+    // Simulate Admin Auto-Reply in 6 seconds for dynamic reactivity
+    setTimeout(() => {
+      setTickets(prevTickets => {
+        const index = prevTickets.findIndex(t => t.id === ticketId);
+        if (index === -1) return prevTickets;
+
+        const updated = [...prevTickets];
+        let autoReply = '';
+        if (newTicket.category === 'Admit Card Download') {
+          autoReply = `Dear Candidate, our automated systems have checked the active downloads pipeline. If the commission's link is slow, please access the "Direct mirror portal" listed on our Admit Card tab. We have verified that the PDF fetch servers are running smoothly at 100% capacity.`;
+        } else if (newTicket.category === 'Mock Test & Scorecard') {
+          autoReply = `Hello Aspirant, we have reviewed your test history scorecard. Your results have been compiled successfully in your performance portfolio. Try exporting the PDF/CSV from your profile dashboard for physical printing.`;
+        } else if (newTicket.category === 'Premium Access') {
+          autoReply = `Thank you for supporting Job Sarkari Hub! Our billing gateways have confirmed your subscriber activation. Your lifetime premium access is completely unlocked across all solved papers, syllabus planners, and test series.`;
+        } else {
+          autoReply = `Greetings! Our support executive has received your inquiry regarding "${newTicket.subject}". We are currently matching your request with official department publications. Rest assured, your ticket has been prioritized and resolved.`;
+        }
+
+        updated[index] = {
+          ...updated[index],
+          status: 'RESOLVED',
+          adminReply: autoReply,
+          repliedDate: new Date().toLocaleString('en-US', { hour12: true, dateStyle: 'medium', timeStyle: 'short' })
+        };
+        localStorage.setItem('sarkari_support_tickets', JSON.stringify(updated));
+        return updated;
+      });
+      triggerToast(`🔔 Helpdesk answered your Ticket ${ticketId}! Check your Support Tickets section.`);
+    }, 6000);
+  };
+
 
   const handleExportCSV = () => {
     if (!user.testHistory || user.testHistory.length === 0) {
@@ -686,6 +789,163 @@ export default function UserDashboard({
             </div>
           )}
         </div>
+
+        {/* Support Tickets Desk Card */}
+        <div className="rounded-2xl border border-blue-50 bg-white p-5 shadow-xs">
+          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 border-b border-slate-100 pb-3 mb-4 font-sans">
+            <div>
+              <h3 className="font-sans text-base font-bold text-slate-900 flex items-center gap-2">
+                <MessageSquare className="h-5 w-5 text-blue-600" />
+                🎫 Support Tickets Desk (सहायता टिकट डेस्क)
+              </h3>
+              <p className="font-sans text-xs text-slate-500">
+                Track status of admit card delays, syllabus queries, or register technical helpdesk tickets.
+              </p>
+            </div>
+            <button
+              onClick={() => setShowNewTicketForm(!showNewTicketForm)}
+              className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-2 text-xs font-bold transition shadow-xs cursor-pointer select-none"
+            >
+              <Plus className="h-4 w-4" />
+              File New Ticket
+            </button>
+          </div>
+
+          {/* New Ticket Form Panel */}
+          {showNewTicketForm && (
+            <form onSubmit={handleCreateTicket} className="bg-slate-50 p-4 rounded-xl border border-slate-100 mb-4 space-y-3 font-sans">
+              <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wide">File Helpdesk Ticket</h4>
+              
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Inquiry Category</label>
+                  <select
+                    value={newTicket.category}
+                    onChange={(e) => setNewTicket({...newTicket, category: e.target.value as SupportTicket['category']})}
+                    className="w-full rounded-lg border border-slate-200 bg-white p-2 text-xs focus:outline-hidden focus:border-blue-500"
+                  >
+                    <option value="Admit Card Download">Admit Card Download</option>
+                    <option value="Mock Test & Scorecard">Mock Test & Scorecard</option>
+                    <option value="Premium Access">Premium Access</option>
+                    <option value="Vacancy Syllabus">Vacancy Syllabus</option>
+                    <option value="Other Inquiry">Other Inquiry</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Ticket Subject</label>
+                  <input
+                    type="text"
+                    required
+                    maxLength={100}
+                    placeholder="e.g. UPSC Prelims Syllabus download error"
+                    value={newTicket.subject}
+                    onChange={(e) => setNewTicket({...newTicket, subject: e.target.value})}
+                    className="w-full rounded-lg border border-slate-200 bg-white p-2 text-xs focus:outline-hidden focus:border-blue-500"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Describe details & query message</label>
+                <textarea
+                  required
+                  rows={3}
+                  placeholder="Explain your problem clearly. If it's about a specific commission vacancy, please state the vacancy name."
+                  value={newTicket.message}
+                  onChange={(e) => setNewTicket({...newTicket, message: e.target.value})}
+                  className="w-full rounded-lg border border-slate-200 bg-white p-2 text-xs focus:outline-hidden focus:border-blue-500"
+                />
+              </div>
+
+              <div className="flex justify-end gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={() => setShowNewTicketForm(false)}
+                  className="px-3.5 py-1.5 rounded-lg border border-slate-200 text-slate-500 text-xs font-semibold hover:bg-slate-100 transition cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center gap-1 transition cursor-pointer"
+                >
+                  <Send className="h-3 w-3" /> Submit Ticket
+                </button>
+              </div>
+            </form>
+          )}
+
+          {/* List of Tickets */}
+          {tickets.length > 0 ? (
+            <div className="space-y-3 font-sans">
+              {tickets.map((ticket) => {
+                const isPending = ticket.status === 'PENDING';
+                const isReview = ticket.status === 'UNDER_REVIEW';
+
+                return (
+                  <div key={ticket.id} className="rounded-xl border border-slate-100 bg-slate-50/30 p-3.5 hover:bg-slate-50/60 transition text-left">
+                    <div className="flex flex-col sm:flex-row justify-between sm:items-start gap-2 border-b border-slate-100/60 pb-2 mb-2.5">
+                      <div className="min-w-0">
+                        <span className="text-[10px] text-blue-800 bg-blue-50 border border-blue-100 font-extrabold px-1.5 py-0.5 rounded mr-2 font-mono">
+                          {ticket.id}
+                        </span>
+                        <span className="text-[10px] text-slate-400 font-semibold font-mono">
+                          Created: {ticket.createdDate}
+                        </span>
+                        <h4 className="font-sans text-xs sm:text-sm font-extrabold text-slate-800 mt-1.5">
+                          {ticket.subject}
+                        </h4>
+                        <span className="text-[9px] text-slate-500 bg-slate-100 font-extrabold px-2 py-0.5 rounded inline-block mt-1 uppercase font-mono tracking-wider">
+                          {ticket.category}
+                        </span>
+                      </div>
+
+                      <div className="flex-shrink-0 self-start">
+                        {isPending ? (
+                          <span className="text-[9px] bg-amber-50 text-amber-800 border border-amber-200 font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider animate-pulse inline-block">
+                            ⏳ PENDING SUPPORT
+                          </span>
+                        ) : isReview ? (
+                          <span className="text-[9px] bg-blue-50 text-blue-800 border border-blue-200 font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider inline-block">
+                            ⚙️ UNDER REVIEW
+                          </span>
+                        ) : (
+                          <span className="text-[9px] bg-emerald-50 text-emerald-800 border border-emerald-200 font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider inline-block">
+                            ✅ RESOLVED
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    <p className="text-xs text-slate-600 leading-relaxed font-semibold">
+                      {ticket.message}
+                    </p>
+
+                    {/* Admin response */}
+                    {ticket.adminReply && (
+                      <div className="mt-3 bg-white p-3 rounded-xl border border-slate-100/80 space-y-1.5 text-left">
+                        <div className="flex items-center gap-1 text-[9px] font-black text-[#1E3A8A] uppercase tracking-wider">
+                          <CornerDownRight className="h-3.5 w-3.5 text-blue-600" />
+                          <span>Helpdesk Official Response • {ticket.repliedDate}</span>
+                        </div>
+                        <p className="text-xs text-slate-700 leading-relaxed pl-4 font-semibold italic border-l-2 border-blue-500">
+                          {ticket.adminReply}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="py-8 text-center text-slate-400 space-y-2">
+              <Mail className="mx-auto h-8 w-8 text-slate-200" />
+              <p className="text-xs font-medium">No helpdesk support tickets recorded.</p>
+              <p className="text-[11px] text-slate-400">File a ticket above if you face registration or mock key errors.</p>
+            </div>
+          )}
+        </div>
+
 
       </div>
 
