@@ -3993,9 +3993,10 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                         
                         <div className="max-w-md bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden shadow-md">
                           <img 
-                            src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=600&auto=format&fit=crop"
+                            src="https://images.unsplash.com/photo-1532375811409-90b14564167e?q=80&w=1200&auto=format&fit=crop"
                             alt="Government Exam Preparation"
                             className="w-full h-32 object-cover object-center brightness-90 bg-slate-800"
+                            referrerPolicy="no-referrer"
                           />
                           <div className="p-3 text-[11px] space-y-1 bg-zinc-900 border-t border-zinc-800">
                             <span className="text-[#1D9BF0] uppercase font-black text-[9px] tracking-widest block">JOB SARKARI HUB OFFICIAL</span>
