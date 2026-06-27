@@ -56,6 +56,130 @@ export default function AdminConsole({
   const [webhookEnabled, setWebhookEnabled] = useState<boolean>(() => localStorage.getItem('sarkari_wa_enabled') === 'true');
   const [webhookLogs, setWebhookLogs] = useState<{timestamp: string, status: string, payload: string}[]>([]);
 
+  // Telegram States
+  const [tgBotToken, setTgBotToken] = useState<string>(() => localStorage.getItem('sarkari_tg_bot_token') || '');
+  const [tgChatId, setTgChatId] = useState<string>(() => localStorage.getItem('sarkari_tg_chat_id') || '@JobSarkariHub');
+  const [tgEnabled, setTgEnabled] = useState<boolean>(() => localStorage.getItem('sarkari_tg_enabled') === 'true');
+  const [tgLogs, setTgLogs] = useState<{timestamp: string, status: string, payload: string}[]>([]);
+
+  const handleSaveTelegram = () => {
+    localStorage.setItem('sarkari_tg_bot_token', tgBotToken);
+    localStorage.setItem('sarkari_tg_chat_id', tgChatId);
+    localStorage.setItem('sarkari_tg_enabled', tgEnabled ? 'true' : 'false');
+    
+    const log = {
+      timestamp: new Date().toLocaleTimeString(),
+      status: 'TELEGRAM_CONFIG_SAVED',
+      payload: `Channel ID/Chat ID: ${tgChatId} | Integration Active: ${tgEnabled}`
+    };
+    setTgLogs(prev => [log, ...prev]);
+    setStatusMessage("✅ Telegram Integration saved successfully!");
+  };
+
+  const handleTestTelegram = async () => {
+    if (!tgBotToken) {
+      setStatusMessage("❌ Please configure a valid Telegram Bot Token first.");
+      return;
+    }
+    if (!tgChatId) {
+      setStatusMessage("❌ Please configure a valid Telegram Chat ID/Channel username (e.g. @JobSarkariHub).");
+      return;
+    }
+
+    const testMessage = `🔔 *Job Sarkari Hub Telegram Connection Active!* \n\nThis is a real-time test message confirming that your Telegram Channel (${tgChatId}) is successfully integrated with our live admin dispatch engine! 🚀\n\n📅 _Verified on: ${new Date().toLocaleString()}_`;
+
+    try {
+      setStatusMessage("⏳ Dispatching test message to your Telegram channel...");
+      const res = await fetch(`https://api.telegram.org/bot${tgBotToken}/sendMessage`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          chat_id: tgChatId,
+          text: testMessage,
+          parse_mode: 'Markdown'
+        })
+      });
+
+      const data = await res.json();
+      if (data.ok) {
+        setStatusMessage(`✅ Success! Test message sent to ${tgChatId}. Check your Telegram channel!`);
+        const log = {
+          timestamp: new Date().toLocaleTimeString(),
+          status: 'TEST_SUCCESS_TELEGRAM',
+          payload: JSON.stringify(data, null, 2)
+        };
+        setTgLogs(prev => [log, ...prev]);
+      } else {
+        setStatusMessage(`❌ Telegram API Error: ${data.description || 'Check token or channel name'}`);
+        const log = {
+          timestamp: new Date().toLocaleTimeString(),
+          status: 'TEST_FAILED_TELEGRAM',
+          payload: JSON.stringify(data, null, 2)
+        };
+        setTgLogs(prev => [log, ...prev]);
+      }
+    } catch (err: any) {
+      setStatusMessage(`❌ Connection Failed: ${err?.message || 'Check your internet connection or URL'}`);
+    }
+  };
+
+  const sendTelegramMessage = async (message: string) => {
+    const isTgActive = localStorage.getItem('sarkari_tg_enabled') === 'true';
+    const token = localStorage.getItem('sarkari_tg_bot_token') || '';
+    const chatId = localStorage.getItem('sarkari_tg_chat_id') || '';
+
+    if (!isTgActive || !token || !chatId) {
+      return;
+    }
+
+    try {
+      const log = {
+        timestamp: new Date().toLocaleTimeString(),
+        status: 'SENDING_TELEGRAM_API_POST',
+        payload: `Channel: ${chatId}\nMessage preview: ${message.slice(0, 100)}...`
+      };
+      setTgLogs(prev => [log, ...prev]);
+
+      const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: message,
+          parse_mode: 'Markdown'
+        })
+      });
+
+      const responseData = await res.json();
+      if (responseData.ok) {
+        const successLog = {
+          timestamp: new Date().toLocaleTimeString(),
+          status: 'SUCCESS_TELEGRAM_DISPATCHED',
+          payload: JSON.stringify(responseData, null, 2)
+        };
+        setTgLogs(prev => [successLog, ...prev]);
+      } else {
+        const errorLog = {
+          timestamp: new Date().toLocaleTimeString(),
+          status: 'ERROR_TELEGRAM_API_FAIL',
+          payload: JSON.stringify(responseData, null, 2)
+        };
+        setTgLogs(prev => [errorLog, ...prev]);
+      }
+    } catch (err: any) {
+      const exceptionLog = {
+        timestamp: new Date().toLocaleTimeString(),
+        status: 'EXCEPTION_TELEGRAM_API_FAIL',
+        payload: err?.message || 'Unknown network error'
+      };
+      setTgLogs(prev => [exceptionLog, ...prev]);
+    }
+  };
+
   // Local state to keep track of automated alerts sent to WhatsApp Channel
   const [waAutoBroadcasts, setWaAutoBroadcasts] = useState<{
     id: string;
@@ -170,6 +294,9 @@ export default function AdminConsole({
         mode: 'no-cors'
       }).catch(e => console.log('Simulated background dispatch complete', e));
     }
+
+    // Real-time dispatch to User's configured Telegram Bot Channel
+    sendTelegramMessage(fullMessage);
   };
 
   // Dynamically set default selected job if none is chosen
@@ -2073,6 +2200,96 @@ What is the standard pH level of pure distilled water at normal room temperature
                         <div key={i} className="p-2.5 bg-slate-55/10 rounded-xl border border-slate-100 space-y-1 font-mono text-[9px]">
                           <div className="flex justify-between font-bold text-slate-700">
                             <span className="text-blue-600">{log.status}</span>
+                            <span className="text-slate-400">{log.timestamp}</span>
+                          </div>
+                          <pre className="text-slate-600 overflow-x-auto p-1.5 bg-white rounded-lg border border-slate-100 text-[8.5px] max-h-[80px] leading-tight">
+                            {log.payload}
+                          </pre>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Telegram Channel Live Bot Integration settings card */}
+              <div className="bg-white rounded-3xl border border-slate-200 p-5 shadow-xs space-y-4">
+                <div className="border-b border-slate-100 pb-2 flex justify-between items-center">
+                  <h4 className="font-bold text-slate-900 text-xs uppercase tracking-wider flex items-center gap-2">
+                    <Send className="h-4 w-4 text-sky-500 fill-sky-50" /> Telegram Channel Auto-Broadcast Setup (टेलीग्राम ऑटो ब्रॉडकास्ट)
+                  </h4>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input 
+                      type="checkbox" 
+                      className="sr-only peer" 
+                      checked={tgEnabled}
+                      onChange={(e) => setTgEnabled(e.target.checked)}
+                    />
+                    <div className="w-7 h-4 bg-slate-200 peer-focus:outline-hidden rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-sky-500"></div>
+                    <span className="ml-1.5 text-[9px] font-bold text-slate-500">Enable</span>
+                  </label>
+                </div>
+
+                <p className="text-[11px] text-slate-600 leading-relaxed font-semibold">
+                  Connect your real Telegram channel <strong className="text-sky-600">(@JobSarkariHub)</strong> using a custom Bot. Any time a new vacancy, admit card, result, or answer key is published, a beautifully formatted alert is automatically sent!
+                </p>
+
+                <div className="space-y-3 text-xs">
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-500 mb-1 flex items-center gap-1">
+                      <span>TELEGRAM BOT API TOKEN</span>
+                      <span className="text-[9px] text-slate-400 font-normal">(Get from @BotFather on Telegram)</span>
+                    </label>
+                    <input 
+                      type="password" 
+                      placeholder="e.g. 123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ"
+                      value={tgBotToken}
+                      onChange={(e) => setTgBotToken(e.target.value)}
+                      className="w-full rounded-lg border border-slate-200 p-2 text-[11px] text-slate-800 font-mono"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-500 mb-1 flex items-center gap-1">
+                      <span>TELEGRAM CHANNEL USERNAME OR CHAT ID</span>
+                      <span className="text-[9px] text-slate-400 font-normal">(Make sure Bot is Admin in Channel!)</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      placeholder="e.g. @JobSarkariHub or -10012345678"
+                      value={tgChatId}
+                      onChange={(e) => setTgChatId(e.target.value)}
+                      className="w-full rounded-lg border border-slate-200 p-2 text-[11px] font-mono text-slate-800"
+                    />
+                  </div>
+
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={handleSaveTelegram}
+                      className="flex-1 py-2 bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs rounded-xl transition cursor-pointer"
+                    >
+                      Save Telegram Config
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleTestTelegram}
+                      className="px-4 py-2 bg-sky-50 hover:bg-sky-100 text-sky-700 font-extrabold text-xs rounded-xl transition border border-sky-200 cursor-pointer"
+                    >
+                      Test Connection ⚡
+                    </button>
+                  </div>
+                </div>
+
+                {/* Telegram Stream logs */}
+                {tgLogs.length > 0 && (
+                  <div className="border-t border-slate-100 pt-3 space-y-2 text-left">
+                    <span className="text-[9px] uppercase font-bold text-slate-400 block tracking-wider">TELEGRAM API ACTIVITY STREAM LOGS</span>
+                    <div className="space-y-2 max-h-[140px] overflow-y-auto">
+                      {tgLogs.map((log, i) => (
+                        <div key={i} className="p-2.5 bg-sky-50/25 rounded-xl border border-sky-100/60 space-y-1 font-mono text-[9px]">
+                          <div className="flex justify-between font-bold text-slate-700">
+                            <span className={log.status.includes('ERROR') || log.status.includes('FAIL') ? "text-red-600" : "text-sky-600"}>{log.status}</span>
                             <span className="text-slate-400">{log.timestamp}</span>
                           </div>
                           <pre className="text-slate-600 overflow-x-auto p-1.5 bg-white rounded-lg border border-slate-100 text-[8.5px] max-h-[80px] leading-tight">
