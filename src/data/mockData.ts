@@ -4,6 +4,77 @@ import { generateAllExtendedMocks } from '../utils/examMockGenerator';
 
 export const INITIAL_JOBS: GovJob[] = [
   {
+    id: 'upsc-cds-ii-exam-2026',
+    title: 'UPSC Combined Defence Services (CDS) II Exam 2026 Online Application Form (Out Now)',
+    org: 'Union Public Service Commission (UPSC)',
+    category: 'UPSC',
+    qualification: 'Graduate',
+    ageLimit: '20 - 24 Years',
+    salary: '₹56,100 — ₹1,77,500 / Month',
+    fees: {
+      General: '₹200',
+      OBC: '₹200',
+      SC_ST_Female: 'Nil'
+    },
+    totalPosts: 450,
+    applyUrl: 'https://upsc.gov.in',
+    pdfUrl: 'https://upsc.gov.in',
+    officialWebsite: 'https://upsc.gov.in',
+    postedDate: '2026-06-26',
+    lastDate: '2026-07-26',
+    importantDates: {
+      applyStart: '2026-06-26',
+      applyEnd: '2026-07-26',
+      examDate: 'September 2026',
+      admitCardRelease: 'August 2026'
+    },
+    selectionProcess: [
+      'Written Examination (Objective CBT/OMR)',
+      'SSB Interview & Psychological Aptitude Test',
+      'Medical Examination & Final Merit List'
+    ],
+    location: 'All India Slots',
+    description: '⚔️ UNION PUBLIC SERVICE COMMISSION (UPSC) COMBINED DEFENCE SERVICES (CDS) II EXAM 2026. UPSC has released the official recruitment notification for 450 seats in Indian Military Academy (IMA), Officers Training Academy (OTA), Indian Naval Academy (INA), and Air Force Academy (AFA). Unmarried graduates and final-year students are invited to apply online for this prestigious commission.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'upsssc-junior-assistant-clerk-2026',
+    title: 'UPSSSC Junior Assistant, Clerk & Assistant Grade III 2026 Mega Recruitment (4,286 Posts)',
+    org: 'Uttar Pradesh Subordinate Services Selection Commission (UPSSSC)',
+    category: 'State PSC',
+    qualification: '12th Pass',
+    ageLimit: '18 - 40 Years',
+    salary: '₹21,700 — ₹69,100 / Month',
+    fees: {
+      General: '₹25',
+      OBC: '₹25',
+      SC_ST_Female: '₹25'
+    },
+    totalPosts: 4286,
+    applyUrl: 'http://upsssc.gov.in',
+    pdfUrl: 'http://upsssc.gov.in',
+    officialWebsite: 'http://upsssc.gov.in',
+    postedDate: '2026-06-26',
+    lastDate: '2026-07-26',
+    importantDates: {
+      applyStart: '2026-06-26',
+      applyEnd: '2026-07-26',
+      examDate: 'December 2026',
+      admitCardRelease: 'November 2026'
+    },
+    selectionProcess: [
+      'Shortlisting based on UPSSSC PET 2025 Score',
+      'Main Written Examination (Offline OMR)',
+      'Hindi & English Keyboard Typing Test',
+      'Document Verification'
+    ],
+    location: 'Uttar Pradesh',
+    description: '✍️ UPSSSC JUNIOR ASSISTANT & CLERK RECRUITMENT 2026. The Uttar Pradesh Subordinate Services Selection Commission invites online applications for 4,286 vacant positions of Junior Assistants, Clerks, and Assistant Grade-III across various UP State Government Departments. Candidates must have passed Intermediate (12th), hold a valid NIELIT CCC certificate, and possess a valid UPSSSC PET 2025 scorecard.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
     id: 'sbi-po-probationary-officers-recruitment-2026',
     title: 'SBI Probationary Officers (PO) 2026-27 Mega Recruitment Notification (Out Now)',
     org: 'State Bank of India (SBI)',
@@ -1902,6 +1973,26 @@ export const INITIAL_JOBS: GovJob[] = [
 
 export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
   {
+    id: 'upsc-civil-services-mains-admit-2026',
+    title: 'UPSC Civil Services (Mains) 2026 e-Admit Card & Full Exam Schedule (Released)',
+    org: 'Union Public Service Commission (UPSC)',
+    examDate: '2026-09-18 to 2026-09-22',
+    examCity: 'Allotted UPSC Regional Mains CBT Centers',
+    downloadUrl: 'https://upsc.gov.in',
+    officialLink: 'https://upsc.gov.in',
+    addedDate: '2026-06-26'
+  },
+  {
+    id: 'bihar-police-constable-admit-2026',
+    title: 'Bihar Police Constable Exam 2026 e-Admit Card & Center Allocation List (PDF Download)',
+    org: 'Central Selection Board of Constables (CSBC), Bihar',
+    examDate: '2026-08-07 to 2026-08-25',
+    examCity: 'All Districts of Bihar State',
+    downloadUrl: 'https://csbc.bih.nic.in',
+    officialLink: 'https://csbc.bih.nic.in',
+    addedDate: '2026-06-26'
+  },
+  {
     id: 'ssc-mts-havaldar-admit-card-2026',
     title: 'SSC Multi-Tasking Staff (MTS) & Havaldar Exam 2026 e-Admit Card & Application Status (All Regions Out Now)',
     org: 'Staff Selection Commission (SSC)',
@@ -2144,6 +2235,36 @@ export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
 ];
 
 export const INITIAL_RESULTS: JobResult[] = [
+  {
+    id: 'upsc-civil-services-prelims-result-2026',
+    title: 'UPSC Civil Services Prelims Exam 2026 Written Result with Selected Roll Number PDF List (Declared)',
+    org: 'Union Public Service Commission (UPSC)',
+    meritListUrl: 'https://upsc.gov.in',
+    scoreCardUrl: 'https://upsc.gov.in',
+    cutOff: {
+      UR: '84.5 Marks Out of 200',
+      OBC: '82.0 Marks',
+      SC: '73.5 Marks',
+      ST: '70.0 Marks'
+    },
+    downloadUrl: 'https://upsc.gov.in',
+    releaseDate: '2026-06-26'
+  },
+  {
+    id: 'ssc-cgl-tier2-result-2025',
+    title: 'SSC CGL Tier-II 2025 Final Recommended Merit List & Post-Wise Cut-off Marks (Released)',
+    org: 'Staff Selection Commission (SSC)',
+    meritListUrl: 'https://ssc.gov.in',
+    scoreCardUrl: 'https://ssc.gov.in',
+    cutOff: {
+      UR: '298.5 Marks Out of 390',
+      OBC: '292.0 Marks',
+      SC: '270.0 Marks',
+      ST: '260.0 Marks'
+    },
+    downloadUrl: 'https://ssc.gov.in',
+    releaseDate: '2026-06-26'
+  },
   {
     id: 'ssc-chsl-tier1-result-2026',
     title: 'SSC CHSL (10+2) Tier-1 Exam 2026 Merit List PDF & Region-wise Cut-off Marks (Released)',
@@ -2432,6 +2553,7 @@ export const INITIAL_RESULTS: JobResult[] = [
 ];
 
 const BASE_ANSWER_KEYS = [
+  { id: 'uppsc-pcs-prelims-key-2026', title: 'UPPSC PCS Prelims Exam 2026 Solved Answer Key & Candidate Response Sheet (All Sets Out)', org: 'Uttar Pradesh Public Service Commission (UPPSC)', released: '2026-06-26', objectionsLimit: '2026-07-04', pdfUrl: 'https://uppsc.up.nic.in' },
   { id: 'ugc-net-june-key-today-2026', title: 'UGC NET June 2026 Joint CSIR-UGC Test Paper 1 & 2 Provisional Solved Answer Key & OMR Sheet PDF (Declared)', org: 'National Testing Agency (NTA)', released: '2026-06-26', objectionsLimit: '2026-07-03', pdfUrl: 'https://ugcnet.nta.ac.in' },
   { id: 'ssc-gd-constable-key-2026', title: 'SSC GD Constable Exam 2026 Provisional Solved Answer Sheets with Candidate Response Key (Out Now)', org: 'Staff Selection Commission (SSC)', released: '2026-06-26', objectionsLimit: '2026-07-02', pdfUrl: 'https://ssc.gov.in' },
   { id: 'bihar-civil-court-key-2026', title: 'Bihar Civil Court Clerk & Stenographer Exam 2026 Solved Booklet Keys (All Sets out)', org: 'Patna High Court / Bihar Civil Court', released: '2026-06-26', objectionsLimit: '2026-07-05', pdfUrl: 'https://patnahighcourt.gov.in' },
@@ -2863,6 +2985,30 @@ const ALL_MOCK_TESTS_WITH_EXTENDED = [
 export const INITIAL_MOCK_TESTS: MockTest[] = ALL_MOCK_TESTS_WITH_EXTENDED;
 
 export const INITIAL_CURRENT_AFFAIRS: CurrentAffair[] = [
+  {
+    id: 'ca-today-1',
+    title: 'ISRO Successfully Launches Aditya-L2 Solar Mission Probe Expansion',
+    date: '2026-06-26',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Aditya_L2_Solar_Mission_Expansion.pdf',
+    content: 'The Indian Space Research Organisation (ISRO) successfully launched the Aditya-L2 solar observatory probe from Sriharikota. This crucial expansion mission is set to analyze solar corona flares, high-speed solar winds, and solar magnetic fields in deep space.'
+  },
+  {
+    id: 'ca-today-2',
+    title: 'RBI Monetary Policy Committee Retains Repo Rate at 6.25%',
+    date: '2026-06-26',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/RBI_MPC_Repo_Rate_June_2026.pdf',
+    content: 'The Reserve Bank of India (RBI) Monetary Policy Committee (MPC) voted unanimously to retain the policy repo rate unchanged at 6.25% in its June bi-monthly review. Governor Shaktikanta Das noted that this decision aims to stabilize domestic CPI inflation while reinforcing robust GDP growth rates.'
+  },
+  {
+    id: 'ca-today-3',
+    title: 'India Declared Official Host for ICC Men’s T20 World Cup 2026',
+    date: '2026-06-26',
+    category: 'Sports',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/ICC_T20_World_Cup_2026_Hosts.pdf',
+    content: 'The International Cricket Council (ICC) announced India as the primary host country alongside Sri Lanka for the upcoming ICC Men’s T20 World Cup edition. Extensive upgrades have officially commenced across key cricket stadiums in Mumbai, Delhi, and Bengaluru.'
+  },
   {
     id: 'ca-1',
     title: 'G7 Summit 2026: Major Green Finance Partnerships Signed',

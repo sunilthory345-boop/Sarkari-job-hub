@@ -67,6 +67,30 @@ export const DAILY_CURRENT_AFFAIRS_ITEMS: CurrentAffair[] = [
     content: 'The two countries entered a five-year defense cooperation roadmap focusing on joint coast guard drills, maritime secure communication lines, and sharing key naval logistics.'
   },
   {
+    id: 'ca-news-today-1',
+    title: 'RBI Monetary Policy Committee Retains Repo Rate at 6.25% in Bi-Monthly Review / आरबीआई मौद्रिक नीति समिति ने द्विमासिक समीक्षा में रेपो दर को 6.25% पर बरकरार रखा',
+    date: '2026-06-26',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/RBI_MPC_Repo_Rate_June_2026.pdf',
+    content: 'The Reserve Bank of India (RBI) Monetary Policy Committee (MPC) voted unanimously to retain the policy repo rate unchanged at 6.25% in its June bi-monthly review. Governor Shaktikanta Das noted that this decision aims to stabilize domestic CPI inflation while reinforcing robust GDP growth rates.'
+  },
+  {
+    id: 'ca-news-today-2',
+    title: 'India Declared Official Host for ICC Men’s T20 World Cup 2026 alongside Sri Lanka / भारत को श्रीलंका के साथ आईसीसी पुरुष टी20 विश्व कप 2026 का आधिकारिक मेजबान घोषित किया गया',
+    date: '2026-06-26',
+    category: 'Sports',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/ICC_T20_World_Cup_2026_Hosts.pdf',
+    content: 'The International Cricket Council (ICC) announced India as the primary host country alongside Sri Lanka for the upcoming ICC Men’s T20 World Cup edition. Extensive upgrades have officially commenced across key cricket stadiums in Mumbai, Delhi, and Bengaluru.'
+  },
+  {
+    id: 'ca-news-today-3',
+    title: 'ISRO Successfully Launches Aditya-L2 Solar Mission Probe Expansion from Sriharikota / इसरो ने श्रीहरिकोटा से आदित्य-एल2 सौर मिशन जांच विस्तार का सफल प्रक्षेपण किया',
+    date: '2026-06-26',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Aditya_L2_Solar_Mission_Expansion.pdf',
+    content: 'The Indian Space Research Organisation (ISRO) successfully launched the Aditya-L2 solar observatory probe from Sriharikota. This crucial expansion mission is set to analyze solar corona flares, high-speed solar winds, and solar magnetic fields in deep space.'
+  },
+  {
     id: 'ca-news-j26a',
     title: 'India launches GSAT-32 communication satellite from Sriharikota / भारत ने श्रीहरिकोटा से GSAT-32 संचार उपग्रह लॉन्च किया',
     date: '2026-06-26',
