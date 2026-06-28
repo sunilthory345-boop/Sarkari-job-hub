@@ -2246,6 +2246,12 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                           <span className="text-[10px] font-bold bg-blue-50 text-blue-700 px-2 py-0.5 rounded">
                             {job.category} Exam
                           </span>
+                          {job.postedDate === '2026-06-27' && (
+                            <span className="text-[10px] font-extrabold bg-rose-500 text-white px-2 py-0.5 rounded animate-pulse flex items-center gap-1 shadow-xs">
+                              <span className="h-1.5 w-1.5 rounded-full bg-white animate-ping"></span>
+                              TODAY
+                            </span>
+                          )}
                           <span className="text-xs text-slate-400">{job.org}</span>
                         </div>
                         <h4 className="font-sans text-sm font-bold text-slate-800 mt-2 leading-snug">
@@ -2402,8 +2408,13 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
 
                     <div className="space-y-2">
                       {filteredAdmitCards.map((card) => (
-                        <div key={card.id} className="p-2.5 border border-slate-100 rounded-lg text-[11px] space-y-1.5 bg-slate-50/50">
-                          <h5 className="font-bold text-slate-800 leading-snug">{card.title}</h5>
+                        <div key={card.id} className="p-2.5 border border-slate-100 rounded-lg text-[11px] space-y-1.5 bg-slate-50/50 relative overflow-hidden">
+                          {card.addedDate === '2026-06-27' && (
+                            <span className="absolute top-1 right-1 bg-emerald-600 text-white text-[8px] font-extrabold px-1.5 py-0.5 rounded shadow-xs animate-pulse">
+                              NEW TODAY
+                            </span>
+                          )}
+                          <h5 className="font-bold text-slate-800 leading-snug pr-12">{card.title}</h5>
                           <p className="text-[9px] text-slate-400 font-bold">Exam Date: {card.examDate}</p>
                           <a 
                             href="#"
@@ -2432,9 +2443,14 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
 
                   <div className="p-3.5 space-y-2.5 text-xs">
                     {results.map((res) => (
-                      <div key={res.id} className="p-2.5 border border-slate-100 rounded-lg space-y-2 bg-slate-50/50">
+                      <div key={res.id} className="p-2.5 border border-slate-100 rounded-lg space-y-2 bg-slate-50/50 relative overflow-hidden">
+                        {res.releaseDate === '2026-06-27' && (
+                          <span className="absolute top-1 right-1 bg-amber-500 text-white text-[8px] font-extrabold px-1.5 py-0.5 rounded shadow-xs animate-pulse">
+                            DECLARED TODAY
+                          </span>
+                        )}
                         <div>
-                          <h5 className="font-bold text-slate-800 text-[11px]">{res.title}</h5>
+                          <h5 className="font-bold text-slate-800 text-[11px] pr-16">{res.title}</h5>
                           <span className="text-[9px] text-slate-400 font-extrabold font-mono tracking-wider">{res.releaseDate} released</span>
                         </div>
                         

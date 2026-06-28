@@ -4,6 +4,42 @@ import { generateAllExtendedMocks } from '../utils/examMockGenerator';
 
 export const INITIAL_JOBS: GovJob[] = [
   {
+    id: 'rrb-group-d-recruitment-2026',
+    title: 'Railway RRB Group D (Level 1) Mega Recruitment 2026 Online Application Form (1,37,690 Posts)',
+    org: 'Railway Recruitment Boards (RRB)',
+    category: 'Railway',
+    qualification: '10th Pass',
+    ageLimit: '18 - 33 Years',
+    salary: '₹18,000 — ₹56,900 / Month plus allowances',
+    fees: {
+      General: '₹500',
+      OBC: '₹500',
+      SC_ST_Female: '₹250'
+    },
+    totalPosts: 137690,
+    applyUrl: 'https://rrbapply.gov.in',
+    pdfUrl: 'https://rrbapply.gov.in',
+    officialWebsite: 'https://rrbcdg.gov.in',
+    postedDate: '2026-06-27',
+    lastDate: '2026-07-27',
+    importantDates: {
+      applyStart: '2026-06-27',
+      applyEnd: '2026-07-27',
+      examDate: 'October - December 2026',
+      admitCardRelease: 'September 2026'
+    },
+    selectionProcess: [
+      'Computer Based Test (CBT - 100 Marks)',
+      'Physical Efficiency Test (PET - Running & Weight)',
+      'Document Verification & Biometrics Check',
+      'Medical Examination in Railway Hospitals'
+    ],
+    location: 'All India Zones',
+    description: '🆕 RAILWAY RECRUITMENT BOARDS (RRB) GROUP D (LEVEL-1) RECRUITMENT 2026. The Ministry of Railways has released a mega notification for 1,37,690 vacancies for Level-1 posts including Track Maintainer Grade-IV, Helper/Assistant in various technical departments (Electrical, Engineering, Mechanical, and S&T), and Assistant Pointsman in Indian Railways. Eligible candidates who have passed 10th standard or hold an ITI credential are ready to apply online.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
     id: 'upsc-cds-ii-exam-2026',
     title: 'UPSC Combined Defence Services (CDS) II Exam 2026 Online Application Form (Out Now)',
     org: 'Union Public Service Commission (UPSC)',
@@ -1973,6 +2009,16 @@ export const INITIAL_JOBS: GovJob[] = [
 
 export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
   {
+    id: 'rrb-ntpc-cbt1-admit-card-2026',
+    title: 'Railway RRB NTPC Graduate & Under Graduate CEN 05/2026 CBT-1 Phase-I Admit Card (Released Today)',
+    org: 'Railway Recruitment Boards (RRB)',
+    examDate: '2026-07-10 to 2026-07-25',
+    examCity: 'As Allotted in Candidate Login Portal',
+    downloadUrl: 'https://rrbapply.gov.in',
+    officialLink: 'https://rrbcdg.gov.in',
+    addedDate: '2026-06-27'
+  },
+  {
     id: 'upsc-civil-services-mains-admit-2026',
     title: 'UPSC Civil Services (Mains) 2026 e-Admit Card & Full Exam Schedule (Released)',
     org: 'Union Public Service Commission (UPSC)',
@@ -2235,6 +2281,21 @@ export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
 ];
 
 export const INITIAL_RESULTS: JobResult[] = [
+  {
+    id: 'upsc-nda-i-written-result-2026',
+    title: 'UPSC National Defence Academy (NDA) I Exam 2026 Written Exam Result & Roll Number List (Declared Today)',
+    org: 'Union Public Service Commission (UPSC)',
+    meritListUrl: 'https://upsc.gov.in',
+    scoreCardUrl: 'https://upsc.gov.in',
+    cutOff: {
+      UR: '355 Marks Out of 900',
+      OBC: '350 Marks',
+      SC: '320 Marks',
+      ST: '310 Marks'
+    },
+    downloadUrl: 'https://upsc.gov.in',
+    releaseDate: '2026-06-27'
+  },
   {
     id: 'upsc-civil-services-prelims-result-2026',
     title: 'UPSC Civil Services Prelims Exam 2026 Written Result with Selected Roll Number PDF List (Declared)',
@@ -2553,6 +2614,7 @@ export const INITIAL_RESULTS: JobResult[] = [
 ];
 
 const BASE_ANSWER_KEYS = [
+  { id: 'rrb-technician-key-today-2026', title: 'RRB Technician Grade I & III CEN 02/2026 Official Solved Answer Key & Objection Link (Active Today) / RRB तकनीशियन ग्रेड I और III उत्तर कुंजी और आपत्ति दर्ज करें', org: 'Railway Recruitment Boards (RRB)', released: '2026-06-27', objectionsLimit: '2026-07-05', pdfUrl: 'https://www.rrbcdg.gov.in' },
   { id: 'rrb-ntpc-ug-key-2026', title: 'RRB NTPC Under Graduate (UG) CEN 04/2026 CBT-1 Official Provisional Answer Key & OMR Response Sheets (Declared) / RRB NTPC अंडर ग्रेजुएट (UG) CBT-1 अनंतिम उत्तर कुंजी और रिस्पॉन्स शीट जारी', org: 'Railway Recruitment Boards (RRB)', released: '2026-06-27', objectionsLimit: '2026-07-06', pdfUrl: 'https://www.rrbcdg.gov.in/ntpc-ug-cbt1-key-2026.pdf' },
   { id: 'uppsc-pcs-prelims-key-2026', title: 'UPPSC PCS Prelims Exam 2026 Solved Answer Key & Candidate Response Sheet (All Sets Out)', org: 'Uttar Pradesh Public Service Commission (UPPSC)', released: '2026-06-26', objectionsLimit: '2026-07-04', pdfUrl: 'https://uppsc.up.nic.in' },
   { id: 'ugc-net-june-key-today-2026', title: 'UGC NET June 2026 Joint CSIR-UGC Test Paper 1 & 2 Provisional Solved Answer Key & OMR Sheet PDF (Declared)', org: 'National Testing Agency (NTA)', released: '2026-06-26', objectionsLimit: '2026-07-03', pdfUrl: 'https://ugcnet.nta.ac.in' },

@@ -412,8 +412,13 @@ export default function ObjectionPortal({ triggerToast, answerKeys = [] }: Objec
               
               <div className="space-y-2.5 max-h-[220px] overflow-y-auto pr-1">
                 {answerKeys.map((keyItem, i) => (
-                  <div key={i} className="p-2 border border-slate-150 rounded-lg bg-slate-50 space-y-1.5 hover:border-blue-200 transition">
-                    <h5 className="font-bold text-slate-800 text-[11px] leading-tight">{keyItem.title}</h5>
+                  <div key={i} className="p-2 border border-slate-150 rounded-lg bg-slate-50 space-y-1.5 hover:border-blue-200 transition relative overflow-hidden">
+                    {keyItem.released === '2026-06-27' && (
+                      <span className="absolute top-1 right-1 bg-amber-500 text-white text-[8px] font-extrabold px-1.5 py-0.5 rounded shadow-xs animate-pulse">
+                        NEW TODAY
+                      </span>
+                    )}
+                    <h5 className="font-bold text-slate-800 text-[11px] leading-tight pr-14">{keyItem.title}</h5>
                     <div className="flex justify-between items-center">
                       <span className="text-[9px] text-slate-400 font-medium">Limit: {keyItem.objectionsLimit}</span>
                       <span className="text-blue-700 font-bold uppercase text-[9px]">{keyItem.org}</span>
