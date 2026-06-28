@@ -145,4 +145,16 @@ export interface SupportTicket {
   repliedDate?: string;
 }
 
+export interface Newspaper {
+  id: string;
+  title: string;
+  date: string;
+  pdfUrl: string;
+  downloadCount: number;
+  language: 'Hindi' | 'English' | 'Bilingual';
+  category: 'National' | 'Employment' | 'Editorial' | 'Local';
+  size?: string;
+}
+
+
 

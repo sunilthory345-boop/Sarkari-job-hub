@@ -1,4 +1,4 @@
-import { GovJob, AdmitCard, JobResult, MockTest, CurrentAffair, Blog, AnswerKey } from '../types';
+import { GovJob, AdmitCard, JobResult, MockTest, CurrentAffair, Blog, AnswerKey, Newspaper } from '../types';
 import { getSSCCGL100Questions } from '../utils/cglMockGenerator';
 import { generateAllExtendedMocks } from '../utils/examMockGenerator';
 
@@ -3058,3 +3058,57 @@ export const INITIAL_BLOGS: Blog[] = [
     date: '2026-06-10'
   }
 ];
+
+export const INITIAL_NEWSPAPERS: Newspaper[] = [
+  {
+    id: 'paper-1',
+    title: 'Dainik Jagran (दैनिक जागरण) National Edition ePaper PDF',
+    date: '2026-06-27',
+    pdfUrl: 'https://jobsarkarihub.pdf/newspapers/Dainik_Jagran_2026_06_27.pdf',
+    downloadCount: 4210,
+    language: 'Hindi',
+    category: 'National',
+    size: '14.2 MB'
+  },
+  {
+    id: 'paper-2',
+    title: 'The Hindu Daily ePaper PDF with Editorial Analysis',
+    date: '2026-06-27',
+    pdfUrl: 'https://jobsarkarihub.pdf/newspapers/The_Hindu_2026_06_27.pdf',
+    downloadCount: 8940,
+    language: 'English',
+    category: 'Editorial',
+    size: '8.4 MB'
+  },
+  {
+    id: 'paper-3',
+    title: 'Employment News (रोजगार समाचार) Weekly Official Edition (June 27 - July 03)',
+    date: '2026-06-27',
+    pdfUrl: 'https://jobsarkarihub.pdf/newspapers/Employment_News_Weekly_June_27.pdf',
+    downloadCount: 15430,
+    language: 'Bilingual',
+    category: 'Employment',
+    size: '18.1 MB'
+  },
+  {
+    id: 'paper-4',
+    title: 'Dainik Bhaskar (दैनिक भास्कर) State PDF Update',
+    date: '2026-06-27',
+    pdfUrl: 'https://jobsarkarihub.pdf/newspapers/Dainik_Bhaskar_2026_06_27.pdf',
+    downloadCount: 3120,
+    language: 'Hindi',
+    category: 'National',
+    size: '11.8 MB'
+  },
+  {
+    id: 'paper-5',
+    title: 'The Indian Express Daily PDF with Explained Page',
+    date: '2026-06-27',
+    pdfUrl: 'https://jobsarkarihub.pdf/newspapers/Indian_Express_2026_06_27.pdf',
+    downloadCount: 5690,
+    language: 'English',
+    category: 'Editorial',
+    size: '9.2 MB'
+  }
+];
+

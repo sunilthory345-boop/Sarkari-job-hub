@@ -4,7 +4,7 @@ import {
   HelpCircle, CheckCircle, Database, RefreshCw, AlertTriangle,
   Share2, Send, Copy, ExternalLink, Link, Sparkles, Settings, Bell, MessageSquare, CheckSquare
 } from 'lucide-react';
-import { GovJob, AdmitCard, JobResult, MockTest, Question, AnswerKey } from '../types';
+import { GovJob, AdmitCard, JobResult, MockTest, Question, AnswerKey, Newspaper } from '../types';
 
 interface AdminConsoleProps {
   jobs: GovJob[];
@@ -12,6 +12,7 @@ interface AdminConsoleProps {
   results: JobResult[];
   mockTests: MockTest[];
   answerKeys?: AnswerKey[];
+  newspapers?: Newspaper[];
   
   onAddJob: (job: GovJob) => void;
   onDeleteJob: (jobId: string) => void;
@@ -20,6 +21,8 @@ interface AdminConsoleProps {
   onAddMockTest: (test: MockTest) => void;
   onAddAnswerKey?: (key: AnswerKey) => void;
   onDeleteMockTest?: (testId: string) => void;
+  onAddNewspaper?: (paper: Newspaper) => void;
+  onDeleteNewspaper?: (paperId: string) => void;
 }
 
 export default function AdminConsole({
@@ -28,15 +31,18 @@ export default function AdminConsole({
   results,
   mockTests,
   answerKeys = [],
+  newspapers = [],
   onAddJob,
   onDeleteJob,
   onAddAdmitCard,
   onAddResult,
   onAddMockTest,
   onAddAnswerKey,
-  onDeleteMockTest
+  onDeleteMockTest,
+  onAddNewspaper,
+  onDeleteNewspaper
 }: AdminConsoleProps) {
-  const [activeAdminTab, setActiveAdminTab] = useState<'jobs' | 'mocks' | 'cards' | 'whatsapp' | 'payments'>('jobs');
+  const [activeAdminTab, setActiveAdminTab] = useState<'jobs' | 'mocks' | 'cards' | 'whatsapp' | 'payments' | 'newspapers'>('jobs');
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
 
   // --- PAYMENT AND UPI SETUP STATES ---
@@ -1160,6 +1166,7 @@ What is the standard pH level of pure distilled water at normal room temperature
             { id: 'jobs', label: 'Government Positions & Vacancies' },
             { id: 'mocks', label: 'Interactive MCQ Test Creator' },
             { id: 'cards', label: 'Admit Cards / Official Results' },
+            { id: 'newspapers', label: '📰 Daily Newspapers / ePaper' },
             { id: 'whatsapp', label: '📢 WhatsApp & Telegram Broadcast' },
             { id: 'payments', label: '💳 UPI ID & Payments Setup' }
           ].map((tab) => (

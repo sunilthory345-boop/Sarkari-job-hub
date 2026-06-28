@@ -3,7 +3,7 @@ import {
   Briefcase, FileText, Award, BookOpen, Clock, 
   Sparkles, Mail, Bell, Menu, X, CheckSquare, 
   GraduationCap, MessageSquare, Download, LogIn,
-  Moon, Sun, HelpCircle, FileDown, Star, Calendar, FileUp, Globe
+  Moon, Sun, HelpCircle, FileDown, Star, Calendar, FileUp, Globe, Newspaper
 } from 'lucide-react';
 import { UserProfile } from '../types';
 import { LANGUAGES, TRANSLATIONS, LocaleType } from '../utils/lang';
@@ -54,6 +54,7 @@ export default function Navbar({
     { id: 'syllabus', label: t.syllabusAdmission, icon: GraduationCap, category: 'Prep Zone' },
     { id: 'pyqs', label: t.pyqPapers, icon: FileDown, category: 'Prep Zone' },
     { id: 'mock-tests', label: t.mockTests, icon: Clock, category: 'Prep Zone' },
+    { id: 'newspapers', label: locale === 'hi' ? '📰 दैनिक समाचार पत्र' : '📰 Daily Newspaper ePaper', icon: Newspaper, category: 'Prep Zone' },
     { id: 'uploads', label: t.uploads, icon: FileUp, category: 'Prep Zone' },
     { id: 'current-affairs', label: t.currentAffairs, icon: Clock, category: 'Prep Zone' },
     { id: 'blog', label: t.blogsStrategies, icon: MessageSquare, category: 'Prep Zone' },
@@ -104,7 +105,7 @@ export default function Navbar({
 
           {/* Desktop Horizontal Navigation Links (High Density Layout) */}
           <div className="hidden md:flex items-center gap-5 text-xs font-semibold">
-            {menuItems.filter(item => ['home', 'jobs', 'calendar', 'admit-cards', 'results', 'current-affairs', 'whatsapp-alerts', 'premium'].includes(item.id)).map((item) => {
+            {menuItems.filter(item => ['home', 'jobs', 'newspapers', 'calendar', 'admit-cards', 'results', 'current-affairs', 'whatsapp-alerts', 'premium'].includes(item.id)).map((item) => {
               const isSelected = activeTab === item.id;
               return (
                 <button
