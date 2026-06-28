@@ -4,6 +4,42 @@ import { generateAllExtendedMocks } from '../utils/examMockGenerator';
 
 export const INITIAL_JOBS: GovJob[] = [
   {
+    id: 'ssc-cpo-sub-inspector-recruitment-2026',
+    title: 'SSC CPO Sub-Inspector in Delhi Police & CAPF Exam 2026 Online Application Form (4,187 Posts) (Active Today) / एसएससी सीपीओ सब-इस्पेक्टर भर्ती 2026',
+    org: 'Staff Selection Commission (SSC)',
+    category: 'SSC',
+    qualification: 'Graduate',
+    ageLimit: '20 - 25 Years',
+    salary: '₹35,400 — ₹1,12,400 / Month plus allowances',
+    fees: {
+      General: '₹100',
+      OBC: '₹100',
+      SC_ST_Female: 'Nil'
+    },
+    totalPosts: 4187,
+    applyUrl: 'https://ssc.gov.in',
+    pdfUrl: 'https://ssc.gov.in',
+    officialWebsite: 'https://ssc.gov.in',
+    postedDate: '2026-06-28',
+    lastDate: '2026-07-28',
+    importantDates: {
+      applyStart: '2026-06-28',
+      applyEnd: '2026-07-28',
+      examDate: 'October 2026',
+      admitCardRelease: 'September 2026'
+    },
+    selectionProcess: [
+      'Paper-I Computer Based Exam (CBT)',
+      'Physical Endurance Test (PET) & PST',
+      'Paper-II English Language Test (CBT)',
+      'Detailed Medical Examination (DME)'
+    ],
+    location: 'All India Zones',
+    description: '🚨 STAFF SELECTION COMMISSION (SSC) CPO SI RECRUITMENT 2026. SSC has released the prestigious official notification for recruitment of 4,187 Sub-Inspectors (Executive) in Delhi Police and Sub-Inspectors (Assistant) in Central Armed Police Forces (CAPFs - BSF, CISF, CRPF, ITBP, SSB). Eligible graduate male and female aspirants are invited to submit their online forms starting today, 28 June 2026.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
     id: 'rrb-group-d-recruitment-2026',
     title: 'Railway RRB Group D (Level 1) Mega Recruitment 2026 Online Application Form (1,37,690 Posts)',
     org: 'Railway Recruitment Boards (RRB)',
@@ -2009,6 +2045,16 @@ export const INITIAL_JOBS: GovJob[] = [
 
 export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
   {
+    id: 'ssc-chsl-tier1-admit-card-2026',
+    title: 'SSC CHSL (10+2) Tier-1 Exam 2026 Region-Wise e-Admit Card & City Intimation Slip (Active Today) / एसएससी सीएचएसएल Tier-1 एडमिट कार्ड जारी',
+    org: 'Staff Selection Commission (SSC)',
+    examDate: '2026-07-15 to 2026-07-30',
+    examCity: 'As Allotted on SSC Regional Portals',
+    downloadUrl: 'https://ssc.gov.in',
+    officialLink: 'https://ssc.gov.in',
+    addedDate: '2026-06-28'
+  },
+  {
     id: 'rrb-ntpc-cbt1-admit-card-2026',
     title: 'Railway RRB NTPC Graduate & Under Graduate CEN 05/2026 CBT-1 Phase-I Admit Card (Released Today)',
     org: 'Railway Recruitment Boards (RRB)',
@@ -2281,6 +2327,21 @@ export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
 ];
 
 export const INITIAL_RESULTS: JobResult[] = [
+  {
+    id: 'ssc-mts-final-result-2025',
+    title: 'SSC Multi-Tasking (Non-Technical) Staff & Havaldar (CBIC & CBN) Exam 2025 Final Recommended Merit List & Cut-off Marks (Declared Today) / एसएससी एमटीएस फाइनल रिजल्ट जारी',
+    org: 'Staff Selection Commission (SSC)',
+    meritListUrl: 'https://ssc.gov.in',
+    scoreCardUrl: 'https://ssc.gov.in',
+    cutOff: {
+      UR: '128.5 Marks Out of 150',
+      OBC: '125.0 Marks',
+      SC: '118.2 Marks',
+      ST: '112.0 Marks'
+    },
+    downloadUrl: 'https://ssc.gov.in',
+    releaseDate: '2026-06-28'
+  },
   {
     id: 'upsc-nda-i-written-result-2026',
     title: 'UPSC National Defence Academy (NDA) I Exam 2026 Written Exam Result & Roll Number List (Declared Today)',
@@ -2614,6 +2675,7 @@ export const INITIAL_RESULTS: JobResult[] = [
 ];
 
 const BASE_ANSWER_KEYS = [
+  { id: 'ssc-selection-post-phase-12-key-today-2026', title: 'SSC Selection Post Phase XII (Matric/Higher Secondary/Grad Level) Official Provisional Solved Answer Key & Response sheets (Active Today) / एसएससी फेज XII उत्तर कुंजी जारी', org: 'Staff Selection Commission (SSC)', released: '2026-06-28', objectionsLimit: '2026-07-04', pdfUrl: 'https://ssc.gov.in' },
   { id: 'rrb-technician-key-today-2026', title: 'RRB Technician Grade I & III CEN 02/2026 Official Solved Answer Key & Objection Link (Active Today) / RRB तकनीशियन ग्रेड I और III उत्तर कुंजी और आपत्ति दर्ज करें', org: 'Railway Recruitment Boards (RRB)', released: '2026-06-27', objectionsLimit: '2026-07-05', pdfUrl: 'https://www.rrbcdg.gov.in' },
   { id: 'rrb-ntpc-ug-key-2026', title: 'RRB NTPC Under Graduate (UG) CEN 04/2026 CBT-1 Official Provisional Answer Key & OMR Response Sheets (Declared) / RRB NTPC अंडर ग्रेजुएट (UG) CBT-1 अनंतिम उत्तर कुंजी और रिस्पॉन्स शीट जारी', org: 'Railway Recruitment Boards (RRB)', released: '2026-06-27', objectionsLimit: '2026-07-06', pdfUrl: 'https://www.rrbcdg.gov.in/ntpc-ug-cbt1-key-2026.pdf' },
   { id: 'uppsc-pcs-prelims-key-2026', title: 'UPPSC PCS Prelims Exam 2026 Solved Answer Key & Candidate Response Sheet (All Sets Out)', org: 'Uttar Pradesh Public Service Commission (UPPSC)', released: '2026-06-26', objectionsLimit: '2026-07-04', pdfUrl: 'https://uppsc.up.nic.in' },

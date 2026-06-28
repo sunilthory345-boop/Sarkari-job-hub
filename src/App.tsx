@@ -275,6 +275,8 @@ export default function App() {
   const [todayQuizIdx, setTodayQuizIdx] = useState(0);
   const [todayAnswers, setTodayAnswers] = useState<{[key: string]: number}>({}); // maps question ID to selected option index
   const [todayActiveSubTab, setTodayActiveSubTab] = useState<'questions' | 'capsules'>('questions');
+  const [caQuizDate, setCaQuizDate] = useState<'june_28' | 'june_27' | 'high_yield'>('june_28');
+  const [homeQuizDate, setHomeQuizDate] = useState<'june_28' | 'june_27'>('june_28');
   const [caSearchQuery, setCaSearchQuery] = useState('');
   const [caSelectedCategory, setCaSelectedCategory] = useState<string>('All');
   const [caVisibleCount, setCaVisibleCount] = useState(6);
@@ -538,7 +540,11 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
   });
   const [liveNotifications, setLiveNotifications] = useState<any[]>(() => {
     const defaultNotifs = [
-      { id: 'init-rrb-ntpc-ug-key', category: 'Answer Key', title: 'Railway Recruitment Board - RRB NTPC Under Graduate (UG) CEN 04/2026 CBT-1 Official Provisional Answer Key & OMR Candidate Response Sheets (Released) / RRB NTPC अंडर ग्रेजुएट (UG) CBT-1 अनंतिम उत्तर कुंजी और रिस्पॉन्स शीट जारी', timestamp: 'Just now', url: '?tab=answer-key' },
+      { id: 'notif-ssc-cpo-vacancy-2026', category: 'Vacancy', title: 'Staff Selection Commission (SSC) - SSC CPO Sub-Inspector in Delhi Police & CAPF Exam 2026 Online Application Form (4,187 Posts) (Active Today) / एसएससी सीपीओ सब-इस्पेक्टर भर्ती 2026', timestamp: 'Just now', url: '?tab=jobs' },
+      { id: 'notif-ssc-chsl-admit-2026', category: 'Admit Card', title: 'Staff Selection Commission (SSC) - SSC CHSL (10+2) Tier-1 Exam 2026 Region-Wise e-Admit Card & City Intimation Slip (Active Today) / एसएससी सीएचएसएल Tier-1 एडमिट कार्ड जारी', timestamp: 'Just now', url: '?tab=admit-cards' },
+      { id: 'notif-ssc-mts-result-2025', category: 'Result', title: 'Staff Selection Commission (SSC) - SSC Multi-Tasking (Non-Technical) Staff & Havaldar (CBIC & CBN) Exam 2025 Final Recommended Merit List & Cut-off Marks (Declared Today) / एसएससी एमटीएस फाइनल रिजल्ट जारी', timestamp: 'Just now', url: '?tab=results' },
+      { id: 'notif-ssc-phase-12-key-2026', category: 'Answer Key', title: 'Staff Selection Commission (SSC) - SSC Selection Post Phase XII (Matric/Higher Secondary/Grad Level) Official Provisional Solved Answer Key & Response sheets (Active Today) / एसएससी फेज XII उत्तर कुंजी जारी', timestamp: 'Just now', url: '?tab=answer-key' },
+      { id: 'init-rrb-ntpc-ug-key', category: 'Answer Key', title: 'Railway Recruitment Board - RRB NTPC Under Graduate (UG) CEN 04/2026 CBT-1 Official Provisional Answer Key & OMR Candidate Response Sheets (Released) / RRB NTPC अंडर ग्रेजुएट (UG) CBT-1 अनंतिम उत्तर कुंजी और रिस्पॉन्स शीट जारी', timestamp: '1 hour ago', url: '?tab=answer-key' },
       { id: 'init-neet-key', category: 'Answer Key', title: 'National Testing Agency (NTA) - NEET UG 2026 Official Answer Key with Scanned OMR Response Sheet PDF (Out Now)', timestamp: 'Just now', url: '?tab=answer-key' },
       { id: 'init-upsc-res', category: 'Result', title: 'Union Public Service Commission (UPSC) - UPSC Civil Services Prelims Exam 2026 Qualified Candidates Merit List & Scorecard (Out Now)', timestamp: 'Just now', url: '?tab=results' },
       { id: 'init-ibps-card', category: 'Admit Card', title: 'Institute of Banking Personnel Selection (IBPS) - IBPS CRP Clerks-XIV Preliminary Exam e-Admit Card / Call Letter (Out Now)', timestamp: '2 mins ago', url: '?tab=admit-cards' },
@@ -1226,12 +1232,24 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                   </div>
                 </div>
 
-                {/* Live Calendar Date Tag */}
-                <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-3 py-1.5 self-start md:self-auto">
-                  <Calendar className="h-4 w-4 text-blue-300" />
-                  <span className="font-sans text-xs font-bold text-slate-200">
-                    {locale === 'hi' ? 'शनिवार, 27 जून 2026' : 'Saturday, 27 June 2026'}
-                  </span>
+                {/* Live Calendar Date Tag with Option Dropdown */}
+                <div className="flex items-center gap-2 bg-slate-950 border border-blue-900/60 rounded-xl px-2 py-1 self-start md:self-auto shadow-inner">
+                  <Calendar className="h-4 w-4 text-blue-300 ml-1 shrink-0" />
+                  <select
+                    value={homeQuizDate}
+                    onChange={(e) => {
+                      setHomeQuizDate(e.target.value as 'june_28' | 'june_27');
+                      setTodayQuizIdx(0);
+                    }}
+                    className="bg-transparent text-slate-200 font-sans text-xs font-bold focus:outline-hidden cursor-pointer border-none pr-6 py-1 select-none font-sans"
+                  >
+                    <option value="june_28" className="bg-slate-900 text-white">
+                      {locale === 'hi' ? 'रविवार, 28 जून 2026 (आज के विशेष)' : 'Sunday, 28 June 2026 (Today)'}
+                    </option>
+                    <option value="june_27" className="bg-slate-900 text-white">
+                      {locale === 'hi' ? 'शनिवार, 27 जून 2026 (पिछला अपडेट)' : 'Saturday, 27 June 2026 (Yesterday)'}
+                    </option>
+                  </select>
                 </div>
               </div>
 
@@ -1265,7 +1283,15 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
               <div className="relative z-10 mt-5">
                 {todayActiveSubTab === 'questions' ? (
                   (() => {
-                    const todayQs = quizQuestions.filter(q => q.id.includes('today'));
+                    const todayQs = quizQuestions.filter(q => {
+                      const idNum = parseInt(q.id.replace('ca-q-today-', ''));
+                      if (isNaN(idNum)) return false;
+                      if (homeQuizDate === 'june_28') {
+                        return idNum >= 51 && idNum <= 100;
+                      } else {
+                        return idNum >= 1 && idNum <= 50;
+                      }
+                    });
                     const q = todayQs[todayQuizIdx];
                     if (!q) return <p className="text-slate-400 text-xs text-center py-6">No questions found for today.</p>;
 
@@ -1382,34 +1408,52 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                   })()
                 ) : (
                   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {currentAffairs.slice(0, 3).map((ca) => (
-                      <div key={ca.id} className="bg-slate-900/60 rounded-2xl border border-white/5 p-4 flex flex-col justify-between hover:border-blue-500/40 transition duration-200">
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between gap-2 text-[10px]">
-                            <span className="bg-blue-500/20 text-blue-300 font-bold px-2 py-0.5 rounded-full border border-blue-500/30">
-                              {ca.category}
-                            </span>
-                            <span className="text-slate-400 font-semibold">{ca.date}</span>
+                    {(() => {
+                      const filteredCapsules = currentAffairs.filter(ca => {
+                        if (homeQuizDate === 'june_28') {
+                          return ca.date === '2026-06-28';
+                        } else {
+                          return ca.date !== '2026-06-28';
+                        }
+                      });
+                      if (filteredCapsules.length === 0) {
+                        return (
+                          <div className="col-span-full py-10 text-center bg-slate-900/40 rounded-2xl border border-white/5">
+                            <p className="text-slate-400 text-xs font-semibold">
+                              {locale === 'hi' ? 'इस तिथि के लिए कोई समाचार कैप्सूल उपलब्ध नहीं है।' : 'No news capsules found for this date.'}
+                            </p>
                           </div>
-                          <h4 className="text-xs sm:text-sm font-extrabold text-white line-clamp-2 leading-snug">
-                            {ca.title}
-                          </h4>
-                          <p className="text-slate-300 text-[11px] line-clamp-3 leading-relaxed">
-                            {ca.content}
-                          </p>
-                        </div>
+                        );
+                      }
+                      return filteredCapsules.slice(0, 3).map((ca) => (
+                        <div key={ca.id} className="bg-slate-900/60 rounded-2xl border border-white/5 p-4 flex flex-col justify-between hover:border-blue-500/40 transition duration-200">
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between gap-2 text-[10px]">
+                              <span className="bg-blue-500/20 text-blue-300 font-bold px-2 py-0.5 rounded-full border border-blue-500/30">
+                                {ca.category}
+                              </span>
+                              <span className="text-slate-400 font-semibold">{ca.date}</span>
+                            </div>
+                            <h4 className="text-xs sm:text-sm font-extrabold text-white line-clamp-2 leading-snug">
+                              {ca.title}
+                            </h4>
+                            <p className="text-slate-300 text-[11px] line-clamp-3 leading-relaxed">
+                              {ca.content}
+                            </p>
+                          </div>
 
-                        <div className="border-t border-white/5 pt-3 mt-3 flex items-center justify-between">
-                          <button
-                            onClick={() => triggerToast(`📥 Downloading PDF for capsule: ${ca.title}`)}
-                            className="text-[10px] text-blue-400 font-bold hover:underline flex items-center gap-1 cursor-pointer"
-                          >
-                            <Download className="h-3 w-3" /> Download PDF
-                          </button>
-                          <span className="text-[9px] text-slate-500 italic">Bilingual GK</span>
+                          <div className="border-t border-white/5 pt-3 mt-3 flex items-center justify-between">
+                            <button
+                              onClick={() => triggerToast(`📥 Downloading PDF for capsule: ${ca.title}`)}
+                              className="text-[10px] text-blue-400 font-bold hover:underline flex items-center gap-1 cursor-pointer"
+                            >
+                              <Download className="h-3 w-3" /> Download PDF
+                            </button>
+                            <span className="text-[9px] text-slate-500 italic">Bilingual GK</span>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ));
+                    })()}
                   </div>
                 )}
               </div>
@@ -3728,7 +3772,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                                             ca.content.toLowerCase().includes(caSearchQuery.toLowerCase());
                       return matchesCat && matchesSearch;
                     }).slice(0, caVisibleCount).map((ca) => (
-                      <div key={ca.id} className="bg-white rounded-2xl border border-slate-100 p-5 space-y-3 font-sans text-xs transition duration-200 hover:border-blue-100 hover:shadow-xs group relative">
+                      <div key={ca.id} className="bg-white rounded-2xl border border-slate-100 p-5 space-y-3 font-sans text-xs transition duration-200 hover:border-blue-100 hover:shadow-xs group relative text-left">
                         <div className="absolute right-4 top-4 text-[10px] font-mono font-semibold bg-slate-50 text-slate-400 group-hover:bg-blue-50 group-hover:text-blue-600 px-2 py-0.5 rounded transition">
                           #Capsule {currentAffairs.findIndex(x => x.id === ca.id) + 1} of 50
                         </div>
@@ -3781,161 +3825,200 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                 </div>
               </div>
 
-              {/* RIGHT COLUMN: 50 INTERACTIVE QUIZ CONSOLE */}
+              {/* RIGHT COLUMN: INTERACTIVE QUIZ CONSOLE WITH DYNAMIC SELECTOR */}
               <div className="lg:col-span-5">
-                <div className="bg-linear-to-b from-slate-900 to-indigo-950 text-white rounded-3xl p-5 shadow-lg space-y-4 text-xs font-sans border border-slate-800 lg:sticky lg:top-4">
-                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                    <div>
-                      <span className="text-[10px] bg-blue-500/30 text-blue-300 font-bold px-2.5 py-1 rounded-full uppercase tracking-wider block w-max">
-                        Bilingual Practice Quiz
-                      </span>
-                      <h4 className="text-xs font-semibold text-slate-300 mt-1">50 High-Yield GA Questions</h4>
-                    </div>
-                    {/* Score Tracker */}
-                    <div className="text-right">
-                      <div className="text-sm font-black text-amber-300 font-mono">
-                        {Object.keys(selectedAnswers).length} / 50 Attempted
-                      </div>
-                      <div className="text-[9px] text-slate-400 font-bold">
-                        Score: {
-                          Object.entries(selectedAnswers).reduce((acc, [qIdx, ansIdx]) => {
-                            return acc + (quizQuestions[parseInt(qIdx)].correctOptionIndex === ansIdx ? 1 : 0);
-                          }, 0)
-                        } Correct
-                      </div>
-                    </div>
-                  </div>
+                {(() => {
+                  const activeQuestions = quizQuestions.filter(q => {
+                    const idNum = parseInt(q.id.replace('ca-q-today-', ''));
+                    if (caQuizDate === 'june_28') {
+                      return !isNaN(idNum) && idNum >= 51 && idNum <= 100;
+                    } else if (caQuizDate === 'june_27') {
+                      return !isNaN(idNum) && idNum >= 1 && idNum <= 50;
+                    } else {
+                      return q.id.startsWith('ca-q-') && !q.id.includes('today');
+                    }
+                  });
 
-                  {/* Navigator list dropdown or jump box */}
-                  <div className="bg-white/5 rounded-xl p-3 space-y-2 border border-white/10">
-                    <p className="text-[10px] text-slate-400 font-bold flex items-center justify-between">
-                      <span>Jump to any question (1 - 50):</span>
-                      <span className="text-amber-400">Current Q: #{currentQuizIdx + 1}</span>
-                    </p>
-                    <div className="flex gap-1.5">
-                      <select
-                        value={currentQuizIdx}
-                        onChange={(e) => setCurrentQuizIdx(parseInt(e.target.value))}
-                        className="bg-slate-850 border border-slate-750 rounded-lg text-xs leading-none py-1.5 px-2 text-slate-100 flex-1 outline-hidden focus:ring-1 focus:ring-blue-500 font-mono font-bold"
-                      >
-                        {quizQuestions.map((_, idx) => {
-                          const isSolved = selectedAnswers[idx] !== undefined;
-                          const isCorrect = isSolved && selectedAnswers[idx] === quizQuestions[idx].correctOptionIndex;
-                          return (
-                            <option key={idx} value={idx}>
-                              Question #{idx + 1} {isSolved ? (isCorrect ? '✅ (Correct)' : '❌ (Wrong)') : '(Unsolved)'}
-                            </option>
-                          );
-                        })}
-                      </select>
+                  const q = activeQuestions[currentQuizIdx] || activeQuestions[0];
+                  if (!q) return <p className="text-slate-400 text-xs text-center py-6">No questions found.</p>;
 
-                      <button
-                        onClick={() => {
-                          setSelectedAnswers({});
-                          setCurrentQuizIdx(0);
-                          triggerToast('🧹 Quiz reset! All correct affairs options wiped.');
-                        }}
-                        className="bg-rose-955 hover:bg-rose-900 border border-rose-800 text-[10px] px-2.5 py-1 rounded-lg font-bold text-rose-300 transition cursor-pointer"
-                      >
-                        Reset
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Active Question Box */}
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-mono text-slate-400">Question #{currentQuizIdx + 1} of 50</span>
-                        <span className="text-[10px] bg-amber-400/20 text-amber-300 font-bold px-1.5 py-0.5 rounded">
-                          Bilingual (Eng/Hindi)
-                        </span>
-                      </div>
-                      <h5 className="font-extrabold text-sm text-slate-100 leading-snug">
-                        {quizQuestions[currentQuizIdx].text}
-                      </h5>
-                    </div>
-
-                    {/* Options area */}
-                    <div className="space-y-2">
-                      {quizQuestions[currentQuizIdx].options.map((option, oIdx) => {
-                        const isSelected = selectedAnswers[currentQuizIdx] === oIdx;
-                        const hasAnswered = selectedAnswers[currentQuizIdx] !== undefined;
-                        const isCorrectAnswer = quizQuestions[currentQuizIdx].correctOptionIndex === oIdx;
-
-                        // Visual Feedback Color Assignment
-                        let btnStyle = 'bg-white/5 border border-white/10 hover:bg-white/10 text-slate-200 hover:text-white';
-                        if (hasAnswered) {
-                          if (isCorrectAnswer) {
-                            btnStyle = 'bg-emerald-600 border-emerald-500 text-white shadow-xs font-bold';
-                          } else if (isSelected) {
-                            btnStyle = 'bg-rose-600 border-rose-500 text-white shadow-xs font-bold';
-                          } else {
-                            btnStyle = 'bg-white/2 border border-white/5 text-slate-400 pointer-events-none opacity-50';
-                          }
-                        }
-
-                        return (
-                          <button
-                            key={oIdx}
-                            disabled={hasAnswered}
-                            onClick={() => {
-                              setSelectedAnswers(prev => ({
-                                ...prev,
-                                [currentQuizIdx]: oIdx
-                              }));
-                            }}
-                            className={`w-full text-left rounded-xl p-3 font-medium transition cursor-pointer text-xs ${btnStyle}`}
-                          >
-                            <div className="flex items-start justify-between gap-1">
-                              <span>{option}</span>
-                              {hasAnswered && isCorrectAnswer && <CheckCircle className="h-4 w-4 shrink-0 text-emerald-200 inline ml-1" />}
-                              {hasAnswered && isSelected && !isCorrectAnswer && <ShieldAlert className="h-4 w-4 shrink-0 text-rose-200 inline ml-1" />}
+                  return (
+                    <div className="bg-linear-to-b from-slate-900 to-indigo-950 text-white rounded-3xl p-5 shadow-lg space-y-4 text-xs font-sans border border-slate-800 lg:sticky lg:top-4 animate-fade-in text-left">
+                      <div className="flex flex-col gap-2 border-b border-white/10 pb-3">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] bg-blue-500/30 text-blue-300 font-bold px-2.5 py-1 rounded-full uppercase tracking-wider block w-max">
+                            Bilingual Practice Quiz
+                          </span>
+                          {/* Score Tracker */}
+                          <div className="text-right">
+                            <div className="text-sm font-black text-amber-300 font-mono">
+                              {Object.keys(selectedAnswers).length} / {activeQuestions.length} Attempted
                             </div>
-                          </button>
-                        );
-                      })}
-                    </div>
-
-                    {/* Answer Explanation Box (Displays ONLY if attempted) */}
-                    {selectedAnswers[currentQuizIdx] !== undefined && (
-                      <div className="bg-white/5 border border-white/10 rounded-2xl p-4 space-y-2 transition-all">
-                        <div className="flex items-center gap-1.5 text-amber-400 font-bold text-xs uppercase tracking-wider">
-                          <CheckSquare className="h-4 w-4 inline" /> Explanation (व्याख्या):
+                            <div className="text-[9px] text-slate-400 font-bold">
+                              Score: {
+                                Object.entries(selectedAnswers).reduce((acc, [qIdx, ansIdx]) => {
+                                  const targetQ = activeQuestions[parseInt(qIdx)];
+                                  return acc + (targetQ && targetQ.correctOptionIndex === ansIdx ? 1 : 0);
+                                }, 0)
+                              } Correct
+                            </div>
+                          </div>
                         </div>
-                        <p className="text-slate-300 leading-relaxed font-sans text-xs">
-                          {quizQuestions[currentQuizIdx].explanation}
-                        </p>
-                        <p className="text-[10px] text-emerald-400 font-bold">
-                          Correct Choice Index: ({String.fromCharCode(65 + quizQuestions[currentQuizIdx].correctOptionIndex)})
-                        </p>
+
+                        {/* Set/Date Select Dropdown ("Today option me add karo") */}
+                        <div className="mt-2 space-y-1">
+                          <label className="text-[10px] text-slate-400 font-bold block">
+                            Choose Quiz Set / Option (प्रश्नोत्तरी सेट चुनें):
+                          </label>
+                          <select
+                            value={caQuizDate}
+                            onChange={(e) => {
+                              setCaQuizDate(e.target.value as 'june_28' | 'june_27' | 'high_yield');
+                              setSelectedAnswers({});
+                              setCurrentQuizIdx(0);
+                              triggerToast(`📂 Switched to ${e.target.value === 'june_28' ? "Today's June 28 Update" : e.target.value === 'june_27' ? "June 27 Update" : "General High-Yield"} set!`);
+                            }}
+                            className="w-full bg-slate-850 border border-slate-700 rounded-xl text-xs py-2 px-3 text-slate-100 font-bold focus:ring-1 focus:ring-blue-500 cursor-pointer font-sans"
+                          >
+                            <option value="june_28">Sunday, 28 June 2026 (Today's New 50 Questions / आज के विशेष)</option>
+                            <option value="june_27">Saturday, 27 June 2026 (Yesterday's 50 Questions / पिछला अपडेट)</option>
+                            <option value="high_yield">Static General Current Affairs (100 High-Yield Questions / सामान्य ज्ञान)</option>
+                          </select>
+                        </div>
                       </div>
-                    )}
 
-                    {/* Controls Footer */}
-                    <div className="flex items-center justify-between pt-3 border-t border-white/10">
-                      <button
-                        onClick={() => setCurrentQuizIdx(prev => Math.max(0, prev - 1))}
-                        disabled={currentQuizIdx === 0}
-                        className="bg-white/10 hover:bg-white/15 text-white border border-white/15 disabled:opacity-30 rounded-xl px-3.5 py-2 font-bold transition flex items-center gap-1 text-xs cursor-pointer"
-                      >
-                        &larr; Prev Q
-                      </button>
+                      {/* Navigator list dropdown or jump box */}
+                      <div className="bg-white/5 rounded-xl p-3 space-y-2 border border-white/10">
+                        <p className="text-[10px] text-slate-400 font-bold flex items-center justify-between">
+                          <span>Jump to any question (1 - {activeQuestions.length}):</span>
+                          <span className="text-amber-400">Current Q: #{currentQuizIdx + 1}</span>
+                        </p>
+                        <div className="flex gap-1.5">
+                          <select
+                            value={currentQuizIdx}
+                            onChange={(e) => setCurrentQuizIdx(parseInt(e.target.value))}
+                            className="bg-slate-850 border border-slate-750 rounded-lg text-xs leading-none py-1.5 px-2 text-slate-100 flex-1 outline-hidden focus:ring-1 focus:ring-blue-500 font-mono font-bold"
+                          >
+                            {activeQuestions.map((_, idx) => {
+                              const isSolved = selectedAnswers[idx] !== undefined;
+                              const isCorrect = isSolved && selectedAnswers[idx] === activeQuestions[idx]?.correctOptionIndex;
+                              return (
+                                <option key={idx} value={idx}>
+                                  Question #{idx + 1} {isSolved ? (isCorrect ? '✅ (Correct)' : '❌ (Wrong)') : '(Unsolved)'}
+                                </option>
+                              );
+                            })}
+                          </select>
 
-                      <div className="text-[10px] font-mono text-slate-400 font-bold">
-                        {currentQuizIdx + 1} / 50
+                          <button
+                            onClick={() => {
+                              setSelectedAnswers({});
+                              setCurrentQuizIdx(0);
+                              triggerToast('🧹 Quiz reset! All correct affairs options wiped.');
+                            }}
+                            className="bg-rose-955 hover:bg-rose-900 border border-rose-800 text-[10px] px-2.5 py-1 rounded-lg font-bold text-rose-300 transition cursor-pointer"
+                          >
+                            Reset
+                          </button>
+                        </div>
                       </div>
 
-                      <button
-                        onClick={() => setCurrentQuizIdx(prev => Math.min(quizQuestions.length - 1, prev + 1))}
-                        disabled={currentQuizIdx === quizQuestions.length - 1}
-                        className="bg-blue-600 hover:bg-blue-500 text-white disabled:bg-white/10 disabled:text-white/30 rounded-xl px-4 py-2 font-bold transition flex items-center gap-1 text-xs cursor-pointer"
-                      >
-                        Next Q &rarr;
-                      </button>
+                      {/* Active Question Box */}
+                      <div className="space-y-4">
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[10px] font-mono text-slate-400">Question #{currentQuizIdx + 1} of {activeQuestions.length}</span>
+                            <span className="text-[10px] bg-amber-400/20 text-amber-300 font-bold px-1.5 py-0.5 rounded">
+                              Bilingual (Eng/Hindi)
+                            </span>
+                          </div>
+                          <h5 className="font-extrabold text-sm text-slate-100 leading-snug">
+                            {q.text}
+                          </h5>
+                        </div>
+
+                        {/* Options area */}
+                        <div className="space-y-2">
+                          {q.options.map((option, oIdx) => {
+                            const isSelected = selectedAnswers[currentQuizIdx] === oIdx;
+                            const hasAnswered = selectedAnswers[currentQuizIdx] !== undefined;
+                            const isCorrectAnswer = q.correctOptionIndex === oIdx;
+
+                            // Visual Feedback Color Assignment
+                            let btnStyle = 'bg-white/5 border border-white/10 hover:bg-white/10 text-slate-200 hover:text-white';
+                            if (hasAnswered) {
+                              if (isCorrectAnswer) {
+                                btnStyle = 'bg-emerald-600 border-emerald-500 text-white shadow-xs font-bold';
+                              } else if (isSelected) {
+                                btnStyle = 'bg-rose-600 border-rose-500 text-white shadow-xs font-bold';
+                              } else {
+                                btnStyle = 'bg-white/2 border border-white/5 text-slate-400 pointer-events-none opacity-50';
+                              }
+                            }
+
+                            return (
+                              <button
+                                key={oIdx}
+                                disabled={hasAnswered}
+                                onClick={() => {
+                                  setSelectedAnswers(prev => ({
+                                    ...prev,
+                                    [currentQuizIdx]: oIdx
+                                  }));
+                                }}
+                                className={`w-full text-left rounded-xl p-3 font-medium transition cursor-pointer text-xs ${btnStyle}`}
+                              >
+                                <div className="flex items-start justify-between gap-1">
+                                  <span>{option}</span>
+                                  {hasAnswered && isCorrectAnswer && <CheckCircle className="h-4 w-4 shrink-0 text-emerald-200 inline ml-1" />}
+                                  {hasAnswered && isSelected && !isCorrectAnswer && <ShieldAlert className="h-4 w-4 shrink-0 text-rose-200 inline ml-1" />}
+                                </div>
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        {/* Answer Explanation Box (Displays ONLY if attempted) */}
+                        {selectedAnswers[currentQuizIdx] !== undefined && (
+                          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 space-y-2 transition-all">
+                            <div className="flex items-center gap-1.5 text-amber-400 font-bold text-xs uppercase tracking-wider">
+                              <CheckSquare className="h-4 w-4 inline" /> Explanation (व्याख्या):
+                            </div>
+                            <p className="text-slate-300 leading-relaxed font-sans text-xs">
+                              {q.explanation}
+                            </p>
+                            <p className="text-[10px] text-emerald-400 font-bold">
+                              Correct Choice Index: ({String.fromCharCode(65 + q.correctOptionIndex)})
+                            </p>
+                          </div>
+                        )}
+
+                        {/* Controls Footer */}
+                        <div className="flex items-center justify-between pt-3 border-t border-white/10">
+                          <button
+                            onClick={() => setCurrentQuizIdx(prev => Math.max(0, prev - 1))}
+                            disabled={currentQuizIdx === 0}
+                            className="bg-white/10 hover:bg-white/15 text-white border border-white/15 disabled:opacity-30 rounded-xl px-3.5 py-2 font-bold transition flex items-center gap-1 text-xs cursor-pointer"
+                          >
+                            &larr; Prev Q
+                          </button>
+
+                          <div className="text-[10px] font-mono text-slate-400 font-bold">
+                            {currentQuizIdx + 1} / {activeQuestions.length}
+                          </div>
+
+                          <button
+                            onClick={() => setCurrentQuizIdx(prev => Math.min(activeQuestions.length - 1, prev + 1))}
+                            disabled={currentQuizIdx === activeQuestions.length - 1}
+                            className="bg-blue-600 hover:bg-blue-500 text-white disabled:bg-white/10 disabled:text-white/30 rounded-xl px-4 py-2 font-bold transition flex items-center gap-1 text-xs cursor-pointer"
+                          >
+                            Next Q &rarr;
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  );
+                })()}
               </div>
             </div>
           </div>

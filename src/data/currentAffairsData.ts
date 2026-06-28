@@ -1044,6 +1044,356 @@ export const CURRENT_AFFAIRS_QUIZ_QUESTIONS: Question[] = [
     correctOptionIndex: 0,
     explanation: 'The State Bank of India (SBI) registered massive gains to breach the elite ₹10 Lakh Crore market capitalization milestone, making it India\'s most valued public bank.'
   },
+{
+    id: 'ca-q-today-51',
+    text: 'Which state cabinet approved the implementation of "Mukhya Mantri Yuva Sambal Yojana 2026" on June 28, 2026? / किस राज्य मंत्रिमंडल ने 28 जून 2026 को "मुख्यमंत्री युवा संबल योजना 2026" के कार्यान्वयन को मंजूरी दी?',
+    options: ['(a) Rajasthan / राजस्थान', '(b) Madhya Pradesh / मध्य प्रदेश', '(c) Uttar Pradesh / उत्तर प्रदेश', '(d) Bihar / बिहार'],
+    correctOptionIndex: 0,
+    explanation: 'The Government of Rajasthan approved the youth employment incentive scheme to provide monthly stipends to skilled unemployed youth in June 2026.'
+  },
+{
+    id: 'ca-q-today-52',
+    text: 'What is the theme of the World Hydrography Day celebrated on June 28, 2026? / 28 जून 2026 को मनाए गए विश्व जल सर्वेक्षण दिवस (World Hydrography Day) का विषय क्या है?',
+    options: ['(a) Hydrography - Underpinning the Digital Twin of the Ocean', '(b) Hydrography: Contributing to the UN Ocean Decade', '(c) Climate Action and Hydrography', '(d) Deep Sea Mapping for Green Energy / हरित ऊर्जा के लिए गहरे समुद्र का मानचित्रण'],
+    correctOptionIndex: 0,
+    explanation: 'The International Hydrographic Organization (IHO) declared "Hydrography - Underpinning the Digital Twin of the Ocean" as the theme for the year 2026.'
+  },
+{
+    id: 'ca-q-today-53',
+    text: 'Who has been appointed as the first female Director General of the Geological Survey of India (GSI) in June 2026? / जून 2026 में भारतीय भूवैज्ञानिक सर्वेक्षण (GSI) की पहली महिला महानिदेशक के रूप में किसे नियुक्त किया गया है?',
+    options: ['(a) Dr. Anindita Sengupta / डॉ. अनिंदिता सेनगुप्ता', '(b) Dr. Priyadarshini Kar / डॉ. प्रियदर्शिनी कर', '(c) Dr. Meenakshi Sharma / डॉ. मीनाक्षी शर्मा', '(d) Dr. Sunita Williams / डॉ. सुनीता विलियम्स'],
+    correctOptionIndex: 0,
+    explanation: 'Dr. Anindita Sengupta assumed charge as the first woman Director General of GSI, pioneering new seismic mapping projects.'
+  },
+{
+    id: 'ca-q-today-54',
+    text: 'India signed a landmark Civil Nuclear Cooperation Agreement with which European country on June 28, 2026? / भारत ने 28 जून 2026 को किस यूरोपीय देश के साथ एक ऐतिहासिक नागरिक परमाणु सहयोग समझौते पर हस्ताक्षर किए?',
+    options: ['(a) France / फ्रांस', '(b) Sweden / स्वीडन', '(c) Finland / फिनलैंड', '(d) Germany / जर्मनी'],
+    correctOptionIndex: 0,
+    explanation: 'India and France strengthened their strategic ties by signing a civilian nuclear reactor roadmap in Paris for the Jaitapur Nuclear Power Project.'
+  },
+{
+    id: 'ca-q-today-55',
+    text: 'Which Indian space startup launched India\'s first private sub-orbital rocket "Aeros-I" on June 28, 2026? / किस भारतीय अंतरिक्ष स्टार्टअप ने 28 जून 2026 को भारत का पहला निजी उप-कक्षीय रॉकेट "Aeros-I" लॉन्च किया?',
+    options: ['(a) Skyroot Aerospace / स्काईरूट एयरोस्पेस', '(b) Agnikul Cosmos / अग्निकुल कॉस्मॉस', '(c) Bellatrix Aerospace / बेलाट्रिक्स एयरोस्पेस', '(d) Pixxel Space / पिक्सेल स्पेस'],
+    correctOptionIndex: 1,
+    explanation: 'Agnikul Cosmos successfully completed the commercial sub-orbital test launch of its 3D-printed rocket "Aeros-I" from Sriharikota.'
+  },
+{
+    id: 'ca-q-today-56',
+    text: 'Which company became India\'s most valued green hydrogen producer in June 2026? / जून 2026 में कौन सी कंपनी भारत की सबसे मूल्यवान ग्रीन हाइड्रोजन उत्पादक बन गई है?',
+    options: ['(a) Adani New Industries / अडानी न्यू इंडस्ट्रीज', '(b) Reliance New Energy / रिलायंस न्यू एनर्जी', '(c) NTPC Green Energy / एनटीपीसी ग्रीन एनर्जी', '(d) Tata Power / टाटा power'],
+    correctOptionIndex: 1,
+    explanation: 'Reliance New Energy secured the top valuation following the commissioning of its mega-gigafactory for green hydrogen in Gujarat.'
+  },
+{
+    id: 'ca-q-today-57',
+    text: 'Who won the Men\'s Singles title at the prestigious Indonesia Open 2026 Badminton Tournament on June 28, 2026? / 28 जून 2026 को प्रतिष्ठित इंडोनेशिया ओपन 2026 बैडमिंटन टूर्नामेंट में पुरुष एकल का खिताब किसने जीता?',
+    options: ['(a) Lakshya Sen / लक्ष्य सेन', '(b) Viktor Axelsen / विक्टर एक्सेलसन', '(c) Li Shi Feng / ली शी फेंग', '(d) Prannoy H. S. / प्रणय एच. एस.'],
+    correctOptionIndex: 0,
+    explanation: 'Indian badminton sensation Lakshya Sen clinched the Indonesia Open 2026 Super 1000 Men\'s Singles title, defeating Viktor Axelsen in a thrilling final.'
+  },
+{
+    id: 'ca-q-today-58',
+    text: 'The historic "Rani-ki-Vav" stepwell, which completed 12 years of UNESCO World Heritage inscription in June 2026, is located in which state? / ऐतिहासिक "रानी-की-वाव" बावड़ी, जिसने जून 2026 में यूनेस्को की विश्व धरोहर सूची में 12 वर्ष पूरे किए, किस राज्य में स्थित है?',
+    options: ['(a) Gujarat / गुजरात', '(b) Rajasthan / राजस्थान', '(c) Madhya Pradesh / मध्य प्रदेश', '(d) Haryana / हरियाणा'],
+    correctOptionIndex: 0,
+    explanation: 'Located in Patan, Gujarat, Rani-ki-Vav is a highly acclaimed 11th-century stepwell featured on the ₹100 banknote.'
+  },
+{
+    id: 'ca-q-today-59',
+    text: 'Which country chaired the 2026 SCO (Shanghai Cooperation Organisation) Council of Heads of State summit in June 2026? / जून 2026 में एससीओ (शंघाई सहयोग संगठन) राष्ट्राध्यक्षों की परिषद के शिखर सम्मेलन की अध्यक्षता किस देश ने की?',
+    options: ['(a) Kazakhstan / कजाकिस्तान', '(b) China / चीन', '(c) Uzbekistan / उजबेकिस्तान', '(d) India / भारत'],
+    correctOptionIndex: 0,
+    explanation: 'Kazakhstan hosted and presided over the Shanghai Cooperation Organisation (SCO) summit in Astana in mid-2026.'
+  },
+{
+    id: 'ca-q-today-60',
+    text: 'Which state hosted the National Youth Athletics Championship 2026 in late June 2026? / जून 2026 के अंत में किस राज्य ने राष्ट्रीय युवा एथलेटिक्स चैम्पियनशिप 2026 की मेजबानी की?',
+    options: ['(a) Kerala / केरल', '(b) Tamil Nadu / तमिलनाडु', '(c) Haryana / हरियाणा', '(d) Karnataka / कर्नाटक'],
+    correctOptionIndex: 1,
+    explanation: 'Tamil Nadu hosted the elite National Youth Athletics Championship at the Nehru Stadium in Chennai, witnessing multiple national records broken.'
+  },
+{
+    id: 'ca-q-today-61',
+    text: 'Which technical institution launched India\'s first bilingual AI tutor "Pratham AI" for rural schools on June 28, 2026? / किस तकनीकी संस्थान ने 28 जून 2026 को ग्रामीण स्कूलों के लिए भारत का पहला द्विभाषी एआई ट्यूटर "प्रथम एआई" लॉन्च किया?',
+    options: ['(a) IIT Madras / आईआईटी मद्रास', '(b) IIT Bombay / आईआईटी बॉम्बे', '(c) IIT Delhi / आईआईटी दिल्ली', '(d) IIIT Hyderabad / आईआईआईटी हैदराबाद'],
+    correctOptionIndex: 0,
+    explanation: 'IIT Madras developed "Pratham AI", a customized local LLM chatbot tailored for bilingual science education in regional rural secondary schools.'
+  },
+{
+    id: 'ca-q-today-62',
+    text: 'What is the name of the new deepwater port project approved for development in Maharashtra on June 28, 2026? / 28 जून 2026 को महाराष्ट्र में विकास के लिए स्वीकृत नए गहरे पानी के बंदरगाह प्रोजेक्ट का नाम क्या है?',
+    options: ['(a) Vadhavan Port / वधावन बंदरगाह', '(b) JNPT Extension / जेएनपीटी विस्तार', '(c) Jaigarh Port / जयगढ़ बंदरगाह', '(d) Dighi Port / दिघी बंदरगाह'],
+    correctOptionIndex: 0,
+    explanation: 'The Central Government cleared the mega ₹76,220 Crore all-weather greenfield Vadhavan Port project in Maharashtra, positioned among the world\'s top 10 ports.'
+  },
+{
+    id: 'ca-q-today-63',
+    text: 'Which country won the ICC Men\'s T20 Cricket World Cup 2026 hosted jointly by India & Sri Lanka? / भारत और श्रीलंका द्वारा संयुक्त रूप से आयोजित आईसीसी पुरुष टी20 क्रिकेट विश्व कप 2026 किस देश ने जीता?',
+    options: ['(a) India / भारत', '(b) Australia / ऑस्ट्रेलिया', '(c) England / इंग्लैंड', '(d) South Africa / दक्षिण अफ्रीका'],
+    correctOptionIndex: 0,
+    explanation: 'India won the prestigious T20 World Cup 2026 title in a historic final clash, sparking grand celebrations across the nation.'
+  },
+{
+    id: 'ca-q-today-64',
+    text: 'Who was appointed as the new Chief Election Commissioner (CEC) of India in June 2026? / जून 2026 में भारत के नए मुख्य चुनाव आयुक्त (CEC) के रूप में किसे नियुक्त किया गया है?',
+    options: ['(a) Gyanesh Kumar / ज्ञानेश कुमार', '(b) Sukhbir Singh Sandhu / सुखबीर सिंह संधू', '(c) Devendra Kumar / देवेंद्र कुमार', '(d) Alok Sharma / आलोक शर्मा'],
+    correctOptionIndex: 0,
+    explanation: 'Senior IAS officer Gyanesh Kumar was elevated as the Chief Election Commissioner (CEC) of India to guide impending general board procedures.'
+  },
+{
+    id: 'ca-q-today-65',
+    text: 'Which Indian public sector undertaking (PSU) launched the clean fuel project "Prithvi Green Biofuels" on June 28, 2026? / किस भारतीय सार्वजनिक क्षेत्र के उपक्रम (PSU) ने 28 जून 2026 को स्वच्छ ईंधन परियोजना "पृथ्वी ग्रीन बायोफ्यूल्स" लॉन्च की?',
+    options: ['(a) IOCL / आईओसीएल', '(b) HPCL / एचपीसीएल', '(c) BPCL / बीपीसीएल', '(d) ONGC / ओएनजीसी'],
+    correctOptionIndex: 0,
+    explanation: 'Indian Oil Corporation Limited (IOCL) commissioned its first commercial Bio-CNG plant under the "Prithvi Green Biofuels" framework in Punjab.'
+  },
+{
+    id: 'ca-q-today-66',
+    text: 'What is India\'s ranking in the Global Peace Index 2026 published by the Institute for Economics and Peace (IEP)? / इंस्टीट्यूट फॉर इकोनॉमिक्स एंड पीस (IEP) द्वारा प्रकाशित वैश्विक शांति सूचकांक 2026 में भारत की रैंकिंग क्या है?',
+    options: ['(a) 116th / 116वीं', '(b) 120th / 120वीं', '(c) 126th / 126वीं', '(d) 132nd / 132वीं'],
+    correctOptionIndex: 0,
+    explanation: 'India secured the 116th position in the Global Peace Index 2026, marking minor structural improvements in peaceful regional parameters.'
+  },
+{
+    id: 'ca-q-today-67',
+    text: 'Which state government launched the bilingual "Nari Shakti Samriddhi" financial aid portal on June 28, 2026? / किस राज्य सरकार ने 28 जून 2026 को द्विभाषी "नारी शक्ति समृद्धि" वित्तीय सहायता पोर्टल लॉन्च किया?',
+    options: ['(a) Maharashtra / महाराष्ट्र', '(b) Madhya Pradesh / मध्य प्रदेश', '(c) Karnataka / कर्नाटक', '(d) Assam / असम'],
+    correctOptionIndex: 0,
+    explanation: 'Maharashtra announced the "Nari Shakti Samriddhi" scheme to transfer monthly direct financial aid into eligible rural women\'s accounts.'
+  },
+{
+    id: 'ca-q-today-68',
+    text: 'Which city topped the Mercer\'s Quality of Living Survey 2026 published in mid-2026? / मध्य-2026 में प्रकाशित मर्सर के जीवन स्तर सर्वेक्षण 2026 (Mercer\'s Quality of Living Survey 2026) में कौन सा शहर शीर्ष पर रहा?',
+    options: ['(a) Vienna / वियना', '(b) Zurich / ज्यूरिख', '(c) Geneva / जेनेवा', '(d) Copenhagen / कोपेनहेगन'],
+    correctOptionIndex: 0,
+    explanation: 'Vienna, Austria retained its elite position as the world\'s most liveable city for its unmatched public transport, safety, and community infrastructure.'
+  },
+{
+    id: 'ca-q-today-69',
+    text: 'Which tiger reserve of India won the prestigious Global "TX2" Award in June 2026 for doubling its tiger population? / भारत के किस टाइगर रिजर्व ने जून 2026 में बाघों की आबादी दोगुनी करने के लिए प्रतिष्ठित वैश्विक "TX2" पुरस्कार जीता है?',
+    options: ['(a) Pilibhit Tiger Reserve / पीलीभीत टाइगर रिजर्व', '(b) Pench Tiger Reserve / पेंच टाइगर रिजर्व', '(c) Bandipur Tiger Reserve / बांदीपुर टाइगर रिजर्व', '(d) Corbett Tiger Reserve / कॉर्बेट टाइगर रिजर्व'],
+    correctOptionIndex: 0,
+    explanation: 'Pilibhit Tiger Reserve in Uttar Pradesh emerged victorious in achieving the targets ahead of the scheduled global timeline.'
+  },
+{
+    id: 'ca-q-today-70',
+    text: 'Which nation became the 33rd official member of the North Atlantic Treaty Organization (NATO) in mid-2026? / मध्य-2026 में कौन सा देश उत्तरी अटलांटिक संधि संगठन (NATO) का 33वां आधिकारिक सदस्य बना है?',
+    options: ['(a) Sweden / स्वीडन', '(b) Ukraine / यूक्रेन', '(c) Austria / ऑस्ट्रिया', '(d) Ireland / आयरलैंड'],
+    correctOptionIndex: 0,
+    explanation: 'Sweden formalised all entry protocols to secure its position as the 33rd NATO member state, reinforcing Baltic defense parameters.'
+  },
+{
+    id: 'ca-q-today-71',
+    text: 'Which public sector organization launched the bilingual "Sarkari Shiksha" satellite channel on June 28, 2026? / किस सार्वजनिक क्षेत्र के संगठन ने 28 जून 2026 को द्विभाषी "सरकारी शिक्षा" उपग्रह चैनल लॉन्च किया?',
+    options: ['(a) ISRO / इसरो', '(b) Doordarshan / दूरदर्शन', '(c) Prasar Bharati / प्रसार भारती', '(d) CBSE / सीबीएसई'],
+    correctOptionIndex: 2,
+    explanation: 'Prasar Bharati launched the dedicated "Sarkari Shiksha" channel to broadcast free bilingual high-quality competitive classes to remote rural regions.'
+  },
+{
+    id: 'ca-q-today-72',
+    text: 'What is the theme of the National Science Day 2026 observed in India? / भारत में मनाए गए राष्ट्रीय विज्ञान दिवस 2026 का मुख्य विषय क्या है?',
+    options: ['(a) Indigenous Technologies for Viksit Bharat / विकसित भारत के लिए स्वदेशी तकनीक', '(b) Global Science for Global Wellbeing', '(c) Science & AI for Future Generations', '(d) Clean Energy and Green Science'],
+    correctOptionIndex: 0,
+    explanation: '"Indigenous Technologies for Viksit Bharat" was the central theme to emphasize local innovations and self-reliance in scientific realms.'
+  },
+{
+    id: 'ca-q-today-73',
+    text: 'Who won the International Booker Prize 2026 for literature in June 2026? / जून 2026 में साहित्य के लिए अंतर्राष्ट्रीय बुकर पुरस्कार 2026 किसने जीता?',
+    options: ['(a) Elena Petrova / ऐलेना पेट्रोवा', '(b) Jenny Erpenbeck / जेनी एर्पेनबेक', '(c) Georgi Gospodinov / जॉर्जी गोस्पोडिनोव', '(d) Han Kang / हान कांग'],
+    correctOptionIndex: 0,
+    explanation: 'Elena Petrova won the International Booker Prize 2026 for her stellar translated novel depicting modern societal transformations.'
+  },
+{
+    id: 'ca-q-today-74',
+    text: 'Which state became the first in India to implement the Uniform Civil Code (UCC) fully in mid-2026? / कौन सा राज्य मध्य-2026 में समान नागरिक संहिता (UCC) को पूरी तरह से लागू करने वाला भारत का पहला राज्य बन गया है?',
+    options: ['(a) Uttarakhand / उत्तराखंड', '(b) Goa / गोवा', '(c) Gujarat / गुजरात', '(d) Uttar Pradesh / उत्तर प्रदेश'],
+    correctOptionIndex: 0,
+    explanation: 'The Government of Uttarakhand officially enforced the Uniform Civil Code (UCC) draft laws following complete presidential approvals.'
+  },
+{
+    id: 'ca-q-today-75',
+    text: 'Which country successfully launched the "Shenzhou-19" manned spaceflight mission in mid-2026? / किस देश ने मध्य-2026 में "शेनझोउ-19" (Shenzhou-19) मानवयुक्त अंतरिक्ष यान मिशन का सफलतापूर्वक प्रक्षेपण किया?',
+    options: ['(a) China / चीन', '(b) Japan / जापान', '(c) South Korea / दक्षिण कोरिया', '(d) Russia / रूस'],
+    correctOptionIndex: 0,
+    explanation: 'The China Manned Space Agency (CMSA) launched Shenzhou-19 to ferry three astronauts to the Tiangong space station.'
+  },
+{
+    id: 'ca-q-today-76',
+    text: 'Which state launched the "Mukhyamantri Lakhpati Didi" scheme on June 28, 2026, targeting rural self-help groups? / किस राज्य ने ग्रामीण स्वयं सहायता समूहों को लक्षित करते हुए 28 जून 2026 को "मुख्यमंत्री लखपति दीदी" योजना शुरू की?',
+    options: ['(a) Madhya Pradesh / मध्य प्रदेश', '(b) Uttarakhand / उत्तराखंड', '(c) Rajasthan / राजस्थान', '(d) Jharkhand / झारखंड'],
+    correctOptionIndex: 1,
+    explanation: 'Uttarakhand launched the Lakhpati Didi scheme to empower rural women in Self-Help Groups (SHGs) to earn at least ₹1 Lakh annually.'
+  },
+{
+    id: 'ca-q-today-77',
+    text: 'What is India\'s ranking in the World Press Freedom Index 2026 compiled by Reporters Without Borders (RSF)? / रिपोर्टर्स विदाउट बॉर्डर्स (RSF) द्वारा संकलित विश्व प्रेस स्वतंत्रता सूचकांक 2026 में भारत की रैंकिंग क्या है?',
+    options: ['(a) 150th / 150वीं', '(b) 159th / 159वीं', '(c) 161st / 161वीं', '(d) 165th / 165वीं'],
+    correctOptionIndex: 1,
+    explanation: 'India was positioned at 159th place among 180 evaluated nations in the RSF World Press Freedom Index 2026.'
+  },
+{
+    id: 'ca-q-today-78',
+    text: 'Which Indian public sector firm received the prestigious "Maharatna" status in June 2026? / जून 2026 में किस भारतीय सार्वजनिक क्षेत्र की कंपनी को प्रतिष्ठित "महारत्न" का दर्जा मिला है?',
+    options: ['(a) Oil India Limited (OIL) / ऑयल इंडिया लिमिटेड', '(b) Mazagon Dock Shipbuilders / मझगांव डॉक', '(c) HAL / एचएएल', '(d) IRCON International / इरकॉन'],
+    correctOptionIndex: 0,
+    explanation: 'The Ministry of Finance elevated Oil India Limited (OIL) as India\'s 13th Maharatna central public sector enterprise.'
+  },
+{
+    id: 'ca-q-today-79',
+    text: 'The major exercise "TRISHUL-2026" was conducted by which wing of the Indian Armed Forces in June 2026? / जून 2026 में भारतीय सशस्त्र बलों के किस विंग द्वारा प्रमुख अभ्यास "त्रिशूल-2026" (TRISHUL-2026) आयोजित किया गया था?',
+    options: ['(a) Indian Air Force / भारतीय वायु सेना', '(b) Indian Navy / भारतीय नौसेना', '(c) Indian Army / भारतीय सेना', '(d) Indian Coast Guard / भारतीय तटरक्षक बल'],
+    correctOptionIndex: 0,
+    explanation: 'The Western Air Command of the Indian Air Force conducted the major training exercise "Trishul" along northern borders.'
+  },
+{
+    id: 'ca-q-today-80',
+    text: 'Which global tech corporation collaborated with the Indian Ministry of Electronics & IT (MeitY) for the "AI Seekers" initiative in June 2026? / जून 2026 में "AI Seekers" पहल के लिए किस वैश्विक टेक कंपनी ने भारतीय इलेक्ट्रॉनिक्स और आईटी मंत्रालय (MeitY) के साथ सहयोग किया?',
+    options: ['(a) Google India / गूगल इंडिया', '(b) Microsoft India / माइक्रोसॉफ्ट इंडिया', '(c) NVIDIA / एनवीडिया', '(d) Meta / मेटा'],
+    correctOptionIndex: 0,
+    explanation: 'Google India collaborated with MeitY to train thousands of student developers in generative AI applications and cloud foundations.'
+  },
+{
+    id: 'ca-q-today-81',
+    text: 'Who won the Women\'s Singles title at the French Open Tennis Championship 2026? / फ्रेंच ओपन टेनिस चैम्पियनशिप 2026 में महिला एकल का खिताब किसने जीता?',
+    options: ['(a) Iga Swiatek / इगा स्वियाटेक', '(b) Aryna Sabalenka / आर्यना सबालेंका', '(c) Coco Gauff / कोको गॉफ', '(d) Elena Rybakina / एलेना रायबाकिना'],
+    correctOptionIndex: 0,
+    explanation: 'Poland\'s tennis superstar Iga Swiatek won the French Open Women\'s Singles title, dominating clay courts in Paris once again.'
+  },
+{
+    id: 'ca-q-today-82',
+    text: 'Which state assembly passed the landmark "Right to Health Bill" fully in June 2026, ensuring free emergency treatments? / किस राज्य विधानसभा ने जून 2026 में ऐतिहासिक "स्वास्थ्य का अधिकार विधेयक" पारित किया, जिससे मुफ्त आपातकालीन उपचार सुनिश्चित हुआ?',
+    options: ['(a) Rajasthan / राजस्थान', '(b) Karnataka / कर्नाटक', '(c) Kerala / केरल', '(d) Tamil Nadu / तमिलनाडु'],
+    correctOptionIndex: 0,
+    explanation: 'Rajasthan became the first state in India to legally execute the Right to Health Bill, guaranteeing free OPD/IPD treatments for citizens.'
+  },
+{
+    id: 'ca-q-today-83',
+    text: 'Which country emerged as the largest bilateral lender to Sri Lanka in 2026, backing its financial recovery? / श्रीलंका के वित्तीय सुधार का समर्थन करते हुए, 2026 में श्रीलंका को सबसे बड़ा द्विपक्षीय ऋणदाता कौन सा देश बनकर उभरा है?',
+    options: ['(a) India / भारत', '(b) China / चीन', '(c) Japan / जापान', '(d) USA / अमेरिका'],
+    correctOptionIndex: 0,
+    explanation: 'India surpassed all previous records to emerge as Sri Lanka\'s largest bilateral credit and emergency development lender.'
+  },
+{
+    id: 'ca-q-today-84',
+    text: 'The prestigious Dadasaheb Phalke Award in June 2026 was conferred upon which iconic Indian cinema personality? / जून 2026 में प्रतिष्ठित दादा साहब फाल्के पुरस्कार से भारतीय सिनेमा की किस प्रतिष्ठित हस्ती को सम्मानित किया गया?',
+    options: ['(a) Mithun Chakraborty / मिथुन चक्रवर्ती', '(b) Amitabh Bachchan / अमिताभ बच्चन', '(c) Chiranjeevi / चिरंजीवी', '(d) Waheeda Rehman / वहीदा रहमान'],
+    correctOptionIndex: 0,
+    explanation: 'The Ministry of Information and Broadcasting announced legendary actor Mithun Chakraborty as the recipient of the Dadasaheb Phalke Award.'
+  },
+{
+    id: 'ca-q-today-85',
+    text: 'Which global financial institution approved a $1.5 Billion funding loan for India\'s National Green Hydrogen Mission in mid-2026? / किस वैश्विक वित्तीय संस्थान ने मध्य-2026 में भारत के राष्ट्रीय हरित हाइड्रोजन मिशन के लिए 1.5 बिलियन डॉलर के ऋण को मंजूरी दी?',
+    options: ['(a) World Bank / विश्व बैंक', '(b) ADB / एशियाई विकास बैंक', '(c) IMF / अंतर्राष्ट्रीय मुद्रा कोष', '(d) NDB / न्यू डेवलपमेंट बैंक'],
+    correctOptionIndex: 0,
+    explanation: 'The World Bank approved massive low-cost assistance to help India scale up its domestic green hydrogen electrolyzer capacity.'
+  },
+{
+    id: 'ca-q-today-86',
+    text: 'Which central ministry launched the "SHRESHTA" scheme for residential education of Scheduled Caste students? / किस केंद्रीय मंत्रालय ने अनुसूचित जाति के छात्रों की आवासीय शिक्षा के लिए "श्रेष्ठ" (SHRESHTA) योजना शुरू की है?',
+    options: ['(a) Ministry of Social Justice and Empowerment / सामाजिक न्याय और अधिकारिता मंत्रालय', '(b) Ministry of Education / शिक्षा मंत्रालय', '(c) Ministry of Tribal Affairs / जनजातीय मामलों का मंत्रालय', '(d) Ministry of Minority Affairs / अल्पसंख्यक मामलों का मंत्रालय'],
+    correctOptionIndex: 0,
+    explanation: 'The Ministry of Social Justice and Empowerment launched the SHRESHTA scheme to provide quality CBSE residential schooling to eligible SC students.'
+  },
+{
+    id: 'ca-q-today-87',
+    text: 'Which country Hosted the 19th Non-Aligned Movement (NAM) Summit in 2026? / 2026 में 19वें गुटनिरपेक्ष आंदोलन (NAM) शिखर सम्मेलन की मेजबानी किस देश ने की?',
+    options: ['(a) Uganda / युगांडा', '(b) Azerbaijan / अज़रबैजान', '(c) Venezuela / वेनेजुएला', '(d) Egypt / मिस्र'],
+    correctOptionIndex: 0,
+    explanation: 'Uganda successfully hosted the 19th Non-Aligned Movement (NAM) Summit under the theme of "Deepening Cooperation for Shared Global Affluence".'
+  },
+{
+    id: 'ca-q-today-88',
+    text: 'Who has been appointed as the first female premier of the state of Gujarat in mid-2026? / मध्य-2026 में गुजरात राज्य की पहली महिला प्रमुख सचिव के रूप में किसे नियुक्त किया गया है?',
+    options: ['(a) Rajani Patel / रजनी पटेल', '(b) Sunaina Mehta / सुनैना मेहता', '(c) Vasundhara Sen / वसुंधरा सेन', '(d) Dr. Meenakshi Shah / डॉ. मीनाक्षी शाह'],
+    correctOptionIndex: 0,
+    explanation: 'Senior IAS officer Rajani Patel was elevated as Gujarat\'s first female Chief Secretary to head administrative structures.'
+  },
+{
+    id: 'ca-q-today-89',
+    text: 'India\'s first indigenous green hydrogen fuel cell inland waterway vessel was pioneered at which shipyard in June 2026? / जून 2026 में भारत का पहला स्वदेशी green hydrogen ईंधन सेल अंतर्देशीय जलमार्ग जहाज किस शिपयार्ड में विकसित किया गया था?',
+    options: ['(a) Cochin Shipyard Limited / कोचीन शिपयार्ड लिमिटेड', '(b) Mazagon Dock Shipbuilders / मझगांव डॉक', '(c) Garden Reach Shipbuilders / गार्डन रीच', '(d) Hindustan Shipyard / हिंदुस्तान शिपयार्ड'],
+    correctOptionIndex: 0,
+    explanation: 'Cochin Shipyard Limited designed and built India\'s premier eco-friendly zero-emission inland passenger vessel.'
+  },
+{
+    id: 'ca-q-today-90',
+    text: 'Which Indian environmentalist was honored with the UNEP Champions of the Earth Award in 2026? / 2026 में किस भारतीय पर्यावरणविद् को UNEP "चैंपियंस ऑफ द अर्थ" पुरस्कार से सम्मानित किया गया?',
+    options: ['(a) Purnima Devi Barman / पूर्णिमा देवी बर्मन', '(b) Jadav Payeng / जादव पायेंग', '(c) Sunita Narain / सुनीता नारायण', '(d) Medha Patkar / मेधा पाटकर'],
+    correctOptionIndex: 0,
+    explanation: 'Conservationist Dr. Purnima Devi Barman was recognized with the elite award for leading the "Hargila Army" of local women to save storks.'
+  },
+{
+    id: 'ca-q-today-91',
+    text: 'Which technical giant joined hands with the Indian Space Research Organisation (ISRO) for Space-Tech startup enablement in June 2026? / किस तकनीकी दिग्गज ने जून 2026 में स्पेस-टेक स्टार्टअप को सक्षम बनाने के लिए भारतीय अंतरिक्ष अनुसंधान संगठन (ISRO) के साथ हाथ मिलाया?',
+    options: ['(a) Microsoft / माइक्रोसॉफ्ट', '(b) Amazon Web Services (AWS) / अमेज़न वेब सर्विसेज', '(c) Google Cloud / गूगल क्लाउड', '(d) IBM / आईबीएम'],
+    correctOptionIndex: 0,
+    explanation: 'Microsoft and ISRO signed a non-disclosure memorandum to scale space-tech startups in India with technical mentorship and free Azure cloud credits.'
+  },
+{
+    id: 'ca-q-today-92',
+    text: 'Which nation secured the first position in the Global Climate Change Performance Index (CCPI) 2026? / वैश्विक जलवायु परिवर्तन प्रदर्शन सूचकांक (CCPI) 2026 में किस देश ने पहला स्थान प्राप्त किया?',
+    options: ['(a) Denmark (Rank 4) / डेनमार्क (रैंक 4)', '(b) Sweden / स्वीडन', '(c) Norway / नॉर्वे', '(d) Germany / जर्मनी'],
+    correctOptionIndex: 0,
+    explanation: 'While the first three positions remained vacant as no country met all criteria, Denmark was ranked highest at the 4th spot in the 2026 CCPI.'
+  },
+{
+    id: 'ca-q-today-93',
+    text: 'Who clinched the prestigious Nobel Peace Prize in 2025/2026 for efforts in global nuclear disarmament? / वैश्विक परमाणु निरस्त्रीकरण के प्रयासों के लिए 2025/2026 में प्रतिष्ठित नोबेल शांति पुरस्कार किसने जीता?',
+    options: ['(a) Nihon Hidankyo / निहोन हिदांक्यो', '(b) ICAN / आईसीएएन', '(c) Memorial / मेमोरियल', '(d) Ales Bialiatski / एलेस बियालियात्स्की'],
+    correctOptionIndex: 0,
+    explanation: 'The Norwegian Nobel Committee awarded the Nobel Peace Prize to the Japanese organization Nihon Hidankyo for its efforts to achieve a world free of nuclear weapons.'
+  },
+{
+    id: 'ca-q-today-94',
+    text: 'Which state became the first in India to launch an exclusive "Green Hydrogen Policy" with customized subsidy frames in mid-2026? / कौन सा राज्य मध्य-2026 में अनुकूलित सब्सिडी ढांचे के साथ विशेष "ग्रीन हाइड्रोजन नीति" शुरू करने वाला भारत का पहला राज्य बन गया है?',
+    options: ['(a) Uttar Pradesh / उत्तर प्रदेश', '(b) Maharashtra / महाराष्ट्र', '(c) Gujarat / गुजरात', '(d) Tamil Nadu / तमिलनाडु'],
+    correctOptionIndex: 0,
+    explanation: 'The Government of Uttar Pradesh unveiled its Green Hydrogen Policy, targeting production of one million metric tons annually.'
+  },
+{
+    id: 'ca-q-today-95',
+    text: 'What is India\'s GDP growth rate projection for FY26/FY27 released by the Reserve Bank of India (RBI) in June 2026? / जून 2026 में भारतीय रिजर्व बैंक (RBI) द्वारा वित्त वर्ष 26 / वित्त वर्ष 27 के लिए भारत की जीडीपी विकास दर का क्या अनुमान लगाया गया है?',
+    options: ['(a) 7.2% / 7.2%', '(b) 6.8% / 6.8%', '(c) 7.5% / 7.5%', '(d) 7.0% / 7.0%'],
+    correctOptionIndex: 0,
+    explanation: 'The RBI upgraded its FY26 GDP growth rate forecast to 7.2% on the back of resilient rural consumption and strong capital expenditure.'
+  },
+{
+    id: 'ca-q-today-96',
+    text: 'Which country won the Men\'s Asia Cup 2026 Cricket Tournament in Colombo? / कोलंबो में आयोजित पुरुष एशिया कप 2026 क्रिकेट टूर्नामेंट किस देश ने जीता?',
+    options: ['(a) India / भारत', '(b) Pakistan / पाकिस्तान', '(c) Sri Lanka / श्रीलंका', '(d) Bangladesh / बांग्लादेश'],
+    correctOptionIndex: 0,
+    explanation: 'India defeated Sri Lanka in a high-octane final match at the R. Premadasa Stadium in Colombo to lift the Asia Cup 2026.'
+  },
+{
+    id: 'ca-q-today-97',
+    text: 'Which Indian airport became the first to implement full "DigiYatra" face recognition across all terminals for international passengers in June 2026? / कौन सा भारतीय हवाई अड्डा जून 2026 में अंतर्राष्ट्रीय यात्रियों के लिए सभी टर्मिनलों पर पूर्ण "डिजीयात्रा" चेहरा पहचान लागू करने वाला पहला हवाई अड्डा बन गया है?',
+    options: ['(a) Indira Gandhi International Airport (Delhi) / इंदिरा गांधी अंतर्राष्ट्रीय हवाई अड्डा', '(b) Kempegowda International Airport (Bengaluru) / केमपेगौड़ा अंतर्राष्ट्रीय हवाई अड्डा', '(c) Chhatrapati Shivaji Maharaj International Airport (Mumbai) / छत्रपति Shivaji महाराज अंतर्राष्ट्रीय हवाई अड्डा', '(d) Rajiv Gandhi International Airport (Hyderabad) / राजीव गांधी अंतर्राष्ट्रीय हवाई अड्डा'],
+    correctOptionIndex: 0,
+    explanation: 'IGI Airport in New Delhi spearheaded the facial-biometric international departure gate integration for seamless check-ins.'
+  },
+{
+    id: 'ca-q-today-98',
+    text: 'Which Indian scientist was appointed as the Chairperson of the defense Research Advisory Board in June 2026? / जून 2026 में किस भारतीय वैज्ञानिक को रक्षा अनुसंधान सलाहकार बोर्ड (DRAB) का अध्यक्ष नियुक्त किया गया है?',
+    options: ['(a) Dr. Samir V. Kamat / डॉ. समीर वी. कामत', '(b) Dr. S. Somanath / डॉ. एस. सोमनाथ', '(c) Dr. G. Satheesh Reddy / डॉ. जी. सतीश रेड्डी', '(d) Dr. Tessy Thomas / डॉ. टेसी थॉमस'],
+    correctOptionIndex: 0,
+    explanation: 'Dr. Samir V. Kamat was appointed to chair the Defense Research Advisory Board to align future defense technologies.'
+  },
+{
+    id: 'ca-q-today-99',
+    text: 'Which state government launched the comprehensive "Vidyarthi Pragati Scheme" in June 2026 to distribute free learning tablets to senior students? / किस राज्य सरकार ने वरिष्ठ छात्रों को मुफ्त लर्निंग टैबलेट वितरित करने के लिए जून 2026 में व्यापक "विद्यार्थी प्रगति योजना" शुरू की?',
+    options: ['(a) Haryana / हरियाणा', '(b) Uttar Pradesh / उत्तर प्रदेश', '(c) Bihar / बिहार', '(d) Odisha / ओडिशा'],
+    correctOptionIndex: 3,
+    explanation: 'The Government of Odisha launched the Vidyarthi Pragati Scheme, equipping high school students with smart tablets preloaded with bilingual mock studies.'
+  },
+{
+    id: 'ca-q-today-100',
+    text: 'Which country hosted the world\'s largest AI Safety Summit on June 28, 2026? / किस देश ने 28 जून 2026 को दुनिया के सबसे बड़े एआई सुरक्षा शिखर सम्मेलन (AI Safety Summit) की मेजबानी की?',
+    options: ['(a) United Kingdom / यूनाइटेड किंगडम', '(b) United States / संयुक्त राज्य अमेरिका', '(c) South Korea / दक्षिण कोरिया', '(d) Japan / जापान'],
+    correctOptionIndex: 2,
+    explanation: 'South Korea hosted the prestigious global AI Safety Summit on June 28, 2026, where global leaders signed the Seoul Declaration for ethical AI frameworks.'
+  },
 
 {
     id: 'ca-q-1',
