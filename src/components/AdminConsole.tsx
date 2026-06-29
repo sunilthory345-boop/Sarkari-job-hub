@@ -74,48 +74,83 @@ export default function AdminConsole({
   const [aiParsedResult, setAiParsedResult] = useState<any>(null);
 
   const handleSaveTelegram = () => {
-    localStorage.setItem('sarkari_tg_bot_token', tgBotToken);
-    localStorage.setItem('sarkari_tg_chat_id', tgChatId);
+    let cleanToken = tgBotToken.trim();
+    let cleanChatId = tgChatId.trim();
+    if (cleanChatId && !cleanChatId.startsWith('@') && !cleanChatId.startsWith('-')) {
+      cleanChatId = '@' + cleanChatId;
+    }
+
+    setTgBotToken(cleanToken);
+    setTgChatId(cleanChatId);
+
+    localStorage.setItem('sarkari_tg_bot_token', cleanToken);
+    localStorage.setItem('sarkari_tg_chat_id', cleanChatId);
     localStorage.setItem('sarkari_tg_enabled', tgEnabled ? 'true' : 'false');
     
     const log = {
       timestamp: new Date().toLocaleTimeString(),
       status: 'TELEGRAM_CONFIG_SAVED',
-      payload: `Channel ID/Chat ID: ${tgChatId} | Integration Active: ${tgEnabled}`
+      payload: `Channel ID/Chat ID: ${cleanChatId} | Integration Active: ${tgEnabled}`
     };
     setTgLogs(prev => [log, ...prev]);
     setStatusMessage("✅ Telegram Integration saved successfully!");
   };
 
   const handleTestTelegram = async () => {
-    if (!tgBotToken) {
+    let cleanToken = tgBotToken.trim();
+    let cleanChatId = tgChatId.trim();
+    if (cleanChatId && !cleanChatId.startsWith('@') && !cleanChatId.startsWith('-')) {
+      cleanChatId = '@' + cleanChatId;
+    }
+
+    if (!cleanToken) {
       setStatusMessage("❌ Please configure a valid Telegram Bot Token first.");
       return;
     }
-    if (!tgChatId) {
+    if (!cleanChatId) {
       setStatusMessage("❌ Please configure a valid Telegram Chat ID/Channel username (e.g. @JobSarkariHub).");
       return;
     }
 
-    const testMessage = `🔔 *Job Sarkari Hub Telegram Connection Active!* \n\nThis is a real-time test message confirming that your Telegram Channel (${tgChatId}) is successfully integrated with our live admin dispatch engine! 🚀\n\n📅 _Verified on: ${new Date().toLocaleString()}_`;
+    setTgBotToken(cleanToken);
+    setTgChatId(cleanChatId);
+
+    const testMessage = `🔔 *Job Sarkari Hub Telegram Connection Active!* \n\nThis is a real-time test message confirming that your Telegram Channel (${cleanChatId}) is successfully integrated with our live admin dispatch engine! 🚀\n\n📅 _Verified on: ${new Date().toLocaleString()}_`;
 
     try {
       setStatusMessage("⏳ Dispatching test message to your Telegram channel...");
-      const res = await fetch(`https://api.telegram.org/bot${tgBotToken}/sendMessage`, {
+      let res = await fetch(`https://api.telegram.org/bot${cleanToken}/sendMessage`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          chat_id: tgChatId,
+          chat_id: cleanChatId,
           text: testMessage,
           parse_mode: 'Markdown'
         })
       });
 
-      const data = await res.json();
+      let data = await res.json();
+
+      // If Markdown parsing fails, try sending without formatting (plain text)
+      if (!data.ok && (data.description?.toLowerCase().includes('parse') || data.description?.toLowerCase().includes('entity') || data.error_code === 400)) {
+        setStatusMessage("⚠️ Markdown parse failed. Retrying with Plain Text...");
+        const fallbackRes = await fetch(`https://api.telegram.org/bot${cleanToken}/sendMessage`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            chat_id: cleanChatId,
+            text: testMessage.replace(/[\*\_]/g, '')
+          })
+        });
+        data = await fallbackRes.json();
+      }
+
       if (data.ok) {
-        setStatusMessage(`✅ Success! Test message sent to ${tgChatId}. Check your Telegram channel!`);
+        setStatusMessage(`✅ Success! Test message sent to ${cleanChatId}. Check your Telegram channel!`);
         const log = {
           timestamp: new Date().toLocaleTimeString(),
           status: 'TEST_SUCCESS_TELEGRAM',
@@ -137,9 +172,13 @@ export default function AdminConsole({
   };
 
   const sendTelegramMessage = async (message: string) => {
-    const isTgActive = localStorage.getItem('sarkari_tg_enabled') === 'true';
-    const token = localStorage.getItem('sarkari_tg_bot_token') || '';
-    const chatId = localStorage.getItem('sarkari_tg_chat_id') || '';
+    const isTgActive = tgEnabled || localStorage.getItem('sarkari_tg_enabled') === 'true';
+    let token = tgBotToken.trim() || localStorage.getItem('sarkari_tg_bot_token')?.trim() || '';
+    let chatId = tgChatId.trim() || localStorage.getItem('sarkari_tg_chat_id')?.trim() || '';
+
+    if (chatId && !chatId.startsWith('@') && !chatId.startsWith('-')) {
+      chatId = '@' + chatId;
+    }
 
     if (!isTgActive || !token || !chatId) {
       return;
@@ -153,7 +192,7 @@ export default function AdminConsole({
       };
       setTgLogs(prev => [log, ...prev]);
 
-      const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      let res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -165,7 +204,36 @@ export default function AdminConsole({
         })
       });
 
-      const responseData = await res.json();
+      let responseData = await res.json();
+
+      // Fallback: If it failed due to markdown parsing, retry immediately as plain text
+      if (!responseData.ok) {
+        const isParseError = responseData.description?.toLowerCase().includes('parse') || 
+                            responseData.description?.toLowerCase().includes('entity') || 
+                            responseData.error_code === 400;
+        
+        if (isParseError) {
+          const fallbackLog = {
+            timestamp: new Date().toLocaleTimeString(),
+            status: 'RETRY_TELEGRAM_PLAIN_TEXT',
+            payload: `Original failed: ${responseData.description || 'Bad Request'}. Retrying without formatting.`
+          };
+          setTgLogs(prev => [fallbackLog, ...prev]);
+
+          const fallbackRes = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              chat_id: chatId,
+              text: message // Omit parse_mode to send as plain text
+            })
+          });
+          responseData = await fallbackRes.json();
+        }
+      }
+
       if (responseData.ok) {
         const successLog = {
           timestamp: new Date().toLocaleTimeString(),
@@ -2585,7 +2653,19 @@ What is the standard pH level of pure distilled water at normal room temperature
                       type="checkbox" 
                       className="sr-only peer" 
                       checked={tgEnabled}
-                      onChange={(e) => setTgEnabled(e.target.checked)}
+                      onChange={(e) => {
+                        const val = e.target.checked;
+                        setTgEnabled(val);
+                        localStorage.setItem('sarkari_tg_enabled', val ? 'true' : 'false');
+                        
+                        // Add a log entry for live updates
+                        const log = {
+                          timestamp: new Date().toLocaleTimeString(),
+                          status: 'TELEGRAM_STATUS_CHANGED',
+                          payload: `Telegram automatic broadcasting has been ${val ? 'ENABLED' : 'DISABLED'}`
+                        };
+                        setTgLogs(prev => [log, ...prev]);
+                      }}
                     />
                     <div className="w-7 h-4 bg-slate-200 peer-focus:outline-hidden rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-sky-500"></div>
                     <span className="ml-1.5 text-[9px] font-bold text-slate-500">Enable</span>
