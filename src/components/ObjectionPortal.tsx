@@ -43,6 +43,7 @@ export default function ObjectionPortal({ triggerToast, answerKeys = [] }: Objec
   const [selectedExam, setSelectedExam] = useState(() => answerKeys.length > 0 ? answerKeys[0].title : '');
 
   const [activeSubTab, setActiveSubTab] = useState<'browse' | 'dispute'>('browse');
+  const [showTodayOnly, setShowTodayOnly] = useState(false);
   const [browseExamId, setBrowseExamId] = useState(() => answerKeys.length > 0 ? answerKeys[0].id : '');
   const selectedBrowseExam = answerKeys.find(k => k.id === browseExamId);
   const [browseDate, setBrowseDate] = useState('');
@@ -403,21 +404,31 @@ export default function ObjectionPortal({ triggerToast, answerKeys = [] }: Objec
             </form>
           </div>
 
-          {/* Right Side: Track Submitted Objections */}
           <div className="md:col-span-5 space-y-4">
             <div className="bg-white border border-slate-200 rounded-xl p-4 space-y-3.5 shadow-xs text-left">
-              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1">
-                <CheckSquare className="h-4 w-4 text-emerald-600" /> Active Provisional Solved catalog
-              </h4>
+              <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-2">
+                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1">
+                  <CheckSquare className="h-4 w-4 text-emerald-600" /> Active Provisional Solved catalog
+                </h4>
+                <button
+                  type="button"
+                  onClick={() => setShowTodayOnly(!showTodayOnly)}
+                  className={`text-[9px] font-extrabold rounded-md px-2 py-1 border transition-all cursor-pointer ${showTodayOnly ? 'bg-amber-500 border-amber-600 text-white animate-pulse' : 'bg-slate-50 border-slate-200 text-slate-500 hover:bg-slate-100'}`}
+                >
+                  ⚡ Today Only
+                </button>
+              </div>
               
               <div className="space-y-2.5 max-h-[220px] overflow-y-auto pr-1">
-                {answerKeys.map((keyItem, i) => (
-                  <div key={i} className="p-2 border border-slate-150 rounded-lg bg-slate-50 space-y-1.5 hover:border-blue-200 transition relative overflow-hidden">
-                    {keyItem.released === '2026-06-27' && (
-                      <span className="absolute top-1 right-1 bg-amber-500 text-white text-[8px] font-extrabold px-1.5 py-0.5 rounded shadow-xs animate-pulse">
-                        NEW TODAY
-                      </span>
-                    )}
+                {answerKeys
+                  .filter(keyItem => !showTodayOnly || keyItem.released === '2026-06-28' || keyItem.released === '2026-06-27')
+                  .map((keyItem, i) => (
+                    <div key={i} className="p-2 border border-slate-150 rounded-lg bg-slate-50 space-y-1.5 hover:border-blue-200 transition relative overflow-hidden">
+                      {(keyItem.released === '2026-06-28' || keyItem.released === '2026-06-27') && (
+                        <span className="absolute top-1 right-1 bg-amber-500 text-white text-[8px] font-extrabold px-1.5 py-0.5 rounded shadow-xs animate-pulse">
+                          NEW TODAY
+                        </span>
+                      )}
                     <h5 className="font-bold text-slate-800 text-[11px] leading-tight pr-14">{keyItem.title}</h5>
                     <div className="flex justify-between items-center">
                       <span className="text-[9px] text-slate-400 font-medium">Limit: {keyItem.objectionsLimit}</span>

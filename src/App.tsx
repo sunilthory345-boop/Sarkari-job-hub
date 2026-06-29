@@ -281,6 +281,8 @@ export default function App() {
   const [caSelectedCategory, setCaSelectedCategory] = useState<string>('All');
   const [caVisibleCount, setCaVisibleCount] = useState(6);
   const [quizSearchVal, setQuizSearchVal] = useState('');
+  const [showTodayOnlyAdmitCards, setShowTodayOnlyAdmitCards] = useState(false);
+  const [showTodayOnlyResults, setShowTodayOnlyResults] = useState(false);
   
   // Newspaper filter, reader, and AI summary states
   const [selectedPaperForReader, setSelectedPaperForReader] = useState<Newspaper | null>(null);
@@ -2290,7 +2292,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                           <span className="text-[10px] font-bold bg-blue-50 text-blue-700 px-2 py-0.5 rounded">
                             {job.category} Exam
                           </span>
-                          {job.postedDate === '2026-06-27' && (
+                          {(job.postedDate === '2026-06-28' || job.postedDate === '2026-06-27') && (
                             <span className="text-[10px] font-extrabold bg-rose-500 text-white px-2 py-0.5 rounded animate-pulse flex items-center gap-1 shadow-xs">
                               <span className="h-1.5 w-1.5 rounded-full bg-white animate-ping"></span>
                               TODAY
@@ -2453,7 +2455,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                     <div className="space-y-2">
                       {filteredAdmitCards.map((card) => (
                         <div key={card.id} className="p-2.5 border border-slate-100 rounded-lg text-[11px] space-y-1.5 bg-slate-50/50 relative overflow-hidden">
-                          {card.addedDate === '2026-06-27' && (
+                          {(card.addedDate === '2026-06-28' || card.addedDate === '2026-06-27') && (
                             <span className="absolute top-1 right-1 bg-emerald-600 text-white text-[8px] font-extrabold px-1.5 py-0.5 rounded shadow-xs animate-pulse">
                               NEW TODAY
                             </span>
@@ -2488,7 +2490,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                   <div className="p-3.5 space-y-2.5 text-xs">
                     {results.map((res) => (
                       <div key={res.id} className="p-2.5 border border-slate-100 rounded-lg space-y-2 bg-slate-50/50 relative overflow-hidden">
-                        {res.releaseDate === '2026-06-27' && (
+                        {(res.releaseDate === '2026-06-28' || res.releaseDate === '2026-06-27') && (
                           <span className="absolute top-1 right-1 bg-amber-500 text-white text-[8px] font-extrabold px-1.5 py-0.5 rounded shadow-xs animate-pulse">
                             DECLARED TODAY
                           </span>
@@ -2658,14 +2660,44 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
               </button>
             </div>
 
+            {/* Today Filter Row */}
+            <div className="flex flex-wrap gap-2 items-center justify-between bg-blue-50/20 border border-blue-100 rounded-2xl p-3 text-xs text-left">
+              <span className="font-semibold text-slate-700 flex items-center gap-1">
+                <span>⚡</span> {locale === 'hi' ? 'त्वरित फ़िल्टर (Quick Filters):' : 'Quick Filters:'}
+              </span>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowTodayOnlyAdmitCards(false)}
+                  className={`px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${!showTodayOnlyAdmitCards ? 'bg-blue-600 text-white' : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200/60'}`}
+                >
+                  {locale === 'hi' ? 'सभी दिखाएं' : 'Show All'}
+                </button>
+                <button
+                  onClick={() => setShowTodayOnlyAdmitCards(true)}
+                  className={`px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer flex items-center gap-1 ${showTodayOnlyAdmitCards ? 'bg-rose-600 text-white animate-pulse' : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200/60'}`}
+                >
+                  <span>🔥</span> {locale === 'hi' ? 'केवल आज के जारी (Today only)' : "Today's Releases"}
+                </button>
+              </div>
+            </div>
+
             <div className="space-y-4">
-              {admitCards.map((card) => (
-                <div key={card.id} className="border border-slate-100 p-4 rounded-2xl bg-slate-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div>
-                    <span className="text-[10px] bg-slate-200 text-slate-600 font-bold px-2 py-0.5 rounded">
-                      {card.org}
-                    </span>
-                    <h3 className="font-bold text-slate-800 text-sm mt-1">{card.title}</h3>
+              {admitCards
+                .filter(card => !showTodayOnlyAdmitCards || card.addedDate === '2026-06-28' || card.addedDate === '2026-06-27')
+                .map((card) => (
+                  <div key={card.id} className="border border-slate-100 p-4 rounded-2xl bg-slate-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="text-left">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-[10px] bg-slate-200 text-slate-600 font-bold px-2 py-0.5 rounded">
+                          {card.org}
+                        </span>
+                        {(card.addedDate === '2026-06-28' || card.addedDate === '2026-06-27') && (
+                          <span className="text-[9px] bg-rose-500 text-white font-extrabold px-2 py-0.5 rounded animate-pulse shadow-xs">
+                            NEW TODAY
+                          </span>
+                        )}
+                      </div>
+                      <h3 className="font-bold text-slate-800 text-sm mt-1">{card.title}</h3>
                     <div className="flex items-center gap-3 mt-1.5 text-xs text-slate-500">
                       <span>Venue: {card.examCity}</span>
                       <span>•</span>
@@ -2697,13 +2729,41 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
               Verified Government Exam Merit Lists & Cut-offs
             </h2>
 
-            <div className="grid gap-6 sm:grid-cols-2">
-              {results.map((res) => (
-                <div key={res.id} className="border border-slate-150 p-4 rounded-3xl bg-slate-50/30 space-y-3">
-                  <div>
-                    <h3 className="font-bold text-slate-800 text-sm">{res.title}</h3>
-                    <p className="text-slate-400 mt-0.5">Released: {res.releaseDate}</p>
-                  </div>
+            {/* Today Filter Row */}
+            <div className="flex flex-wrap gap-2 items-center justify-between bg-emerald-50/20 border border-emerald-100 rounded-2xl p-3 text-xs text-left">
+              <span className="font-semibold text-slate-700 flex items-center gap-1">
+                <span>⚡</span> {locale === 'hi' ? 'त्वरित फ़िल्टर (Quick Filters):' : 'Quick Filters:'}
+              </span>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowTodayOnlyResults(false)}
+                  className={`px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${!showTodayOnlyResults ? 'bg-blue-600 text-white' : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200/60'}`}
+                >
+                  {locale === 'hi' ? 'सभी दिखाएं' : 'Show All'}
+                </button>
+                <button
+                  onClick={() => setShowTodayOnlyResults(true)}
+                  className={`px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer flex items-center gap-1 ${showTodayOnlyResults ? 'bg-emerald-600 text-white animate-pulse' : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200/60'}`}
+                >
+                  <span>🔥</span> {locale === 'hi' ? 'केवल आज के घोषित (Declared today)' : "Today's Declared Results"}
+                </button>
+              </div>
+            </div>
+
+            <div className="grid gap-6 sm:grid-cols-2 text-left">
+              {results
+                .filter(res => !showTodayOnlyResults || res.releaseDate === '2026-06-28' || res.releaseDate === '2026-06-27')
+                .map((res) => (
+                  <div key={res.id} className="border border-slate-150 p-4 rounded-3xl bg-slate-50/30 space-y-3 relative overflow-hidden">
+                    {(res.releaseDate === '2026-06-28' || res.releaseDate === '2026-06-27') && (
+                      <span className="absolute top-2 right-2 bg-rose-500 text-white text-[8px] font-extrabold px-1.5 py-0.5 rounded shadow-xs animate-pulse">
+                        DECLARED TODAY
+                      </span>
+                    )}
+                    <div>
+                      <h3 className="font-bold text-slate-800 text-sm pr-16">{res.title}</h3>
+                      <p className="text-slate-400 mt-0.5">Released: {res.releaseDate}</p>
+                    </div>
 
                   {/* Cutoff breakdown */}
                   <div className="p-3 bg-white border border-slate-100 rounded-2xl grid grid-cols-2 gap-2 text-[11px]">

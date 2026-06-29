@@ -68,6 +68,8 @@ export default function JobCard({
     let matchesCategory = false;
     if (selectedCategory === 'All') {
       matchesCategory = true;
+    } else if (selectedCategory === 'Today') {
+      matchesCategory = job.postedDate === '2026-06-28' || job.postedDate === '2026-06-27';
     } else if (selectedCategory === 'WhatsAppAlerts') {
       matchesCategory = !!job.isWhatsAppAlert;
     } else if (selectedCategory === 'Rajasthan') {
@@ -116,6 +118,7 @@ export default function JobCard({
         <div className="flex flex-wrap gap-2">
           {[
             { id: 'All', label: 'All Exams (सभी)', emoji: '🌐', color: 'border-slate-200 bg-white hover:bg-slate-50 text-slate-800' },
+            { id: 'Today', label: "Today's Updates (आज के अपडेट)", emoji: '🔥', color: 'border-rose-200 bg-rose-50/20 hover:bg-rose-50 text-rose-900 animate-pulse' },
             { id: 'WhatsAppAlerts', label: 'WhatsApp Job Alerts', emoji: '🟢', color: 'border-emerald-200 bg-emerald-50/20 hover:bg-emerald-50 text-emerald-900' },
             { id: 'SSC', label: 'SSC Exams Office', emoji: '🏢', color: 'border-blue-200 bg-blue-50/20 hover:bg-blue-50 text-blue-900' },
             { id: 'Bank', label: 'Banking (SBI, IBPS)', emoji: '🏦', color: 'border-indigo-200 bg-indigo-50/20 hover:bg-indigo-50 text-indigo-900' },
@@ -279,6 +282,12 @@ export default function JobCard({
                     <span className={`inline-block rounded px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wide ${cStyles.text}`}>
                       {job.category} Exam
                     </span>
+                    {(job.postedDate === '2026-06-28' || job.postedDate === '2026-06-27') && (
+                      <span className="inline-flex items-center gap-0.5 rounded bg-rose-500 text-white px-1.5 py-0.5 text-[8.5px] font-extrabold animate-pulse shadow-xs">
+                        <span className="h-1 w-1 rounded-full bg-white animate-ping"></span>
+                        TODAY
+                      </span>
+                    )}
                     {job.isWhatsAppAlert && (
                       <a 
                         href="https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U"
