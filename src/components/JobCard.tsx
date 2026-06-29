@@ -14,6 +14,7 @@ interface JobCardProps {
   setQualificationFilter?: (q: string) => void;
   selectedCategory?: string;
   setSelectedCategory?: (c: string) => void;
+  pyqsList?: { title: string; type: string; size: string; year: number; exam: string; premium: boolean; downloadUrl?: string }[];
 }
 
 const getCategoryStyles = (cat: string) => {
@@ -44,7 +45,8 @@ export default function JobCard({
   qualificationFilter = 'All',
   setQualificationFilter,
   selectedCategory: propCategory,
-  setSelectedCategory: propSetCategory
+  setSelectedCategory: propSetCategory,
+  pyqsList
 }: JobCardProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [localCategory, setLocalCategory] = useState('All');
@@ -52,6 +54,55 @@ export default function JobCard({
   const setSelectedCategory = propSetCategory !== undefined ? propSetCategory : setLocalCategory;
   const [selectedJob, setSelectedJob] = useState<GovJob | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const getRelevantPyqsForJob = (job: GovJob) => {
+    let list = pyqsList;
+    if (!list) {
+      try {
+        const saved = localStorage.getItem('sarkari_pyqs');
+        if (saved) {
+          list = JSON.parse(saved);
+        }
+      } catch (e) {
+        // ignore
+      }
+    }
+    if (!list || list.length === 0) return [];
+
+    return list.filter(pyq => {
+      const jobCat = job.category.toLowerCase().trim();
+      const pyqExam = pyq.exam.toLowerCase().trim();
+
+      if (jobCat === pyqExam) return true;
+
+      if (jobCat === 'police' && pyqExam === 'ssc' && pyq.title.toLowerCase().includes('constable')) return true;
+      if (jobCat === 'others' && pyqExam === 'others') return true;
+
+      const org = job.org.toLowerCase();
+      const pyqTitle = pyq.title.toLowerCase();
+      const pyqExamLower = pyq.exam.toLowerCase();
+
+      if (org.includes('rrb') && (pyqTitle.includes('railway') || pyqTitle.includes('rrb') || pyqExamLower.includes('railway'))) return true;
+      if (org.includes('ssc') && (pyqTitle.includes('ssc') || pyqExamLower.includes('ssc'))) return true;
+      if (org.includes('upsc') && (pyqTitle.includes('upsc') || pyqExamLower.includes('upsc') || pyqTitle.includes('ias') || pyqTitle.includes('cds') || pyqTitle.includes('nda'))) return true;
+      if (org.includes('nhm') && (pyqTitle.includes('nhm') || pyqExamLower.includes('health') || pyqTitle.includes('vaccin') || pyqTitle.includes('anm'))) return true;
+      if (org.includes('rpsc') && (pyqTitle.includes('rpsc') || pyqTitle.includes('rajasthan'))) return true;
+      if (org.includes('upsssc') && pyqTitle.includes('upsssc')) return true;
+      if (org.includes('sbi') && (pyqTitle.includes('sbi') || pyqTitle.includes('bank') || pyqExamLower.includes('bank'))) return true;
+      if (org.includes('ibps') && (pyqTitle.includes('ibps') || pyqTitle.includes('bank') || pyqExamLower.includes('bank'))) return true;
+
+      const jobTitle = job.title.toLowerCase();
+      if (jobTitle.includes('constable') && pyqTitle.includes('constable')) return true;
+      if (jobTitle.includes('sub-inspector') && (pyqTitle.includes('sub-inspector') || pyqTitle.includes('cpo') || pyqTitle.includes('constable'))) return true;
+      if (jobTitle.includes('assistant') && pyqTitle.includes('assistant')) return true;
+      if (jobTitle.includes('lineman') && pyqTitle.includes('lineman')) return true;
+      if (jobTitle.includes('vaccinat') && (pyqTitle.includes('vaccinat') || pyqTitle.includes('immuniz') || pyqTitle.includes('health'))) return true;
+      if (jobTitle.includes('clerk') && pyqTitle.includes('clerk')) return true;
+      if (jobTitle.includes('technician') && pyqTitle.includes('technician')) return true;
+
+      return false;
+    });
+  };
 
   const categories = ['All', 'SSC', 'Bank', 'Railway', 'UPSC', 'Rajasthan', 'Defence', 'State PSC', 'Police', 'Teaching', 'Others'];
   const qualifications = [
@@ -346,6 +397,19 @@ export default function JobCard({
                       <span className="truncate">{job.location}</span>
                     </div>
                   </div>
+
+                  {(() => {
+                    const rPyqs = getRelevantPyqsForJob(job);
+                    if (rPyqs.length > 0) {
+                      return (
+                        <div className="mt-2.5 flex items-center gap-1.5 text-[9.5px] text-blue-700 font-extrabold bg-blue-50 border border-blue-100 px-2.5 py-1 rounded-lg leading-tight">
+                          <FileText className="h-3 w-3 text-blue-650 shrink-0" />
+                          <span>{rPyqs.length} Solved PYQs Available</span>
+                        </div>
+                      );
+                    }
+                    return null;
+                  })()}
                 </div>
 
                 {/* Footer Action buttons & countdown */}
@@ -541,6 +605,78 @@ export default function JobCard({
                   ))}
                 </ol>
               </div>
+
+              {/* Connected PYQs Section */}
+              {(() => {
+                const rPyqs = getRelevantPyqsForJob(selectedJob);
+                if (rPyqs.length > 0) {
+                  return (
+                    <div className="rounded-2xl border border-blue-150 bg-blue-50/20 p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <h4 className="font-sans text-xs font-extrabold text-[#1E3A8A] uppercase tracking-wider flex items-center gap-2">
+                          <FileText className="h-4.5 w-4.5 text-[#1E3A8A]" />
+                          Solved Previous Year Papers (PYQs) / पिछले वर्षों के हल प्रश्न पत्र
+                        </h4>
+                        <span className="text-[10px] bg-blue-100 text-blue-800 font-extrabold px-2 py-0.5 rounded-full">
+                          {rPyqs.length} PAPERS FOUND
+                        </span>
+                      </div>
+                      
+                      <div className="grid gap-2 sm:grid-cols-2">
+                        {rPyqs.map((pyq, pIdx) => {
+                          const isPremiumLocked = pyq.premium && !user.premiumUser;
+                          return (
+                            <div 
+                              key={pIdx} 
+                              className="flex items-center justify-between p-2.5 bg-white rounded-xl border border-slate-150 shadow-xs hover:border-blue-300 transition"
+                            >
+                              <div className="flex-1 min-w-0 pr-2">
+                                <div className="flex items-center gap-1 flex-wrap">
+                                  <span className="text-[8.5px] bg-slate-100 text-slate-700 font-bold px-1 rounded font-mono">
+                                    {pyq.year} Exam
+                                  </span>
+                                  <span className="text-[8.5px] bg-blue-50 text-blue-700 font-bold px-1 rounded font-mono">
+                                    {pyq.size}
+                                  </span>
+                                </div>
+                                <p className="font-sans text-xs font-bold text-slate-850 mt-1 line-clamp-1 leading-normal" title={pyq.title}>
+                                  {pyq.title}
+                                </p>
+                              </div>
+                              
+                              <button
+                                onClick={() => {
+                                  if (isPremiumLocked) {
+                                    alert("🔒 This Solved PYQ is a Premium resource. Please upgrade to Premium in the 'Premium Club' tab to unlock all PDF papers instantly!");
+                                  } else {
+                                    if (pyq.downloadUrl) {
+                                      window.open(pyq.downloadUrl, '_blank', 'noopener,noreferrer');
+                                    } else {
+                                      alert(`📥 Starting download for file "${pyq.title}".`);
+                                    }
+                                  }
+                                }}
+                                className={`shrink-0 flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-[9.5px] font-bold transition cursor-pointer shrink-0 ${
+                                  isPremiumLocked 
+                                    ? 'bg-amber-500 hover:bg-amber-600 text-white' 
+                                    : 'bg-blue-650 hover:bg-blue-700 text-white'
+                                }`}
+                              >
+                                {isPremiumLocked ? (
+                                  <>🔒 Unlock PDF</>
+                                ) : (
+                                  <>📥 Download</>
+                                )}
+                              </button>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                }
+                return null;
+              })()}
 
             </div>
 

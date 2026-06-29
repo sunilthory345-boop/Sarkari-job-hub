@@ -2631,6 +2631,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
               setQualificationFilter={setQualificationFilter}
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}
+              pyqsList={pyqsList}
             />
           </div>
         )}
