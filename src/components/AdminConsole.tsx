@@ -52,6 +52,12 @@ export default function AdminConsole({
 
   // --- WHATSAPP BROADCAST STATES ---
   const [selectedJobId, setSelectedJobId] = useState<string>('');
+  const [broadcastMode, setBroadcastMode] = useState<'single' | 'bulletin'>('single');
+  const [bulletinSelectedJobs, setBulletinSelectedJobs] = useState<string[]>([]);
+  const [bulletinSelectedCards, setBulletinSelectedCards] = useState<string[]>([]);
+  const [bulletinSelectedResults, setBulletinSelectedResults] = useState<string[]>([]);
+  const [bulletinSelectedAnswerKeys, setBulletinSelectedAnswerKeys] = useState<string[]>([]);
+  const [bulletinSelectedMocks, setBulletinSelectedMocks] = useState<string[]>([]);
   const [whatsappStyle, setWhatsappStyle] = useState<'hindi' | 'professional' | 'short'>('hindi');
   const [includeJoinLink, setIncludeJoinLink] = useState<boolean>(true);
   const [includeApplyUrls, setIncludeApplyUrls] = useState<boolean>(true);
@@ -385,51 +391,173 @@ export default function AdminConsole({
     }
   }, [jobs, selectedJobId]);
 
-  // Generate WhatsApp Message
+  // Pre-populate daily bulletin selections with active/latest entries
   useEffect(() => {
-    const activeJob = jobs.find(j => j.id === selectedJobId) || jobs[0];
-    if (!activeJob) {
-      setCustomMsgText("⚠️ No vacancy notifications exist yet. Create a job vacancy first in the 'Government Positions & Vacancies' tab to generate broadcast formats!");
-      return;
-    }
+    const todayStr = new Date().toISOString().split('T')[0];
+    const yesterdayStr = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().split('T')[0];
 
-    let header = '';
-    let body = '';
-    let links = '';
+    const filterTodayOrFallback = (items: any[], dateField: string, limit = 3) => {
+      const filtered = items.filter(item => {
+        const d = item[dateField];
+        return d === todayStr || d === yesterdayStr;
+      });
+      if (filtered.length > 0) return filtered.map(i => i.id);
+      return items.slice(0, limit).map(i => i.id);
+    };
 
-    const boldTitle = `*🎯 Post:* ${activeJob.title}`;
-    const boldOrg = `*🏢 Org/Dept:* ${activeJob.org}`;
-    const boldPosts = `*💼 Total Posts:* ${activeJob.totalPosts} Positions`;
-    const boldSalary = `*💰 Pay Scale:* ${activeJob.salary}`;
-    const boldLastDate = `*📅 Last Date:* ${activeJob.lastDate}`;
-    const boldQual = `*🎓 Qualification:* ${activeJob.qualification}`;
-    const boldLoc = `*📍 Job Location:* ${activeJob.location}`;
+    setBulletinSelectedJobs(filterTodayOrFallback(jobs, 'postedDate', 3));
+    setBulletinSelectedCards(filterTodayOrFallback(admitCards, 'addedDate', 2));
+    setBulletinSelectedResults(filterTodayOrFallback(results, 'releaseDate', 2));
+    setBulletinSelectedAnswerKeys(filterTodayOrFallback(answerKeys, 'released', 2));
+    setBulletinSelectedMocks(mockTests.slice(0, 2).map(m => m.id));
+  }, [jobs, admitCards, results, answerKeys, mockTests]);
 
-    if (whatsappStyle === 'hindi') {
-      header = `📢 *SARKARI JOB HUB - BIG VACANCY ALERT* 📢\n\nSarkari Job Recruitment आ गयी है! सभी उम्मीदवारों के लिए सुनहरा अवसर! 👇\n\n`;
-      body = `${boldOrg}\n${boldTitle}\n${boldPosts}\n${boldQual}\n${boldSalary}\n${boldLoc}\n${boldLastDate}\n\n`;
-    } else if (whatsappStyle === 'professional') {
-      header = `💼 *OFFICIAL GOVERNMENT RECRUITMENT ALERT* 💼\n*Sarkari Job Notification 2026*\n\n`;
-      body = `${boldOrg}\n${boldTitle}\n${boldPosts}\n${boldQual}\n${boldSalary}\n${boldLoc}\n${boldLastDate}\n\n`;
+  // Generate WhatsApp & Telegram Message (Single or Bulletin)
+  useEffect(() => {
+    if (broadcastMode === 'single') {
+      const activeJob = jobs.find(j => j.id === selectedJobId) || jobs[0];
+      if (!activeJob) {
+        setCustomMsgText("⚠️ No vacancy notifications exist yet. Create a job vacancy first in the 'Government Positions & Vacancies' tab to generate broadcast formats!");
+        return;
+      }
+
+      let header = '';
+      let body = '';
+      let links = '';
+
+      const boldTitle = `*🎯 Post:* ${activeJob.title}`;
+      const boldOrg = `*🏢 Org/Dept:* ${activeJob.org}`;
+      const boldPosts = `*💼 Total Posts:* ${activeJob.totalPosts} Positions`;
+      const boldSalary = `*💰 Pay Scale:* ${activeJob.salary}`;
+      const boldLastDate = `*📅 Last Date:* ${activeJob.lastDate}`;
+      const boldQual = `*🎓 Qualification:* ${activeJob.qualification}`;
+      const boldLoc = `*📍 Job Location:* ${activeJob.location}`;
+
+      if (whatsappStyle === 'hindi') {
+        header = `📢 *SARKARI JOB HUB - BIG VACANCY ALERT* 📢\n\nSarkari Job Recruitment आ गयी है! सभी उम्मीदवारों के लिए सुनहरा अवसर! 👇\n\n`;
+        body = `${boldOrg}\n${boldTitle}\n${boldPosts}\n${boldQual}\n${boldSalary}\n${boldLoc}\n${boldLastDate}\n\n`;
+      } else if (whatsappStyle === 'professional') {
+        header = `💼 *OFFICIAL GOVERNMENT RECRUITMENT ALERT* 💼\n*Sarkari Job Notification 2026*\n\n`;
+        body = `${boldOrg}\n${boldTitle}\n${boldPosts}\n${boldQual}\n${boldSalary}\n${boldLoc}\n${boldLastDate}\n\n`;
+      } else {
+        header = `⚡ *Sarkari Alerts - ${activeJob.org} Bharti* ⚡\n\n`;
+        body = `• *Vacancy:* ${activeJob.title}\n• *Posts:* ${activeJob.totalPosts}\n• *Qual:* ${activeJob.qualification}\n• *Last Date:* ${activeJob.lastDate}\n\n`;
+      }
+
+      if (includeApplyUrls) {
+        links += `🔗 *Apply Online & Read Details:* \nhttps://sarkari-job-hub-v595.onrender.com/?tab=jobs\n\n`;
+        links += `📄 *Download Official PDF:* \n${activeJob.pdfUrl || 'https://ssc.gov.in'}\n\n`;
+      }
+
+      if (includeJoinLink) {
+        links += `👇 *Join our Verified WhatsApp Channel for daily alerts:* \nhttps://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U\n\n`;
+        links += `🚀 *Join our Official Telegram Channel for instantly downloadable files & PDFs:* \nhttps://t.me/JobSarkariHub\n\n`;
+      }
+
+      links += `_Forward this to friends who need a job!_ 🙏✨`;
+
+      setCustomMsgText(`${header}${body}${links}`);
     } else {
-      header = `⚡ *Sarkari Alerts - ${activeJob.org} Bharti* ⚡\n\n`;
-      body = `• *Vacancy:* ${activeJob.title}\n• *Posts:* ${activeJob.totalPosts}\n• *Qual:* ${activeJob.qualification}\n• *Last Date:* ${activeJob.lastDate}\n\n`;
+      // BULLETIN MODE
+      const activeJobs = jobs.filter(j => bulletinSelectedJobs.includes(j.id));
+      const activeCards = admitCards.filter(c => bulletinSelectedCards.includes(c.id));
+      const activeResults = results.filter(r => bulletinSelectedResults.includes(r.id));
+      const activeAnswerKeys = answerKeys.filter(k => bulletinSelectedAnswerKeys.includes(k.id));
+      const activeMocks = mockTests.filter(m => bulletinSelectedMocks.includes(m.id));
+
+      let header = '';
+      let body = '';
+      let links = '';
+
+      const todayFormatted = new Date().toLocaleDateString('hi-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+
+      if (whatsappStyle === 'hindi') {
+        header = `📢 *SARKARI JOB HUB - आज के मुख्य सरकारी अपडेट्स* 📢\n📅 *दिनांक: ${todayFormatted}*\n\nसभी उम्मीदवारों के लिए आज के नवीनतम परीक्षा प्रवेश पत्र, परिणाम, एवं सरकारी भर्तियों की सूची नीचे दी गयी है। तुरंत आवेदन करें व डाउनलोड करें! 👇\n\n`;
+      } else if (whatsappStyle === 'professional') {
+        header = `📢 *SARKARI JOB HUB DAILY BULLETIN* 📢\n📅 *Date: ${new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}*\n\nHere are the latest government job updates, admit cards, exam results, and mock tests released today. Click on the respective links to view details. 👇\n\n`;
+      } else {
+        header = `⚡ *Sarkari Job Hub Mini Daily Bulletin* ⚡\n📅 *${new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}*\n\n`;
+      }
+
+      // 1. Vacancies
+      if (activeJobs.length > 0) {
+        body += `🆕 *नवीनतम सरकारी भर्तियां (New Vacancies):*\n`;
+        activeJobs.forEach(j => {
+          body += `• *${j.org}* - ${j.title} (${j.totalPosts} Posts) | Last Date: ${j.lastDate}\n`;
+        });
+        body += `\n`;
+      }
+
+      // 2. Admit Cards
+      if (activeCards.length > 0) {
+        body += `🎟️ *प्रवेश पत्र जारी (Admit Cards Declared):*\n`;
+        activeCards.forEach(c => {
+          body += `• *${c.org}* - ${c.title} | Exam: ${c.examDate}\n`;
+        });
+        body += `\n`;
+      }
+
+      // 3. Results
+      if (activeResults.length > 0) {
+        body += `🏆 *परीक्षा परिणाम घोषित (Exam Results Out):*\n`;
+        activeResults.forEach(r => {
+          body += `• *${r.org}* - ${r.title}\n`;
+        });
+        body += `\n`;
+      }
+
+      // 4. Answer Keys
+      if (activeAnswerKeys.length > 0) {
+        body += `🔑 *आंसर की जारी (Answer Keys Released):*\n`;
+        activeAnswerKeys.forEach(k => {
+          body += `• *${k.org}* - ${k.title} | Objections: ${k.objectionsLimit}\n`;
+        });
+        body += `\n`;
+      }
+
+      // 5. Mock Tests
+      if (activeMocks.length > 0) {
+        body += `📝 *फ्री प्रैक्टिस मॉक टेस्ट (MCQ Mock Tests):*\n`;
+        activeMocks.forEach(m => {
+          body += `• *${m.title}* | duration: ${m.durationMinutes} mins\n`;
+        });
+        body += `\n`;
+      }
+
+      if (body === '') {
+        body = `⚠️ *कोई अपडेट चयनित नहीं है (No Updates Selected)*\nकृपया बाईं ओर दी गई सूची से अपडेट्स का चयन करें।\n\n`;
+      }
+
+      if (includeApplyUrls) {
+        links += `🔗 *सभी अपडेट्स डायरेक्ट डाउनलोड & अप्लाई करें:* \nhttps://sarkari-job-hub-v595.onrender.com/\n\n`;
+      }
+
+      if (includeJoinLink) {
+        links += `👇 *डेली अपडेट्स सीधे व्हाट्सएप पर पाने के लिए चैनल ज्वाइन करें:* \nhttps://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U\n\n`;
+        links += `🚀 *सभी पीडीएफ्स और सरकारी फाइल्स के लिए टेलीग्राम ज्वाइन करें:* \nhttps://t.me/JobSarkariHub\n\n`;
+      }
+
+      links += `_Forward this helpful bulletin in study groups to support aspirants!_ 🎓✨`;
+
+      setCustomMsgText(`${header}${body}${links}`);
     }
-
-    if (includeApplyUrls) {
-      links += `🔗 *Apply Online & Read Details:* \nhttps://sarkari-job-hub-v595.onrender.com/?tab=jobs\n\n`;
-      links += `📄 *Download Official PDF:* \n${activeJob.pdfUrl || 'https://ssc.gov.in'}\n\n`;
-    }
-
-    if (includeJoinLink) {
-      links += `👇 *Join our Verified WhatsApp Channel for daily alerts:* \nhttps://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq5U\n\n`;
-      links += `🚀 *Join our Official Telegram Channel for instantly downloadable files & PDFs:* \nhttps://t.me/JobSarkariHub\n\n`;
-    }
-
-    links += `_Forward this to friends who need a job!_ 🙏✨`;
-
-    setCustomMsgText(`${header}${body}${links}`);
-  }, [selectedJobId, whatsappStyle, includeJoinLink, includeApplyUrls, jobs]);
+  }, [
+    broadcastMode, 
+    selectedJobId, 
+    bulletinSelectedJobs, 
+    bulletinSelectedCards, 
+    bulletinSelectedResults, 
+    bulletinSelectedAnswerKeys, 
+    bulletinSelectedMocks, 
+    whatsappStyle, 
+    includeJoinLink, 
+    includeApplyUrls, 
+    jobs, 
+    admitCards, 
+    results, 
+    answerKeys, 
+    mockTests
+  ]);
 
   const handleSaveWebhook = () => {
     localStorage.setItem('sarkari_wa_webhook', webhookUrl);
@@ -2270,37 +2398,223 @@ What is the standard pH level of pure distilled water at normal room temperature
             {/* LEFT COLUMN: CONTROL & SELECTION */}
             <div className="lg:col-span-5 space-y-6">
               
-              {/* Select Job Card */}
+              {/* Select Job / Bulletin Card */}
               <div className="bg-white rounded-3xl border border-slate-100 p-5 shadow-xs space-y-4">
-                <div>
-                  <h4 className="font-bold text-slate-800 text-xs uppercase tracking-wider mb-2 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-blue-600"></span> Select Active Vacancy
-                  </h4>
-                  <p className="text-[11px] text-slate-500 mb-2">
-                    Choose which newly published vacancy to prepare for broadcast:
-                  </p>
-                  
-                  {jobs.length === 0 ? (
-                    <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl text-center">
-                      <p className="text-xs font-bold text-slate-500">No jobs configured yet.</p>
-                      <button onClick={() => setActiveAdminTab('jobs')} className="text-[10px] text-blue-600 underline font-bold mt-1">
-                        + Create Your First Job Now
-                      </button>
-                    </div>
-                  ) : (
-                    <select
-                      value={selectedJobId}
-                      onChange={(e) => setSelectedJobId(e.target.value)}
-                      className="w-full rounded-xl border border-slate-200 p-2.5 text-xs text-slate-850 font-medium focus:border-blue-500 focus:outline-hidden bg-slate-50 hover:bg-slate-100/50 transition"
-                    >
-                      {jobs.map((job) => (
-                        <option key={job.id} value={job.id}>
-                          {job.org} - {job.title} ({job.totalPosts} Posts)
-                        </option>
-                      ))}
-                    </select>
-                  )}
+                {/* Mode Selector */}
+                <div className="flex bg-slate-100 p-1 rounded-2xl border border-slate-200">
+                  <button
+                    type="button"
+                    onClick={() => setBroadcastMode('single')}
+                    className={`flex-1 py-2 text-xs font-extrabold rounded-xl transition flex items-center justify-center gap-1.5 ${
+                      broadcastMode === 'single'
+                        ? 'bg-white text-slate-900 shadow-xs'
+                        : 'text-slate-550 hover:text-slate-900'
+                    }`}
+                  >
+                    🎯 Single Job Alert
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setBroadcastMode('bulletin')}
+                    className={`flex-1 py-2 text-xs font-extrabold rounded-xl transition flex items-center justify-center gap-1.5 ${
+                      broadcastMode === 'bulletin'
+                        ? 'bg-blue-600 text-white shadow-xs'
+                        : 'text-slate-550 hover:text-slate-900'
+                    }`}
+                  >
+                    📰 Today's Bulletin (दैनिक बुलेटिन)
+                  </button>
                 </div>
+
+                {broadcastMode === 'single' ? (
+                  <div>
+                    <h4 className="font-bold text-slate-800 text-xs uppercase tracking-wider mb-2 flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-blue-600"></span> Select Active Vacancy
+                    </h4>
+                    <p className="text-[11px] text-slate-500 mb-2">
+                      Choose which newly published vacancy to prepare for broadcast:
+                    </p>
+                    
+                    {jobs.length === 0 ? (
+                      <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl text-center">
+                        <p className="text-xs font-bold text-slate-500">No jobs configured yet.</p>
+                        <button onClick={() => setActiveAdminTab('jobs')} className="text-[10px] text-blue-600 underline font-bold mt-1">
+                          + Create Your First Job Now
+                        </button>
+                      </div>
+                    ) : (
+                      <select
+                        value={selectedJobId}
+                        onChange={(e) => setSelectedJobId(e.target.value)}
+                        className="w-full rounded-xl border border-slate-200 p-2.5 text-xs text-slate-850 font-medium focus:border-blue-500 focus:outline-hidden bg-slate-50 hover:bg-slate-100/50 transition"
+                      >
+                        {jobs.map((job) => (
+                          <option key={job.id} value={job.id}>
+                            {job.org} - {job.title} ({job.totalPosts} Posts)
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="font-bold text-slate-800 text-xs uppercase tracking-wider flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-blue-600"></span> Select Updates to Include
+                      </h4>
+                      <p className="text-[11px] text-slate-500">
+                        Check updates to add them to today's Telegram/WhatsApp bulletin message:
+                      </p>
+                    </div>
+
+                    <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1 text-xs">
+                      {/* jobs selection */}
+                      {jobs.length > 0 && (
+                        <div className="space-y-1.5">
+                          <span className="text-[10px] font-bold text-blue-600 uppercase tracking-wider">🆕 Vacancies</span>
+                          <div className="space-y-1">
+                            {jobs.slice(0, 5).map(job => (
+                              <label key={job.id} className="flex items-start gap-2 p-1.5 hover:bg-slate-50 rounded-lg cursor-pointer">
+                                <input
+                                  type="checkbox"
+                                  checked={bulletinSelectedJobs.includes(job.id)}
+                                  onChange={(e) => {
+                                    if (e.target.checked) {
+                                      setBulletinSelectedJobs([...bulletinSelectedJobs, job.id]);
+                                    } else {
+                                      setBulletinSelectedJobs(bulletinSelectedJobs.filter(id => id !== job.id));
+                                    }
+                                  }}
+                                  className="mt-0.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 h-3.5 w-3.5"
+                                />
+                                <div className="leading-tight">
+                                  <span className="font-bold text-slate-700">{job.org}</span>
+                                  <span className="text-slate-500 text-[11px] ml-1">{job.title}</span>
+                                </div>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* admitCards selection */}
+                      {admitCards.length > 0 && (
+                        <div className="space-y-1.5 pt-2 border-t border-slate-100">
+                          <span className="text-[10px] font-bold text-amber-600 uppercase tracking-wider">🎟️ Admit Cards</span>
+                          <div className="space-y-1">
+                            {admitCards.slice(0, 4).map(card => (
+                              <label key={card.id} className="flex items-start gap-2 p-1.5 hover:bg-slate-50 rounded-lg cursor-pointer">
+                                <input
+                                  type="checkbox"
+                                  checked={bulletinSelectedCards.includes(card.id)}
+                                  onChange={(e) => {
+                                    if (e.target.checked) {
+                                      setBulletinSelectedCards([...bulletinSelectedCards, card.id]);
+                                    } else {
+                                      setBulletinSelectedCards(bulletinSelectedCards.filter(id => id !== card.id));
+                                    }
+                                  }}
+                                  className="mt-0.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 h-3.5 w-3.5"
+                                />
+                                <div className="leading-tight">
+                                  <span className="font-bold text-slate-700">{card.org}</span>
+                                  <span className="text-slate-500 text-[11px] ml-1">{card.title}</span>
+                                </div>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* results selection */}
+                      {results.length > 0 && (
+                        <div className="space-y-1.5 pt-2 border-t border-slate-100">
+                          <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider">🏆 Results</span>
+                          <div className="space-y-1">
+                            {results.slice(0, 4).map(res => (
+                              <label key={res.id} className="flex items-start gap-2 p-1.5 hover:bg-slate-50 rounded-lg cursor-pointer">
+                                <input
+                                  type="checkbox"
+                                  checked={bulletinSelectedResults.includes(res.id)}
+                                  onChange={(e) => {
+                                    if (e.target.checked) {
+                                      setBulletinSelectedResults([...bulletinSelectedResults, res.id]);
+                                    } else {
+                                      setBulletinSelectedResults(bulletinSelectedResults.filter(id => id !== res.id));
+                                    }
+                                  }}
+                                  className="mt-0.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 h-3.5 w-3.5"
+                                />
+                                <div className="leading-tight">
+                                  <span className="font-bold text-slate-700">{res.org}</span>
+                                  <span className="text-slate-500 text-[11px] ml-1">{res.title}</span>
+                                </div>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* answerKeys selection */}
+                      {answerKeys.length > 0 && (
+                        <div className="space-y-1.5 pt-2 border-t border-slate-100">
+                          <span className="text-[10px] font-bold text-sky-600 uppercase tracking-wider">🔑 Answer Keys</span>
+                          <div className="space-y-1">
+                            {answerKeys.slice(0, 4).map(key => (
+                              <label key={key.id} className="flex items-start gap-2 p-1.5 hover:bg-slate-50 rounded-lg cursor-pointer">
+                                <input
+                                  type="checkbox"
+                                  checked={bulletinSelectedAnswerKeys.includes(key.id)}
+                                  onChange={(e) => {
+                                    if (e.target.checked) {
+                                      setBulletinSelectedAnswerKeys([...bulletinSelectedAnswerKeys, key.id]);
+                                    } else {
+                                      setBulletinSelectedAnswerKeys(bulletinSelectedAnswerKeys.filter(id => id !== key.id));
+                                    }
+                                  }}
+                                  className="mt-0.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 h-3.5 w-3.5"
+                                />
+                                <div className="leading-tight">
+                                  <span className="font-bold text-slate-700">{key.org}</span>
+                                  <span className="text-slate-500 text-[11px] ml-1">{key.title}</span>
+                                </div>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* mockTests selection */}
+                      {mockTests.length > 0 && (
+                        <div className="space-y-1.5 pt-2 border-t border-slate-100">
+                          <span className="text-[10px] font-bold text-purple-600 uppercase tracking-wider">📝 Mock Tests</span>
+                          <div className="space-y-1">
+                            {mockTests.slice(0, 4).map(mock => (
+                              <label key={mock.id} className="flex items-start gap-2 p-1.5 hover:bg-slate-50 rounded-lg cursor-pointer">
+                                <input
+                                  type="checkbox"
+                                  checked={bulletinSelectedMocks.includes(mock.id)}
+                                  onChange={(e) => {
+                                    if (e.target.checked) {
+                                      setBulletinSelectedMocks([...bulletinSelectedMocks, mock.id]);
+                                    } else {
+                                      setBulletinSelectedMocks(bulletinSelectedMocks.filter(id => id !== mock.id));
+                                    }
+                                  }}
+                                  className="mt-0.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 h-3.5 w-3.5"
+                                />
+                                <div className="leading-tight">
+                                  <span className="font-bold text-slate-700">{mock.category}</span>
+                                  <span className="text-slate-500 text-[11px] ml-1">{mock.title}</span>
+                                </div>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
 
                 {/* Styling Options */}
                 <div className="pt-3 border-t border-slate-100 space-y-3">
