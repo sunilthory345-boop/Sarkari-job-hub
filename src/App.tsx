@@ -275,8 +275,8 @@ export default function App() {
   const [todayQuizIdx, setTodayQuizIdx] = useState(0);
   const [todayAnswers, setTodayAnswers] = useState<{[key: string]: number}>({}); // maps question ID to selected option index
   const [todayActiveSubTab, setTodayActiveSubTab] = useState<'questions' | 'capsules'>('questions');
-  const [caQuizDate, setCaQuizDate] = useState<'june_28' | 'june_27' | 'high_yield'>('june_28');
-  const [homeQuizDate, setHomeQuizDate] = useState<'june_28' | 'june_27'>('june_28');
+  const [caQuizDate, setCaQuizDate] = useState<'june_29' | 'june_28' | 'june_27' | 'high_yield'>('june_29');
+  const [homeQuizDate, setHomeQuizDate] = useState<'june_29' | 'june_28' | 'june_27'>('june_29');
   const [caSearchQuery, setCaSearchQuery] = useState('');
   const [caSelectedCategory, setCaSelectedCategory] = useState<string>('All');
   const [caVisibleCount, setCaVisibleCount] = useState(6);
@@ -1240,16 +1240,19 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                   <select
                     value={homeQuizDate}
                     onChange={(e) => {
-                      setHomeQuizDate(e.target.value as 'june_28' | 'june_27');
+                      setHomeQuizDate(e.target.value as 'june_29' | 'june_28' | 'june_27');
                       setTodayQuizIdx(0);
                     }}
                     className="bg-transparent text-slate-200 font-sans text-xs font-bold focus:outline-hidden cursor-pointer border-none pr-6 py-1 select-none font-sans"
                   >
+                    <option value="june_29" className="bg-slate-900 text-white">
+                      {locale === 'hi' ? 'सोमवार, 29 जून 2026 (आज के विशेष)' : 'Monday, 29 June 2026 (Today)'}
+                    </option>
                     <option value="june_28" className="bg-slate-900 text-white">
-                      {locale === 'hi' ? 'रविवार, 28 जून 2026 (आज के विशेष)' : 'Sunday, 28 June 2026 (Today)'}
+                      {locale === 'hi' ? 'रविवार, 28 जून 2026 (कल के विशेष)' : 'Sunday, 28 June 2026 (Yesterday)'}
                     </option>
                     <option value="june_27" className="bg-slate-900 text-white">
-                      {locale === 'hi' ? 'शनिवार, 27 जून 2026 (पिछला अपडेट)' : 'Saturday, 27 June 2026 (Yesterday)'}
+                      {locale === 'hi' ? 'शनिवार, 27 जून 2026' : 'Saturday, 27 June 2026'}
                     </option>
                   </select>
                 </div>
@@ -1288,7 +1291,9 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                     const todayQs = quizQuestions.filter(q => {
                       const idNum = parseInt(q.id.replace('ca-q-today-', ''));
                       if (isNaN(idNum)) return false;
-                      if (homeQuizDate === 'june_28') {
+                      if (homeQuizDate === 'june_29') {
+                        return idNum >= 101 && idNum <= 150;
+                      } else if (homeQuizDate === 'june_28') {
                         return idNum >= 51 && idNum <= 100;
                       } else {
                         return idNum >= 1 && idNum <= 50;
@@ -1412,10 +1417,12 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     {(() => {
                       const filteredCapsules = currentAffairs.filter(ca => {
-                        if (homeQuizDate === 'june_28') {
+                        if (homeQuizDate === 'june_29') {
+                          return ca.date === '2026-06-29';
+                        } else if (homeQuizDate === 'june_28') {
                           return ca.date === '2026-06-28';
                         } else {
-                          return ca.date !== '2026-06-28';
+                          return ca.date === '2026-06-27';
                         }
                       });
                       if (filteredCapsules.length === 0) {
@@ -3890,7 +3897,9 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                 {(() => {
                   const activeQuestions = quizQuestions.filter(q => {
                     const idNum = parseInt(q.id.replace('ca-q-today-', ''));
-                    if (caQuizDate === 'june_28') {
+                    if (caQuizDate === 'june_29') {
+                      return !isNaN(idNum) && idNum >= 101 && idNum <= 150;
+                    } else if (caQuizDate === 'june_28') {
                       return !isNaN(idNum) && idNum >= 51 && idNum <= 100;
                     } else if (caQuizDate === 'june_27') {
                       return !isNaN(idNum) && idNum >= 1 && idNum <= 50;
@@ -3933,15 +3942,16 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                           <select
                             value={caQuizDate}
                             onChange={(e) => {
-                              setCaQuizDate(e.target.value as 'june_28' | 'june_27' | 'high_yield');
+                              setCaQuizDate(e.target.value as 'june_29' | 'june_28' | 'june_27' | 'high_yield');
                               setSelectedAnswers({});
                               setCurrentQuizIdx(0);
-                              triggerToast(`📂 Switched to ${e.target.value === 'june_28' ? "Today's June 28 Update" : e.target.value === 'june_27' ? "June 27 Update" : "General High-Yield"} set!`);
+                              triggerToast(`📂 Switched to ${e.target.value === 'june_29' ? "Monday, June 29 Update" : e.target.value === 'june_28' ? "Sunday, June 28 Update" : e.target.value === 'june_27' ? "Saturday, June 27 Update" : "General High-Yield"} set!`);
                             }}
                             className="w-full bg-slate-850 border border-slate-700 rounded-xl text-xs py-2 px-3 text-slate-100 font-bold focus:ring-1 focus:ring-blue-500 cursor-pointer font-sans"
                           >
-                            <option value="june_28">Sunday, 28 June 2026 (Today's New 50 Questions / आज के विशेष)</option>
-                            <option value="june_27">Saturday, 27 June 2026 (Yesterday's 50 Questions / पिछला अपडेट)</option>
+                            <option value="june_29">Monday, 29 June 2026 (Today's New 50 Questions / आज के विशेष)</option>
+                            <option value="june_28">Sunday, 28 June 2026 (Yesterday's 50 Questions / पिछला अपडेट)</option>
+                            <option value="june_27">Saturday, 27 June 2026 (Older 50 Questions / पुराना सेट)</option>
                             <option value="high_yield">Static General Current Affairs (100 High-Yield Questions / सामान्य ज्ञान)</option>
                           </select>
                         </div>

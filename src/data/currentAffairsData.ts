@@ -59,6 +59,30 @@ export const DAILY_CURRENT_AFFAIRS_ITEMS: CurrentAffair[] = [
     content: 'The Indian junior team produced a stellar performance to defeat rivals Pakistan in a thrilling penalty shootout in the finals to secure their historic fifth Junior Asia Cup title.'
   },
   {
+    id: 'ca-news-j29c',
+    title: 'Dr. Arvind Panagariya details progress for 16th Finance Commission framework / डॉ. अरविंद पनगढ़िया ने 16वें वित्त आयोग के सिफारिश फार्मूले की प्रगति का विवरण दिया',
+    date: '2026-06-29',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/16th_Finance_Commission_2026.pdf',
+    content: 'The 16th Finance Commission of India, chaired by Dr. Arvind Panagariya, discussed key center-state revenue distribution plans and structural formulas for the five-year block starting April 2026.'
+  },
+  {
+    id: 'ca-news-j29d',
+    title: 'Global Peace Index 2026: Iceland ranks first; India records positive improvements / वैश्विक शांति सूचकांक 2026: आइसलैंड पहले स्थान पर; भारत ने सकारात्मक सुधार दर्ज किए',
+    date: '2026-06-29',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Global_Peace_Index_2026.pdf',
+    content: 'In the annual Global Peace Index reporting, Iceland remains the world\'s most peaceful nation. India showed positive increments in peacefulness and security scores due to reduced internal conflicts.'
+  },
+  {
+    id: 'ca-news-j29e',
+    title: 'Ministry of Mines launches major bidding round for critical mineral blocks / खान मंत्रालय ने महत्वपूर्ण खनिज ब्लॉकों के लिए बड़ा बोली दौर शुरू किया',
+    date: '2026-06-29',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Critical_Minerals_Bidding_2026.pdf',
+    content: 'The Ministry of Mines initiated the auction rounds for lithium, titanium, and rare earth element blocks across Jammu & Kashmir, Chhattisgarh, and Rajasthan to secure the domestic battery supply chain.'
+  },
+  {
     id: 'ca-news-j28a',
     title: 'CSIR develops low-cost eco-friendly solar water purification kit / सीएसआईआर ने कम लागत वाली पर्यावरण-अनुकूल सौर जल शोधन किट विकसित की',
     date: '2026-06-28',
@@ -1393,6 +1417,356 @@ export const CURRENT_AFFAIRS_QUIZ_QUESTIONS: Question[] = [
     options: ['(a) United Kingdom / यूनाइटेड किंगडम', '(b) United States / संयुक्त राज्य अमेरिका', '(c) South Korea / दक्षिण कोरिया', '(d) Japan / जापान'],
     correctOptionIndex: 2,
     explanation: 'South Korea hosted the prestigious global AI Safety Summit on June 28, 2026, where global leaders signed the Seoul Declaration for ethical AI frameworks.'
+  },
+{
+    id: 'ca-q-today-101',
+    text: 'National Statistics Day is celebrated on June 29 every year in India to honor whose birth anniversary? / भारत में हर साल 29 जून को राष्ट्रीय सांख्यिकी दिवस किसकी जयंती के सम्मान में मनाया जाता है?',
+    options: ['(a) Prof. P. C. Mahalanobis / प्रो. पी. सी. महालनोबिस', '(b) Dr. C. R. Rao / डॉ. सी. आर. राव', '(c) Srinivasa Ramanujan / श्रीनिवास रामानुजन', '(d) Harish-Chandra / हरीश-चंद्र'],
+    correctOptionIndex: 0,
+    explanation: 'National Statistics Day is celebrated on June 29 in honor of the contribution of Prof. Prasanta Chandra Mahalanobis.'
+  },
+{
+    id: 'ca-q-today-102',
+    text: 'Which country won the Junior Asia Cup Hockey 2026 held in Muscat? / मस्कट में आयोजित जूनियर एशिया कप हॉकी 2026 किस देश ने जीता?',
+    options: ['(a) India / भारत', '(b) Pakistan / पाकिस्तान', '(c) Japan / जापान', '(d) South Korea / दक्षिण कोरिया'],
+    correctOptionIndex: 0,
+    explanation: 'Indian junior hockey team defeated Pakistan in a penalty shootout in Muscat to win the Junior Asia Cup 2026.'
+  },
+{
+    id: 'ca-q-today-103',
+    text: 'In June 2026, what record milestone did India\'s gross GST collection achieve? / जून 2026 में भारत के सकल जीएसटी संग्रह ने किस रिकॉर्ड मील के पत्थर को प्राप्त किया?',
+    options: ['(a) ₹2.15 Lakh Crore / ₹2.15 लाख करोड़', '(b) ₹1.98 Lakh Crore / ₹1.98 लाख करोड़', '(c) ₹2.05 Lakh Crore / ₹2.05 लाख करोड़', '(d) ₹1.85 Lakh Crore / ₹1.85 लाख करोड़'],
+    correctOptionIndex: 0,
+    explanation: 'India\'s gross GST collection surged to an all-time record of ₹2.15 Lakh Crore in June 2026.'
+  },
+{
+    id: 'ca-q-today-104',
+    text: 'Which country hosted the G7 Summit in June 2026? / जून 2026 में G7 शिखर सम्मेलन की मेजबानी किस देश ने की?',
+    options: ['(a) Italy / इटली', '(b) Canada / कनाडा', '(c) Germany / जर्मनी', '(d) Japan / जापान'],
+    correctOptionIndex: 1,
+    explanation: 'Canada hosted the G7 Summit in June 2026, focusing on economic cooperation, AI safety, and green partnerships.'
+  },
+{
+    id: 'ca-q-today-105',
+    text: 'Which space agency successfully launched the Aditya-L2 solar probe expansion in June 2026? / किस अंतरिक्ष एजेंसी ने जून 2026 में आदित्य-एल2 सौर प्रोब विस्तार का सफल प्रक्षेपण किया?',
+    options: ['(a) NASA', '(b) ISRO / इसरो', '(c) ESA', '(d) JAXA'],
+    correctOptionIndex: 1,
+    explanation: 'Indian Space Research Organisation (ISRO) successfully launched the Aditya-L2 solar observatory probe to study solar corona flares.'
+  },
+{
+    id: 'ca-q-today-106',
+    text: 'Which country was ranked as the most peaceful country in the Global Peace Index 2026? / वैश्विक शांति सूचकांक 2026 में किस देश को सबसे शांतिपूर्ण देश का दर्जा दिया गया?',
+    options: ['(a) Iceland / आइसलैंड', '(b) New Zealand / न्यूजीलैंड', '(c) Ireland / आयरलैंड', '(d) Switzerland / स्विट्जरलैंड'],
+    correctOptionIndex: 0,
+    explanation: 'Iceland retained its position as the most peaceful country in the world in the Global Peace Index 2026.'
+  },
+{
+    id: 'ca-q-today-107',
+    text: 'The World Bank raised India\'s GDP growth forecast for FY 2026-27 to what percentage? / विश्व बैंक ने वित्तीय वर्ष 2026-27 के लिए भारत की जीडीपी वृद्धि दर के अनुमान को बढ़ाकर कितने प्रतिशत कर दिया है?',
+    options: ['(a) 6.8% / 6.8 प्रतिशत', '(b) 7.0% / 7.0 प्रतिशत', '(c) 7.2% / 7.2 प्रतिशत', '(d) 7.5% / 7.5 प्रतिशत'],
+    correctOptionIndex: 1,
+    explanation: 'The World Bank upgraded India\'s GDP growth projection to 7.0% for the FY 2026-27 due to resilient private consumption.'
+  },
+{
+    id: 'ca-q-today-108',
+    text: 'India and Vietnam signed a strategic defense partnership pact covering which time frame? / भारत और वियतनाम ने किस समय सीमा को कवर करने वाले एक रणनीतिक रक्षा साझेदारी समझौते पर हस्ताक्षर किए हैं?',
+    options: ['(a) 2026-2030', '(b) 2025-2028', '(c) 2026-2035', '(d) 2027-2032'],
+    correctOptionIndex: 0,
+    explanation: 'India and Vietnam signed a defense cooperation roadmap for 2026-2030, reinforcing joint exercises.'
+  },
+{
+    id: 'ca-q-today-109',
+    text: 'Which country has the most powerful passport as per the Henley Passport Index 2026? / हेनले पासपोर्ट इंडेक्स 2026 के अनुसार किस देश का पासपोर्ट सबसे शक्तिशाली है?',
+    options: ['(a) Singapore / सिंगापुर', '(b) Japan / जापान', '(c) France / फ्रांस', '(d) Germany / जर्मनी'],
+    correctOptionIndex: 0,
+    explanation: 'Singapore continues to occupy the top spot, offering visa-free or visa-on-arrival entry to 195 destinations.'
+  },
+{
+    id: 'ca-q-today-110',
+    text: 'Who is the Chairman of the 16th Finance Commission of India? / भारत के 16वें वित्त आयोग के अध्यक्ष कौन हैं?',
+    options: ['(a) Dr. Arvind Panagariya / डॉ. अरविंद पनगढ़िया', '(b) N. K. Singh / एन. के. सिंह', '(c) Y. V. Reddy / वाई. वी. रेड्डी', '(d) Dr. Bibek Debroy / डॉ. बिबेक देबरॉय'],
+    correctOptionIndex: 0,
+    explanation: 'Dr. Arvind Panagariya is heading the 16th Finance Commission, which drafts recommendation formulas for 2026-2031.'
+  },
+{
+    id: 'ca-q-today-111',
+    text: 'Who is the Governor of the Reserve Bank of India (RBI) who announced the repo rate retention at 6.25% in late June 2026? / भारतीय रिजर्व बैंक (RBI) के गवर्नर कौन हैं जिन्होंने जून 2026 के अंत में रेपो दर को 6.25% पर रखने की घोषणा की?',
+    options: ['(a) Urjit Patel / उर्जित पटेल', '(b) Shaktikanta Das / शक्तिकांत दास', '(c) Raghuram Rajan / रघुराम राजन', '(d) Swaminathan Janakiraman / स्वामीनाथन जानकीरमन'],
+    correctOptionIndex: 1,
+    explanation: 'RBI Governor Shaktikanta Das announced that the MPC unanimously retained the policy repo rate at 6.25%.'
+  },
+{
+    id: 'ca-q-today-112',
+    text: 'India targets to achieve net-zero carbon emissions by which year? / भारत ने किस वर्ष तक शुद्ध-शून्य कार्बन उत्सर्जन प्राप्त करने का लक्ष्य रखा है?',
+    options: ['(a) 2050', '(b) 2060', '(c) 2070', '(d) 2080'],
+    correctOptionIndex: 2,
+    explanation: 'India has committed to achieving net-zero greenhouse gas emissions by the year 2070.'
+  },
+{
+    id: 'ca-q-today-113',
+    text: 'Where is India\'s first National Maritime Heritage Complex (NMHC) being developed? / भारत का पहला राष्ट्रीय समुद्री विरासत परिसर (NMHC) कहाँ विकसित किया जा रहा है?',
+    options: ['(a) Lothal, Gujarat / लोथल, गुजरात', '(b) Puri, Odisha / पुरी, ओडिशा', '(c) Kochi, Kerala / कोच्चि, केरल', '(d) Visakhapatnam, Andhra Pradesh / विशाखापत्तनम'],
+    correctOptionIndex: 0,
+    explanation: 'The National Maritime Heritage Complex is being built at the ancient Indus Valley site of Lothal, Gujarat.'
+  },
+{
+    id: 'ca-q-today-114',
+    text: 'Which international organization led the signing of the first legally-binding global AI Treaty in 2026? / किस अंतर्राष्ट्रीय संगठन ने 2026 में पहली कानूनी रूप से बाध्यकारी वैश्विक एआई संधि के हस्ताक्षर का नेतृत्व किया?',
+    options: ['(a) United Nations / संयुक्त राष्ट्र', '(b) Council of Europe / काउंसिल ऑफ यूरोप', '(c) European Union / यूरोपीय संघ', '(d) G20'],
+    correctOptionIndex: 1,
+    explanation: 'The Council of Europe introduced the world\'s first legally binding international AI Treaty, signed by several countries.'
+  },
+{
+    id: 'ca-q-today-115',
+    text: 'Which state became the first in India to achieve a 100% electrified railway broad-gauge network? / कौन सा राज्य भारत में 100% विद्युतीकृत रेलवे ब्रॉड-गेज नेटवर्क हासिल करने वाला पहला राज्य बन गया है?',
+    options: ['(a) Haryana / हरियाणा', '(b) Uttar Pradesh / उत्तर प्रदेश', '(c) Gujarat / गुजरात', '(d) Maharashtra / महाराष्ट्र'],
+    correctOptionIndex: 0,
+    explanation: 'Haryana achieved 100% railway electrification of its entire broad-gauge route network.'
+  },
+{
+    id: 'ca-q-today-116',
+    text: 'The prestigious \'Aviation Week Laureate Award\' was presented in 2026 to which Indian space program? / प्रतिष्ठित \'एविएशन वीक लॉरेट अवार्ड\' 2026 में किस भारतीय अंतरिक्ष कार्यक्रम को प्रदान किया गया था?',
+    options: ['(a) Chandrayaan-3 / चंद्रयान-3', '(b) Aditya-L1 / आदित्य-एल1', '(c) Gaganyaan / गगनयान', '(d) Mangalyaan / मंगलयान'],
+    correctOptionIndex: 0,
+    explanation: 'ISRO was honored with the Aviation Week Laureate Award for the historic success of the Chandrayaan-3 lunar touchdown.'
+  },
+{
+    id: 'ca-q-today-117',
+    text: 'Who is the current Chief Justice of India (CJI) as of mid-2026? / मध्य-2026 तक भारत के वर्तमान मुख्य न्यायाधीश (CJI) कौन हैं?',
+    options: ['(a) Justice Sanjiv Khanna / न्यायमूर्ति संजीव खन्ना', '(b) Justice D.Y. Chandrachud / न्यायमूर्ति डी.वाई. चंद्रचूड़', '(c) Justice B.R. Gavai / न्यायमूर्ति बी.आर. गवई', '(d) Justice Suryakant / न्यायमूर्ति सूर्यकांत'],
+    correctOptionIndex: 0,
+    explanation: 'Justice Sanjiv Khanna serves as the Chief Justice of India, following Justice D.Y. Chandrachud\'s retirement.'
+  },
+{
+    id: 'ca-q-today-118',
+    text: 'Which country topped the World Press Freedom Index 2026 published by Reporters Without Borders? / रिपोर्टर्स विदाउट बॉर्डर्स द्वारा प्रकाशित विश्व प्रेस स्वतंत्रता सूचकांक 2026 में कौन सा देश शीर्ष पर रहा?',
+    options: ['(a) Norway / नॉर्वे', '(b) Denmark / डेनमार्क', '(c) Finland / फिनलैंड', '(d) Sweden / स्वीडन'],
+    correctOptionIndex: 0,
+    explanation: 'Norway continuously ranks first in the World Press Freedom Index, preserving high indices of journalist security.'
+  },
+{
+    id: 'ca-q-today-119',
+    text: 'Who is the current Chief Economic Advisor (CEA) of India? / भारत के वर्तमान मुख्य आर्थिक सलाहकार (CEA) कौन हैं?',
+    options: ['(a) Dr. V. Anantha Nageswaran / डॉ. वी. अनंत नागेश्वरन', '(b) Krishnamurthy Subramanian / कृष्णमूर्ति सुब्रमण्यम', '(c) Arvind Subramanian / अरविंद सुब्रमण्यम', '(d) Raghuram Rajan / रघुराम राजन'],
+    correctOptionIndex: 0,
+    explanation: 'Dr. V. Anantha Nageswaran is the Chief Economic Advisor of India, presenting key economic surveys.'
+  },
+{
+    id: 'ca-q-today-120',
+    text: 'Nihon Hidankyo, the recipient of the Nobel Peace Prize, is a grassroots organization of atomic bomb survivors from which country? / नोबेल शांति पुरस्कार प्राप्त करने वाली संस्था निहोन हिदांक्यो किस देश के परमाणु बम पीड़ितों का एक जमीनी संगठन है?',
+    options: ['(a) Japan / जापान', '(b) South Korea / दक्षिण कोरिया', '(c) China / चीन', '(d) Vietnam / वियतनाम'],
+    correctOptionIndex: 0,
+    explanation: 'Nihon Hidankyo is a Japanese organization of atomic bomb survivors (Hibakusha) from Hiroshima and Nagasaki.'
+  },
+{
+    id: 'ca-q-today-121',
+    text: 'India climbed to which position in the latest Global Innovation Index (GII) report? / नवीनतम वैश्विक नवाचार सूचकांक (GII) रिपोर्ट में भारत किस स्थान पर पहुंच गया है?',
+    options: ['(a) 39th / 39वें', '(b) 40th / 40वें', '(c) 42nd / 42वें', '(d) 45th / 45वें'],
+    correctOptionIndex: 0,
+    explanation: 'India secured the 39th position among 133 economies in the Global Innovation Index (GII) compiled by WIPO.'
+  },
+{
+    id: 'ca-q-today-122',
+    text: 'Which body compiles and publishes the annual Global Hunger Index (GHI)? / वार्षिक वैश्विक भूख सूचकांक (GHI) कौन सी संस्था तैयार और प्रकाशित करती है?',
+    options: ['(a) Concern Worldwide and Welthungerhilfe / कंसर्न वर्ल्डवाइड और वेल्टहंगरहाइल्फ', '(b) FAO / खाद्य एवं कृषि संगठन', '(c) WHO / विश्व स्वास्थ्य संगठन', '(d) UNDP / यूएनडीपी'],
+    correctOptionIndex: 0,
+    explanation: 'The Global Hunger Index is peer-reviewed and jointly published annually by Concern Worldwide and Welthungerhilfe.'
+  },
+{
+    id: 'ca-q-today-123',
+    text: 'India\'s first private rocket launchpad was established in Sriharikota by which aerospace startup? / किस एयरोस्पेस स्टार्टअप द्वारा श्रीहरिकोटा में भारत का पहला निजी रॉकेट लॉन्चपैड स्थापित किया गया था?',
+    options: ['(a) Agnikul Cosmos / अग्निकुल कॉस्मॉस', '(b) Skyroot Aerospace / स्काईरूट एयरोस्पेस', '(c) Pixxel / पिक्सेल', '(d) Bellatrix Aerospace / बेलाट्रिक्स'],
+    correctOptionIndex: 0,
+    explanation: 'Agnikul Cosmos inaugurated India\'s first private launchpad and mission control center at Sriharikota.'
+  },
+{
+    id: 'ca-q-today-124',
+    text: 'India has bid to host the UNFCCC COP 31 Climate Summit in which year? / भारत ने किस वर्ष में UNFCCC COP 31 जलवायु शिखर सम्मेलन की मेजबानी करने की बोली लगाई है?',
+    options: ['(a) 2026', '(b) 2028', '(c) 2030', '(d) 2032'],
+    correctOptionIndex: 1,
+    explanation: 'India has formally bid to host the United Nations Climate Change Conference COP 31 in 2028.'
+  },
+{
+    id: 'ca-q-today-125',
+    text: 'What is \'Bhashini\', developed by the Ministry of Electronics & IT? / इलेक्ट्रॉनिक्स और आईटी मंत्रालय द्वारा विकसित \'भाषिनी\' क्या है?',
+    options: ['(a) AI-powered multilingual translation platform / एआई-संचालित बहुभाषी अनुवाद मंच', '(b) Cybersecurity firewall / साइबर सुरक्षा फ़ायरवॉल', '(c) Supercomputer platform / सुपरकंप्यूटर प्लेटफॉर्म', '(d) Digital payment app / डिजिटल भुगतान ऐप'],
+    correctOptionIndex: 0,
+    explanation: 'Bhashini is India\'s AI-led language translation platform, aimed at bridging digital barriers.'
+  },
+{
+    id: 'ca-q-today-126',
+    text: 'Which country is the largest producer of Millets globally? / वैश्विक स्तर पर बाजरा (Millets) का सबसे बड़ा उत्पादक देश कौन सा है?',
+    options: ['(a) India / भारत', '(b) Niger / नाइजर', '(c) China / चीन', '(d) Nigeria / नाइजीरिया'],
+    correctOptionIndex: 0,
+    explanation: 'India is the largest producer of millets in the world, accounting for over 40% of global production.'
+  },
+{
+    id: 'ca-q-today-127',
+    text: 'Which armed force of India conducted the multi-nation air exercise \'Tarang Shakti 2026\'? / भारत के किस सशस्त्र बल ने बहुराष्ट्रीय हवाई अभ्यास \'तरंग शक्ति 2026\' का संचालन किया?',
+    options: ['(a) Indian Air Force / भारतीय वायु सेना', '(b) Indian Navy / भारतीय नौसेना', '(c) Indian Army / भारतीय सेना', '(d) Indian Coast Guard / तटरक्षक बल'],
+    correctOptionIndex: 0,
+    explanation: 'The Indian Air Force (IAF) hosted the historic multi-nation air exercise \'Tarang Shakti\' to foster defense integration.'
+  },
+{
+    id: 'ca-q-today-128',
+    text: 'Which European country officially integrated UPI payments in partnership with NPCI in late June 2026? / किस यूरोपीय देश ने जून 2026 के अंत में NPCI के साथ साझेदारी में UPI भुगतान को आधिकारिक रूप से एकीकृत किया?',
+    options: ['(a) France / फ्रांस', '(b) Greece / ग्रीस', '(c) Germany / जर्मनी', '(d) Italy / इटली'],
+    correctOptionIndex: 1,
+    explanation: 'NPCI International signed a pact to enable UPI acceptance across Greece, assisting tourists.'
+  },
+{
+    id: 'ca-q-today-129',
+    text: 'Project Seabird, one of Asia\'s largest naval infrastructure programs, is located in which state? / प्रोजेक्ट सीबर्ड, जो एशिया के सबसे बड़े नौसैनिक बुनियादी ढांचा कार्यक्रमों में से एक है, किस राज्य में स्थित है?',
+    options: ['(a) Karwar, Karnataka / कारवार, कर्नाटक', '(b) Kochi, Kerala / कोच्चि, केरल', '(c) Visakhapatnam, Andhra Pradesh', '(d) Mumbai, Maharashtra'],
+    correctOptionIndex: 0,
+    explanation: 'INS Kadamba at Karwar, Karnataka, is part of India\'s prestigious Project Seabird naval base expansion.'
+  },
+{
+    id: 'ca-q-today-130',
+    text: 'Which state houses India\'s first fully digital, paperless block panchayat? / कौन सा राज्य भारत की पहली पूरी तरह से डिजिटल, पेपरलेस ब्लॉक पंचायत का घर है?',
+    options: ['(a) Kerala / केरल', '(b) Karnataka / कर्नाटक', '(c) Gujarat / गुजरात', '(d) Goa / गोवा'],
+    correctOptionIndex: 0,
+    explanation: 'Kerala has achieved high indicators, including creating fully digital and paperless local administrative panchayats.'
+  },
+{
+    id: 'ca-q-today-131',
+    text: 'Which country is selected to host the World Environment Day 2026? / विश्व पर्यावरण दिवस 2026 की मेजबानी के लिए किस देश को चुना गया है?',
+    options: ['(a) Saudi Arabia / सऊदी अरब', '(b) Azerbaijan / अज़रबैजान', '(c) South Korea / दक्षिण कोरिया', '(d) Brazil / ब्राजील'],
+    correctOptionIndex: 3,
+    explanation: 'Brazil is selected as the global host for World Environment Day 2026 with a focus on forest restoration.'
+  },
+{
+    id: 'ca-q-today-132',
+    text: 'India has announced its candidacy for non-permanent membership of the United Nations Security Council (UNSC) for which term? / भारत ने किस कार्यकाल के लिए संयुक्त राष्ट्र सुरक्षा परिषद (UNSC) के अस्थायी सदस्य के लिए अपनी उम्मीदवारी की घोषणा की है?',
+    options: ['(a) 2028-29', '(b) 2026-27', '(c) 2030-31', '(d) 2027-28'],
+    correctOptionIndex: 0,
+    explanation: 'India has formally submitted its bid for a non-permanent seat at the UNSC for the 2028-2029 term.'
+  },
+{
+    id: 'ca-q-today-133',
+    text: 'India\'s first indigenous hydrogen-powered train is scheduled to run on which heritage route? / भारत की पहली स्वदेशी हाइड्रोजन-संचालित ट्रेन किस हेरिटेज रूट पर चलने वाली है?',
+    options: ['(a) Kalka-Shimla Route / कालका-शिमला रूट', '(b) Darjeeling Himalayan Route', '(c) Nilgiri Mountain Route', '(d) Matheran Hill Route'],
+    correctOptionIndex: 0,
+    explanation: 'Indian Railways is conducting trials to roll out India\'s first hydrogen train on the Kalka-Shimla heritage circuit.'
+  },
+{
+    id: 'ca-q-today-134',
+    text: 'Who was awarded the prestigious Saraswati Samman for outstanding literature? / उत्कृष्ट साहित्य के लिए प्रतिष्ठित सरस्वती सम्मान से किसे सम्मानित किया गया था?',
+    options: ['(a) Prabha Varma / प्रभा वर्मा', '(b) Sivasankari / शिवशंकरी', '(c) Ramdarash Mishra / रामदरश मिश्र', '(d) Sharan Kumar Limbale / शरण कुमार लिम्बाले'],
+    correctOptionIndex: 0,
+    explanation: 'Renowned poet Prabha Varma was chosen for the prestigious Saraswati Samman award for his novel \'Raudra Satwikam\'.'
+  },
+{
+    id: 'ca-q-today-135',
+    text: 'World Oceans Day is observed globally on which date every year? / विश्व महासागर दिवस हर साल दुनिया भर में किस तारीख को मनाया जाता है?',
+    options: ['(a) June 8 / 8 जून', '(b) June 5 / 5 जून', '(c) June 12 / 12 जून', '(d) June 21 / 21 जून'],
+    correctOptionIndex: 0,
+    explanation: 'World Oceans Day is observed on June 8 to raise awareness about the vital role of oceans.'
+  },
+{
+    id: 'ca-q-today-136',
+    text: 'Which state government launched the \'Lakhpati Didi\' scheme to empower rural self-help group women? / किस राज्य सरकार ने ग्रामीण स्वयं सहायता समूह की महिलाओं को सशक्त बनाने के लिए \'लखपति दीदी\' योजना शुरू की?',
+    options: ['(a) Uttarakhand / उत्तराखंड', '(b) Maharashtra / महाराष्ट्र', '(c) Rajasthan / राजस्थान', '(d) Uttar Pradesh / उत्तर प्रदेश'],
+    correctOptionIndex: 0,
+    explanation: 'The Lakhpati Didi initiative is aggressively executed across states like Uttarakhand and Rajasthan to boost rural incomes.'
+  },
+{
+    id: 'ca-q-today-137',
+    text: 'The PM-PRANAM scheme is aimed at achieving which of the following objectives? / पीएम-प्रणाम (PM-PRANAM) योजना का उद्देश्य निम्नलिखित में से क्या है?',
+    options: ['(a) Reducing chemical fertilizer usage / रासायनिक उर्वरकों के उपयोग को कम करना', '(b) Promoting digital education / डिजिटल शिक्षा को बढ़ावा देना', '(c) Assisting organic sericulture / जैविक रेशम उत्पादन में सहायता', '(d) Reclaiming fallow lands / परती भूमि का पुनरुद्धार'],
+    correctOptionIndex: 0,
+    explanation: 'PM-PRANAM is aimed at incentivizing states to reduce the consumption of chemical fertilizers.'
+  },
+{
+    id: 'ca-q-today-138',
+    text: 'What is the official helpline number of the Indian Cyber Crime Coordination Centre (I4C) for reporting digital fraud? / डिजिटल धोखाधड़ी की रिपोर्ट करने के लिए भारतीय साइबर अपराध समन्वय केंद्र (I4C) का आधिकारिक हेल्पलाइन नंबर क्या है?',
+    options: ['(a) 1930', '(b) 112', '(c) 1091', '(d) 100'],
+    correctOptionIndex: 0,
+    explanation: 'Dialing 1930 connects citizens to the National Cyber Crime Helpline portal to report financial frauds instantly.'
+  },
+{
+    id: 'ca-q-today-139',
+    text: 'Which ministry of India oversaw the country\'s first-ever auction of critical minerals like lithium and graphite? / भारत के किस मंत्रालय ने लिथियम और ग्रेफाइट जैसे महत्वपूर्ण खनिजों की देश की पहली नीलामी की देखरेख की?',
+    options: ['(a) Ministry of Mines / खान मंत्रालय', '(b) Ministry of Power / विद्युत मंत्रालय', '(c) Ministry of Commerce / वाणिज्य मंत्रालय', '(d) Ministry of Environment / पर्यावरण मंत्रालय'],
+    correctOptionIndex: 0,
+    explanation: 'The Ministry of Mines successfully managed the commercial bidding rounds for critical mineral concessions.'
+  },
+{
+    id: 'ca-q-today-140',
+    text: 'Which regional group became a permanent member of the G20 during India\'s presidency? / भारत की अध्यक्षता के दौरान कौन सा क्षेत्रीय समूह G20 का स्थायी सदस्य बना?',
+    options: ['(a) African Union / अफ्रीकी संघ', '(b) European Union / यूरोपीय संघ', '(c) ASEAN / आसियान', '(d) OPEC'],
+    correctOptionIndex: 0,
+    explanation: 'The African Union was formally inducted as a permanent member of the G20 under India\'s G20 presidency.'
+  },
+{
+    id: 'ca-q-today-141',
+    text: 'Project \'Udbhav\', recently seen in news, is an initiative of which Indian institution? / हाल ही में खबरों में रहा प्रोजेक्ट \'उद्भव\' (Project Udbhav) किस भारतीय संस्थान की एक पहल है?',
+    options: ['(a) Indian Army / भारतीय सेना', '(b) ISRO / इसरो', '(c) DRDO / डीआरडीओ', '(d) Ministry of Culture / संस्कृति मंत्रालय'],
+    correctOptionIndex: 0,
+    explanation: 'Project Udbhav is an initiative of the Indian Army to synthesize ancient Indian statecraft and military wisdom with modern security.'
+  },
+{
+    id: 'ca-q-today-142',
+    text: 'In which state/UT is India constructing the world\'s tallest railway pier bridge across the Iring river? / भारत इयरिंग नदी पर दुनिया का सबसे ऊंचा रेलवे पियर ब्रिज (रेलवे घाट पुल) किस राज्य/केंद्र शासित प्रदेश में बना रहा है?',
+    options: ['(a) Manipur / मणिपुर', '(b) Jammu & Kashmir / जम्मू और कश्मीर', '(c) Himachal Pradesh / हिमाचल प्रदेश', '(d) Arunachal Pradesh'],
+    correctOptionIndex: 0,
+    explanation: 'The spectacular Indian Railways bridge project is situated in Manipur, standing at a pier height of 141 meters.'
+  },
+{
+    id: 'ca-q-today-143',
+    text: 'According to latest Global Unicorn Index rankings, what is India\'s position in terms of unicorn startups? / नवीनतम ग्लोबल यूनिकॉर्न इंडेक्स रैंकिंग के अनुसार, यूनिकॉर्न स्टार्टअप्स के मामले में भारत का क्या स्थान है?',
+    options: ['(a) 3rd / तीसरा', '(b) 2nd / दूसरा', '(c) 4th / चौथा', '(d) 5th / पांचवां'],
+    correctOptionIndex: 0,
+    explanation: 'India maintains its position as the third-largest startup ecosystem in the world with over 110 unicorns.'
+  },
+{
+    id: 'ca-q-today-144',
+    text: 'The Lemru Elephant Reserve, which is aimed at managing human-wildlife encounters, is located in which state? / लेमरू हाथी रिजर्व, जिसका उद्देश्य मानव-वन्यजीव मुठभेड़ों को प्रबंधित करना है, किस राज्य में स्थित है?',
+    options: ['(a) Chhattisgarh / छत्तीसगढ़', '(b) Jharkhand / झारखंड', '(c) Odisha / ओडिशा', '(d) Assam / असम'],
+    correctOptionIndex: 0,
+    explanation: 'The Lemru Elephant Reserve is situated in Chhattisgarh, established to protect elephant habitats.'
+  },
+{
+    id: 'ca-q-today-145',
+    text: 'The famous \'Cuttack Silver Filigree\' (Rupa Tarakasi) which recently received a GI Tag belongs to which state? / प्रसिद्ध \'कटक सिल्वर फिलीग्री\' (रूपा तारकशी) जिसे हाल ही में जीआई टैग प्राप्त हुआ है, किस राज्य से संबंधित है?',
+    options: ['(a) Odisha / ओडिशा', '(b) Bihar / बिहार', '(c) West Bengal / पश्चिम बंगाल', '(d) Rajasthan / राजस्थान'],
+    correctOptionIndex: 0,
+    explanation: 'Odisha\'s exquisite silver filigree handicraft from Cuttack was awarded the Geographical Indication (GI) status.'
+  },
+{
+    id: 'ca-q-today-146',
+    text: 'Which state became the first in independent India to pass and implement a Uniform Civil Code (UCC) Bill? / स्वतंत्र भारत में समान नागरिक संहिता (UCC) विधेयक पारित और लागू करने वाला पहला राज्य कौन सा बना है?',
+    options: ['(a) Uttarakhand / उत्तराखंड', '(b) Goa / गोवा', '(c) Gujarat / गुजरात', '(d) Assam / असम'],
+    correctOptionIndex: 0,
+    explanation: 'Uttarakhand became the first state in independent India to pass a comprehensive Uniform Civil Code bill.'
+  },
+{
+    id: 'ca-q-today-147',
+    text: 'The \'Mera Yuva Bharat\' (MY Bharat) portal launched by India targets which of the following youth groups? / भारत द्वारा शुरू किया गया \'मेरा युवा भारत\' (MY Bharat) पोर्टल निम्नलिखित में से किस युवा समूह को लक्षित करता है?',
+    options: ['(a) Youth aged 15-29 years / 15-29 वर्ष के युवा', '(b) Youth aged 18-35 years / 18-35 वर्ष के युवा', '(c) School students only / केवल स्कूली छात्र', '(d) Engineering graduates only / केवल इंजीनियरिंग स्नातक'],
+    correctOptionIndex: 0,
+    explanation: 'MY Bharat is a technology-driven platform dedicated to empowering youths aged 15-29.'
+  },
+{
+    id: 'ca-q-today-148',
+    text: 'The United Nations Sustainable Development Goal (SDG) 6 is dedicated to which of the following? / संयुक्त राष्ट्र का सतत विकास लक्ष्य (SDG) 6 निम्नलिखित में से किससे संबंधित है?',
+    options: ['(a) Clean Water and Sanitation / स्वच्छ जल और स्वच्छता', '(b) Quality Education / गुणवत्तापूर्ण शिक्षा', '(c) Affordable and Clean Energy / सस्ती और स्वच्छ ऊर्जा', '(d) Zero Hunger / शून्य भुखमरी'],
+    correctOptionIndex: 0,
+    explanation: 'SDG 6 targets universal and equitable access to safe and affordable drinking water and sanitation for all.'
+  },
+{
+    id: 'ca-q-today-149',
+    text: 'The headquarters of the International Solar Alliance (ISA) is situated in which city? / अंतर्राष्ट्रीय सौर गठबंधन (ISA) का मुख्यालय किस शहर में स्थित है?',
+    options: ['(a) Gurugram, India / गुरुग्राम, भारत', '(b) Paris, France / पेरिस, फ्रांस', '(c) Geneva, Switzerland / जिनेवा, स्विट्जरलैंड', '(d) New Delhi, India / नई दिल्ली, भारत'],
+    correctOptionIndex: 0,
+    explanation: 'The ISA is co-founded by India and France, with its central headquarters situated in Gurugram, Haryana.'
+  },
+{
+    id: 'ca-q-today-150',
+    text: 'The joint military exercise \'Nomadic Elephant\' is conducted between India and which country? / संयुक्त सैन्य अभ्यास \'नोमैडिक एलीफेंट\' भारत और किस देश के बीच आयोजित किया जाता है?',
+    options: ['(a) Mongolia / मंगोलिया', '(b) Kazakhstan / कजाकिस्तान', '(c) Kyrgyzstan / किर्गिस्तान', '(d) Oman / ओमान'],
+    correctOptionIndex: 0,
+    explanation: 'Nomadic Elephant is an annual bilateral training exercise between the armies of India and Mongolia.'
   },
 
 {
