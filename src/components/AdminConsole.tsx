@@ -4,7 +4,7 @@ import {
   HelpCircle, CheckCircle, Database, RefreshCw, AlertTriangle,
   Share2, Send, Copy, ExternalLink, Link, Sparkles, Settings, Bell, MessageSquare, CheckSquare
 } from 'lucide-react';
-import { GovJob, AdmitCard, JobResult, MockTest, Question, AnswerKey, Newspaper } from '../types';
+import { GovJob, AdmitCard, JobResult, MockTest, Question, AnswerKey, Newspaper, CurrentAffair } from '../types';
 
 interface AdminConsoleProps {
   jobs: GovJob[];
@@ -13,6 +13,8 @@ interface AdminConsoleProps {
   mockTests: MockTest[];
   answerKeys?: AnswerKey[];
   newspapers?: Newspaper[];
+  currentAffairs?: CurrentAffair[];
+  quizQuestions?: Question[];
   
   onAddJob: (job: GovJob) => void;
   onDeleteJob: (jobId: string) => void;
@@ -23,6 +25,8 @@ interface AdminConsoleProps {
   onDeleteMockTest?: (testId: string) => void;
   onAddNewspaper?: (paper: Newspaper) => void;
   onDeleteNewspaper?: (paperId: string) => void;
+  onAddCurrentAffair?: (item: CurrentAffair) => void;
+  onAddCurrentAffairsQuestion?: (q: Question) => void;
 }
 
 export default function AdminConsole({
@@ -32,6 +36,8 @@ export default function AdminConsole({
   mockTests,
   answerKeys = [],
   newspapers = [],
+  currentAffairs = [],
+  quizQuestions = [],
   onAddJob,
   onDeleteJob,
   onAddAdmitCard,
@@ -40,10 +46,28 @@ export default function AdminConsole({
   onAddAnswerKey,
   onDeleteMockTest,
   onAddNewspaper,
-  onDeleteNewspaper
+  onDeleteNewspaper,
+  onAddCurrentAffair,
+  onAddCurrentAffairsQuestion
 }: AdminConsoleProps) {
-  const [activeAdminTab, setActiveAdminTab] = useState<'jobs' | 'mocks' | 'cards' | 'whatsapp' | 'payments' | 'newspapers'>('jobs');
+  const [activeAdminTab, setActiveAdminTab] = useState<'jobs' | 'mocks' | 'cards' | 'whatsapp' | 'payments' | 'newspapers' | 'current-affairs'>('jobs');
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
+
+  // --- CURRENT AFFAIRS UPLOADER STATES ---
+  const [caCapsuleTitle, setCaCapsuleTitle] = useState('');
+  const [caCapsuleDate, setCaCapsuleDate] = useState('2026-06-30');
+  const [caCapsuleCategory, setCaCapsuleCategory] = useState<'National' | 'International' | 'Sports' | 'Economy' | 'Science & Tech' | 'Awards'>('National');
+  const [caCapsuleContent, setCaCapsuleContent] = useState('');
+  const [caCapsulePdfUrl, setCaCapsulePdfUrl] = useState('');
+
+  const [caQuestDate, setCaQuestDate] = useState('2026-06-30');
+  const [caQuestText, setCaQuestText] = useState('');
+  const [caQuestOptA, setCaQuestOptA] = useState('');
+  const [caQuestOptB, setCaQuestOptB] = useState('');
+  const [caQuestOptC, setCaQuestOptC] = useState('');
+  const [caQuestOptD, setCaQuestOptD] = useState('');
+  const [caQuestCorrectOpt, setCaQuestCorrectOpt] = useState<number>(0);
+  const [caQuestExplanation, setCaQuestExplanation] = useState('');
 
   // --- PAYMENT AND UPI SETUP STATES ---
   const [adminUpiId, setAdminUpiId] = useState<string>(() => localStorage.getItem('sarkari_business_upi_id') || 'sarkarihub@upi');
@@ -1352,6 +1376,73 @@ What is the standard pH level of pure distilled water at normal room temperature
   }
 ]`;
 
+  const handleCurrentAffairSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!caCapsuleTitle.trim() || !caCapsuleContent.trim()) {
+      alert("Please fill out all required fields!");
+      return;
+    }
+    
+    const newItem: CurrentAffair = {
+      id: `ca-news-custom-${Date.now()}`,
+      title: caCapsuleTitle.trim(),
+      date: caCapsuleDate,
+      category: caCapsuleCategory,
+      content: caCapsuleContent.trim(),
+      pdfUrl: caCapsulePdfUrl.trim() || 'https://jobsarkarihub.pdf/current-affairs/Custom_Verified_CA.pdf'
+    };
+    
+    if (onAddCurrentAffair) {
+      onAddCurrentAffair(newItem);
+      setCaCapsuleTitle('');
+      setCaCapsuleContent('');
+      setCaCapsulePdfUrl('');
+      setStatusMessage(`✅ Successfully uploaded Current Affairs News Capsule for date: ${caCapsuleDate}!`);
+      setTimeout(() => setStatusMessage(null), 4000);
+    } else {
+      setStatusMessage(`⚠️ Error: Current Affairs upload callback is not configured.`);
+      setTimeout(() => setStatusMessage(null), 4000);
+    }
+  };
+
+  const handleCurrentAffairsQuestionSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!caQuestText.trim() || !caQuestOptA.trim() || !caQuestOptB.trim()) {
+      alert("Please enter the question text and at least options A and B!");
+      return;
+    }
+    
+    const newQ: Question = {
+      id: `ca-q-custom-${Date.now()}`,
+      text: caQuestText.trim(),
+      options: [
+        caQuestOptA.trim(),
+        caQuestOptB.trim(),
+        caQuestOptC.trim() || '(c) N/A',
+        caQuestOptD.trim() || '(d) N/A'
+      ],
+      correctOptionIndex: caQuestCorrectOpt,
+      explanation: caQuestExplanation.trim() || 'Official bilingual explanation verified by Sarkari Hub Exam specialists.',
+      date: caQuestDate
+    };
+    
+    if (onAddCurrentAffairsQuestion) {
+      onAddCurrentAffairsQuestion(newQ);
+      setCaQuestText('');
+      setCaQuestOptA('');
+      setCaQuestOptB('');
+      setCaQuestOptC('');
+      setCaQuestOptD('');
+      setCaQuestCorrectOpt(0);
+      setCaQuestExplanation('');
+      setStatusMessage(`✅ Successfully uploaded bilingual Interactive Quiz Question for date: ${caQuestDate}!`);
+      setTimeout(() => setStatusMessage(null), 4000);
+    } else {
+      setStatusMessage(`⚠️ Error: Quiz question upload callback is not configured.`);
+      setTimeout(() => setStatusMessage(null), 4000);
+    }
+  };
+
   return (
     <div className="font-sans text-slate-700 space-y-6">
       
@@ -1363,6 +1454,7 @@ What is the standard pH level of pure distilled water at normal room temperature
             { id: 'mocks', label: 'Interactive MCQ Test Creator' },
             { id: 'cards', label: 'Admit Cards / Official Results' },
             { id: 'newspapers', label: '📰 Daily Newspapers / ePaper' },
+            { id: 'current-affairs', label: '📰 Daily Current Affairs & Quiz' },
             { id: 'whatsapp', label: '📢 WhatsApp & Telegram Broadcast' },
             { id: 'payments', label: '💳 UPI ID & Payments Setup' }
           ].map((tab) => (
@@ -3231,6 +3323,223 @@ What is the standard pH level of pure distilled water at normal room temperature
 
             </div>
 
+          </div>
+        </div>
+      )}
+      
+      {activeAdminTab === 'current-affairs' && (
+        <div className="space-y-6">
+          {/* Main Info Banner */}
+          <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 rounded-3xl p-6 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="space-y-1 text-left">
+              <h3 className="text-base font-extrabold text-slate-900 flex items-center gap-1.5">
+                <span className="p-1 px-2 rounded-lg bg-emerald-600 text-white text-[10px] font-mono font-black">PREP CONSOLE</span>
+                Daily Current Affairs & Bilingual Quiz Uploader
+              </h3>
+              <p className="text-xs text-slate-600">
+                Upload verified daily news capsules and bilingual practice quiz questions. All uploaded items are cataloged date-wise and updated live inside the candidate prep zone.
+              </p>
+            </div>
+          </div>
+          
+          <div className="grid gap-6 md:grid-cols-2 text-xs">
+            {/* COLUMN 1: UPLOAD NEWS CAPSULES */}
+            <div className="bg-white rounded-3xl border border-slate-150 p-6 shadow-xs space-y-4 text-left">
+              <div className="border-b border-slate-100 pb-2 flex justify-between items-center">
+                <h4 className="font-extrabold text-slate-900 text-xs uppercase tracking-wider">
+                  📰 1. Upload Daily News Capsule
+                </h4>
+                <span className="text-[10px] bg-blue-50 text-blue-700 font-bold px-2 py-0.5 rounded">Verified Study Material</span>
+              </div>
+              
+              <form onSubmit={handleCurrentAffairSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-550 mb-1">Target Date (लक्ष्य तिथि) *</label>
+                  <input 
+                    type="date"
+                    value={caCapsuleDate}
+                    onChange={(e) => setCaCapsuleDate(e.target.value)}
+                    className="w-full rounded-xl border border-slate-200 p-2.5 text-slate-800 font-semibold focus:border-blue-500 focus:outline-none"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-550 mb-1">Category Select (श्रेणी का चयन करें) *</label>
+                  <select
+                    value={caCapsuleCategory}
+                    onChange={(e) => setCaCapsuleCategory(e.target.value as any)}
+                    className="w-full rounded-xl border border-slate-200 p-2.5 text-slate-800 font-semibold focus:border-blue-500 focus:outline-none"
+                  >
+                    <option value="National">National (राष्ट्रीय)</option>
+                    <option value="International">International (अंतर्राष्ट्रीय)</option>
+                    <option value="Sports">Sports (खेलकूद)</option>
+                    <option value="Economy">Economy (अर्थव्यवस्था)</option>
+                    <option value="Science & Tech">Science & Tech (विज्ञान और तकनीक)</option>
+                    <option value="Awards">Awards (पुरस्कार)</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-550 mb-1">Bilingual Title / Headline (शीर्षक - हिंदी और अंग्रेजी) *</label>
+                  <input 
+                    type="text"
+                    placeholder="e.g. Government launches 'SWAYAM Plus' portal / सरकार ने 'स्वयं प्लस' पोर्टल लॉन्च किया"
+                    value={caCapsuleTitle}
+                    onChange={(e) => setCaCapsuleTitle(e.target.value)}
+                    className="w-full rounded-xl border border-slate-200 p-2.5 text-slate-800 focus:outline-none focus:border-blue-500"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-550 mb-1">Detail Content / Capsule Explanation (मुख्य समाचार विवरण) *</label>
+                  <textarea 
+                    rows={4}
+                    placeholder="Provide full description of the news event. Include relevant key facts, figures, ministries, and exam-oriented takeaways..."
+                    value={caCapsuleContent}
+                    onChange={(e) => setCaCapsuleContent(e.target.value)}
+                    className="w-full rounded-xl border border-slate-200 p-2.5 text-slate-800 focus:outline-none focus:border-blue-500"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-550 mb-1">Solved PDF Document URL (वैकल्पिक पीडीएफ यूआरएल)</label>
+                  <input 
+                    type="url"
+                    placeholder="e.g. https://jobsarkarihub.pdf/current-affairs/Capsule_Doc.pdf"
+                    value={caCapsulePdfUrl}
+                    onChange={(e) => setCaCapsulePdfUrl(e.target.value)}
+                    className="w-full rounded-xl border border-slate-200 p-2.5 text-slate-800 focus:outline-none focus:border-blue-500"
+                  />
+                  <p className="text-[10px] text-slate-400 mt-1">If blank, standard secure bilingual PDF download link is auto-generated.</p>
+                </div>
+                
+                <div className="pt-2 flex justify-end">
+                  <button
+                    type="submit"
+                    className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl transition flex items-center gap-1.5 shadow-sm cursor-pointer"
+                  >
+                    <PlusCircle className="h-4 w-4" /> Upload News Capsule
+                  </button>
+                </div>
+              </form>
+            </div>
+            
+            {/* COLUMN 2: UPLOAD QUIZ QUESTIONS */}
+            <div className="bg-white rounded-3xl border border-slate-150 p-6 shadow-xs space-y-4 text-left">
+              <div className="border-b border-slate-100 pb-2 flex justify-between items-center">
+                <h4 className="font-extrabold text-slate-900 text-xs uppercase tracking-wider">
+                  📝 2. Upload Daily Practice Quiz Question
+                </h4>
+                <span className="text-[10px] bg-amber-50 text-amber-700 font-bold px-2 py-0.5 rounded">Interactive MCQ</span>
+              </div>
+              
+              <form onSubmit={handleCurrentAffairsQuestionSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-550 mb-1">Target Date (लक्ष्य तिथि) *</label>
+                  <input 
+                    type="date"
+                    value={caQuestDate}
+                    onChange={(e) => setCaQuestDate(e.target.value)}
+                    className="w-full rounded-xl border border-slate-200 p-2.5 text-slate-800 font-semibold focus:border-blue-500 focus:outline-none"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-550 mb-1">Bilingual MCQ Question Text (बहुविकल्पीय प्रश्न पाठ) *</label>
+                  <textarea 
+                    rows={2}
+                    placeholder="e.g. Which portal did India launch to offer industry courses? / भारत ने व्यावसायिक पाठ्यक्रमों के लिए कौन सा पोर्टल लॉन्च किया?"
+                    value={caQuestText}
+                    onChange={(e) => setCaQuestText(e.target.value)}
+                    className="w-full rounded-xl border border-slate-200 p-2.5 text-slate-800 focus:outline-none focus:border-blue-500"
+                    required
+                  />
+                </div>
+                
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-550 mb-1">Option A (विकल्प क) *</label>
+                    <input 
+                      type="text"
+                      placeholder="e.g. (a) SWAYAM Plus / स्वयं प्लस"
+                      value={caQuestOptA}
+                      onChange={(e) => setCaQuestOptA(e.target.value)}
+                      className="w-full rounded-xl border border-slate-200 p-2.5 text-slate-800 focus:outline-none focus:border-blue-500"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-550 mb-1">Option B (विकल्प ख) *</label>
+                    <input 
+                      type="text"
+                      placeholder="e.g. (b) DIKSHA Pro / दीक्षा प्रो"
+                      value={caQuestOptB}
+                      onChange={(e) => setCaQuestOptB(e.target.value)}
+                      className="w-full rounded-xl border border-slate-200 p-2.5 text-slate-800 focus:outline-none focus:border-blue-500"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-550 mb-1">Option C (विकल्प ग)</label>
+                    <input 
+                      type="text"
+                      placeholder="e.g. (c) PRAGATI / प्रगति"
+                      value={caQuestOptC}
+                      onChange={(e) => setCaQuestOptC(e.target.value)}
+                      className="w-full rounded-xl border border-slate-200 p-2.5 text-slate-800 focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-550 mb-1">Option D (विकल्प घ)</label>
+                    <input 
+                      type="text"
+                      placeholder="e.g. (d) SAMARTH / समर्थ"
+                      value={caQuestOptD}
+                      onChange={(e) => setCaQuestOptD(e.target.value)}
+                      className="w-full rounded-xl border border-slate-200 p-2.5 text-slate-800 focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-550 mb-1">Correct Option Answer (सही उत्तर विकल्प) *</label>
+                  <select
+                    value={caQuestCorrectOpt}
+                    onChange={(e) => setCaQuestCorrectOpt(Number(e.target.value))}
+                    className="w-full rounded-xl border border-slate-200 p-2.5 text-slate-800 font-semibold focus:border-blue-500 focus:outline-none"
+                  >
+                    <option value={0}>Option A (विकल्प क)</option>
+                    <option value={1}>Option B (विकल्प ख)</option>
+                    <option value={2}>Option C (विकल्प ग)</option>
+                    <option value={3}>Option D (विकल्प घ)</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-550 mb-1">Bilingual Explanation (विस्तृत व्याख्या)</label>
+                  <textarea 
+                    rows={2}
+                    placeholder="Explain why this option is correct bilingually so candidates can learn..."
+                    value={caQuestExplanation}
+                    onChange={(e) => setCaQuestExplanation(e.target.value)}
+                    className="w-full rounded-xl border border-slate-200 p-2.5 text-slate-800 focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+                
+                <div className="pt-2 flex justify-end">
+                  <button
+                    type="submit"
+                    className="px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs rounded-xl transition flex items-center gap-1.5 shadow-sm cursor-pointer"
+                  >
+                    <PlusCircle className="h-4 w-4" /> Upload Quiz Question
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       )}

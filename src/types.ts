@@ -63,6 +63,7 @@ export interface Question {
   options: string[];
   correctOptionIndex: number;
   explanation: string;
+  date?: string;
 }
 
 export interface MockTest {

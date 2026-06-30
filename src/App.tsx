@@ -295,15 +295,31 @@ export default function App() {
     localStorage.setItem('sarkari_mock_tests', JSON.stringify(mockTests));
   }, [mockTests]);
 
-  const [currentAffairs, setCurrentAffairs] = useState<CurrentAffair[]>(DAILY_CURRENT_AFFAIRS_ITEMS);
-  const [quizQuestions] = useState<Question[]>(CURRENT_AFFAIRS_QUIZ_QUESTIONS);
+  const [currentAffairs, setCurrentAffairs] = useState<CurrentAffair[]>(() => {
+    const saved = localStorage.getItem('sarkari_current_affairs');
+    return saved ? JSON.parse(saved) : DAILY_CURRENT_AFFAIRS_ITEMS;
+  });
+
+  const [quizQuestions, setQuizQuestions] = useState<Question[]>(() => {
+    const saved = localStorage.getItem('sarkari_quiz_questions');
+    return saved ? JSON.parse(saved) : CURRENT_AFFAIRS_QUIZ_QUESTIONS;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('sarkari_current_affairs', JSON.stringify(currentAffairs));
+  }, [currentAffairs]);
+
+  useEffect(() => {
+    localStorage.setItem('sarkari_quiz_questions', JSON.stringify(quizQuestions));
+  }, [quizQuestions]);
+
   const [currentQuizIdx, setCurrentQuizIdx] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<{[key: number]: number}>({}); // maps question Index (0-49) to selected option index (0-3)
   const [todayQuizIdx, setTodayQuizIdx] = useState(0);
   const [todayAnswers, setTodayAnswers] = useState<{[key: string]: number}>({}); // maps question ID to selected option index
   const [todayActiveSubTab, setTodayActiveSubTab] = useState<'questions' | 'capsules'>('questions');
-  const [caQuizDate, setCaQuizDate] = useState<'june_30' | 'june_29' | 'june_28' | 'june_27' | 'high_yield'>('june_30');
-  const [homeQuizDate, setHomeQuizDate] = useState<'june_30' | 'june_29' | 'june_28' | 'june_27'>('june_30');
+  const [caQuizDate, setCaQuizDate] = useState<string>('june_30');
+  const [homeQuizDate, setHomeQuizDate] = useState<string>('june_30');
   const [caSearchQuery, setCaSearchQuery] = useState('');
   const [caSelectedCategory, setCaSelectedCategory] = useState<string>('All');
   const [caVisibleCount, setCaVisibleCount] = useState(6);
@@ -357,6 +373,54 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('sarkari_pyqs', JSON.stringify(pyqsList));
   }, [pyqsList]);
+
+  const getAvailableDates = () => {
+    const datesSet = new Set<string>();
+    // Default key dates
+    datesSet.add('2026-06-30');
+    datesSet.add('2026-06-29');
+    datesSet.add('2026-06-28');
+    datesSet.add('2026-06-27');
+    
+    currentAffairs.forEach(ca => {
+      if (ca.date) datesSet.add(ca.date);
+    });
+    
+    quizQuestions.forEach(q => {
+      if (q.date) datesSet.add(q.date);
+    });
+    
+    return Array.from(datesSet).sort((a, b) => b.localeCompare(a));
+  };
+
+  const formatCADate = (dateStr: string, isHindi: boolean) => {
+    if (dateStr === '2026-06-30' || dateStr === 'june_30') return isHindi ? 'मंगलवार, 30 जून 2026 (आज के विशेष)' : 'Tuesday, 30 June 2026 (Today)';
+    if (dateStr === '2026-06-29' || dateStr === 'june_29') return isHindi ? 'सोमवार, 29 जून 2026 (कल के विशेष)' : 'Monday, 29 June 2026 (Yesterday)';
+    if (dateStr === '2026-06-28' || dateStr === 'june_28') return isHindi ? 'रविवार, 28 जून 2026' : 'Sunday, 28 June 2026';
+    if (dateStr === '2026-06-27' || dateStr === 'june_27') return isHindi ? 'शनिवार, 27 जून 2026' : 'Saturday, 27 June 2026';
+    
+    try {
+      const parts = dateStr.split('-');
+      if (parts.length === 3) {
+        const year = parts[0];
+        const monthNum = parseInt(parts[1], 10);
+        const day = parseInt(parts[2], 10);
+        
+        const monthsEng = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const monthsHin = ['जनवरी', 'फरवरी', 'मार्च', 'अप्रैल', 'मई', 'जून', 'जुलाई', 'अगस्त', 'सितंबर', 'अक्टूबर', 'नवंबर', 'दिसंबर'];
+        
+        const monthEng = monthsEng[monthNum - 1] || parts[1];
+        const monthHin = monthsHin[monthNum - 1] || parts[1];
+        
+        return isHindi 
+          ? `${day} ${monthHin} ${year}` 
+          : `${day} ${monthEng} ${year}`;
+      }
+    } catch (e) {
+      // fallback
+    }
+    return dateStr;
+  };
 
   const [pyqSearch, setPyqSearch] = useState('');
   const [pyqSelectedYear, setPyqSelectedYear] = useState('All');
@@ -1267,23 +1331,16 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                   <select
                     value={homeQuizDate}
                     onChange={(e) => {
-                      setHomeQuizDate(e.target.value as 'june_30' | 'june_29' | 'june_28' | 'june_27');
+                      setHomeQuizDate(e.target.value);
                       setTodayQuizIdx(0);
                     }}
-                    className="bg-transparent text-slate-200 font-sans text-xs font-bold focus:outline-hidden cursor-pointer border-none pr-6 py-1 select-none font-sans"
+                    className="bg-transparent text-slate-200 font-sans text-xs font-bold focus:outline-none cursor-pointer border-none pr-6 py-1 select-none font-sans"
                   >
-                    <option value="june_30" className="bg-slate-900 text-white">
-                      {locale === 'hi' ? 'मंगलवार, 30 जून 2026 (आज के विशेष)' : 'Tuesday, 30 June 2026 (Today)'}
-                    </option>
-                    <option value="june_29" className="bg-slate-900 text-white">
-                      {locale === 'hi' ? 'सोमवार, 29 जून 2026 (कल के विशेष)' : 'Monday, 29 June 2026 (Yesterday)'}
-                    </option>
-                    <option value="june_28" className="bg-slate-900 text-white">
-                      {locale === 'hi' ? 'रविवार, 28 जून 2026' : 'Sunday, 28 June 2026'}
-                    </option>
-                    <option value="june_27" className="bg-slate-900 text-white">
-                      {locale === 'hi' ? 'शनिवार, 27 जून 2026' : 'Saturday, 27 June 2026'}
-                    </option>
+                    {getAvailableDates().map(d => (
+                      <option key={d} value={d} className="bg-slate-900 text-white">
+                        {formatCADate(d, locale === 'hi')}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -1319,6 +1376,14 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                 {todayActiveSubTab === 'questions' ? (
                   (() => {
                     const todayQs = quizQuestions.filter(q => {
+                      if (q.date) {
+                        const targetDateStr = homeQuizDate === 'june_30' ? '2026-06-30' :
+                                              homeQuizDate === 'june_29' ? '2026-06-29' :
+                                              homeQuizDate === 'june_28' ? '2026-06-28' :
+                                              homeQuizDate === 'june_27' ? '2026-06-27' :
+                                              homeQuizDate;
+                        if (q.date === targetDateStr || q.date === homeQuizDate) return true;
+                      }
                       const idNum = parseInt(q.id.replace('ca-q-today-', ''));
                       if (isNaN(idNum)) return false;
                       if (homeQuizDate === 'june_30') {
@@ -1327,9 +1392,10 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                         return idNum >= 101 && idNum <= 150;
                       } else if (homeQuizDate === 'june_28') {
                         return idNum >= 51 && idNum <= 100;
-                      } else {
+                      } else if (homeQuizDate === 'june_27') {
                         return idNum >= 1 && idNum <= 50;
                       }
+                      return false;
                     });
                     const q = todayQs[todayQuizIdx];
                     if (!q) return <p className="text-slate-400 text-xs text-center py-6">No questions found for today.</p>;
@@ -1449,15 +1515,12 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     {(() => {
                       const filteredCapsules = currentAffairs.filter(ca => {
-                        if (homeQuizDate === 'june_30') {
-                          return ca.date === '2026-06-30';
-                        } else if (homeQuizDate === 'june_29') {
-                          return ca.date === '2026-06-29';
-                        } else if (homeQuizDate === 'june_28') {
-                          return ca.date === '2026-06-28';
-                        } else {
-                          return ca.date === '2026-06-27';
-                        }
+                        const targetDateStr = homeQuizDate === 'june_30' ? '2026-06-30' :
+                                              homeQuizDate === 'june_29' ? '2026-06-29' :
+                                              homeQuizDate === 'june_28' ? '2026-06-28' :
+                                              homeQuizDate === 'june_27' ? '2026-06-27' :
+                                              homeQuizDate;
+                        return ca.date === targetDateStr || ca.date === homeQuizDate;
                       });
                       if (filteredCapsules.length === 0) {
                         return (
@@ -2884,6 +2947,8 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
             mockTests={mockTests}
             answerKeys={answerKeys}
             newspapers={newspapers}
+            currentAffairs={currentAffairs}
+            quizQuestions={quizQuestions}
             onAddNewspaper={(newPaper) => handleNewLaunch('Newspaper', newPaper.title, 'Press', 'newspapers', newPaper)}
             onDeleteNewspaper={(paperId) => setNewspapers(prev => prev.filter(n => n.id !== paperId))}
             onAddJob={(newJob) => handleNewLaunch('Vacancy', newJob.title, newJob.org, 'jobs', newJob)}
@@ -2892,6 +2957,8 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
             onAddResult={(newRes) => handleNewLaunch('Result', newRes.title, newRes.org, 'results', newRes)}
             onAddMockTest={(newTest) => setMockTests([newTest, ...mockTests])}
             onAddAnswerKey={(newKey) => handleNewLaunch('Answer Key', newKey.title, newKey.org, 'answerKeys', newKey)}
+            onAddCurrentAffair={(newItem) => setCurrentAffairs(prev => [newItem, ...prev])}
+            onAddCurrentAffairsQuestion={(newQ) => setQuizQuestions(prev => [newQ, ...prev])}
             onDeleteMockTest={(testId) => {
               const deletedSaved = localStorage.getItem('sarkari_deleted_mock_ids');
               let deletedIds: string[] = [];
@@ -3931,6 +3998,15 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
               <div className="lg:col-span-5">
                 {(() => {
                   const activeQuestions = quizQuestions.filter(q => {
+                    if (q.date) {
+                      const targetDateStr = caQuizDate === 'june_30' ? '2026-06-30' :
+                                            caQuizDate === 'june_29' ? '2026-06-29' :
+                                            caQuizDate === 'june_28' ? '2026-06-28' :
+                                            caQuizDate === 'june_27' ? '2026-06-27' :
+                                            caQuizDate;
+                      if (q.date === targetDateStr || q.date === caQuizDate) return true;
+                    }
+                    
                     const idNum = parseInt(q.id.replace('ca-q-today-', ''));
                     if (caQuizDate === 'june_30') {
                       return !isNaN(idNum) && idNum >= 151 && idNum <= 200;
@@ -3979,17 +4055,18 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                           <select
                             value={caQuizDate}
                             onChange={(e) => {
-                              setCaQuizDate(e.target.value as 'june_30' | 'june_29' | 'june_28' | 'june_27' | 'high_yield');
+                              setCaQuizDate(e.target.value);
                               setSelectedAnswers({});
                               setCurrentQuizIdx(0);
-                              triggerToast(`📂 Switched to ${e.target.value === 'june_30' ? "Tuesday, June 30 Update" : e.target.value === 'june_29' ? "Monday, June 29 Update" : e.target.value === 'june_28' ? "Sunday, June 28 Update" : e.target.value === 'june_27' ? "Saturday, June 27 Update" : "General High-Yield"} set!`);
+                              triggerToast(`📂 Switched to selected current affairs set!`);
                             }}
                             className="w-full bg-slate-850 border border-slate-700 rounded-xl text-xs py-2 px-3 text-slate-100 font-bold focus:ring-1 focus:ring-blue-500 cursor-pointer font-sans"
                           >
-                            <option value="june_30">Tuesday, 30 June 2026 (Today's New 50 Questions / आज के विशेष)</option>
-                            <option value="june_29">Monday, 29 June 2026 (Yesterday's 50 Questions / पिछला अपडेट)</option>
-                            <option value="june_28">Sunday, 28 June 2026 (Older 50 Questions / पुराना सेट)</option>
-                            <option value="june_27">Saturday, 27 June 2026 (Historical 50 Questions / अन्य सेट)</option>
+                            {getAvailableDates().map(d => (
+                              <option key={d} value={d}>
+                                {formatCADate(d, locale === 'hi')}
+                              </option>
+                            ))}
                             <option value="high_yield">Static General Current Affairs (100 High-Yield Questions / सामान्य ज्ञान)</option>
                           </select>
                         </div>
