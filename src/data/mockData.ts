@@ -4,6 +4,41 @@ import { generateAllExtendedMocks } from '../utils/examMockGenerator';
 
 export const INITIAL_JOBS: GovJob[] = [
   {
+    id: 'ssc-mts-havaldar-recruitment-2026',
+    title: 'SSC Multi-Tasking (Non-Technical) Staff, and Havaldar (CBIC & CBN) Recruitment Exam 2026 Official Notification Out (9,583 Posts) (Active Today) / एसएससी एमटीएस और हवलदार भर्ती 2026',
+    org: 'Staff Selection Commission (SSC)',
+    category: 'SSC',
+    qualification: '10th Pass',
+    ageLimit: '18 - 27 Years',
+    salary: '₹18,000 — ₹22,000 / Month plus Grade Pay & allowances',
+    fees: {
+      General: '₹100',
+      OBC: '₹100',
+      SC_ST_Female: 'Nil'
+    },
+    totalPosts: 9583,
+    applyUrl: 'https://ssc.gov.in',
+    pdfUrl: 'https://ssc.gov.in',
+    officialWebsite: 'https://ssc.gov.in',
+    postedDate: '2026-06-30',
+    lastDate: '2026-07-31',
+    importantDates: {
+      applyStart: '2026-06-30',
+      applyEnd: '2026-07-31',
+      examDate: 'September - October 2026',
+      admitCardRelease: 'August 2026'
+    },
+    selectionProcess: [
+      'Computer Based Examination (CBT) bilingually',
+      'Physical Efficiency Test (PET) / Physical Standard Test (PST) (Only for Havaldar posts)',
+      'Document Verification & Merit List'
+    ],
+    location: 'All India Departments',
+    description: '🚨 OFFICIAL RECRUITMENT WARNING: Staff Selection Commission (SSC) has officially declared the mega recruitment campaign for Multi-Tasking Staff (MTS) and Havaldar in Central Board of Indirect Taxes and Customs (CBIC) and Central Bureau of Narcotics (CBN) for the financial year 2026. This year, SSC is offering a staggering 9,583 vacancies. Candidates who have successfully cleared matriculation from any recognized Indian board are eligible. Make sure to apply on the official SSC portal starting today, 30 June 2026, to secure your central government career path!',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
     id: 'ssc-cpo-sub-inspector-recruitment-2026',
     title: 'SSC CPO Sub-Inspector in Delhi Police & CAPF Exam 2026 Online Application Form (4,187 Posts) (Active Today) / एसएससी सीपीओ सब-इस्पेक्टर भर्ती 2026',
     org: 'Staff Selection Commission (SSC)',
@@ -2045,6 +2080,16 @@ export const INITIAL_JOBS: GovJob[] = [
 
 export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
   {
+    id: 'ssc-cgl-tier1-admit-card-2026',
+    title: 'SSC CGL Tier-1 Exam 2026 Official Region-Wise e-Admit Card & City Intimation Slip Link Out / एसएससी सीजीएल Tier-1 एडमिट कार्ड जारी',
+    org: 'Staff Selection Commission (SSC)',
+    examDate: '2026-07-10 to 2026-07-25',
+    examCity: 'Check in Candidate Portal (Region-Wise Direct Link)',
+    downloadUrl: 'https://ssc.gov.in',
+    officialLink: 'https://ssc.gov.in',
+    addedDate: '2026-06-30'
+  },
+  {
     id: 'ssc-chsl-tier1-admit-card-2026',
     title: 'SSC CHSL (10+2) Tier-1 Exam 2026 Region-Wise e-Admit Card & City Intimation Slip (Active Today) / एसएससी सीएचएसएल Tier-1 एडमिट कार्ड जारी',
     org: 'Staff Selection Commission (SSC)',
@@ -2327,6 +2372,21 @@ export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
 ];
 
 export const INITIAL_RESULTS: JobResult[] = [
+  {
+    id: 'rrb-alp-cbt1-result-2026',
+    title: 'Railway RRB Assistant Loco Pilot (ALP) CEN 01/2026 CBT-1 Score Card & Region-Wise Merit List PDF (Declared Today) / रेलवे एएलपी CBT-1 परीक्षा परिणाम जारी',
+    org: 'Railway Recruitment Boards (RRB)',
+    meritListUrl: 'https://rrbcdg.gov.in',
+    scoreCardUrl: 'https://rrbcdg.gov.in',
+    cutOff: {
+      UR: '68.5% Marks (Out of 75)',
+      OBC: '64.2% Marks',
+      SC: '56.0% Marks',
+      ST: '51.8% Marks'
+    },
+    downloadUrl: 'https://rrbcdg.gov.in',
+    releaseDate: '2026-06-30'
+  },
   {
     id: 'ssc-mts-final-result-2025',
     title: 'SSC Multi-Tasking (Non-Technical) Staff & Havaldar (CBIC & CBN) Exam 2025 Final Recommended Merit List & Cut-off Marks (Declared Today) / एसएससी एमटीएस फाइनल रिजल्ट जारी',
@@ -2675,6 +2735,7 @@ export const INITIAL_RESULTS: JobResult[] = [
 ];
 
 const BASE_ANSWER_KEYS = [
+  { id: 'ssc-cpo-answer-key-today-2026', title: 'SSC CPO Sub-Inspector in Delhi Police & CAPFs 2026 CBT Paper-1 Official Preliminary Solved Answer Key & Question Booklet (Active Today) / एसएससी सीपीओ पेपर-1 उत्तर कुंजी जारी', org: 'Staff Selection Commission (SSC)', released: '2026-06-30', objectionsLimit: '2026-07-06', pdfUrl: 'https://ssc.gov.in' },
   { id: 'ssc-selection-post-phase-12-key-today-2026', title: 'SSC Selection Post Phase XII (Matric/Higher Secondary/Grad Level) Official Provisional Solved Answer Key & Response sheets (Active Today) / एसएससी फेज XII उत्तर कुंजी जारी', org: 'Staff Selection Commission (SSC)', released: '2026-06-28', objectionsLimit: '2026-07-04', pdfUrl: 'https://ssc.gov.in' },
   { id: 'rrb-technician-key-today-2026', title: 'RRB Technician Grade I & III CEN 02/2026 Official Solved Answer Key & Objection Link (Active Today) / RRB तकनीशियन ग्रेड I और III उत्तर कुंजी और आपत्ति दर्ज करें', org: 'Railway Recruitment Boards (RRB)', released: '2026-06-27', objectionsLimit: '2026-07-05', pdfUrl: 'https://www.rrbcdg.gov.in' },
   { id: 'rrb-ntpc-ug-key-2026', title: 'RRB NTPC Under Graduate (UG) CEN 04/2026 CBT-1 Official Provisional Answer Key & OMR Response Sheets (Declared) / RRB NTPC अंडर ग्रेजुएट (UG) CBT-1 अनंतिम उत्तर कुंजी और रिस्पॉन्स शीट जारी', org: 'Railway Recruitment Boards (RRB)', released: '2026-06-27', objectionsLimit: '2026-07-06', pdfUrl: 'https://www.rrbcdg.gov.in/ntpc-ug-cbt1-key-2026.pdf' },
