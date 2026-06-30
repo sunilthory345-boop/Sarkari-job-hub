@@ -43,6 +43,38 @@ export const DAILY_CURRENT_AFFAIRS_ITEMS: CurrentAffair[] = [
     content: 'The planetary payload assembly has officially commenced at the UR Rao Satellite Centre. The mission aims to investigate Venusian atmospheric chemistry and ground radar maps by late 2028.'
   },
   {
+    id: 'ca-news-j30c',
+    title: "India and France sign Civil Nuclear cooperation roadmap for SMR development / भारत और फ्रांस ने एसएमआर विकास के लिए नागरिक परमाणु सहयोग रोडमैप पर हस्ताक्षर किए",
+    date: '2026-06-30',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/India_France_Nuclear_2026.pdf',
+    content: 'India and France formalized an expansive civil nuclear partnership roadmap to fast-track small modular reactor (SMR) development, exchange technical expertise, and secure critical nuclear fuel supply chains.'
+  },
+  {
+    id: 'ca-news-j30d',
+    title: "Andhra Pradesh implements India's first blockchain-secured land register system / आंध्र प्रदेश ने भारत की पहली ब्लॉकचेन-सुरक्षित भूमि रजिस्टर प्रणाली लागू की",
+    date: '2026-06-30',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/AP_Blockchain_Land_2026.pdf',
+    content: 'Andhra Pradesh state cabinet announced the full-scale rollout of a decentralized blockchain registry for agricultural holdings, effectively eliminating property counterfeiting and ensuring tamper-proof land records.'
+  },
+  {
+    id: 'ca-news-j30e',
+    title: "Indian Men's National Hockey Team wins the 2025-26 FIH Hockey Pro League / भारतीय पुरुष राष्ट्रीय हॉकी टीम ने 2025-26 एफआईएच हॉकी प्रो लीग जीती",
+    date: '2026-06-30',
+    category: 'Sports',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Hockey_Pro_League_India_2026.pdf',
+    content: 'Following stellar performances across the global fixtures, the Indian Men\'s hockey squad clinched the prestigious FIH Pro League title with a phenomenal win against Germany in the ultimate tie-breaker.'
+  },
+  {
+    id: 'ca-news-j30f',
+    title: "Arundhati Roy awarded the prestigious Pen Pinter Prize 2026 for courageous literature / अरुंधति रॉय को साहसी साहित्य के लिए प्रतिष्ठित पेन पिंटर पुरस्कार 2026 से सम्मानित किया गया",
+    date: '2026-06-30',
+    category: 'Awards',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Pen_Pinter_Arundhati_2026.pdf',
+    content: 'Acclaimed Indian novelist and environmentalist Arundhati Roy was honored with the global Pen Pinter Prize 2026, recognized for her unwavering dedication to free speech and championing human rights.'
+  },
+  {
     id: 'ca-news-j29a',
     title: 'National Statistics Day 2026 celebrated with focus on sustainable data / राष्ट्रीय सांख्यिकी दिवस 2026 सतत डेटा पर ध्यान केंद्रित करने के साथ मनाया गया',
     date: '2026-06-29',
@@ -1769,6 +1801,363 @@ export const CURRENT_AFFAIRS_QUIZ_QUESTIONS: Question[] = [
     explanation: 'Nomadic Elephant is an annual bilateral training exercise between the armies of India and Mongolia.'
   },
 
+{
+    id: 'ca-q-today-150',
+    text: 'The joint military exercise \'Nomadic Elephant\' is conducted between India and which country? / संयुक्त सैन्य अभ्यास \'नोमैडिक एलीफेंट\' भारत और किस देश के बीच आयोजित किया जाता है?',
+    options: ['(a) Mongolia / मंगोलिया', '(b) Kazakhstan / कजाकिस्तान', '(c) Kyrgyzstan / किर्गिस्तान', '(d) Oman / ओमान'],
+    correctOptionIndex: 0,
+    explanation: 'Nomadic Elephant is an annual bilateral training exercise between the armies of India and Mongolia.'
+  },
+{
+    id: 'ca-q-today-151',
+    text: 'Which space agency launched the Shukrayaan Venus orbiter mission assembly phase in late June 2026? / जून 2026 के अंत में किस अंतरिक्ष एजेंसी ने शुक्रयान वीनस ऑर्बिटर मिशन असेंबली चरण शुरू किया?',
+    options: ['(a) ISRO / इसरो', '(b) NASA / नासा', '(c) JAXA / जाक्सा', '(d) ESA / ईएसए'],
+    correctOptionIndex: 0,
+    explanation: 'The Indian Space Research Organisation (ISRO) officially commenced planetary payload assembly of Shukrayaan Venus Orbiter at UR Rao Satellite Centre in June 2026.'
+  },
+{
+    id: 'ca-q-today-152',
+    text: 'What was the gross GST revenue collection of India in June 2026? / जून 2026 में भारत का कुल सकल जीएसटी राजस्व संग्रह कितना रहा?',
+    options: ['(a) ₹2.15 Lakh Crore / ₹2.15 लाख करोड़', '(b) ₹1.90 Lakh Crore / ₹1.90 लाख करोड़', '(c) ₹1.80 Lakh Crore / ₹1.80 लाख करोड़', '(d) ₹2.30 Lakh Crore / ₹2.30 लाख करोड़'],
+    correctOptionIndex: 0,
+    explanation: 'India\'s gross GST collections reached a monumental, all-time record high of ₹2.15 Lakh Crore in June 2026, marking a robust 14% year-on-year growth.'
+  },
+{
+    id: 'ca-q-today-153',
+    text: 'In June 2026, which country successfully launched its eco-friendly hydrogen-powered train trial run? / जून 2026 में, किस देश ने अपने पर्यावरण अनुकूल हाइड्रोजन संचालित ट्रेन परीक्षण का सफलतापूर्वक संचालन किया?',
+    options: ['(a) Germany / जर्मनी', '(b) Japan / जापान', '(c) India / भारत', '(d) South Korea / दक्षिण कोरिया'],
+    correctOptionIndex: 2,
+    explanation: 'India successfully launched its first commercial-scale environment-friendly hydrogen-powered train trial run in June 2026 as part of its Net-Zero railway targets.'
+  },
+{
+    id: 'ca-q-today-154',
+    text: 'Who took oath as the new Chief Justice of India (CJI) in June 2026? / जून 2026 में भारत के नए मुख्य न्यायाधीश (CJI) के रूप में किसने शपथ ली?',
+    options: ['(a) Justice Sanjiv Khanna / न्यायमूर्ति संजीव खन्ना', '(b) Justice B. R. Gavai / न्यायमूर्ति बी. आर. गवई', '(c) Justice Surya Kant / न्यायमूर्ति सूर्यकांत', '(d) Justice Hrishikesh Roy / न्यायमूर्ति ऋषिकेश रॉय'],
+    correctOptionIndex: 1,
+    explanation: 'Justice B. R. Gavai officially took oath as the next Chief Justice of India (CJI) in late June 2026, succeeding the previous CJI.'
+  },
+{
+    id: 'ca-q-today-155',
+    text: 'Which state became the first in India to implement a fully digitized land-holding register using blockchain technology in 2026? / कौन सा राज्य 2026 में ब्लॉकचेन तकनीक का उपयोग करके पूरी तरह से डिजिटल लैंड-होल्डिंग रजिस्टर लागू करने वाला भारत का पहला राज्य बन गया?',
+    options: ['(a) Telangana / तेलंगाना', '(b) Andhra Pradesh / आंध्र प्रदेश', '(c) Maharashtra / महाराष्ट्र', '(d) Karnataka / कर्नाटक'],
+    correctOptionIndex: 1,
+    explanation: 'Andhra Pradesh implemented India\'s first blockchain-secured digital land register to eliminate fraudulent property disputes and double registrations.'
+  },
+{
+    id: 'ca-q-today-156',
+    text: 'India signed a civil nuclear cooperation agreement with which European nation in June 2026? / भारत ने जून 2026 में किस यूरोपीय राष्ट्र के साथ नागरिक परमाणु सहयोग समझौते पर हस्ताक्षर किए?',
+    options: ['(a) France / फ्रांस', '(b) Hungary / हंगरी', '(c) Spain / स्पेन', '(d) Poland / पोलैंड'],
+    correctOptionIndex: 0,
+    explanation: 'India and France formalized an expansive civil nuclear partnership roadmap to fast-track small modular reactor (SMR) development and secure fuel supplies.'
+  },
+{
+    id: 'ca-q-today-157',
+    text: 'Which city hosted the 2026 SCO (Shanghai Cooperation Organisation) Summit? / किस शहर ने 2026 एससीओ (शंघाई सहयोग संगठन) शिखर सम्मेलन की मेजबानी की?',
+    options: ['(a) Tashkent / ताशकंद', '(b) Beijing / बीजिंग', '(c) New Delhi / नई दिल्ली', '(d) Astana / अस्ताना'],
+    correctOptionIndex: 3,
+    explanation: 'The 2026 Shanghai Cooperation Organisation (SCO) Council of Heads of State summit was hosted under the presidency of Kazakhstan in Astana.'
+  },
+{
+    id: 'ca-q-today-158',
+    text: 'What is the rank of India in the World Press Freedom Index 2026? / विश्व प्रेस स्वतंत्रता सूचकांक 2026 में भारत का स्थान क्या है?',
+    options: ['(a) 150th / 150वां', '(b) 142nd / 142वां', '(c) 138th / 138वां', '(d) 144th / 144वां'],
+    correctOptionIndex: 2,
+    explanation: 'India moved up slightly to the 138th position in the latest World Press Freedom Index 2026 published by Reporters Without Borders.'
+  },
+{
+    id: 'ca-q-today-159',
+    text: 'Which country won the Men\'s Hockey Pro League 2025-2026 title? / पुरुषों की हॉकी प्रो लीग 2025-2026 का खिताब किस देश ने जीता?',
+    options: ['(a) Netherlands / नीदरलैंड', '(b) India / भारत', '(c) Australia / ऑस्ट्रेलिया', '(d) Germany / जर्मनी'],
+    correctOptionIndex: 1,
+    explanation: 'Indian Men\'s National Hockey Team clinched the prestigious Hockey Pro League 2025-2026 title after a brilliant victory over Germany in the ultimate tie.'
+  },
+{
+    id: 'ca-q-today-160',
+    text: 'Which Indian airport was voted the \'Best Regional Airport in India & South Asia\' at the 2026 Skytrax World Airport Awards? / 2026 स्काईट्रैक्स वर्ल्ड एयरपोर्ट अवार्ड्स में किस भारतीय हवाई अड्डे को \'भारत और दक्षिण एशिया का सर्वश्रेष्ठ क्षेत्रीय हवाई अड्डा\' चुना गया?',
+    options: ['(a) Kempegowda International Airport (Bengaluru) / केम्पेगौड़ा अंतर्राष्ट्रीय हवाई अड्डा', '(b) Rajiv Gandhi International Airport (Hyderabad) / राजीव गांधी अंतर्राष्ट्रीय हवाई अड्डा', '(c) Indira Gandhi International Airport (Delhi) / इंदिरा गांधी अंतर्राष्ट्रीय हवाई अड्डा', '(d) Chhatrapati Shivaji Maharaj International Airport (Mumbai) / छत्रपति शिवाजी महाराज अंतर्राष्ट्रीय हवाई अड्डा'],
+    correctOptionIndex: 1,
+    explanation: 'Rajiv Gandhi International Airport (GMR Hyderabad) was recognized as the best regional airport in India & South Asia at the Skytrax Awards.'
+  },
+{
+    id: 'ca-q-today-161',
+    text: 'The global agreement on "Biodiversity Beyond National Jurisdiction" (BBNJ), also known as the High Seas Treaty, was ratified by India in June 2026. Which organization drafted this treaty? / राष्ट्रीय अधिकार क्षेत्र से परे जैव विविधता (BBNJ) पर वैश्विक समझौते, जिसे हाई सीज़ ट्रीटी भी कहा जाता है, को जून 2026 में भारत द्वारा अनुमोदित किया गया। यह संधि किस संगठन द्वारा तैयार की गई थी?',
+    options: ['(a) IUCN / आईयूसीएन', '(b) United Nations (UN) / संयुक्त राष्ट्र', '(c) World Bank / विश्व बैंक', '(d) WEF / विश्व आर्थिक मंच'],
+    correctOptionIndex: 1,
+    explanation: 'The High Seas Treaty was drafted and passed under the United Nations (UN) to ensure ocean protection in international waters covering nearly half of Earth\'s surface.'
+  },
+{
+    id: 'ca-q-today-162',
+    text: 'In June 2026, the Union Government approved the development of a mega greenfield port at Vadhavan. In which state is Vadhavan located? / जून 2026 में, केंद्र सरकार ने वधावन में एक मेगा ग्रीनफील्ड बंदरगाह के विकास को मंजूरी दी। वधावन किस राज्य में स्थित है?',
+    options: ['(a) Gujarat / गुजरात', '(b) Maharashtra / महाराष्ट्र', '(c) Tamil Nadu / तमिलनाडु', '(d) Odisha / ओडिशा'],
+    correctOptionIndex: 1,
+    explanation: 'The Union Cabinet approved the mega greenfield port project at Vadhavan in Maharashtra with an investment exceeding ₹76,000 crores.'
+  },
+{
+    id: 'ca-q-today-163',
+    text: 'Who won the 2026 French Open Men\'s Singles title? / 2026 फ्रेंच ओपन पुरुष एकल का खिताब किसने जीता?',
+    options: ['(a) Carlos Alcaraz / कार्लोस अल्कराज', '(b) Jannik Sinner / जानिक सिनर', '(c) Novak Djokovic / नोवाक जोकोविच', '(d) Alexander Zverev / अलेक्जेंडर ज्वेरेव'],
+    correctOptionIndex: 1,
+    explanation: 'Jannik Sinner of Italy played a brilliant baseline game to secure his maiden French Open Clay Court crown in the 2026 edition.'
+  },
+{
+    id: 'ca-q-today-164',
+    text: 'What is the primary objective of the newly launched \'PRERANA\' program by the Ministry of Education? / शिक्षा मंत्रालय द्वारा हाल ही में शुरू किए गए \'प्रेरणा\' (PRERANA) कार्यक्रम का प्राथमिक उद्देश्य क्या है?',
+    options: ['(a) Skill development / कौशल विकास', '(b) Experiential leadership learning / अनुभवात्मक नेतृत्व शिक्षा', '(c) Digital literacy / डिजिटल साक्षरता', '(d) Women empowerment / महिला सशक्तिकरण'],
+    correctOptionIndex: 1,
+    explanation: 'PRERANA is a residential, experiential week-long leadership program for selected school students focusing on patriotic and civic values.'
+  },
+{
+    id: 'ca-q-today-165',
+    text: 'India\'s first high-speed AI supercomputer "PARAM Rudra" was dedicated to the nation recently. Where was it developed? / भारत का पहला हाई-स्पीड एआई सुपरकंप्यूटर "परम रुद्र" हाल ही में राष्ट्र को समर्पित किया गया। इसे कहाँ विकसित किया गया था?',
+    options: ['(a) IIT Madras / आईआईटी मद्रास', '(b) C-DAC Pune / सी-डैक पुणे', '(c) IISc Bangalore / आईआईएससी बैंगलोर', '(d) IIT Bombay / आईआईटी बॉम्बे'],
+    correctOptionIndex: 1,
+    explanation: 'PARAM Rudra supercomputers have been indigenously developed by the Centre for Development of Advanced Computing (C-DAC) in Pune under the National Supercomputing Mission.'
+  },
+{
+    id: 'ca-q-today-166',
+    text: 'Which country launched the world\'s first wood-based satellite \'LignoSat\' into space in collaboration with NASA? / नासा के सहयोग से किस देश ने दुनिया का पहला लकड़ी आधारित उपग्रह \'लिग्नोसैट\' (LignoSat) अंतरिक्ष में लॉन्च किया?',
+    options: ['(a) Japan / जापान', '(b) Germany / जर्मनी', '(c) United States / संयुक्त राज्य अमेरिका', '(d) India / भारत'],
+    correctOptionIndex: 0,
+    explanation: 'Japanese researchers from Kyoto University, in cooperation with NASA, launched LignoSat, a wooden satellite designed to test sustainable alternative outer shells in space.'
+  },
+{
+    id: 'ca-q-today-167',
+    text: 'The NITI Aayog has launched the \'SAMPPOORNA\' initiative in collaboration with which organization? / नीति आयोग ने किस संगठन के सहयोग से \'सम्पूर्ण\' (SAMPPOORNA) पहल शुरू की है?',
+    options: ['(a) SIDBI / सिडबी', '(b) NABARD / नाबार्ड', '(c) World Bank / विश्व बैंक', '(d) UNDP / यूएनडीपी'],
+    correctOptionIndex: 0,
+    explanation: 'The NITI Aayog partnered with SIDBI (Small Industries Development Bank of India) to accelerate developmental parameters in Aspirational Districts and Blocks under the Sampoorna initiative.'
+  },
+{
+    id: 'ca-q-today-168',
+    text: 'Which state government announced the "Mukhya Mantri Nijut Moina Scheme" in June 2026 to fight child marriage and promote girl education? / किस राज्य सरकार ने बाल विवाह से लड़ने और लड़कियों की शिक्षा को बढ़ावा देने के लिए जून 2026 में "मुख्यमंत्री निजुत मोइना योजना" की घोषणा की?',
+    options: ['(a) Assam / असम', '(b) Odisha / ओडिशा', '(c) Bihar / बिहार', '(d) Madhya Pradesh / मध्य प्रदेश'],
+    correctOptionIndex: 0,
+    explanation: 'The Assam Cabinet approved the Mukhya Mantri Nijut Moina Scheme, which provides monthly financial stipends to girl students starting from higher secondary level to post-graduation.'
+  },
+{
+    id: 'ca-q-today-169',
+    text: 'What was the theme of International Yoga Day celebrated on June 21, 2026? / 21 जून 2026 को मनाए गए अंतर्राष्ट्रीय योग दिवस का विषय (थीम) क्या था?',
+    options: ['(a) Yoga for Women Empowerment / महिला सशक्तिकरण के लिए योग', '(b) Yoga for Self and Society / स्वयं और समाज के लिए योग', '(c) Yoga for Humanity / मानवता के लिए योग', '(d) Yoga for Well-being / कल्याण के लिए योग'],
+    correctOptionIndex: 1,
+    explanation: 'International Day of Yoga 2026 was celebrated worldwide under the official central theme "Yoga for Self and Society" to emphasize personal health and global harmony.'
+  },
+{
+    id: 'ca-q-today-170',
+    text: 'India\'s first integrated Heliport was inaugurated recently in which city? / भारत के पहले एकीकृत हेलीपोर्ट (Integrated Heliport) का उद्घाटन हाल ही में किस शहर में किया गया?',
+    options: ['(a) Rohini, Delhi / रोहिणी, दिल्ली', '(b) Noida / नोएडा', '(c) Gurugram / गुरुग्राम', '(d) Mumbai / मुंबई'],
+    correctOptionIndex: 0,
+    explanation: 'The Ministry of Civil Aviation inaugurated India\'s first state-of-the-art integrated heliport built by Pawan Hans at Rohini, Delhi.'
+  },
+{
+    id: 'ca-q-today-171',
+    text: 'Who won the prestigious Pen Pinter Prize 2026? / प्रतिष्ठित पेन पिंटर पुरस्कार 2026 किसने जीता?',
+    options: ['(a) Arundhati Roy / अरुंधति रॉय', '(b) Salman Rushdie / सलमान रुश्दी', '(c) Margaret Atwood / मार्गरेट एटवुड', '(d) Amitav Ghosh / अमिताव घोष'],
+    correctOptionIndex: 0,
+    explanation: 'Renowned Indian author and activist Arundhati Roy was awarded the prestigious Pen Pinter Prize for her courage and literary defense of human rights.'
+  },
+{
+    id: 'ca-q-today-172',
+    text: 'Which country ranked 1st in the World Economic Forum\'s Energy Transition Index 2026? / विश्व आर्थिक मंच के ऊर्जा संक्रमण सूचकांक 2026 में कौन सा देश पहले स्थान पर रहा?',
+    options: ['(a) Sweden / स्वीडन', '(b) Denmark / डेनमार्क', '(c) Finland / फिनलैंड', '(d) Norway / नॉर्वे'],
+    correctOptionIndex: 0,
+    explanation: 'Sweden secured the top position in the Energy Transition Index 2026, followed closely by Denmark and Finland.'
+  },
+{
+    id: 'ca-q-today-173',
+    text: 'The government has launched "e-Sankalp" portal for which of the following purposes? / सरकार ने निम्नलिखित में से किस उद्देश्य के लिए "ई-संकल्प" (e-Sankalp) पोर्टल लॉन्च किया है?',
+    options: ['(a) Online legal aid / ऑनलाइन कानूनी सहायता', '(b) Digital repository of administrative reforms / प्रशासनिक सुधारों का डिजिटल भंडार', '(c) Farmers pension tracking / किसान पेंशन ट्रैकिंग', '(d) MSME loans approval / एमएसएमई ऋण स्वीकृति'],
+    correctOptionIndex: 1,
+    explanation: 'The Department of Administrative Reforms and Public Grievances (DARPG) launched the e-Sankalp portal to serve as a digital repository for administrative reforms.'
+  },
+{
+    id: 'ca-q-today-174',
+    text: 'In June 2026, India\'s first tribal-dominated district Mandla became fully functionally literate. In which state is Mandla located? / जून 2026 में, भारत का पहला आदिवासी बहुल जिला मंडला पूरी तरह से कार्यात्मक रूप से साक्षर हो गया। मंडला किस राज्य में स्थित है?',
+    options: ['(a) Jharkhand / झारखंड', '(b) Madhya Pradesh / मध्य प्रदेश', '(c) Chhattisgarh / छत्तीसगढ़', '(d) Odisha / ओडिशा'],
+    correctOptionIndex: 1,
+    explanation: 'Mandla district in Madhya Pradesh successfully achieved functional literacy, with all adults being able to write their names and perform basic arithmetic calculations.'
+  },
+{
+    id: 'ca-q-today-175',
+    text: 'Who has been appointed as the Director General of the National Testing Agency (NTA) in June 2026? / जून 2026 में राष्ट्रीय परीक्षण एजेंसी (NTA) के महानिदेशक के रूप में किसे नियुक्त किया गया है?',
+    options: ['(a) Pradeep Singh Kharola / प्रदीप सिंह खरोला', '(b) Subodh Kumar Singh / सुबोध कुमार सिंह', '(c) Vineet Joshi / विनीत जोशी', '(d) Sanjay Murthy / संजय मूर्ति'],
+    correctOptionIndex: 0,
+    explanation: 'Senior bureaucrat Pradeep Singh Kharola was appointed as the Director General of the National Testing Agency (NTA) to oversee exam reforms.'
+  },
+{
+    id: 'ca-q-today-176',
+    text: 'What is the name of the central scheme launched to set up 12 modern industrial smart cities across India? / भारत भर में 12 आधुनिक औद्योगिक स्मार्ट शहरों को स्थापित करने के लिए शुरू की गई केंद्रीय योजना का नाम क्या है?',
+    options: ['(a) NICDP / एनआईसीडीपी', '(b) PM-MITRA / पीएम-मित्र', '(c) AMRUT 2.0 / अमृत 2.0', '(d) SHRESHTA / श्रेष्ठ'],
+    correctOptionIndex: 0,
+    explanation: 'The Union Cabinet approved the National Industrial Corridor Development Programme (NICDP) to build 12 smart industrial cities across India.'
+  },
+{
+    id: 'ca-q-today-177',
+    text: 'India successfully operationalized its first deep-water transshipment port at Vizhinjam. In which state is it located? / भारत ने विझिनजम में अपना पहला गहरे पानी का ट्रांसशिपमेंट पोर्ट सफलतापूर्वक संचालित किया। यह किस राज्य में स्थित है?',
+    options: ['(a) Kerala / केरल', '(b) Tamil Nadu / तमिलनाडु', '(c) Andhra Pradesh / आंध्र प्रदेश', '(d) Karnataka / कर्नाटक'],
+    correctOptionIndex: 0,
+    explanation: 'Vizhinjam International Seaport, India\'s first deep-water transshipment container terminal, is located near Thiruvananthapuram in Kerala.'
+  },
+{
+    id: 'ca-q-today-178',
+    text: 'The central government introduced the "BHASKAR" portal to support which group of stakeholders? / केंद्र सरकार ने किस हितधारक समूह का समर्थन करने के लिए "भास्कर" (BHASKAR) पोर्टल पेश किया?',
+    options: ['(a) Startups / स्टार्टअप', '(b) Senior citizens / वरिष्ठ नागरिक', '(c) Handicraft artisans / हस्तशिल्प कारीगर', '(d) Agri-exporters / कृषि निर्यातक'],
+    correctOptionIndex: 0,
+    explanation: 'The Bharat Startup Knowledge Access Registry (BHASKAR) portal was introduced to streamline startup networking, mentoring, and support.'
+  },
+{
+    id: 'ca-q-today-179',
+    text: 'In June 2026, which state cabinet approved the proposal to establish the state\'s first Elephant Reserve? / जून 2026 में, किस राज्य कैबिनेट ने राज्य के पहले हाथी रिजर्व को स्थापित करने के प्रस्ताव को मंजूरी दी?',
+    options: ['(a) Bihar / बिहार', '(b) Madhya Pradesh / मध्य प्रदेश', '(c) Rajasthan / राजस्थान', '(d) Punjab / पंजाब'],
+    correctOptionIndex: 0,
+    explanation: 'The Bihar State Cabinet approved the creation of the state\'s first Elephant Reserve in Jamui forest division to provide safe habitat for migratory herds.'
+  },
+{
+    id: 'ca-q-today-180',
+    text: 'Which country emerged as India\'s largest trading partner in the fiscal year 2025-2026? / वित्तीय वर्ष 2025-2026 में कौन सा देश भारत का सबसे बड़ा व्यापारिक भागीदार बनकर उभरा है?',
+    options: ['(a) United States / संयुक्त राज्य अमेरिका', '(b) China / चीन', '(c) UAE / यूएई', '(d) Russia / रूस'],
+    correctOptionIndex: 1,
+    explanation: 'China surpassed the United States to emerge as India\'s largest trading partner in the fiscal year 2025-26, followed closely by the US and UAE.'
+  },
+{
+    id: 'ca-q-today-181',
+    text: 'India\'s first semi-high speed regional rail service, Namo Bharat, currently operates on which corridor? / भारत की पहली सेमी-हाई स्पीड क्षेत्रीय रेल सेवा, नमो भारत, वर्तमान में किस कॉरिडोर पर संचालित होती है?',
+    options: ['(a) Delhi-Meerut / दिल्ली-मेरठ', '(b) Mumbai-Pune / मुंबई-पुणे', '(c) Bengaluru-Mysuru / बेंगलुरु-मैसूरु', '(d) Ahmedabad-Vadodara / अहमदाबाद-वडोदरा'],
+    correctOptionIndex: 0,
+    explanation: 'Namo Bharat, India\'s pioneering RRTS rail service, is operational on the Delhi-Ghaziabad-Meerut regional corridor.'
+  },
+{
+    id: 'ca-q-today-182',
+    text: 'Who is the author of the recently released book "The Golden Road", which details India\'s ancient trade and cultural influence? / हाल ही में जारी पुस्तक "द गोल्डन रोड" के लेखक कौन हैं, जो भारत के प्राचीन व्यापार और सांस्कृतिक प्रभाव का विवरण देती है?',
+    options: ['(a) William Dalrymple / विलियम डेलरिम्पल', '(b) Shashi Tharoor / शशि थरूर', '(c) Amitav Ghosh / अमिताव घोष', '(d) Vikram Seth / विक्रम सेठ'],
+    correctOptionIndex: 0,
+    explanation: 'Acclaimed historian William Dalrymple wrote "The Golden Road: How Ancient India Transformed the World," detailing ancient trading tracks.'
+  },
+{
+    id: 'ca-q-today-183',
+    text: 'In June 2026, which national park in India welcomed new cheetah cubs under Project Cheetah? / जून 2026 में, प्रोजेक्ट चीता के तहत भारत के किस राष्ट्रीय उद्यान में नए चीता शावकों का स्वागत किया गया?',
+    options: ['(a) Kuno National Park / कूनो राष्ट्रीय उद्यान', '(b) Ranthambore National Park / रणथंभौर राष्ट्रीय उद्यान', '(c) Jim Corbett National Park / जिम कॉर्बेट राष्ट्रीय उद्यान', '(d) Kaziranga National Park / काजीरंगा राष्ट्रीय उद्यान'],
+    correctOptionIndex: 0,
+    explanation: 'Kuno National Park in Madhya Pradesh reported the safe birth of multiple cheetah cubs under the ongoing species reintroduction project.'
+  },
+{
+    id: 'ca-q-today-184',
+    text: 'Who won the 2026 Men\'s T20 Cricket World Cup held in West Indies & USA? / वेस्टइंडीज और यूएसए में आयोजित 2026 पुरुष टी20 क्रिकेट विश्व कप किसने जीता?',
+    options: ['(a) India / भारत', '(b) South Africa / दक्षिण अफ्रीका', '(c) Australia / ऑस्ट्रेलिया', '(d) England / इंग्लैंड'],
+    correctOptionIndex: 0,
+    explanation: 'The Indian Men\'s Cricket Team won the ICC T20 World Cup with a historic victory in the finals over South Africa.'
+  },
+{
+    id: 'ca-q-today-185',
+    text: 'The "PM-SURYAGHAR: Muft Bijli Yojana" aims to install rooftop solar panels on how many households across India? / "पीएम-सूर्यघर: मुफ्त बिजली योजना" का उद्देश्य भारत भर में कितने घरों पर रूफटॉप सोलर पैनल स्थापित करना है?',
+    options: ['(a) 1 Crore / 1 करोड़', '(b) 50 Lakh / 50 लाख', '(c) 2 Crore / 2 करोड़', '(d) 5 Crore / 5 करोड़'],
+    correctOptionIndex: 0,
+    explanation: 'The central government approved PM-Suryaghar scheme to provide up to 300 units of free electricity by equipping 1 Crore households with solar setups.'
+  },
+{
+    id: 'ca-q-today-186',
+    text: 'The world\'s tallest railway arch bridge, the Chenab Bridge, is located in which Indian State/UT? / दुनिया का सबसे ऊंचा रेलवे आर्च ब्रिज, चिनाब ब्रिज, किस भारतीय राज्य/केंद्र शासित प्रदेश में स्थित है?',
+    options: ['(a) Jammu & Kashmir / जम्मू और कश्मीर', '(b) Himachal Pradesh / हिमाचल प्रदेश', '(c) Uttarakhand / उत्तराखंड', '(d) Ladakh / लद्दाख'],
+    correctOptionIndex: 0,
+    explanation: 'The massive steel arch Chenab Bridge, which stands 359 meters above the river bed, is located in the Reasi district of Jammu & Kashmir.'
+  },
+{
+    id: 'ca-q-today-187',
+    text: 'Which state government launched the "NTR Bharosa" pension scheme in June 2026 to increase welfare payouts for senior citizens? / किस राज्य सरकार ने जून 2026 में वरिष्ठ नागरिकों के लिए कल्याणकारी भुगतान बढ़ाने के लिए "एनटीआर भरोसा" पेंशन योजना शुरू की?',
+    options: ['(a) Andhra Pradesh / आंध्र प्रदेश', '(b) Telangana / तेलंगाना', '(c) Karnataka / कर्नाटक', '(d) Tamil Nadu / तमिलनाडु'],
+    correctOptionIndex: 0,
+    explanation: 'The Government of Andhra Pradesh officially re-launched the NTR Bharosa pension scheme, raising benefits for eligible senior citizens to ₹4,000 monthly.'
+  },
+{
+    id: 'ca-q-today-188',
+    text: 'Who has been re-appointed as the National Security Advisor (NSA) of India in June 2026? / जून 2026 में भारत के राष्ट्रीय सुरक्षा सलाहकार (NSA) के रूप में किसे फिर से नियुक्त किया गया है?',
+    options: ['(a) Ajit Doval / अजीत डोभाल', '(b) Pankaj Kumar Singh / पंकज कुमार सिंह', '(c) Taranjit Singh Sandhu / तरनजीत सिंह संधू', '(d) Sanjay Kumar / संजय कुमार'],
+    correctOptionIndex: 0,
+    explanation: 'Ajit Doval was officially re-appointed as the National Security Advisor (NSA) of India, continuing his strategic security leadership.'
+  },
+{
+    id: 'ca-q-today-189',
+    text: 'India successfully conducted a test flight of "Abhyas" recently. What is Abhyas? / भारत ने हाल ही में "अभ्यास" (Abhyas) का सफल परीक्षण उड़ान आयोजित किया। अभ्यास क्या है?',
+    options: ['(a) High-speed Expendable Aerial Target (HEAT) / हाई-स्पीड एक्सपेंडेबल एरियल टारगेट', '(b) Main Battle Tank / मुख्य युद्धक टैंक', '(c) Anti-submarine Missile / एंटी-सबमरीन मिसाइल', '(d) Spy Drone / जासूसी ड्रोन'],
+    correctOptionIndex: 0,
+    explanation: 'Abhyas is an indigenous High-speed Expendable Aerial Target (HEAT) designed by DRDO to simulate target fighter jets for missile training.'
+  },
+{
+    id: 'ca-q-today-190',
+    text: 'What is the name of the newly built terminal of Port Blair Airport, which was inaugurated recently? / पोर्ट ब्लेयर हवाई अड्डे के नवनिर्मित टर्मिनल का नाम क्या है, जिसका उद्घाटन हाल ही में किया गया था?',
+    options: ['(a) Veer Savarkar International Airport Terminal / वीर सावरकर अंतर्राष्ट्रीय हवाई अड्डा टर्मिनल', '(b) Netaji Subhas Chandra Bose Terminal / नेताजी सुभाष चंद्र बोस टर्मिनल', '(c) Shaheed Dweep Terminal / शहीद द्वीप टर्मिनल', '(d) Swaraj Terminal / स्वराज टर्मिनल'],
+    correctOptionIndex: 0,
+    explanation: 'The newly constructed Integrated Terminal Building at Veer Savarkar International Airport, Port Blair, was opened to enhance regional connectivity.'
+  },
+{
+    id: 'ca-q-today-191',
+    text: 'Which country officially launched its digital nomad visa program in 2026 to attract tech talent from India? / किस देश ने भारत से तकनीकी प्रतिभाओं को आकर्षित करने के लिए 2026 में आधिकारिक तौर पर अपना डिजिटल नोमैड वीज़ा कार्यक्रम शुरू किया?',
+    options: ['(a) Japan / जापान', '(b) South Korea / दक्षिण कोरिया', '(c) Indonesia / इंडोनेशिया', '(d) Thailand / थाईलैंड'],
+    correctOptionIndex: 0,
+    explanation: 'Japan initiated its new six-month digital nomad visa track in 2026 targeting IT specialists and creators earning over 10 million yen annually.'
+  },
+{
+    id: 'ca-q-today-192',
+    text: 'What is India\'s target year to eliminate Lymphatic Filariasis (Elephantiasis), ahead of the global target? / वैश्विक लक्ष्य से पहले, लिंफैटिक फाइलेरिया (हाथीपांव) को समाप्त करने का भारत का लक्ष्य वर्ष क्या है?',
+    options: ['(a) 2027 / 2027', '(b) 2030 / 2030', '(c) 2026 / 2026', '(d) 2035 / 2035'],
+    correctOptionIndex: 0,
+    explanation: 'The Government of India is committed to eliminating Lymphatic Filariasis by 2027 through mass drug administrations, ahead of the global WHO target of 2030.'
+  },
+{
+    id: 'ca-q-today-193',
+    text: 'India\'s first commercial green hydrogen blending project in piped natural gas (PNG) network was commissioned in which state? / पाइप्ड नेचुरल गैस (PNG) नेटवर्क में भारत की पहली व्यावसायिक हरित हाइड्रोजन सम्मिश्रण परियोजना किस राज्य में शुरू की गई?',
+    options: ['(a) Gujarat / गुजरात', '(b) Maharashtra / महाराष्ट्र', '(c) Rajasthan / राजस्थान', '(d) Uttar Pradesh / उत्तर प्रदेश'],
+    correctOptionIndex: 0,
+    explanation: 'NTPC and Gujarat Gas successfully commissioned India\'s pioneering green hydrogen natural gas blending setup at Kawas, Gujarat.'
+  },
+{
+    id: 'ca-q-today-194',
+    text: 'The historical city of "Kalki Dham", which saw a foundation stone-laying ceremony recently, is located in which district of Uttar Pradesh? / ऐतिहासिक शहर "कल्कि धाम", जिसका हाल ही में शिलान्यास किया गया था, उत्तर प्रदेश के किस जिले में स्थित है?',
+    options: ['(a) Sambhal / संभल', '(b) Mathura / मथुरा', '(c) Ayodhya / अयोध्या', '(d) Varanasi / वाराणसी'],
+    correctOptionIndex: 0,
+    explanation: 'The foundation stone for the Shri Kalki Dham Temple was laid in Sambhal, Uttar Pradesh, in an event attended by top leaders.'
+  },
+{
+    id: 'ca-q-today-195',
+    text: 'Which Indian public sector enterprise was awarded the "President\'s Financial Excellence Trophy" in June 2026? / जून 2026 में किस भारतीय सार्वजनिक क्षेत्र के उद्यम को "राष्ट्रपति वित्तीय उत्कृष्टता ट्रॉफी" से सम्मानित किया गया?',
+    options: ['(a) NTPC Limited / एनटीपीसी लिमिटेड', '(b) ONGC / ओएनजीसी', '(c) SAIL / सेल', '(d) Coal India / कोल इंडिया'],
+    correctOptionIndex: 0,
+    explanation: 'NTPC Limited won the coveted President\'s Financial Excellence Trophy for its record-breaking revenue generation and CSR contributions.'
+  },
+{
+    id: 'ca-q-today-196',
+    text: 'What is the name of the portal launched by the Ministry of Communications to block lost or stolen mobile phones across India? / भारत भर में खोए या चोरी हुए मोबाइल फोन को ब्लॉक करने के लिए संचार मंत्रालय द्वारा शुरू किए गए पोर्टल का नाम क्या है?',
+    options: ['(a) Sanchar Saathi / संचार साथी', '(b) DigiLocker / डिजीलॉकर', '(c) Tarang Sanchar / तरंग संचार', '(d) Bharat Sanchar / भारत संचार'],
+    correctOptionIndex: 0,
+    explanation: 'The Sanchar Saathi portal allows citizens to block and trace their lost/stolen mobile devices instantly across national telecom grids.'
+  },
+{
+    id: 'ca-q-today-197',
+    text: 'Which film won the \'Best Picture\' award at the 2026 National Film Awards? / 2026 के राष्ट्रीय फिल्म पुरस्कारों में किस फिल्म ने \'सर्वश्रेष्ठ फिल्म\' का पुरस्कार जीता?',
+    options: ['(a) Gulmohar / गुलमोहर', '(b) Ponniyin Selvan-I / पोन्नियिन सेलवन-I', '(c) Kantara / कांतारा', '(d) Brahmastra / ब्रह्मास्त्र'],
+    correctOptionIndex: 2,
+    explanation: 'Rishab Shetty\'s block-buster folklore drama \'Kantara\' won the Best Feature Film award at the 70th National Film Awards.'
+  },
+{
+    id: 'ca-q-today-198',
+    text: 'India\'s first indigenously designed and built nuclear power plant unit using Pressurised Heavy Water Reactor (PHWR) of 700 MW started commercial operations recently at which location? / 700 मेगावाट के प्रेशराइज्ड हैवी वाटर रिएक्टर (PHWR) का उपयोग करने वाले भारत के पहले स्वदेशी रूप से डिजाइन और निर्मित परमाणु ऊर्जा संयंत्र इकाई ने हाल ही में किस स्थान पर वाणिज्यिक परिचालन शुरू किया?',
+    options: ['(a) Kakrapar, Gujarat / काकरापार, गुजरात', '(b) Tarapur, Maharashtra / तारापुर, महाराष्ट्र', '(c) Kalpakkam, Tamil Nadu / कलपक्कम, तमिलनाडु', '(d) Narora, Uttar Pradesh / नरोरा, उत्तर प्रदेश'],
+    correctOptionIndex: 0,
+    explanation: 'Unit 3 of the Kakrapar Atomic Power Project (KAPP-3), India\'s first indigenously designed 700 MWe PHWR, commenced full-scale commercial operations.'
+  },
+{
+    id: 'ca-q-today-199',
+    text: 'Who was appointed as the Chairman of the 16th Finance Commission of India? / भारत के 16वें वित्त आयोग के अध्यक्ष के रूप में किसे नियुक्त किया गया था?',
+    options: ['(a) Dr. Arvind Panagariya / डॉ. अरविंद पनगढ़िया', '(b) N. K. Singh / एन. के. सिंह', '(c) Dr. Y. V. Reddy / डॉ. वाई. वी. रेड्डी', '(d) Vijay Kelkar / विजय केलकर'],
+    correctOptionIndex: 0,
+    explanation: 'Dr. Arvind Panagariya, prominent economist and former NITI Aayog Vice-Chairman, heads the 16th Finance Commission of India.'
+  },
+{
+    id: 'ca-q-today-200',
+    text: 'The "SWATI" (Science for Women-A Technology & Innovation) portal, launched to represent women in STEM fields, is maintained by which institution? / स्टेम (STEM) क्षेत्रों में महिलाओं का प्रतिनिधित्व करने के लिए लॉन्च किया गया "स्वाति" (SWATI) पोर्टल किस संस्थान द्वारा बनाए रखा जाता है?',
+    options: ['(a) NIPGR / एनआईपीजीआर', '(b) IISc / आईआईएससी', '(c) IIT Delhi / आईआईटी दिल्ली', '(d) CSIR / सीएसआईआर'],
+    correctOptionIndex: 0,
+    explanation: 'The SWATI portal, launched by the Principal Scientific Adviser to the Government of India, is developed and maintained by the National Institute of Plant Genome Research (NIPGR).'
+  },
 {
     id: 'ca-q-1',
     text: 'Which Indian State ranked first bilingually as per the latest NITI Aayog State Energy Index 2026? / हाल ही में जारी नीति आयोग राज्य ऊर्जा सूचकांक 2026 में किस भारतीय राज्य ने पहला स्थान प्राप्त किया है?',
