@@ -297,12 +297,42 @@ export default function App() {
 
   const [currentAffairs, setCurrentAffairs] = useState<CurrentAffair[]>(() => {
     const saved = localStorage.getItem('sarkari_current_affairs');
-    return saved ? JSON.parse(saved) : DAILY_CURRENT_AFFAIRS_ITEMS;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved) as CurrentAffair[];
+        const existingIds = new Set(parsed.map(ca => ca.id));
+        const missingItems = DAILY_CURRENT_AFFAIRS_ITEMS.filter(ca => !existingIds.has(ca.id));
+        if (missingItems.length > 0) {
+          const merged = [...missingItems, ...parsed];
+          localStorage.setItem('sarkari_current_affairs', JSON.stringify(merged));
+          return merged;
+        }
+        return parsed;
+      } catch (e) {
+        return DAILY_CURRENT_AFFAIRS_ITEMS;
+      }
+    }
+    return DAILY_CURRENT_AFFAIRS_ITEMS;
   });
 
   const [quizQuestions, setQuizQuestions] = useState<Question[]>(() => {
     const saved = localStorage.getItem('sarkari_quiz_questions');
-    return saved ? JSON.parse(saved) : CURRENT_AFFAIRS_QUIZ_QUESTIONS;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved) as Question[];
+        const existingIds = new Set(parsed.map(q => q.id));
+        const missingItems = CURRENT_AFFAIRS_QUIZ_QUESTIONS.filter(q => !existingIds.has(q.id));
+        if (missingItems.length > 0) {
+          const merged = [...missingItems, ...parsed];
+          localStorage.setItem('sarkari_quiz_questions', JSON.stringify(merged));
+          return merged;
+        }
+        return parsed;
+      } catch (e) {
+        return CURRENT_AFFAIRS_QUIZ_QUESTIONS;
+      }
+    }
+    return CURRENT_AFFAIRS_QUIZ_QUESTIONS;
   });
 
   useEffect(() => {
@@ -318,8 +348,8 @@ export default function App() {
   const [todayQuizIdx, setTodayQuizIdx] = useState(0);
   const [todayAnswers, setTodayAnswers] = useState<{[key: string]: number}>({}); // maps question ID to selected option index
   const [todayActiveSubTab, setTodayActiveSubTab] = useState<'questions' | 'capsules'>('questions');
-  const [caQuizDate, setCaQuizDate] = useState<string>('june_30');
-  const [homeQuizDate, setHomeQuizDate] = useState<string>('june_30');
+  const [caQuizDate, setCaQuizDate] = useState<string>('2026-07-02');
+  const [homeQuizDate, setHomeQuizDate] = useState<string>('2026-07-02');
   const [caSearchQuery, setCaSearchQuery] = useState('');
   const [caSelectedCategory, setCaSelectedCategory] = useState<string>('All');
   const [caVisibleCount, setCaVisibleCount] = useState(6);
@@ -394,8 +424,10 @@ export default function App() {
   };
 
   const formatCADate = (dateStr: string, isHindi: boolean) => {
-    if (dateStr === '2026-06-30' || dateStr === 'june_30') return isHindi ? 'मंगलवार, 30 जून 2026 (आज के विशेष)' : 'Tuesday, 30 June 2026 (Today)';
-    if (dateStr === '2026-06-29' || dateStr === 'june_29') return isHindi ? 'सोमवार, 29 जून 2026 (कल के विशेष)' : 'Monday, 29 June 2026 (Yesterday)';
+    if (dateStr === '2026-07-02') return isHindi ? 'गुरुवार, 2 जुलाई 2026 (आज के विशेष)' : 'Thursday, 2 July 2026 (Today)';
+    if (dateStr === '2026-07-01') return isHindi ? 'बुधवार, 1 जुलाई 2026 (कल के विशेष)' : 'Wednesday, 1 July 2026 (Yesterday)';
+    if (dateStr === '2026-06-30' || dateStr === 'june_30') return isHindi ? 'मंगलवार, 30 जून 2026' : 'Tuesday, 30 June 2026';
+    if (dateStr === '2026-06-29' || dateStr === 'june_29') return isHindi ? 'सोमवार, 29 जून 2026' : 'Monday, 29 June 2026';
     if (dateStr === '2026-06-28' || dateStr === 'june_28') return isHindi ? 'रविवार, 28 जून 2026' : 'Sunday, 28 June 2026';
     if (dateStr === '2026-06-27' || dateStr === 'june_27') return isHindi ? 'शनिवार, 27 जून 2026' : 'Saturday, 27 June 2026';
     
