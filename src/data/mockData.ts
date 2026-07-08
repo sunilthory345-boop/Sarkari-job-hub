@@ -4,6 +4,42 @@ import { generateAllExtendedMocks } from '../utils/examMockGenerator';
 
 export const INITIAL_JOBS: GovJob[] = [
   {
+    id: 'ssc-gd-constable-mega-recruitment-2026',
+    title: 'SSC GD Constable in BSF, CISF, CRPF, SSB, ITBP, AR, SSF Mega Recruitment 2026 Official Notification Out (39,480 Posts) (Active Today) / एसएससी जीडी कांस्टेबल भर्ती 2026',
+    org: 'Staff Selection Commission (SSC)',
+    category: 'SSC',
+    qualification: '10th Pass',
+    ageLimit: '18 - 23 Years',
+    salary: '₹21,700 — ₹69,100 / Month plus Grade Pay & allowances',
+    fees: {
+      General: '₹100',
+      OBC: '₹100',
+      SC_ST_Female: 'Nil'
+    },
+    totalPosts: 39480,
+    applyUrl: 'https://ssc.gov.in',
+    pdfUrl: 'https://ssc.gov.in',
+    officialWebsite: 'https://ssc.gov.in',
+    postedDate: '2026-07-07',
+    lastDate: '2026-08-07',
+    importantDates: {
+      applyStart: '2026-07-07',
+      applyEnd: '2026-08-07',
+      examDate: 'January - February 2027',
+      admitCardRelease: 'December 2026'
+    },
+    selectionProcess: [
+      'Computer Based Examination (CBE)',
+      'Physical Efficiency Test (PET) & Physical Standard Test (PST)',
+      'Detailed Medical Examination (DME)',
+      'Document Verification & Merit List'
+    ],
+    location: 'All India',
+    description: '🚨 MEGA RECRUITMENT NOTIFICATION WARNING: Staff Selection Commission (SSC) has released the official recruitment notification for 39,480 posts of Constable (General Duty) in Border Security Force (BSF), Central Industrial Security Force (CISF), Central Reserve Police Force (CRPF), Indo Tibetan Border Police (ITBP), Sashastra Seema Bal (SSB), Secretariat Security Force (SSF), and Rifleman (General Duty) in Assam Rifles (AR). Matriculate candidates are eligible to apply starting today, 7 July 2026.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
     id: 'ssc-mts-havaldar-recruitment-2026',
     title: 'SSC Multi-Tasking (Non-Technical) Staff, and Havaldar (CBIC & CBN) Recruitment Exam 2026 Official Notification Out (9,583 Posts) (Active Today) / एसएससी एमटीएस और हवलदार भर्ती 2026',
     org: 'Staff Selection Commission (SSC)',
@@ -2080,6 +2116,16 @@ export const INITIAL_JOBS: GovJob[] = [
 
 export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
   {
+    id: 'up-police-constable-admit-card-2026',
+    title: 'UP Police Constable 60,244 Posts Re-Exam 2026 e-Admit Card & Exam City Intimation Slip Link Out / यूपी पुलिस कांस्टेबल एडमिट कार्ड जारी',
+    org: 'Uttar Pradesh Police Recruitment and Promotion Board (UPPRPB)',
+    examDate: '2026-07-20 to 2026-07-25',
+    examCity: 'All Uttar Pradesh Districts Direct Link Activated',
+    downloadUrl: 'https://uppbpb.gov.in',
+    officialLink: 'https://uppbpb.gov.in',
+    addedDate: '2026-07-07'
+  },
+  {
     id: 'ssc-cgl-tier1-admit-card-2026',
     title: 'SSC CGL Tier-1 Exam 2026 Official Region-Wise e-Admit Card & City Intimation Slip Link Out / एसएससी सीजीएल Tier-1 एडमिट कार्ड जारी',
     org: 'Staff Selection Commission (SSC)',
@@ -2372,6 +2418,21 @@ export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
 ];
 
 export const INITIAL_RESULTS: JobResult[] = [
+  {
+    id: 'ssc-chsl-tier1-result-2026',
+    title: 'SSC CHSL (10+2) Tier-1 Exam 2026 CBT Qualified Candidates List & Official Cut-off Marks PDF Out / एसएससी सीएचएसएल Tier-1 रिजल्ट घोषित',
+    org: 'Staff Selection Commission (SSC)',
+    meritListUrl: 'https://ssc.gov.in',
+    scoreCardUrl: 'https://ssc.gov.in',
+    cutOff: {
+      UR: '135.2 Marks (Out of 200)',
+      OBC: '131.5 Marks',
+      SC: '121.0 Marks',
+      ST: '115.4 Marks'
+    },
+    downloadUrl: 'https://ssc.gov.in',
+    releaseDate: '2026-07-07'
+  },
   {
     id: 'rrb-alp-cbt1-result-2026',
     title: 'Railway RRB Assistant Loco Pilot (ALP) CEN 01/2026 CBT-1 Score Card & Region-Wise Merit List PDF (Declared Today) / रेलवे एएलपी CBT-1 परीक्षा परिणाम जारी',
@@ -2735,6 +2796,7 @@ export const INITIAL_RESULTS: JobResult[] = [
 ];
 
 const BASE_ANSWER_KEYS = [
+  { id: 'ssc-cgl-tier1-key-today-2026', title: 'SSC CGL 2026 Tier-1 Official Provisional Solved Answer Key & Candidate Response sheets Out / एसएससी सीजीएल Tier-1 उत्तर कुंजी जारी', org: 'Staff Selection Commission (SSC)', released: '2026-07-07', objectionsLimit: '2026-07-13', pdfUrl: 'https://ssc.gov.in' },
   { id: 'ssc-cpo-answer-key-today-2026', title: 'SSC CPO Sub-Inspector in Delhi Police & CAPFs 2026 CBT Paper-1 Official Preliminary Solved Answer Key & Question Booklet (Active Today) / एसएससी सीपीओ पेपर-1 उत्तर कुंजी जारी', org: 'Staff Selection Commission (SSC)', released: '2026-06-30', objectionsLimit: '2026-07-06', pdfUrl: 'https://ssc.gov.in' },
   { id: 'ssc-selection-post-phase-12-key-today-2026', title: 'SSC Selection Post Phase XII (Matric/Higher Secondary/Grad Level) Official Provisional Solved Answer Key & Response sheets (Active Today) / एसएससी फेज XII उत्तर कुंजी जारी', org: 'Staff Selection Commission (SSC)', released: '2026-06-28', objectionsLimit: '2026-07-04', pdfUrl: 'https://ssc.gov.in' },
   { id: 'rrb-technician-key-today-2026', title: 'RRB Technician Grade I & III CEN 02/2026 Official Solved Answer Key & Objection Link (Active Today) / RRB तकनीशियन ग्रेड I और III उत्तर कुंजी और आपत्ति दर्ज करें', org: 'Railway Recruitment Boards (RRB)', released: '2026-06-27', objectionsLimit: '2026-07-05', pdfUrl: 'https://www.rrbcdg.gov.in' },

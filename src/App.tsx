@@ -348,8 +348,8 @@ export default function App() {
   const [todayQuizIdx, setTodayQuizIdx] = useState(0);
   const [todayAnswers, setTodayAnswers] = useState<{[key: string]: number}>({}); // maps question ID to selected option index
   const [todayActiveSubTab, setTodayActiveSubTab] = useState<'questions' | 'capsules'>('questions');
-  const [caQuizDate, setCaQuizDate] = useState<string>('2026-07-02');
-  const [homeQuizDate, setHomeQuizDate] = useState<string>('2026-07-02');
+  const [caQuizDate, setCaQuizDate] = useState<string>('2026-07-07');
+  const [homeQuizDate, setHomeQuizDate] = useState<string>('2026-07-07');
   const [caSearchQuery, setCaSearchQuery] = useState('');
   const [caSelectedCategory, setCaSelectedCategory] = useState<string>('All');
   const [caVisibleCount, setCaVisibleCount] = useState(6);
@@ -407,6 +407,10 @@ export default function App() {
   const getAvailableDates = () => {
     const datesSet = new Set<string>();
     // Default key dates
+    datesSet.add('2026-07-07');
+    datesSet.add('2026-07-06');
+    datesSet.add('2026-07-02');
+    datesSet.add('2026-07-01');
     datesSet.add('2026-06-30');
     datesSet.add('2026-06-29');
     datesSet.add('2026-06-28');
@@ -424,8 +428,10 @@ export default function App() {
   };
 
   const formatCADate = (dateStr: string, isHindi: boolean) => {
-    if (dateStr === '2026-07-02') return isHindi ? 'गुरुवार, 2 जुलाई 2026 (आज के विशेष)' : 'Thursday, 2 July 2026 (Today)';
-    if (dateStr === '2026-07-01') return isHindi ? 'बुधवार, 1 जुलाई 2026 (कल के विशेष)' : 'Wednesday, 1 July 2026 (Yesterday)';
+    if (dateStr === '2026-07-07') return isHindi ? 'मंगलवार, 7 जुलाई 2026 (आज के विशेष)' : 'Tuesday, 7 July 2026 (Today)';
+    if (dateStr === '2026-07-06') return isHindi ? 'सोमवार, 6 जुलाई 2026 (कल के विशेष)' : 'Monday, 6 July 2026 (Yesterday)';
+    if (dateStr === '2026-07-02') return isHindi ? 'गुरुवार, 2 जुलाई 2026' : 'Thursday, 2 July 2026';
+    if (dateStr === '2026-07-01') return isHindi ? 'बुधवार, 1 जुलाई 2026' : 'Wednesday, 1 July 2026';
     if (dateStr === '2026-06-30' || dateStr === 'june_30') return isHindi ? 'मंगलवार, 30 जून 2026' : 'Tuesday, 30 June 2026';
     if (dateStr === '2026-06-29' || dateStr === 'june_29') return isHindi ? 'सोमवार, 29 जून 2026' : 'Monday, 29 June 2026';
     if (dateStr === '2026-06-28' || dateStr === 'june_28') return isHindi ? 'रविवार, 28 जून 2026' : 'Sunday, 28 June 2026';
@@ -2428,7 +2434,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                           <span className="text-[10px] font-bold bg-blue-50 text-blue-700 px-2 py-0.5 rounded">
                             {job.category} Exam
                           </span>
-                          {(job.postedDate === '2026-06-28' || job.postedDate === '2026-06-27') && (
+                          {(job.postedDate === '2026-07-07' || job.postedDate === '2026-07-06' || job.postedDate === '2026-06-30' || job.postedDate === '2026-06-29' || job.postedDate === '2026-06-28' || job.postedDate === '2026-06-27') && (
                             <span className="text-[10px] font-extrabold bg-rose-500 text-white px-2 py-0.5 rounded animate-pulse flex items-center gap-1 shadow-xs">
                               <span className="h-1.5 w-1.5 rounded-full bg-white animate-ping"></span>
                               TODAY
@@ -2591,7 +2597,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                     <div className="space-y-2">
                       {filteredAdmitCards.map((card) => (
                         <div key={card.id} className="p-2.5 border border-slate-100 rounded-lg text-[11px] space-y-1.5 bg-slate-50/50 relative overflow-hidden">
-                          {(card.addedDate === '2026-06-28' || card.addedDate === '2026-06-27') && (
+                          {(card.addedDate === '2026-07-07' || card.addedDate === '2026-07-06' || card.addedDate === '2026-06-28' || card.addedDate === '2026-06-27') && (
                             <span className="absolute top-1 right-1 bg-emerald-600 text-white text-[8px] font-extrabold px-1.5 py-0.5 rounded shadow-xs animate-pulse">
                               NEW TODAY
                             </span>
@@ -2626,7 +2632,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                   <div className="p-3.5 space-y-2.5 text-xs">
                     {results.map((res) => (
                       <div key={res.id} className="p-2.5 border border-slate-100 rounded-lg space-y-2 bg-slate-50/50 relative overflow-hidden">
-                        {(res.releaseDate === '2026-06-28' || res.releaseDate === '2026-06-27') && (
+                        {(res.releaseDate === '2026-07-07' || res.releaseDate === '2026-07-06' || res.releaseDate === '2026-06-28' || res.releaseDate === '2026-06-27') && (
                           <span className="absolute top-1 right-1 bg-amber-500 text-white text-[8px] font-extrabold px-1.5 py-0.5 rounded shadow-xs animate-pulse">
                             DECLARED TODAY
                           </span>
