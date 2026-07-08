@@ -664,7 +664,8 @@ export default function AdminConsole({
     officialWebsite: 'https://ssc.gov.in',
     lastDate: '2026-08-30',
     location: 'All India',
-    description: 'Provide dynamic opportunities in the governmental departments and secretariats.'
+    description: 'Provide dynamic opportunities in the governmental departments and secretariats.',
+    formStatus: '' as 'started' | 'extended' | 'upcoming' | ''
   });
 
   const [cardForm, setCardForm] = useState({
@@ -973,7 +974,8 @@ export default function AdminConsole({
       },
       selectionProcess: ['Computer Based Objective Test', 'Interview / Personality Audit', 'Medical Screening'],
       location: jobForm.location,
-      description: jobForm.description
+      description: jobForm.description,
+      formStatus: jobForm.formStatus || undefined
     };
 
     onAddJob(newJob);
@@ -1721,6 +1723,20 @@ What is the standard pH level of pure distilled water at normal room temperature
                     className="w-full rounded-lg border border-slate-200 p-2 focus:outline-hidden focus:border-blue-500"
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-semibold text-[#1E3A8A] mb-1 font-bold">Form Status Alert Banner (फ़ॉर्म स्थिति का विशेष बैनर जोड़ें)</label>
+                <select
+                  value={jobForm.formStatus}
+                  onChange={(e) => setJobForm({...jobForm, formStatus: e.target.value as any})}
+                  className="w-full rounded-lg border-2 border-[#1E3A8A]/30 p-2 focus:outline-hidden focus:border-[#1E3A8A] font-bold text-[#1E3A8A] bg-blue-50/20"
+                >
+                  <option value="">No Special Banner (कोई विशेष बैनर नहीं)</option>
+                  <option value="started">🔥 आज इस पोस्ट के फार्म स्टार्ट हुए है (Forms Started Today)</option>
+                  <option value="extended">⏳ आज इस पोस्ट की फार्म डेट को आगे बढ़ाया गया है (Form Date Extended Today)</option>
+                  <option value="upcoming">📅 इस पोस्ट की फार्म की डेट जल्द ही आने वाले समय में निर्धारित होगी (Form Dates To Be Announced Soon)</option>
+                </select>
               </div>
 
               <div>

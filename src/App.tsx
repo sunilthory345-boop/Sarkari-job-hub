@@ -145,6 +145,17 @@ const INITIAL_PYQS = [
   { title: 'SSC GD Constable General Duty Intelligence & Elementary Math Book 2019', type: 'Solved Booklet', size: '3.1 MB', year: 2019, exam: 'SSC', premium: false, downloadUrl: 'https://ssc.gov.in/gd_constable_2019_solved.pdf' }
 ];
 
+function deduplicateById<T extends { id: string }>(arr: T[]): T[] {
+  const seen = new Set<string>();
+  return arr.filter(item => {
+    if (seen.has(item.id)) {
+      return false;
+    }
+    seen.add(item.id);
+    return true;
+  });
+}
+
 export default function App() {
   // ----- ROOT PERSISTENT STATE -----
   const [jobs, setJobs] = useState<GovJob[]>(() => {
@@ -152,14 +163,15 @@ export default function App() {
     if (saved) {
       try {
         const parsed = JSON.parse(saved) as GovJob[];
-        const existingIds = new Set(parsed.map(j => j.id));
+        const deduplicated = deduplicateById(parsed);
+        const existingIds = new Set(deduplicated.map(j => j.id));
         const missingJobs = INITIAL_JOBS.filter(j => !existingIds.has(j.id));
-        if (missingJobs.length > 0) {
-          const merged = [...missingJobs, ...parsed];
+        if (missingJobs.length > 0 || deduplicated.length !== parsed.length) {
+          const merged = deduplicateById([...missingJobs, ...deduplicated]);
           localStorage.setItem('sarkari_jobs', JSON.stringify(merged));
           return merged;
         }
-        return parsed;
+        return deduplicated;
       } catch (e) {
         return INITIAL_JOBS;
       }
@@ -172,14 +184,15 @@ export default function App() {
     if (saved) {
       try {
         const parsed = JSON.parse(saved) as AdmitCard[];
-        const existingIds = new Set(parsed.map(c => c.id));
+        const deduplicated = deduplicateById(parsed);
+        const existingIds = new Set(deduplicated.map(c => c.id));
         const missingCards = INITIAL_ADMIT_CARDS.filter(c => !existingIds.has(c.id));
-        if (missingCards.length > 0) {
-          const merged = [...missingCards, ...parsed];
+        if (missingCards.length > 0 || deduplicated.length !== parsed.length) {
+          const merged = deduplicateById([...missingCards, ...deduplicated]);
           localStorage.setItem('sarkari_admit_cards', JSON.stringify(merged));
           return merged;
         }
-        return parsed;
+        return deduplicated;
       } catch (e) {
         return INITIAL_ADMIT_CARDS;
       }
@@ -192,14 +205,15 @@ export default function App() {
     if (saved) {
       try {
         const parsed = JSON.parse(saved) as JobResult[];
-        const existingIds = new Set(parsed.map(r => r.id));
+        const deduplicated = deduplicateById(parsed);
+        const existingIds = new Set(deduplicated.map(r => r.id));
         const missingResults = INITIAL_RESULTS.filter(r => !existingIds.has(r.id));
-        if (missingResults.length > 0) {
-          const merged = [...missingResults, ...parsed];
+        if (missingResults.length > 0 || deduplicated.length !== parsed.length) {
+          const merged = deduplicateById([...missingResults, ...deduplicated]);
           localStorage.setItem('sarkari_results', JSON.stringify(merged));
           return merged;
         }
-        return parsed;
+        return deduplicated;
       } catch (e) {
         return INITIAL_RESULTS;
       }
@@ -212,14 +226,15 @@ export default function App() {
     if (saved) {
       try {
         const parsed = JSON.parse(saved) as AnswerKey[];
-        const existingIds = new Set(parsed.map(k => k.id));
+        const deduplicated = deduplicateById(parsed);
+        const existingIds = new Set(deduplicated.map(k => k.id));
         const missingKeys = INITIAL_ANSWER_KEYS.filter(k => !existingIds.has(k.id));
-        if (missingKeys.length > 0) {
-          const merged = [...missingKeys, ...parsed];
+        if (missingKeys.length > 0 || deduplicated.length !== parsed.length) {
+          const merged = deduplicateById([...missingKeys, ...deduplicated]);
           localStorage.setItem('sarkari_answer_keys', JSON.stringify(merged));
           return merged;
         }
-        return parsed;
+        return deduplicated;
       } catch (e) {
         return INITIAL_ANSWER_KEYS;
       }
@@ -236,14 +251,15 @@ export default function App() {
     if (saved) {
       try {
         const parsed = JSON.parse(saved) as Newspaper[];
-        const existingIds = new Set(parsed.map(n => n.id));
+        const deduplicated = deduplicateById(parsed);
+        const existingIds = new Set(deduplicated.map(n => n.id));
         const missingNewspapers = INITIAL_NEWSPAPERS.filter(n => !existingIds.has(n.id));
-        if (missingNewspapers.length > 0) {
-          const merged = [...missingNewspapers, ...parsed];
+        if (missingNewspapers.length > 0 || deduplicated.length !== parsed.length) {
+          const merged = deduplicateById([...missingNewspapers, ...deduplicated]);
           localStorage.setItem('sarkari_newspapers', JSON.stringify(merged));
           return merged;
         }
-        return parsed;
+        return deduplicated;
       } catch (e) {
         return INITIAL_NEWSPAPERS;
       }

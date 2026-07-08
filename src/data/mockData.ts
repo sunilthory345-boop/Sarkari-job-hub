@@ -37,7 +37,8 @@ export const INITIAL_JOBS: GovJob[] = [
     location: 'All India',
     description: '🚨 MEGA RECRUITMENT NOTIFICATION WARNING: Staff Selection Commission (SSC) has released the official recruitment notification for 39,480 posts of Constable (General Duty) in Border Security Force (BSF), Central Industrial Security Force (CISF), Central Reserve Police Force (CRPF), Indo Tibetan Border Police (ITBP), Sashastra Seema Bal (SSB), Secretariat Security Force (SSF), and Rifleman (General Duty) in Assam Rifles (AR). Matriculate candidates are eligible to apply starting today, 7 July 2026.',
     isWhatsAppAlert: true,
-    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U',
+    formStatus: 'started'
   },
   {
     id: 'ssc-mts-havaldar-recruitment-2026',
@@ -72,7 +73,8 @@ export const INITIAL_JOBS: GovJob[] = [
     location: 'All India Departments',
     description: '🚨 OFFICIAL RECRUITMENT WARNING: Staff Selection Commission (SSC) has officially declared the mega recruitment campaign for Multi-Tasking Staff (MTS) and Havaldar in Central Board of Indirect Taxes and Customs (CBIC) and Central Bureau of Narcotics (CBN) for the financial year 2026. This year, SSC is offering a staggering 9,583 vacancies. Candidates who have successfully cleared matriculation from any recognized Indian board are eligible. Make sure to apply on the official SSC portal starting today, 30 June 2026, to secure your central government career path!',
     isWhatsAppAlert: true,
-    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U',
+    formStatus: 'extended'
   },
   {
     id: 'ssc-cpo-sub-inspector-recruitment-2026',
@@ -108,7 +110,8 @@ export const INITIAL_JOBS: GovJob[] = [
     location: 'All India Zones',
     description: '🚨 STAFF SELECTION COMMISSION (SSC) CPO SI RECRUITMENT 2026. SSC has released the prestigious official notification for recruitment of 4,187 Sub-Inspectors (Executive) in Delhi Police and Sub-Inspectors (Assistant) in Central Armed Police Forces (CAPFs - BSF, CISF, CRPF, ITBP, SSB). Eligible graduate male and female aspirants are invited to submit their online forms starting today, 28 June 2026.',
     isWhatsAppAlert: true,
-    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U',
+    formStatus: 'upcoming'
   },
   {
     id: 'rrb-group-d-recruitment-2026',
@@ -2236,7 +2239,7 @@ export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
     addedDate: '2026-06-24'
   },
   {
-    id: 'ssc-cgl-tier1-admit-card-2026',
+    id: 'ssc-cgl-tier1-admit-card-prev-2026',
     title: 'SSC CGL Tier-1 Exam 2026 Admission Certificate & Application Status (Out Now)',
     org: 'Staff Selection Commission (SSC)',
     examDate: '2026-07-10 to 2026-07-25',
@@ -2509,7 +2512,7 @@ export const INITIAL_RESULTS: JobResult[] = [
     releaseDate: '2026-06-26'
   },
   {
-    id: 'ssc-chsl-tier1-result-2026',
+    id: 'ssc-chsl-tier1-result-prev-2026',
     title: 'SSC CHSL (10+2) Tier-1 Exam 2026 Merit List PDF & Region-wise Cut-off Marks (Released)',
     org: 'Staff Selection Commission (SSC)',
     meritListUrl: 'https://ssc.gov.in',
@@ -2569,7 +2572,7 @@ export const INITIAL_RESULTS: JobResult[] = [
     releaseDate: '2026-06-26'
   },
   {
-    id: 'upsc-civil-services-prelims-result-2026',
+    id: 'upsc-civil-services-prelims-result-prev-2026',
     title: 'UPSC Civil Services Prelims Exam 2026 Qualified Candidates Merit List & Scorecard (Out Now)',
     org: 'Union Public Service Commission (UPSC)',
     meritListUrl: 'https://upsc.gov.in',

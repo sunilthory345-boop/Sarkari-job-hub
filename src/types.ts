@@ -28,6 +28,7 @@ export interface GovJob {
   description: string;
   isWhatsAppAlert?: boolean;
   whatsAppUrl?: string;
+  formStatus?: 'started' | 'extended' | 'upcoming';
 }
 
 export interface AdmitCard {

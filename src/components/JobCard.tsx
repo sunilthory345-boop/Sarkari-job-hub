@@ -38,6 +38,35 @@ const getCategoryStyles = (cat: string) => {
   }
 };
 
+const getFormStatusInfo = (status?: 'started' | 'extended' | 'upcoming') => {
+  if (!status) return null;
+  switch (status) {
+    case 'started':
+      return {
+        text: '🔥 आज इस पोस्ट के फार्म स्टार्ट हुए है / Online Form Started Today!',
+        classes: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+        badge: 'bg-emerald-500 text-white',
+        icon: '🔥'
+      };
+    case 'extended':
+      return {
+        text: '⏳ आज इस पोस्ट की फार्म डेट को आगे बढ़ाया गया है / Form Date Extended Today!',
+        classes: 'bg-amber-50 text-amber-800 border-amber-200',
+        badge: 'bg-amber-500 text-white',
+        icon: '⏳'
+      };
+    case 'upcoming':
+      return {
+        text: '📅 इस पोस्ट की फार्म की डेट जल्द ही आने वाले समय में निर्धारित होगी / Dates Announced Soon!',
+        classes: 'bg-blue-50 text-blue-800 border-blue-200',
+        badge: 'bg-blue-500 text-white',
+        icon: '📅'
+      };
+    default:
+      return null;
+  }
+};
+
 export default function JobCard({ 
   jobs, 
   user, 
@@ -371,6 +400,17 @@ export default function JobCard({
 
                 {/* Job Info Body */}
                 <div className="mt-2.5 flex-1">
+                  {job.formStatus && (() => {
+                    const statusInfo = getFormStatusInfo(job.formStatus);
+                    if (statusInfo) {
+                      return (
+                        <div className={`mb-2 rounded-lg border p-2 text-[10px] font-bold leading-tight ${statusInfo.classes}`}>
+                          {statusInfo.text}
+                        </div>
+                      );
+                    }
+                    return null;
+                  })()}
                   <h3 className="font-sans text-xs font-extrabold text-[#1E293B] line-clamp-2 leading-snug group-hover:text-blue-700 cursor-pointer" onClick={() => setSelectedJob(job)}>
                     {job.title}
                   </h3>
@@ -490,6 +530,24 @@ export default function JobCard({
             {/* Scrollable details */}
             <div className="mt-5 space-y-5 max-h-[60vh] overflow-y-auto pr-1">
               
+              {selectedJob.formStatus && (() => {
+                const statusInfo = getFormStatusInfo(selectedJob.formStatus);
+                if (statusInfo) {
+                  return (
+                    <div className={`p-4 rounded-2xl border text-xs font-bold flex items-center gap-3 ${statusInfo.classes}`}>
+                      <span className="text-2xl shrink-0">{statusInfo.icon}</span>
+                      <div>
+                        <p className="font-extrabold text-[#1E293B]">{statusInfo.text}</p>
+                        <p className="text-[11px] font-medium text-slate-500 mt-0.5 leading-normal">
+                          This status is live and verified by Jobs Sarkari Hub. Check below for application dates and direct links.
+                        </p>
+                      </div>
+                    </div>
+                  );
+                }
+                return null;
+              })()}
+
               {/* Short summary banner */}
               <div className="rounded-2xl bg-linear-to-r from-blue-50 to-indigo-50/50 p-4 border border-blue-100/50 grid gap-3 sm:grid-cols-3 text-center">
                 <div className="border-r border-blue-100 last:border-0 pr-2">
