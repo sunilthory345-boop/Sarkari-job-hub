@@ -3,6 +3,406 @@ import { CurrentAffair, Question } from '../types';
 // 50 Daily Current Affairs News Items (Bilingual / English-Hindi mix for authenticity)
 export const DAILY_CURRENT_AFFAIRS_ITEMS: CurrentAffair[] = [
   {
+    id: 'ca-news-jul-9-1',
+    title: "Vice Admiral Dinesh K Tripathi assumes command as the new Chief of the Naval Staff / वाइस एडमिरल दिनेश के त्रिपाठी ने नए नौसेना प्रमुख के रूप में कार्यभार संभाला",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Navy_Chief_Tripathi_2026.pdf',
+    content: "Vice Admiral Dinesh K Tripathi officially assumed charge as the 26th Chief of the Naval Staff of India. He succeeded Admiral R Hari Kumar. Prior to this appointment, Vice Admiral Tripathi served as the Vice Chief of the Naval Staff and has a distinguished career spanning nearly 40 years."
+  },
+  {
+    id: 'ca-news-jul-9-2',
+    title: "India and UAE launch bilateral B2B Energy Alliance for power grid modernization / भारत और यूएई ने पावर ग्रिड आधुनिकीकरण के लिए द्विपक्षीय बी2बी ऊर्जा गठबंधन लॉन्च किया",
+    date: '2026-07-09',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/India_UAE_Energy_Alliance_2026.pdf',
+    content: "During a high-level summit, India and the United Arab Emirates established the B2B Energy Alliance. The alliance aims to foster business partnerships in renewable energy, smart grid infrastructure, and power system integration to modernize electric distribution networks."
+  },
+  {
+    id: 'ca-news-jul-9-3',
+    title: "Bengaluru selected to host the prestigious Global Climate Action Summit 2026 / बेंगलुरु को प्रतिष्ठित ग्लोबल क्लाइमेट एक्शन समिट 2026 की मेजबानी के लिए चुना गया",
+    date: '2026-07-09',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Global_Climate_Summit_Bengaluru_2026.pdf',
+    content: "Bengaluru has been officially designated as the host city for the Global Climate Action Summit scheduled for November 2026. The summit will bring together global leaders, policy makers, and climate advocates to collaborate on green tech innovation and sustainable urban development models."
+  },
+  {
+    id: 'ca-news-jul-9-4',
+    title: "Ministry of Mines accelerates digital mapping of critical mineral reserves / खान मंत्रालय ने महत्वपूर्ण खनिज भंडारों के डिजिटल मानचित्रण में तेजी लाई",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Mines_Critical_Minerals_Mapping_2026.pdf',
+    content: "The Ministry of Mines has set an ambitious target to complete the detailed digital mapping of all identified critical mineral blocks, including Lithium and Titanium, across the country by early 2028, ensuring domestic raw material security for the clean tech sector."
+  },
+  {
+    id: 'ca-news-jul-9-5',
+    title: "Ministry of Agriculture introduces Bhu-Sanjivani multilingual AI assistant / कृषि मंत्रालय ने भू-संजीवनी बहुभाषी एआई सहायक की शुरुआत की",
+    date: '2026-07-09',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Bhu_Sanjivani_AI_2026.pdf',
+    content: "The Ministry of Agriculture launched 'Bhu-Sanjivani', a highly advanced generative AI assistant integrated into the national portal. It enables farmers to query their Soil Health Cards in 22 official Indian languages and get instant micro-nutrient optimization recommendations."
+  },
+  {
+    id: 'ca-news-jul-9-6',
+    title: "Odisha Government expands Nua-O Scholarship Scheme to cover more students / ओडिशा सरकार ने अधिक छात्रों को कवर करने के लिए नुआ-ओ छात्रवृत्ति योजना का विस्तार किया",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Nua_O_Scholarship_Odisha_2026.pdf',
+    content: "The state cabinet of Odisha approved the expansion of the 'Nua-O' scholarship program. The scheme provides annual financial assistance to male and female undergraduate and postgraduate students in government universities to ease the financial burden of higher education."
+  },
+  {
+    id: 'ca-news-jul-9-7',
+    title: "India's first fully commercial semiconductor fab plant starts construction in Dholera / धौलेरा में भारत के पहले पूर्णतः वाणिज्यिक सेमीकंडक्टर फैब प्लांट का निर्माण शुरू",
+    date: '2026-07-09',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Dholera_Semiconductor_Fab_2026.pdf',
+    content: "The ground-breaking ceremony was completed for the country's first commercial semiconductor fabrication facility in Dholera, Gujarat. Established under the India Semiconductor Mission, the plant will manufacture indigenous microchips to support electronics supply chains."
+  },
+  {
+    id: 'ca-news-jul-9-8',
+    title: "Jannik Sinner wins his maiden Wimbledon Men's Singles Championship 2026 / जैनिक सिनर ने अपनी पहली विंबलडन पुरुष एकल चैंपियनशिप 2026 जीती",
+    date: '2026-07-09',
+    category: 'Sports',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Wimbledon_Sinner_Champion_2026.pdf',
+    content: "Italian tennis sensation Jannik Sinner won a historic Wimbledon Men's Singles title in London. In a high-voltage five-set final, Sinner displayed remarkable grit to defeat his opponent, claiming his first-ever grass-court Grand Slam trophy."
+  },
+  {
+    id: 'ca-news-jul-9-9',
+    title: "Civil Aviation Ministry clears construction of new international airport near Silchar / नागरिक उड्डयन मंत्रालय ने सिलचर के पास नए अंतरराष्ट्रीय हवाई अड्डे के निर्माण को दी मंजूरी",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Silchar_International_Airport_2026.pdf',
+    content: "The Union Ministry of Civil Aviation granted formal site clearance for the development of a greenfield international airport at Doloo Tea Estate near Silchar, Assam, to dramatically improve transport connectivity in Barak Valley."
+  },
+  {
+    id: 'ca-news-jul-9-10',
+    title: "Solar Energy Corporation of India (SECI) upgraded to elite Maharatna Status / भारतीय सौर ऊर्जा निगम (SECI) को विशिष्ट महारत्न का दर्जा मिला",
+    date: '2026-07-09',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/SECI_Maharatna_Upgrade_2026.pdf',
+    content: "The Department of Public Enterprises officially conferred 'Maharatna Status' upon the Solar Energy Corporation of India (SECI). The upgrade recognizes SECI's pivotal role in executing massive solar park bids and leading India towards its green energy goals."
+  },
+  {
+    id: 'ca-news-jul-9-11',
+    title: "World Bank approves $500 Million loan for National Urban Sanitation Program / विश्व बैंक ने राष्ट्रीय शहरी स्वच्छता कार्यक्रम के लिए $500 मिलियन के ऋण को मंजूरी दी",
+    date: '2026-07-09',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/World_Bank_Sanitation_Loan_2026.pdf',
+    content: "The World Bank formalized a financial aid package of $500 million to assist India's urban sanitation drive. The funds will be deployed across tier-2 cities to construct modern waste-water management plants and secure circular resource networks."
+  },
+  {
+    id: 'ca-news-jul-9-12',
+    title: "India crosses historic 195 GW cumulative installed renewable energy milestone / भारत ने ऐतिहासिक 195 गीगावाट संचयी स्थापित नवीकरणीय ऊर्जा का मील का पत्थर पार किया",
+    date: '2026-07-09',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/India_Renewable_195GW_2026.pdf',
+    content: "According to the Ministry of New & Renewable Energy, India's cumulative installed renewable energy capacity (including hydro projects) officially crossed 195 GW in mid-2026, keeping the country well on track to meet its long-term clean capacity pledges."
+  },
+  {
+    id: 'ca-news-jul-9-13',
+    title: "India secures 116th rank in the Global Peace Index (GPI) 2026 / भारत ने वैश्विक शांति सूचकांक (GPI) 2026 में 116वां स्थान हासिल किया",
+    date: '2026-07-09',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Global_Peace_Index_India_2026.pdf',
+    content: "In the latest edition of the Global Peace Index (GPI) published by the Institute for Economics and Peace, India secured the 116th rank globally, demonstrating steady improvements in safety indicators, regional stability, and reduced internal conflicts."
+  },
+  {
+    id: 'ca-news-jul-9-14',
+    title: "General Upendra Dwivedi takes charge as the 30th Chief of the Army Staff / जनरल उपेंद्र द्विवेदी ने 30वें थल सेनाध्यक्ष के रूप में पदभार ग्रहण किया",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Army_Chief_Dwivedi_2026.pdf',
+    content: "General Upendra Dwivedi officially assumed command as the 30th Chief of the Army Staff of India, succeeding General Manoj Pande. General Dwivedi has extensive command experience along the Northern and Western borders, bringing exceptional strategic expertise."
+  },
+  {
+    id: 'ca-news-jul-9-15',
+    title: "Corbett Tiger Reserve records highest density of tiger population in India / कॉर्बेट टाइगर रिजर्व ने भारत में बाघों की आबादी का उच्चतम घनत्व दर्ज किया",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Corbett_Tiger_Census_2026.pdf',
+    content: "The latest wildlife census published by the Wildlife Institute of India revealed that Uttarakhand's Jim Corbett Tiger Reserve holds the highest tiger density inside a protected zone, indicating the great success of localized ecological corridor management."
+  },
+  {
+    id: 'ca-news-jul-9-16',
+    title: "NIMHANS Bengaluru receives the prestigious WHO Nelson Mandela Award / निमहंस बेंगलुरु को प्रतिष्ठित डब्ल्यूएचओ नेल्सन मंडेला पुरस्कार मिला",
+    date: '2026-07-09',
+    category: 'Awards',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/NIMHANS_Mandela_Award_2026.pdf',
+    content: "The National Institute of Mental Health and Neuro Sciences (NIMHANS) in Bengaluru was awarded the Nelson Mandela Award for Health Promotion for 2026 by the World Health Organization (WHO), acknowledging its pioneer work in public mental health awareness."
+  },
+  {
+    id: 'ca-news-jul-9-17',
+    title: "INS Vagsheer officially inducted into active fleet of the Indian Navy / आईएनएस वागशीर आधिकारिक तौर पर भारतीय नौसेना के सक्रिय बेड़े में शामिल",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/INS_Vagsheer_Induction_2026.pdf',
+    content: "INS Vagsheer, the sixth Kalvari-class submarine under the prestigious Project-75, was formally commissioned into the Indian Navy at the naval dockyard in Mumbai, significantly boosting India's underwater warfare capabilities in the Indian Ocean."
+  },
+  {
+    id: 'ca-news-jul-9-18',
+    title: "Thailand hosts the successful 6th BIMSTEC Summit in Bangkok / थाईलैंड ने बैंकॉक में सफल छठे बिम्सटेक शिखर सम्मेलन की मेजबानी की",
+    date: '2026-07-09',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/6th_BIMSTEC_Summit_Bangkok.pdf',
+    content: "The 6th BIMSTEC (Bay of Bengal Initiative for Multi-Sectoral Technical and Economic Cooperation) Summit concluded in Bangkok, Thailand. The summit focused on consolidating maritime security protocols, shipping lanes, and disaster management grids."
+  },
+  {
+    id: 'ca-news-jul-9-19',
+    title: "India climbs to 67th spot in World Economic Forum's Energy Transition Index / भारत विश्व आर्थिक मंच के ऊर्जा संक्रमण सूचकांक में 67वें स्थान पर पहुंचा",
+    date: '2026-07-09',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/WEF_Energy_Transition_India_2026.pdf',
+    content: "The World Economic Forum (WEF) released the Energy Transition Index 2026, wherein India achieved the 67th spot globally. The report praised India's steady and swift policy-driven integration of renewable systems into the primary electrical grid."
+  },
+  {
+    id: 'ca-news-jul-9-20',
+    title: "Government releases commemorative Rs. 50 coin to mark 50 years of Project Tiger / सरकार ने प्रोजेक्ट टाइगर के 50 वर्ष पूरे होने पर 50 रुपये का स्मारक सिक्का जारी किया",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Project_Tiger_50_Years_Coin_2026.pdf',
+    content: "To commemorate the fifty golden years of India's landmark conservation initiative 'Project Tiger', the government released a special Rs. 50 silver-alloy coin. The program has successfully brought back Indian tigers from the brink of extinction."
+  },
+  {
+    id: 'ca-news-jul-9-21',
+    title: "National Doctors Day celebrated across India with 'Healing Hands, Caring Hearts' theme / भारत भर में 'हीलिंग हैंड्स, केयरिंग हार्ट्स' थीम के साथ राष्ट्रीय चिकित्सक दिवस मनाया गया",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Doctors_Day_Theme_2026.pdf',
+    content: "National Doctors Day 2026 was celebrated nationwide on July 1 to honor the legacy of Dr. BC Roy. The central theme for this year's observation was 'Healing Hands, Caring Hearts', emphasizing the empathy and dedication of medical practitioners."
+  },
+  {
+    id: 'ca-news-jul-9-22',
+    title: "India's first Vedic-themed botanical park 'Ved Van Park' opens in Noida / नोएडा में खुला भारत का पहला वैदिक-थीम वाला बॉटनिकल पार्क 'वेद वन पार्क'",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Ved_Van_Park_Noida.pdf',
+    content: "India's first Vedic-themed botanical attraction, the 'Ved Van Park', has officially opened to the public in Sector 78, Noida. The park features over 50,000 plants mentioned in Vedic literature, alongside laser shows showcasing classical texts."
+  },
+  {
+    id: 'ca-news-jul-9-23',
+    title: "India ranks 82nd in Henley Passport Index 2026 with visa-free travel to 62 nations / हेनले पासपोर्ट इंडेक्स 2026 में भारत 82वें स्थान पर, 62 देशों में वीजा-मुक्त यात्रा",
+    date: '2026-07-09',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Henley_Passport_India_2026.pdf',
+    content: "The Henley Passport Index 2026 ranked India at the 82nd position. Indian passport holders can now travel to 62 destinations across the globe without a prior visa, representing enhanced international travel flexibility and strong diplomatic ties."
+  },
+  {
+    id: 'ca-news-jul-9-24',
+    title: "Paradip Port becomes first major port to handle 150 Million Metric Tonnes of cargo / पारादीप बंदरगाह 150 मिलियन मीट्रिक टन कार्गो संभालने वाला पहला प्रमुख बंदरगाह बना",
+    date: '2026-07-09',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Paradip_Port_150MMT_2026.pdf',
+    content: "Paradip Port Authority in Odisha created history by becoming the first major Indian public port to cross the threshold of handling 150 Million Metric Tonnes (MMT) of cargo in a single fiscal year, consolidating its position as a maritime leader."
+  },
+  {
+    id: 'ca-news-jul-9-25',
+    title: "IIT Delhi opens Abu Dhabi international campus for its first academic session / आईआईटी दिल्ली ने पहले शैक्षणिक सत्र के लिए अबू धाबी अंतरराष्ट्रीय परिसर खोला",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/IIT_Delhi_Abu_Dhabi_2026.pdf',
+    content: "The Indian Institute of Technology (IIT) Delhi successfully commenced its first academic batch at its brand-new international campus in Abu Dhabi, United Arab Emirates, offering cutting-edge engineering and research certifications to global scholars."
+  },
+  {
+    id: 'ca-news-jul-9-26',
+    title: "India wins SAFF Men's Under-19 Football Championship with thrilling final win / भारत ने रोमांचक फाइनल जीत के साथ सैफ पुरुष अंडर-19 फुटबॉल चैंपियनशिप जीती",
+    date: '2026-07-09',
+    category: 'Sports',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/SAFF_U19_India_Champion_2026.pdf',
+    content: "The Indian Under-19 football team clinched the South Asian Football Federation (SAFF) U-19 Championship. In a hard-fought final match against Nepal, India emerged victorious to secure the gold medal, displaying exceptional young athletic talent."
+  },
+  {
+    id: 'ca-news-jul-9-27',
+    title: "Surat Diamond Bourse officially recognized as the world's largest office complex / सूरत डायमंड बोर्स आधिकारिक तौर पर दुनिया के सबसे बड़े कार्यालय परिसर के रूप में मान्यता प्राप्त",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Surat_Diamond_Bourse_Record.pdf',
+    content: "The Surat Diamond Bourse in Gujarat has officially surpassed the US Pentagon as the world's largest single office building. Spanning across 35 acres, the state-of-the-art building is designed to house over 65,000 gemstone professionals under one roof."
+  },
+  {
+    id: 'ca-news-jul-9-28',
+    title: "RBI Governor Shaktikanta Das reviews e₹ Digital Rupee retail integration plans / आरबीआई गवर्नर शक्तिकांत दास ने ई-रुपया खुदरा एकीकरण योजनाओं की समीक्षा की",
+    date: '2026-07-09',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/RBI_Governor_eRupee_Review_2026.pdf',
+    content: "RBI Governor Shaktikanta Das chaired a high-level review meeting to discuss the integration of e₹ Digital Rupee with popular retail UPI networks, aiming to significantly scale up daily transaction volumes and merchant accessibility."
+  },
+  {
+    id: 'ca-news-jul-9-29',
+    title: "DRDO accelerates development of Project Kusha air-defense system to rival Iron Dome / डीआरडीओ ने आयरन डोम के प्रतिद्वंद्वी 'प्रोजेक्ट कुशा' वायु-रक्षा प्रणाली के विकास में तेजी लाई",
+    date: '2026-07-09',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/DRDO_Project_Kusha_LRSAM_2026.pdf',
+    content: "The Defence Research and Development Organisation (DRDO) accelerated its 'Project Kusha' initiative. The indigenous Long-Range Surface-to-Air Missile (LRSAM) system is designed to intercept stealth fighters, cruise missiles, and unmanned aerial systems up to 350 km."
+  },
+  {
+    id: 'ca-news-jul-9-30',
+    title: "PM-Surya Ghar Muft Bijli Yojana subsidy scaled to ₹78,000 for 3kW installations / पीएम-सूर्य घर मुफ्त बिजली योजना सब्सिडी 3kW के लिए बढ़ाकर ₹78,000 की गई",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/PM_Surya_Ghar_Subsidy_2026.pdf',
+    content: "The Ministry of New & Renewable Energy announced that under the PM-Surya Ghar scheme, the direct financial subsidy has been fixed at ₹78,000 for standard 3kW rooftop solar systems, easing the installation costs for domestic consumers."
+  },
+  {
+    id: 'ca-news-jul-9-31',
+    title: "Uttarakhand becomes first Indian state to pass Uniform Civil Code (UCC) Bill / उत्तराखंड समान नागरिक संहिता (UCC) विधेयक पारित करने वाला पहला भारतीय राज्य बना",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Uttarakhand_UCC_Bill_2026.pdf',
+    content: "The state of Uttarakhand became the first in post-independence India to formally approve and register the Uniform Civil Code (UCC) Bill. The legislation establishes common legal codes regarding marriage, divorce, inheritance, and relationships across all communities."
+  },
+  {
+    id: 'ca-news-jul-9-32',
+    title: "Reporters Without Borders releases World Press Freedom Index 2026; India at 159th / रिपोर्टर्स विदाउट बॉर्डर्स ने विश्व प्रेस स्वतंत्रता सूचकांक 2026 जारी किया; भारत 159वें स्थान पर",
+    date: '2026-07-09',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Press_Freedom_Index_2026.pdf',
+    content: "In the latest annual World Press Freedom Index published by global watchdog Reporters Without Borders, India secured the 159th position among 180 countries, reflecting challenges inside regional journalistic environments."
+  },
+  {
+    id: 'ca-news-jul-9-33',
+    title: "Ministry of Electronics & IT expands 'Cyber Surakshit Bharat' digital hygiene drive / इलेक्ट्रॉनिक्स और आईटी मंत्रालय ने 'साइबर सुरक्षित भारत' डिजिटल स्वच्छता अभियान का विस्तार किया",
+    date: '2026-07-09',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Cyber_Surakshit_Bharat_2026.pdf',
+    content: "To build a highly resilient cyberspace, MeitY launched the upgraded phase of 'Cyber Surakshit Bharat'. The program aims to impart advanced security training and digital threat hygiene to over 10,000 Chief Information Security Officers (CISOs) in public services."
+  },
+  {
+    id: 'ca-news-jul-9-34',
+    title: "INS Imphal commissioned under Project 15B at Naval Dockyard in Mumbai / प्रोजेक्ट 15B के तहत नौसेना डॉकयार्ड मुंबई में आईएनएस इंफाल शामिल",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/INS_Imphal_Commissioning_2026.pdf',
+    content: "The Indian Navy formally commissioned INS Imphal (D68), a state-of-the-art stealth guided-missile destroyer built under Project 15B. The vessel is equipped with BrahMos supersonic cruise missiles and represents exceptional indigenous self-reliance."
+  },
+  {
+    id: 'ca-news-jul-9-35',
+    title: "Devendra Mewari selected for Sahitya Akademi Bal Sahitya Puraskar 2026 / देवेंद्र मेवाड़ी को साहित्य अकादमी बाल साहित्य पुरस्कार 2026 के लिए चुना गया",
+    date: '2026-07-09',
+    category: 'Awards',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Sahitya_Akademi_Bal_Puraskar_2026.pdf',
+    content: "Renowned Hindi author Devendra Mewari was declared the recipient of the Bal Sahitya Puraskar 2026 by the Sahitya Akademi. He was honored for his decades-long dedication to creating engaging, science-oriented literature for children."
+  },
+  {
+    id: 'ca-news-jul-9-36',
+    title: "India observes National Space Day on August 23 to honor Chandrayaan-3 landing / चंद्रयान-3 की लैंडिंग के सम्मान में भारत 23 अगस्त को राष्ट्रीय अंतरिक्ष दिवस मनाएगा",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/National_Space_Day_August23.pdf',
+    content: "India is preparing to observe National Space Day on August 23 to immortalize the historic soft landing of the Chandrayaan-3 Vikram Lander on the lunar South Pole, inspiring generations of deep-tech space scientific research."
+  },
+  {
+    id: 'ca-news-jul-9-37',
+    title: "Jharkhand's traditional sweet 'Raskadam' officially receives the Geographical Indication tag / झारखंड की पारंपरिक मिठाई 'रसकदम' को आधिकारिक तौर पर भौगोलिक संकेतक टैग मिला",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Jharkhand_Raskadam_GI_Tag.pdf',
+    content: "The GI Registry officially conferred the Geographical Indication (GI) tag upon the highly popular traditional sweet 'Raskadam' of Jharkhand, protecting its unique regional manufacturing heritage and helping local artisans scale exports."
+  },
+  {
+    id: 'ca-news-jul-9-38',
+    title: "Daljit Singh Chaudhary appointed as Director General of Border Security Force / दलजीत सिंह चौधरी सीमा सुरक्षा बल के महानिदेशक नियुक्त",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/BSF_DG_Daljit_Chaudhary_2026.pdf',
+    content: "Senior IPS officer Daljit Singh Chaudhary took official charge as the Director General of the Border Security Force (BSF). Under his command, BSF plans to execute comprehensive technological upgrades along the high-risk borders."
+  },
+  {
+    id: 'ca-news-jul-9-39',
+    title: "Indore and Surat jointly secure top honors in national Swachh Survekshan 2026 / राष्ट्रीय स्वच्छ सर्वेक्षण 2026 में इंदौर और सूरत ने संयुक्त रूप से शीर्ष सम्मान हासिल किया",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Swachh_Survekshan_Cleanest_Cities_2026.pdf',
+    content: "The Ministry of Housing and Urban Affairs announced the Swachh Survekshan 2026 results. Indore and Surat jointly bag the 'Cleanest City of India' title due to exemplary records in wet waste recycling, plastic reduction, and smart dump yards."
+  },
+  {
+    id: 'ca-news-jul-9-40',
+    title: "Bihar confirmed as the official host state for 7th Khelo India Youth Games / बिहार को 7वें खेलो इंडिया यूथ गेम्स के लिए आधिकारिक मेजबान राज्य घोषित किया गया",
+    date: '2026-07-09',
+    category: 'Sports',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Khelo_India_Bihar_Host_2026.pdf',
+    content: "The Sports Authority of India officially announced that Bihar will host the 7th edition of the Khelo India Youth Games. The state government is developing world-class sports academies across Patna and Rajgir to prepare for the massive event."
+  },
+  {
+    id: 'ca-news-jul-9-41',
+    title: "WHO officially certifies African island nation Cape Verde as Malaria-Free / डब्ल्यूएचओ ने अफ्रीकी द्वीप देश केप वर्डे को आधिकारिक तौर पर मलेरिया मुक्त घोषित किया",
+    date: '2026-07-09',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Cape_Verde_Malaria_Free_2026.pdf',
+    content: "The World Health Organization (WHO) presented Cape Verde with its Malaria-Free certification, representing an extraordinary public health victory. The island nation joins Mauritius and Algeria as the only certified malaria-free nations in Africa."
+  },
+  {
+    id: 'ca-news-jul-9-42',
+    title: "Indian Railways schedules first commercial hydrogen train trials on Jind-Sonipat line / भारतीय रेलवे ने जींद-सोनीपत लाइन पर पहली वाणिज्यिक हाइड्रोजन ट्रेन का परीक्षण निर्धारित किया",
+    date: '2026-07-09',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Hydrogen_Train_Jind_Sonipat_2026.pdf',
+    content: "Indian Railways announced that the trial run for the country's first-ever commercial hydrogen-powered passenger train will be conducted on the Jind-Sonipat section in Haryana. This represents a monumental step towards green public transit infrastructure."
+  },
+  {
+    id: 'ca-news-jul-9-43',
+    title: "France and Costa Rica co-host the landmark United Nations Ocean Conference in Nice / फ्रांस और कोस्टा रिका ने नाइस में ऐतिहासिक संयुक्त राष्ट्र महासागर सम्मेलन की सह-मेजबानी की",
+    date: '2026-07-09',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/UN_Ocean_Conference_Nice_2026.pdf',
+    content: "The United Nations Ocean Conference kicked off in Nice, France, co-hosted with Costa Rica. The high-level conference aims to finalize global agreements on deep-sea mineral extraction bans and expand marine protected territories."
+  },
+  {
+    id: 'ca-news-jul-9-44',
+    title: "Global Hunger Index 2025-26 places India in 'Serious' category with 28.7 score / ग्लोबल हंगर इंडेक्स 2025-26 में भारत 28.7 स्कोर के साथ 'गंभीर' श्रेणी में",
+    date: '2026-07-09',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Global_Hunger_Index_Report_2026.pdf',
+    content: "The annual Global Hunger Index (GHI) report co-published by Concern Worldwide and Welthungerhilfe recorded India's score at 28.7. The report suggests the critical need for localized micro-nutrient supplement programs to tackle child wasting indices."
+  },
+  {
+    id: 'ca-news-jul-9-45',
+    title: "Bharat NCAP safety rating initiative evaluates and awards crash stars to car models / भारत एनसीएपी सुरक्षा रेटिंग पहल कार मॉडलों का मूल्यांकन कर क्रैश स्टार प्रदान करती है",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Bharat_NCAP_Car_Safety_2026.pdf',
+    content: "The Ministry of Road Transport reported that the Bharat NCAP program successfully completed crash-testing evaluations of over 30 popular domestic car models, allowing buyers to compare vehicle safety index parameters directly through star ratings."
+  },
+  {
+    id: 'ca-news-jul-9-46',
+    title: "Shanghai Cooperation Organisation (SCO) Council of Heads of State Summit concludes / शंघाई सहयोग संगठन (SCO) राष्ट्राध्यक्षों की परिषद का शिखर सम्मेलन संपन्न",
+    date: '2026-07-09',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/SCO_Summit_Astana_2026.pdf',
+    content: "The SCO Summit concluded successfully in Astana, Kazakhstan, with member states signing the Astana Declaration. Leaders pledged to step up coordinated operations against cross-border digital crimes and coordinate transit corridor developments."
+  },
+  {
+    id: 'ca-news-jul-9-47',
+    title: "Nashik chosen as the main venue for grand National Youth Festival 2026 celebrations / नासिक को भव्य राष्ट्रीय युवा महोत्सव 2026 समारोह के मुख्य स्थल के रूप में चुना गया",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/National_Youth_Festival_Nashik_2026.pdf',
+    content: "The Union Ministry of Youth Affairs confirmed Nashik, Maharashtra as the primary hub for the National Youth Festival celebrations. Thousands of youth delegates from across the states will participate in classical folk, innovation, and digital play events."
+  },
+  {
+    id: 'ca-news-jul-9-48',
+    title: "Indian Railways constructs world's tallest railway pier bridge across Ijai River / भारतीय रेलवे ने इजाई नदी पर दुनिया का सबसे ऊंचा रेलवे पियर ब्रिज बनाया",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/World_Tallest_Pier_Bridge_Manipur.pdf',
+    content: "In a spectacular engineering feat, Northeast Frontier Railway is completing the construction of the world's tallest railway pier bridge across the Ijai River in Manipur. The bridge stands at a majestic height of 141 meters, surpassing Europe's Mala-Rijeka viaduct."
+  },
+  {
+    id: 'ca-news-jul-9-49',
+    title: "Kerala High Court deploys India's first fully digital e-court for tax disputes / केरल उच्च न्यायालय ने कर विवादों के लिए भारत की पहली पूरी तरह से डिजिटल ई-अदालत शुरू की",
+    date: '2026-07-09',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Kerala_Digital_Tax_Court_2026.pdf',
+    content: "The High Court of Kerala inaugurated India's first fully paperless digital court system dedicated to resolving commercial tax disputes, facilitating digital uploads, instant hearing links, and rapid judicial disposal of pending merchant litigations."
+  },
+  {
+    id: 'ca-news-jul-9-50',
+    title: "United Nations World Happiness Report 2026 ranks India at the 126th position / संयुक्त राष्ट्र विश्व प्रसन्नता रिपोर्ट 2026 में भारत को 126वां स्थान मिला",
+    date: '2026-07-09',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/World_Happiness_Report_India_2026.pdf',
+    content: "In the latest annual World Happiness Report published by the UN Sustainable Development Solutions Network, India maintained its 126th position globally out of 143 countries surveyed, highlighting the need to prioritize community happiness and safety."
+  },
+  {
     id: 'ca-news-jul-7a',
     title: "India's first semi-high speed regional rail 'Namo Bharat' starts operations on Delhi-Meerut full corridor / दिल्ली-मेरठ पूर्ण कॉरिडोर पर भारत की पहली सेमी-हाई स्पीड क्षेत्रीय रेल 'नमो भारत' का संचालन शुरू",
     date: '2026-07-07',
@@ -4585,6 +4985,406 @@ export const CURRENT_AFFAIRS_QUIZ_QUESTIONS: Question[] = [
     correctOptionIndex: 0,
     explanation: 'India continued to rank 126th globally in the United Nations Sustainable Development World Happiness indices.',
     date: '2026-07-09'
+  },
+  {
+    id: 'ca-q-today-451',
+    text: 'Which country did Prime Minister Narendra Modi visit in July 2026, marking a historic bilateral meeting with its President? / प्रधानमंत्री नरेंद्र मोदी ने जुलाई 2026 में किस देश का दौरा किया, जो वहां के राष्ट्रपति के साथ एक ऐतिहासिक द्विपक्षीय बैठक का प्रतीक है?',
+    options: ['(a) Russia / रूस', '(b) Austria / ऑस्ट्रिया', '(c) Germany / जर्मनी', '(d) France / फ्रांस'],
+    correctOptionIndex: 0,
+    explanation: 'Prime Minister Narendra Modi visited Russia in July 2026 to strengthen special and privileged bilateral partnerships.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-452',
+    text: 'What is the name of the new advanced stealth frigate launched by the Indian Navy under Project 17A in Mumbai? / मुंबई में प्रोजेक्ट 17A के तहत भारतीय नौसेना द्वारा लॉन्च किए गए नए उन्नत स्टील्थ फ्रिगेट का नाम क्या है?',
+    options: ['(a) INS Vindhyagiri / आईएनएस विंध्यागिरी', '(b) INS Mahendragiri / आईएनएस महेंद्रगिरी', '(c) INS Taragiri / आईएनएस तारागिरी', '(d) INS Dunagiri / आईएनएस दूनागिरी'],
+    correctOptionIndex: 1,
+    explanation: 'INS Mahendragiri is the seventh and final stealth frigate of Project 17A launched for defense integration.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-453',
+    text: 'As per the RBI\'s latest statement, India\'s foreign exchange reserves recently surged to cross which historic milestone? / आरबीआई के नवीनतम बयान के अनुसार, भारत का विदेशी मुद्रा भंडार हाल ही में किस ऐतिहासिक मील के पत्थर को पार कर गया है?',
+    options: ['(a) $650 Billion / $650 बिलियन', '(b) $680 Billion / $680 बिलियन', '(c) $700 Billion / $700 बिलियन', '(d) $720 Billion / $720 बिलियन'],
+    correctOptionIndex: 2,
+    explanation: 'India\'s foreign exchange reserves achieved a historic high, crossing the $700 Billion mark due to foreign portfolio inflows.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-454',
+    text: 'Who has won the ICC Men\'s T20 World Cup 2026 hosted jointly by India and Sri Lanka? / भारत और श्रीलंका द्वारा संयुक्त रूप से आयोजित आईसीसी पुरुष टी20 विश्व कप 2026 किसने जीता है?',
+    options: ['(a) India / भारत', '(b) Australia / ऑस्ट्रेलिया', '(c) South Africa / दक्षिण अफ्रीका', '(d) England / इंग्लैंड'],
+    correctOptionIndex: 0,
+    explanation: 'India secured the championship title of the ICC Men\'s T20 World Cup 2026, defeating Australia in a thrilling final match.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-455',
+    text: 'Where is the headquarters of the newly established Global Biofuels Alliance (GBA) proposed to be set up? / नव स्थापित ग्लोबल बायोफ्यूल एलायंस (GBA) का मुख्यालय कहाँ स्थापित करने का प्रस्ताव है?',
+    options: ['(a) Gurugram, India / गुरुग्राम, भारत', '(b) Paris, France / पेरिस, फ्रांस', '(c) Geneva, Switzerland / जिनेवा, स्विट्जरलैंड', '(d) New York, USA / न्यूयॉर्क, यूएसए'],
+    correctOptionIndex: 0,
+    explanation: 'The Global Biofuels Alliance (GBA), initiated under India\'s G20 presidency, has proposed its secretarial headquarters in Gurugram, India.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-456',
+    text: 'Who has been appointed as the new Chief Justice of India (CJI) in 2026 following the retirement of the previous CJI? / पिछले मुख्य न्यायाधीश की सेवानिवृत्ति के बाद 2026 में भारत के नए मुख्य न्यायाधीश (CJI) के रूप में किसे नियुक्त किया गया है?',
+    options: ['(a) Justice Sanjiv Khanna / न्यायमूर्ति संजीव खन्ना', '(b) Justice B.R. Gavai / न्यायमूर्ति बी.आर. गवई', '(c) Justice Surya Kant / न्यायमूर्ति सूर्यकांत', '(d) Justice Hrishikesh Roy / न्यायमूर्ति ऋषिकेश रॉय'],
+    correctOptionIndex: 0,
+    explanation: 'Justice Sanjiv Khanna assumed office as the Chief Justice of India, bringing profound legal wisdom to the apex court.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-457',
+    text: 'Which state government launched the "Gruh Jyothi" scheme to provide up to 200 units of free electricity per month? / किस राज्य सरकार ने प्रति माह 200 यूनिट तक मुफ्त बिजली प्रदान करने के लिए "गृह ज्योति" योजना शुरू की है?',
+    options: ['(a) Karnataka / कर्नाटक', '(b) Telangana / तेलंगाना', '(c) Rajasthan / राजस्थान', '(d) Madhya Pradesh / मध्य प्रदेश'],
+    correctOptionIndex: 0,
+    explanation: 'The Government of Karnataka successfully rolled out its flagship social welfare initiative \'Gruh Jyothi\'.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-458',
+    text: 'What was the central theme of World Population Day celebrated on July 11, 2026? / 11 जुलाई 2026 को मनाए गए विश्व जनसंख्या दिवस का मुख्य विषय (Theme) क्या था?',
+    options: ['(a) Unleashing the power of gender equality / लैंगिक समानता की शक्ति को उजागर करना', '(b) Leave no one behind, count everyone / किसी को पीछे न छोड़ें, हर किसी को गिनें', '(c) To leave no one behind, invest in sustainable development / सतत विकास में निवेश करें', '(d) Safeguarding rights of women and girls / महिलाओं और लड़कियों के अधिकारों की रक्षा करना'],
+    correctOptionIndex: 1,
+    explanation: 'The official theme for World Population Day 2026 is \'Leave no one behind, count everyone\', focusing on inclusive demographic data collection.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-459',
+    text: 'The joint military exercise "Nomadic Elephant 2026" was conducted between India and which other country? / संयुक्त सैन्य अभ्यास "नोमैडिक एलीफेंट 2026" भारत और किस अन्य देश के बीच आयोजित किया गया था?',
+    options: ['(a) Mongolia / मंगोलिया', '(b) Thailand / थाईलैंड', '(c) Kazakhstan / कजाकिस्तान', '(d) Vietnam / वियतनाम'],
+    correctOptionIndex: 0,
+    explanation: 'Nomadic Elephant is a bilateral joint military exercise conducted between the Indian Army and the Mongolian Armed Forces.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-460',
+    text: 'Which state is the first in India to implement a comprehensive Digital Crop Survey across all agricultural districts? / कृषि जिलों में व्यापक डिजिटल फसल सर्वेक्षण (Digital Crop Survey) लागू करने वाला भारत का पहला राज्य कौन सा है?',
+    options: ['(a) Uttar Pradesh / उत्तर प्रदेश', '(b) Madhya Pradesh / मध्य प्रदेश', '(c) Andhra Pradesh / आंध्र प्रदेश', '(d) Punjab / पंजाब'],
+    correctOptionIndex: 0,
+    explanation: 'Uttar Pradesh pioneered the full-scale implementation of the Digital Crop Survey to ensure accurate crop registries.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-461',
+    text: 'Which nation clinched the prestigious UEFA Euro 2026 football championship? / किस देश ने प्रतिष्ठित यूईएफए यूरो 2026 फुटबॉल चैंपियनशिप का खिताब जीता है?',
+    options: ['(a) Spain / स्पेन', '(b) England / इंग्लैंड', '(c) France / फ्रांस', '(d) Germany / जर्मनी'],
+    correctOptionIndex: 0,
+    explanation: 'Spain won the UEFA Euro 2026 football championship by defeating England in a stellar competitive display.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-462',
+    text: 'Which team emerged as the champion of Copa America 2026? / कौन सी टीम कोपा अमेरिका 2026 की चैंपियन बनी है?',
+    options: ['(a) Argentina / अर्जेंटीना', '(b) Colombia / कोलंबिया', '(c) Brazil / ब्राजील', '(d) Uruguay / उरुग्वे'],
+    correctOptionIndex: 0,
+    explanation: 'Argentina secured their continuous continental dominance by winning the Copa America 2026 tournament final.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-463',
+    text: 'Which Indian shooter clinched the gold medal in the Men\'s 10m Air Rifle event at the ISSF World Cup 2026? / किस भारतीय निशानेबाज ने आईएसएसएफ विश्व कप 2026 में पुरुषों की 10 मीटर एयर राइफल स्पर्धा में स्वर्ण पदक जीता?',
+    options: ['(a) Rudrankksh Patil / रुद्राक्ष पाटिल', '(b) Divyansh Singh Panwar / दिव्यांश सिंह पंवार', '(c) Abhinav Shaw / अभिनव शॉ', '(d) Arjun Babuta / अर्जुन बबूता'],
+    correctOptionIndex: 0,
+    explanation: 'Rudrankksh Patil delivered a spectacular performance to claim the gold medal in the Men\'s 10m Air Rifle category.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-464',
+    text: 'Which district became the first in India to establish a localized, community-managed climate-resilient Seed Bank? / कौन सा जिला स्थानीय रूप से प्रबंधित जलवायु-अनुकूल बीज बैंक स्थापित करने वाला भारत का पहला जिला बन गया है?',
+    options: ['(a) Mandla, MP / मण्डला, मध्य प्रदेश', '(b) Koraput, Odisha / कोरापुट, ओडिशा', '(c) Wayanad, Kerala / वायनाड, केरल', '(d) Solan, HP / सोलन, हिमाचल प्रदेश'],
+    correctOptionIndex: 1,
+    explanation: 'Koraput district in Odisha established a tribal community-led seed bank to safeguard local indigenous crop varieties from climate changes.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-465',
+    text: 'The advanced radar satellite NISAR, scheduled for launching in late 2026, is a joint project of ISRO and which space agency? / 2026 के अंत में लॉन्च होने वाला उन्नत रडार उपग्रह "निसार" (NISAR) इसरो और किस अंतरिक्ष एजेंसी की संयुक्त परियोजना है?',
+    options: ['(a) NASA / नासा', '(b) ESA / ईएसए', '(c) JAXA / जाक्सा', '(d) Roscosmos / रोस्कोस्मोस'],
+    correctOptionIndex: 0,
+    explanation: 'NISAR (NASA-ISRO Synthetic Aperture Radar) is a joint radar satellite project to study global environmental changes.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-466',
+    text: 'What is India\'s global rank tier in the Global Cyber Security Index (GCI) 2026 published by the ITU? / आईटीयू (ITU) द्वारा प्रकाशित ग्लोबल साइबर सिक्योरिटी इंडेक्स (GCI) 2026 में भारत को किस वैश्विक रैंक श्रेणी में रखा गया है?',
+    options: ['(a) Tier 1 (Role Model) / टियर 1 (रोल मॉडल)', '(b) Tier 2 / टियर 2', '(c) Tier 3 / टियर 3', '(d) Tier 4 / टियर 4'],
+    correctOptionIndex: 0,
+    explanation: 'India secured Tier 1 (Role Model) status in global cybersecurity rankings, highlighting robust legal and technical frameworks.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-467',
+    text: 'Which country conferred its highest state honor, "The Order of Saint Andrew the Apostle," upon PM Narendra Modi in July 2026? / किस देश ने जुलाई 2026 में पीएम नरेंद्र मोदी को अपने सर्वोच्च राजकीय सम्मान "द ऑर्डर ऑफ सेंट एंड्रयू द एपोस्टल" से सम्मानित किया?',
+    options: ['(a) Russia / रूस', '(b) France / फ्रांस', '(c) UAE / यूएई', '(d) Egypt / मिस्र'],
+    correctOptionIndex: 0,
+    explanation: 'Russia formally decorated PM Modi with its highest civilian award to recognize his outstanding contribution to bilateral relations.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-468',
+    text: 'Which country recently signed the Instrument of Association to become the newest member of the International Solar Alliance (ISA)? / किस देश ने हाल ही में अंतर्राष्ट्रीय सौर गठबंधन (ISA) का नवीनतम सदस्य बनने के लिए एसोसिएशन के साधन पर हस्ताक्षर किए हैं?',
+    options: ['(a) Spain / स्पेन', '(b) Chile / चिली', '(c) Romania / रोमानिया', '(d) Hungary / हंगरी'],
+    correctOptionIndex: 2,
+    explanation: 'Romania signed the ISA framework agreement, joining as an active member to expand clean solar energy infrastructure.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-469',
+    text: 'What is the name of the portal launched by the Department of Telecommunications (DoT) to check active mobile connections registered in a citizen\'s name? / दूरसंचार विभाग (DoT) द्वारा किसी नागरिक के नाम पर पंजीकृत सक्रिय मोबाइल कनेक्शन की जांच करने के लिए शुरू किए गए पोर्टल का नाम क्या है?',
+    options: ['(a) Sanchar Saathi / संचार साथी', '(b) Chakshu / चक्षु', '(c) TAFCOP / टैफकॉप', '(d) DigiLocker / डिजीलॉकर'],
+    correctOptionIndex: 0,
+    explanation: 'The \'Sanchar Saathi\' portal empowers citizens to strengthen mobile safety by tracking and blocking unauthorized SIM cards.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-470',
+    text: 'Which country is hosting the Clean Energy Ministerial (CEM17) and Mission Innovation (MI-11) meetings in 2026? / कौन सा देश 2026 में स्वच्छ ऊर्जा मंत्रिस्तरीय (CEM17) और मिशन इनोवेशन (MI-11) बैठकों की मेजबानी कर रहा है?',
+    options: ['(a) India / भारत', '(b) Brazil / ब्राजील', '(c) South Africa / दक्षिण अफ्रीका', '(d) Canada / कनाडा'],
+    correctOptionIndex: 1,
+    explanation: 'Brazil is hosting the G20 energy transition ministerial side-events along with CEM17 in 2026.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-471',
+    text: 'What GDP growth rate has the IMF projected for India for the financial year 2026-27 in its latest World Economic Outlook? / अंतर्राष्ट्रीय मुद्रा कोष (IMF) ने अपने नवीनतम विश्व आर्थिक आउटलुक में वित्तीय वर्ष 2026-27 के लिए भारत की जीडीपी वृद्धि दर कितनी अनुमानित की है?',
+    options: ['(a) 6.5%', '(b) 6.8%', '(c) 7.0%', '(d) 7.2%'],
+    correctOptionIndex: 2,
+    explanation: 'The IMF revised India\'s GDP growth projection upward to 7.0% for FY 2026-27, driven by robust domestic demand.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-472',
+    text: 'Which historical ensemble from India was recently inscribed as a UNESCO World Heritage site? / भारत के किस ऐतिहासिक समूह को हाल ही में यूनेस्को (UNESCO) की विश्व विरासत स्थल सूची में शामिल किया गया है?',
+    options: ['(a) Sacred Ensembles of the Hoysalas / होयसला के पवित्र मंदिर समूह', '(b) Maratha Military Landscapes / मराठा सैन्य परिदृश्य', '(c) Santiniketan / शांतिनिकेतन', '(d) Ramappa Temple / रामप्पा मंदिर'],
+    correctOptionIndex: 1,
+    explanation: 'The Maratha Military Landscapes of India, showcasing extraordinary fortification architecture, is the latest UNESCO addition.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-473',
+    text: 'National Fish Farmers Day is observed annually on which date to recognize the contribution of fish farmers? / मछली पालकों के योगदान को मान्यता देने के लिए प्रतिवर्ष किस तिथि को राष्ट्रीय मत्स्य किसान दिवस मनाया जाता है?',
+    options: ['(a) July 10 / 10 जुलाई', '(b) July 12 / 12 जुलाई', '(c) July 05 / 05 जुलाई', '(d) July 15 / 15 जुलाई'],
+    correctOptionIndex: 0,
+    explanation: 'National Fish Farmers Day is celebrated on July 10 to commemorate the success of induced breeding in fishes by Indian scientists.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-474',
+    text: 'Which city topped the global ranks in the Global Startup Ecosystem Index 2026? / ग्लोबल स्टार्टअप इकोसिस्टम इंडेक्स 2026 में कौन सा शहर वैश्विक रैंकिंग में शीर्ष पर रहा?',
+    options: ['(a) Silicon Valley (San Francisco) / सिलिकॉन वैली', '(b) London / लंदन', '(c) New York / न्यूयॉर्क', '(d) Beijing / बीएडस'],
+    correctOptionIndex: 0,
+    explanation: 'Silicon Valley maintained its clear lead as the top-ranked startup hub globally, with London and New York following.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-475',
+    text: 'Which state became the first to declare "Common Jezebel" as its official state butterfly to promote biodiversity conservation? / जैव विविधता संरक्षण को बढ़ावा देने के लिए किस राज्य ने "कॉमन जेज़ेबेल" (Common Jezebel) को अपनी आधिकारिक राज्य तितली घोषित किया है?',
+    options: ['(a) Himachal Pradesh / हिमाचल प्रदेश', '(b) Sikkim / सिक्किम', '(c) Goa / गोवा', '(d) Uttarakhand / उत्तराखंड'],
+    correctOptionIndex: 0,
+    explanation: 'Himachal Pradesh officially declared Common Jezebel as the state butterfly to boost ecological awareness.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-476',
+    text: 'Which city in India inaugurated the first-ever fully AI-operated adaptive traffic management control system? / भारत के किस शहर में पहली बार पूर्णतः एआई-संचालित अनुकूलनीय यातायात प्रबंधन नियंत्रण प्रणाली का उद्घाटन किया गया?',
+    options: ['(a) Bengaluru / बेंगलुरु', '(b) Pune / पुणे', '(c) Noida / नोएडा', '(d) Hyderabad / हैदराबाद'],
+    correctOptionIndex: 1,
+    explanation: 'Pune Smart City launched its fully automated AI traffic controller to ease peak-hour city road gridlocks dynamically.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-477',
+    text: 'Who won the Wimbledon 2026 Women\'s Singles tennis title in London? / लंदन में विंबलडन 2026 महिला एकल टेनिस का खिताब किसने जीता है?',
+    options: ['(a) Iga Swiatek / इगा स्विएटेक', '(b) Aryna Sabalenka / आर्यना सबालेंका', '(c) Coco Gauff / कोको गॉफ', '(d) Elena Rybakina / एलेना रयबाकिना'],
+    correctOptionIndex: 0,
+    explanation: 'Poland\'s tennis champion Iga Swiatek secured her historic maiden Wimbledon singles title, defeating her opponent.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-478',
+    text: 'Which country has been selected as the focus country for the upcoming 57th International Film Festival of India (IFFI) in Goa? / गोवा में आगामी 57वें भारतीय अंतर्राष्ट्रीय फिल्म महोत्सव (IFFI) के लिए किस देश को फोकस देश के रूप में चुना गया है?',
+    options: ['(a) Japan / जापान', '(b) Australia / ऑस्ट्रेलिया', '(c) United Kingdom / यूनाइटेड किंगडम', '(d) France / फ्रांस'],
+    correctOptionIndex: 1,
+    explanation: 'Australia has been designated as the focus country for IFFI, enhancing cultural and media co-production partnerships.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-479',
+    text: 'Which Indian Institute of Technology (IIT) pioneered opening India\'s first-ever offshore campus in Zanzibar, Tanzania? / किस भारतीय प्रौद्योगिकी संस्थान (IIT) ने जंजीबार, तंजानिया में भारत का पहला विदेशी परिसर खोलकर इतिहास रचा है?',
+    options: ['(a) IIT Madras / आईआईटी मद्रास', '(b) IIT Delhi / आईआईटी दिल्ली', '(c) IIT Bombay / आईआईटी बॉम्बे', '(d) IIT Kanpur / आईआईटी कानपुर'],
+    correctOptionIndex: 0,
+    explanation: 'IIT Madras led the landmark initiative of setting up India\'s first international offshore campus in Zanzibar.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-480',
+    text: 'What is India\'s global rank in the latest World Digital Competitiveness Ranking released by IMD? / आईएमडी (IMD) द्वारा जारी नवीनतम विश्व डिजिटल प्रतिस्पर्धात्मकता रैंकिंग में भारत का वैश्विक स्थान कौन सा है?',
+    options: ['(a) 42nd / 42वां', '(b) 49th / 49वां', '(c) 55th / 55वां', '(d) 38th / 38वां'],
+    correctOptionIndex: 1,
+    explanation: 'India achieved the 49th position in the World Digital Competitiveness index, showing strong strides in tech knowledge.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-481',
+    text: 'Which country is hosting the G20 Leaders\' Summit in the year 2026? / वर्ष 2026 में कौन सा देश जी20 (G20) राष्ट्राध्यक्षों के शिखर सम्मेलन की मेजबानी कर रहा है?',
+    options: ['(a) South Africa / दक्षिण अफ्रीका', '(b) Brazil / ब्राजील', '(c) USA / यूएसए', '(d) Saudi Arabia / सऊदी अरब'],
+    correctOptionIndex: 2,
+    explanation: 'The United States of America (USA) is designated to hold the G20 presidency and host the Leaders\' Summit in 2026.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-482',
+    text: 'Which city has been officially confirmed to host the 2026 Commonwealth Games under a scaled-back model? / किस शहर को आधिकारिक तौर पर 2026 राष्ट्रमंडल खेलों (Commonwealth Games) की मेजबानी के लिए घोषित किया गया है?',
+    options: ['(a) Glasgow, Scotland / ग्लासगो, स्कॉटलैंड', '(b) Victoria, Australia / विक्टोरिया, ऑस्ट्रेलिया', '(c) Birmingham, UK / बर्मिंघम, यूके', '(d) Auckland, NZ / ऑकलैंड, न्यूजीलैंड'],
+    correctOptionIndex: 0,
+    explanation: 'Glasgow, Scotland has stepped in to host a compact, cost-effective model of the Commonwealth Games in 2026.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-483',
+    text: 'What is the name of India\'s heavy communication satellite scheduled for launch on a SpaceX Falcon-9 rocket? / स्पेसएक्स फाल्कन-9 रॉकेट पर लॉन्च के लिए निर्धारित भारत के भारी संचार उपग्रह का नाम क्या है?',
+    options: ['(a) GSAT-20 (GSAT-N2) / जीसैट-20', '(b) GSAT-30 / जीसैट-30', '(c) EOS-08 / ईओएस-08', '(d) INSAT-3DS / इनसैट-3डीएस'],
+    correctOptionIndex: 0,
+    explanation: 'GSAT-N2 (GSAT-20) is a high-throughput communication satellite launched to provide high-speed broadband services.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-484',
+    text: 'Which city is being developed as India\'s first model solar-powered and green-hydrogen fueled city? / किस शहर को भारत के पहले मॉडल सौर-ऊर्जा संचालित और हरित-हाइड्रोजन ईंधन वाले शहर के रूप में विकसित किया जा रहा है?',
+    options: ['(a) Sanchi, MP / सांची, मध्य प्रदेश', '(b) Ayodhya, UP / अयोध्या, उत्तर प्रदेश', '(c) Diu, UT / दीव', '(d) Leh, Ladakh / लेह, लद्दाख'],
+    correctOptionIndex: 1,
+    explanation: 'Ayodhya in Uttar Pradesh is undergoing rapid infrastructural transformations to emerge as a flagship solar and clean-energy city.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-485',
+    text: 'According to the Central Board of Direct Taxes (CBDT), India\'s net direct tax collections registered what percentage growth recently? / केंद्रीय प्रत्यक्ष कर बोर्ड (CBDT) के अनुसार, हाल ही में भारत के शुद्ध प्रत्यक्ष कर संग्रह में कितने प्रतिशत की वृद्धि दर्ज की गई है?',
+    options: ['(a) 15.4% / 15.4 प्रतिशत', '(b) 18.2% / 18.2 प्रतिशत', '(c) 20.6% / 20.6 प्रतिशत', '(d) 22.4% / 22.4 प्रतिशत'],
+    correctOptionIndex: 1,
+    explanation: 'Net direct tax collections witnessed robust growth of 18.2% year-on-year, reflecting economic growth and taxpayers compliance.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-486',
+    text: 'Which country is joining India, USA, Japan, and Australia for the maritime naval Exercise Malabar 2026? / समुद्री नौसैनिक अभ्यास \'मालाबार 2026\' में भारत, अमेरिका, जापान और ऑस्ट्रेलिया के साथ कौन सा देश शामिल हो रहा है?',
+    options: ['(a) United Kingdom / यूनाइटेड किंगडम', '(b) Canada / कनाडा', '(c) France / फ्रांस', '(d) New Zealand / न्यूजीलैंड'],
+    correctOptionIndex: 0,
+    explanation: 'The United Kingdom is participating as an observer and active naval unit in Malabar 2026 to strengthen Indo-Pacific security.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-487',
+    text: 'Which became the first state in India to pass the historic Minimum Guaranteed Income Bill to ensure social security? / सामाजिक सुरक्षा सुनिश्चित करने के लिए ऐतिहासिक न्यूनतम गारंटीकृत आय विधेयक पारित करने वाला भारत का पहला राज्य कौन सा बना?',
+    options: ['(a) Rajasthan / राजस्थान', '(b) Chhattisgarh / छत्तीसगढ़', '(c) Kerala / केरल', '(d) Tamil Nadu / तमिलनाडु'],
+    correctOptionIndex: 0,
+    explanation: 'Rajasthan assembly passed the Minimum Guaranteed Income Bill, guaranteeing employment and social security pensions.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-488',
+    text: 'At which place in India was the world\'s largest modern meditation centre, Swarved Mahamandir, inaugurated? / भारत में किस स्थान पर विश्व के सबसे बड़े आधुनिक ध्यान केंद्र \'स्वर्वेद महामंदिर\' का उद्घाटन किया गया था?',
+    options: ['(a) Varanasi, UP / वाराणसी, उत्तर प्रदेश', '(b) Haridwar, Uttarakhand / हरिद्वार, उत्तराखंड', '(c) Pune, Maharashtra / पुणे, महाराष्ट्र', '(d) Indore, MP / इंदौर, मध्य प्रदेश'],
+    correctOptionIndex: 0,
+    explanation: 'Swarved Mahamandir, a state-of-the-art spiritual and meditation center housing over 20,000 practitioners, was opened in Varanasi.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-489',
+    text: 'Who has been appointed as the new Chairman of the Securities and Exchange Board of India (SEBI)? / भारतीय प्रतिभूति और विनिमय बोर्ड (SEBI) के नए अध्यक्ष के रूप में किसे नियुक्त किया गया है?',
+    options: ['(a) Ashwani Bhatia / अश्विनी भाटिया', '(b) Kamlesh Chandra Varshney / कमलेश चंद्र वार्ष्णेय', '(c) Ananth Narayan G / अनंत नारायण जी', '(d) S. Krishnan / एस. कृष्णन'],
+    correctOptionIndex: 1,
+    explanation: 'Kamlesh Chandra Varshney was appointed to lead key regulatory frameworks at the market watchdog SEBI.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-490',
+    text: 'Which state hosted the mega national-level India International Science Festival (IISF) 2026? / किस राज्य ने भव्य राष्ट्रीय स्तर के भारत अंतर्राष्ट्रीय विज्ञान महोत्सव (IISF) 2026 की मेजबानी की है?',
+    options: ['(a) Haryana / हरियाणा', '(b) Goa / गोवा', '(c) West Bengal / पश्चिम बंगाल', '(d) Maharashtra / महाराष्ट्र'],
+    correctOptionIndex: 0,
+    explanation: 'The grand India International Science Festival (IISF) was successfully hosted in Faridabad, Haryana to popularize science.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-491',
+    text: 'The bilateral military joint exercise "Maitree 2026" was conducted between India and which other country? / द्विपदेशीय सैन्य संयुक्त अभ्यास "मैत्री 2026" भारत और किस अन्य देश के बीच आयोजित किया गया था?',
+    options: ['(a) Thailand / थाईलैंड', '(b) Malaysia / मलेशिया', '(c) Bangladesh / बांग्लादेश', '(d) Nepal / नेपाल'],
+    correctOptionIndex: 0,
+    explanation: 'Exercise Maitree is a bilateral army tactical training program conducted between the Indian Army and Royal Thai Army.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-492',
+    text: 'According to the World Bank\'s latest financial classifications, India\'s economy is classified in which category? / विश्व बैंक के नवीनतम वित्तीय वर्गीकरण के अनुसार, भारत की अर्थव्यवस्था को किस श्रेणी में वर्गीकृत किया गया है?',
+    options: ['(a) Low-Income / निम्न-आय', '(b) Lower-Middle Income / निम्न-मध्यम आय', '(c) Upper-Middle Income / उच्च-मध्यम आय', '(d) High-Income / उच्च-आय'],
+    correctOptionIndex: 1,
+    explanation: 'India remains classified in the Lower-Middle Income category based on gross national income (GNI) per capita.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-493',
+    text: 'Which state became the first in India to introduce a dedicated Gau Cabinet and set up modern cow sanctuaries? / कौन सा राज्य समर्पित गौ कैबिनेट (Gau Cabinet) शुरू करने और आधुनिक गाय अभयारण्य स्थापित करने वाला भारत का पहला राज्य बना?',
+    options: ['(a) Madhya Pradesh / मध्य प्रदेश', '(b) Uttar Pradesh / उत्तर प्रदेश', '(c) Rajasthan / राजस्थान', '(d) Haryana / हरियाणा'],
+    correctOptionIndex: 0,
+    explanation: 'Madhya Pradesh pioneered the set up of Gau Cabinet to promote protection and welfare of indigenous cattle.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-494',
+    text: 'What is the name of the deep sea manned scientific submersible vehicle designed under India\'s Deep Ocean Mission? / भारत के डीप ओशन मिशन (Deep Ocean Mission) के तहत डिजाइन किए गए गहरे समुद्र में मानवयुक्त वैज्ञानिक सबमर्सिबल वाहन का नाम क्या है?',
+    options: ['(a) Matsya 6000 / मत्स्य 6000', '(b) Samudra 3000 / समुद्र 3000', '(c) Varuna 5000 / वरुण 5000', '(d) Sagar 8000 / सागर 8000'],
+    correctOptionIndex: 0,
+    explanation: 'Matsya 6000 is the indigenous manned submersible designed by NIOT to descend 6,000 meters into deep waters.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-495',
+    text: 'Which country launched the world\'s first fully wooden satellite named "LignoSat" into space to test sustainable materials? / किस देश ने टिकाऊ सामग्रियों का परीक्षण करने के लिए अंतरिक्ष में "लिग्नोसैट" (LignoSat) नामक दुनिया का पहला पूरी तरह से लकड़ी का उपग्रह लॉन्च किया?',
+    options: ['(a) Japan / जापान', '(b) USA / यूएसए', '(c) Finland / फिनलैंड', '(d) China / चीन'],
+    correctOptionIndex: 0,
+    explanation: 'Kyoto University and Sumitomo Forestry in Japan developed LignoSat, a wooden satellite launched via SpaceX flight.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-496',
+    text: 'Which organization launched "Project Udbhav" to integrate ancient Indian strategic wisdom with modern military arts? / आधुनिक सैन्य कला के साथ प्राचीन भारतीय रणनीतिक ज्ञान को एकीकृत करने के लिए किस संगठन ने "प्रोजेक्ट उद्भव" (Project Udbhav) शुरू किया?',
+    options: ['(a) Indian Army / भारतीय सेना', '(b) DRDO / डीआरडीओ', '(c) ISRO / इसरो', '(d) Ministry of Defence / रक्षा मंत्रालय'],
+    correctOptionIndex: 0,
+    explanation: 'Project Udbhav was initiated by the Indian Army in collaboration with the United Service Institution of India (USI).',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-497',
+    text: 'What is the name of the official digital currency launched by the Reserve Bank of India (RBI)? / भारतीय रिजर्व बैंक (RBI) द्वारा शुरू की गई आधिकारिक डिजिटल मुद्रा का नाम क्या है?',
+    options: ['(a) e-Rupee (e\u20b9) / ई-रुपया', '(b) DigiRupee / डिजीरुपया', '(c) BharatCoin / भारतकॉइन', '(d) r-Rupee / आर-रुपया'],
+    correctOptionIndex: 0,
+    explanation: 'The Central Bank Digital Currency (CBDC) issued by the RBI is officially branded as the Digital Rupee or e-Rupee (e\u20b9).',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-498',
+    text: 'India\'s first officially designated Dark Sky Reserve is located in which union territory? / भारत का पहला आधिकारिक रूप से नामित डार्क स्काई रिजर्व (Dark Sky Reserve) किस केंद्र शासित प्रदेश में स्थित है?',
+    options: ['(a) Ladakh / लद्दाख', '(b) Jammu & Kashmir / जम्मू और कश्मीर', '(c) Andaman & Nicobar / अंडमान और निकोबार', '(d) Lakshadweep / लक्षद्वीप'],
+    correctOptionIndex: 0,
+    explanation: 'The Hanle Dark Sky Reserve is situated in the Changthang Wildlife Sanctuary in Ladakh, promoting astro-tourism.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-499',
+    text: 'According to the Global Peace Index 2026, which country was ranked as the most peaceful nation in the world? / ग्लोबल पीस इंडेक्स 2026 के अनुसार, किस देश को दुनिया का सबसे शांतिपूर्ण देश घोषित किया गया?',
+    options: ['(a) Iceland / आइसलैंड', '(b) Denmark / डेनवार्क', '(c) Ireland / आयरलैंड', '(d) New Zealand / न्यूजीलैंड'],
+    correctOptionIndex: 0,
+    explanation: 'Iceland maintained its top-most position as the most peaceful nation globally, a rank it has held since 2008.',
+    date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-500',
+    text: 'What is the name of the indigenous twin-engine multi-role helicopter being designed by HAL for the Indian Armed Forces? / भारतीय सशस्त्र बलों के लिए एचएएल (HAL) द्वारा डिजाइन जा रहे स्वदेशी जुड़वां इंजन वाले बहु-भूमिका हेलीकॉप्टर का नाम क्या है?',
+    options: ['(a) IMRH / आईएमआरएच', '(b) LUH / एलयूएच', '(c) LCH Prachand / एलसीएच प्रचंड', '(d) ALH Dhruv / एएलएच ध्रुव'],
+    correctOptionIndex: 0,
+    explanation: 'The Indian Multi-Role Helicopter (IMRH) is a heavy-lift tactical transport rotorcraft designed by HAL.',
+    date: '2026-07-12'
   }
 ];
 
