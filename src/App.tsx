@@ -364,8 +364,8 @@ export default function App() {
   const [todayQuizIdx, setTodayQuizIdx] = useState(0);
   const [todayAnswers, setTodayAnswers] = useState<{[key: string]: number}>({}); // maps question ID to selected option index
   const [todayActiveSubTab, setTodayActiveSubTab] = useState<'questions' | 'capsules'>('questions');
-  const [caQuizDate, setCaQuizDate] = useState<string>('2026-07-07');
-  const [homeQuizDate, setHomeQuizDate] = useState<string>('2026-07-07');
+  const [caQuizDate, setCaQuizDate] = useState<string>('2026-07-13');
+  const [homeQuizDate, setHomeQuizDate] = useState<string>('2026-07-13');
   const [caSearchQuery, setCaSearchQuery] = useState('');
   const [caSelectedCategory, setCaSelectedCategory] = useState<string>('All');
   const [caVisibleCount, setCaVisibleCount] = useState(6);
@@ -444,8 +444,10 @@ export default function App() {
   };
 
   const formatCADate = (dateStr: string, isHindi: boolean) => {
-    if (dateStr === '2026-07-07') return isHindi ? 'मंगलवार, 7 जुलाई 2026 (आज के विशेष)' : 'Tuesday, 7 July 2026 (Today)';
-    if (dateStr === '2026-07-06') return isHindi ? 'सोमवार, 6 जुलाई 2026 (कल के विशेष)' : 'Monday, 6 July 2026 (Yesterday)';
+    if (dateStr === '2026-07-13') return isHindi ? 'सोमवार, 13 जुलाई 2026 (आज के विशेष)' : 'Monday, 13 July 2026 (Today)';
+    if (dateStr === '2026-07-12') return isHindi ? 'रविवार, 12 जुलाई 2026 (कल के विशेष)' : 'Sunday, 12 July 2026 (Yesterday)';
+    if (dateStr === '2026-07-07') return isHindi ? 'मंगलवार, 7 जुलाई 2026' : 'Tuesday, 7 July 2026';
+    if (dateStr === '2026-07-06') return isHindi ? 'सोमवार, 6 जुलाई 2026' : 'Monday, 6 July 2026';
     if (dateStr === '2026-07-02') return isHindi ? 'गुरुवार, 2 जुलाई 2026' : 'Thursday, 2 July 2026';
     if (dateStr === '2026-07-01') return isHindi ? 'बुधवार, 1 जुलाई 2026' : 'Wednesday, 1 July 2026';
     if (dateStr === '2026-06-30' || dateStr === 'june_30') return isHindi ? 'मंगलवार, 30 जून 2026' : 'Tuesday, 30 June 2026';

@@ -3,6 +3,86 @@ import { CurrentAffair, Question } from '../types';
 // 50 Daily Current Affairs News Items (Bilingual / English-Hindi mix for authenticity)
 export const DAILY_CURRENT_AFFAIRS_ITEMS: CurrentAffair[] = [
   {
+    id: 'ca-news-jul-13-1',
+    title: "India successfully launches GSAT-32 communication satellite aboard LVM3 from Sriharikota / भारत ने श्रीहरिकोटा से एलवीएम3 के जरिए जीएसएटी-32 संचार उपग्रह का सफल प्रक्षेपण किया",
+    date: '2026-07-13',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/GSAT_32_Launch_2026.pdf',
+    content: "The Indian Space Research Organisation (ISRO) successfully launched the advanced GSAT-32 communication satellite into Geosynchronous Transfer Orbit using its LVM3 launch vehicle. This high-throughput satellite will boost broadband speeds and secure tactical connectivity across coastal frontiers."
+  },
+  {
+    id: 'ca-news-jul-13-2',
+    title: "RBI grants regulatory approval to five fintech entities as payment aggregators / आरबीआई ने पांच नए फिनटेक दिग्गजों को भुगतान एग्रीगेटर के रूप में नियामक मंजूरी दी",
+    date: '2026-07-13',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/RBI_Fintech_Aggregators_2026.pdf',
+    content: "The Reserve Bank of India (RBI) officially licensed five leading fintech platforms to operate as payment aggregators under the Payment and Settlement Systems Act. This expansion aims to build highly scalable digital commerce nodes across tier-3 smart towns."
+  },
+  {
+    id: 'ca-news-jul-13-3',
+    title: "India wins the bilateral ODI Cricket Series 2026 against Australia / भारत ने ऑस्ट्रेलिया के खिलाफ द्विपक्षीय वनडे क्रिकेट श्रृंखला 2026 जीती",
+    date: '2026-07-13',
+    category: 'Sports',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/India_Aus_Cricket_2026.pdf',
+    content: "The Indian cricket team won the high-octane 5-match bilateral ODI series against Australia with a commanding 4-1 victory in the final match at Ahmedabad. Shubman Gill was named Player of the Series for scoring three centuries."
+  },
+  {
+    id: 'ca-news-jul-13-4',
+    title: "IIT Madras develops indigenous bio-degradable polymer for eco-friendly electronics packaging / आईआईटी मद्रास ने पर्यावरण-अनुकूल इलेक्ट्रॉनिक्स पैकेजिंग के लिए स्वदेशी जैव-अपघट्य बहुलक विकसित किया",
+    date: '2026-07-13',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/IIT_Madras_Biodegradable_Polymer_2026.pdf',
+    content: "Researchers at IIT Madras have successfully synthesized a lightweight, thermally stable, and biodegradable polymer utilizing agricultural waste cellulose. This material will act as a substitute for plastic packaging in standard microchips."
+  },
+  {
+    id: 'ca-news-jul-13-5',
+    title: "India and France sign pact for cyber defense cooperation and secure cloud / भारत और फ्रांस ने साइबर रक्षा सहयोग और सुरक्षित क्लाउड के लिए समझौते पर हस्ताक्षर किए",
+    date: '2026-07-13',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/India_France_Cyber_Defense_2026.pdf',
+    content: "During the bilateral security conference in Paris, India and France inked a critical treaty to co-develop zero-trust cyber defense architectures and establish secure cloud services for critical state infrastructure, countering advanced persistent threats."
+  },
+  {
+    id: 'ca-news-jul-12-1',
+    title: "Union Cabinet approves construction of twelve new industrial smart cities across India / केंद्रीय कैबिनेट ने भारत भर में बारह नए औद्योगिक स्मार्ट शहरों के निर्माण को मंजूरी दी",
+    date: '2026-07-12',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Cabinet_Smart_Cities_2026.pdf',
+    content: "The Cabinet Committee on Economic Affairs (CCEA) approved a massive proposal to build 12 world-class industrial smart nodes under the National Industrial Corridor Development Programme, boosting localized manufacturing hubs."
+  },
+  {
+    id: 'ca-news-jul-12-2',
+    title: "India's foreign exchange reserves cross record high of $695 Billion / भारत का विदेशी मुद्रा भंडार $695 बिलियन के रिकॉर्ड उच्च स्तर को पार कर गया",
+    date: '2026-07-12',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/India_Forex_Reserves_2026.pdf',
+    content: "According to the latest weekly statistical supplement of the Reserve Bank of India, the country's forex reserves grew by $4.2 billion, reaching a historic high of $695.5 billion, providing a strong shield against global macro fluctuations."
+  },
+  {
+    id: 'ca-news-jul-12-3',
+    title: "UNESCO inscribes historic stepwells of Western India on tentative World Heritage list / यूनेस्को ने पश्चिमी भारत के ऐतिहासिक बावड़ियों को विश्व धरोहर की अस्थायी सूची में शामिल किया",
+    date: '2026-07-12',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/UNESCO_Stepwells_Western_India.pdf',
+    content: "UNESCO added the group of historic stepwells of Gujarat and Rajasthan, famous for their ornate stone carvings and ancient water harvesting methods, to its tentative world heritage monuments database."
+  },
+  {
+    id: 'ca-news-jul-12-4',
+    title: "DRDO successfully conducts trials of indigenous UAV 'Tapas' at medium altitude / डीआरडीओ ने मध्यम ऊंचाई पर स्वदेशी यूएवी 'तपस' का सफल परीक्षण किया",
+    date: '2026-07-12',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/DRDO_TAPAS_UAV_2026.pdf',
+    content: "The Defence Research and Development Organisation (DRDO) executed a flawless surveillance trial of TAPAS-BH-201 UAV. The flight demonstrated continuous 18-hour endurance with multi-sensor payloads at 28,000 feet."
+  },
+  {
+    id: 'ca-news-jul-12-5',
+    title: "Eminent writer Arundhati Roy honored with prestigious European Essay Prize 2026 / प्रख्यात लेखिका अरुंधति रॉय को प्रतिष्ठित यूरोपीय निबंध पुरस्कार 2026 से सम्मानित किया गया",
+    date: '2026-07-12',
+    category: 'Awards',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/European_Essay_Prize_Arundhati_2026.pdf',
+    content: "Arundhati Roy was awarded the lifetime achievement award at the European Essay Prize 2026 ceremony in Geneva for her collected essays, emphasizing environmental justice, civil liberties, and democratic resilience."
+  },
+  {
     id: 'ca-news-jul-9-1',
     title: "Vice Admiral Dinesh K Tripathi assumes command as the new Chief of the Naval Staff / वाइस एडमिरल दिनेश के त्रिपाठी ने नए नौसेना प्रमुख के रूप में कार्यभार संभाला",
     date: '2026-07-09',
@@ -5385,6 +5465,46 @@ export const CURRENT_AFFAIRS_QUIZ_QUESTIONS: Question[] = [
     correctOptionIndex: 0,
     explanation: 'The Indian Multi-Role Helicopter (IMRH) is a heavy-lift tactical transport rotorcraft designed by HAL.',
     date: '2026-07-12'
+  },
+  {
+    id: 'ca-q-today-501',
+    text: 'Which space agency successfully launched the GSAT-32 communication satellite aboard the LVM3 rocket on July 13, 2026? / किस अंतरिक्ष एजेंसी ने 13 जुलाई 2026 को LVM3 रॉकेट के जरिए GSAT-32 संचार उपग्रह का सफल प्रक्षेपण किया है?',
+    options: ['(a) NASA / नासा', '(b) ESA / ईएसए', '(c) JAXA / जाक्सा', '(d) ISRO / इसरो'],
+    correctOptionIndex: 3,
+    explanation: 'The Indian Space Research Organisation (ISRO) successfully launched the advanced GSAT-32 communication satellite from Sriharikota.',
+    date: '2026-07-13'
+  },
+  {
+    id: 'ca-q-today-502',
+    text: 'The National Industrial Corridor Development Programme recently approved the construction of how many new industrial smart cities? / राष्ट्रीय औद्योगिक कॉरिडोर विकास कार्यक्रम ने हाल ही में कितने नए औद्योगिक स्मार्ट शहरों के निर्माण को मंजूरी दी है?',
+    options: ['(a) 8 / 8', '(b) 10 / 10', '(c) 12 / 12', '(d) 15 / 15'],
+    correctOptionIndex: 2,
+    explanation: 'The CCEA chaired by PM Narendra Modi approved the development of 12 world-class industrial smart cities across India.',
+    date: '2026-07-13'
+  },
+  {
+    id: 'ca-q-today-503',
+    text: 'Which Indian city is chosen to host the prestigious Global Climate Action Summit in November 2026? / नवंबर 2026 में प्रतिष्ठित ग्लोबल क्लाइमेट Action Summit की मेजबानी के लिए किस भारतीय शहर को चुना गया है?',
+    options: ['(a) New Delhi / नई दिल्ली', '(b) Mumbai / मुंबई', '(c) Bengaluru / बेंगलुरु', '(d) Chennai / चेन्नई'],
+    correctOptionIndex: 2,
+    explanation: 'Bengaluru was officially selected as the host city for the Global Climate Action Summit 2026 to focus on smart cities and green tech.',
+    date: '2026-07-13'
+  },
+  {
+    id: 'ca-q-today-504',
+    text: 'What is the maximum endurance demonstrated by DRDO\'s indigenous UAV Tapas during its medium-altitude trials? / डीआरडीओ के स्वदेशी यूएवी तपस ने अपने मध्यम ऊंचाई वाले परीक्षणों के दौरान अधिकतम कितने घंटे की निरंतर उड़ान प्रदर्शित की है?',
+    options: ['(a) 12 hours / 12 घंटे', '(b) 18 hours / 18 घंटे', '(c) 24 hours / 24 घंटे', '(d) 30 hours / 30 घंटे'],
+    correctOptionIndex: 1,
+    explanation: 'TAPAS-BH-201 UAV successfully demonstrated a continuous 18-hour endurance carrying multi-sensor intelligence payloads.',
+    date: '2026-07-13'
+  },
+  {
+    id: 'ca-q-today-505',
+    text: 'Who has been honored with the prestigious European Essay Prize 2026 for lifetime achievements in essays and environmental justice? / निबंध और पर्यावरण न्याय में जीवन भर की उपलब्धियों के लिए किसे प्रतिष्ठित यूरोपीय निबंध पुरस्कार 2026 से सम्मानित किया गया है?',
+    options: ['(a) Geetanjali Shree / गीतांजलि श्री', '(b) Arundhati Roy / अरुंधति रॉय', '(c) Jhumpa Lahiri / झुंपा लाहिड़ी', '(d) Salman Rushdie / सलमान रुश्दी'],
+    correctOptionIndex: 1,
+    explanation: 'Eminent Indian writer Arundhati Roy was awarded the European Essay Prize 2026 in Geneva, Switzerland.',
+    date: '2026-07-13'
   }
 ];
 
