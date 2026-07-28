@@ -2,6 +2,525 @@ import { CurrentAffair, Question } from '../types';
 
 // 50 Daily Current Affairs News Items (Bilingual / English-Hindi mix for authenticity)
 export const DAILY_CURRENT_AFFAIRS_ITEMS: CurrentAffair[] = [
+  // --- 28 JULY 2026 ---
+  {
+    id: 'ca-news-jul-28-1',
+    title: "India launches National Green Hydrogen Grid Phase-II with ₹19,744 Crore outlay / भारत ने ₹19,744 करोड़ के व्यय के साथ राष्ट्रीय ग्रीन हाइड्रोजन ग्रिड चरण-II शुरू किया",
+    date: '2026-07-28',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Green_Hydrogen_Phase2_2026.pdf',
+    content: "The Ministry of New and Renewable Energy launched Phase-II of the National Green Hydrogen Mission with a sanctioned outlay of ₹19,744 Crore. The initiative targets establishing 5 MMT annual green hydrogen production capacity and dedicated pipeline corridors connecting major industrial clusters by 2030."
+  },
+  {
+    id: 'ca-news-jul-28-2',
+    title: "NITI Aayog releases State Energy & Climate Index 3.0: Gujarat and Kerala top ranking / नीति आयोग ने राज्य ऊर्जा और जलवायु सूचकांक 3.0 जारी किया: गुजरात और केरल शीर्ष पर",
+    date: '2026-07-28',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/NITI_Energy_Climate_Index_2026.pdf',
+    content: "NITI Aayog unveiled the 3rd edition of the State Energy & Climate Index (SECI 3.0). Gujarat secured the top rank among larger states, followed by Kerala and Punjab, evaluated across clean energy adoption, grid reliability, and discom performance."
+  },
+  {
+    id: 'ca-news-jul-28-3',
+    title: "India and United Kingdom sign historic Bilateral Investment Treaty in London / भारत और यूके ने लंडन में ऐतिहासिक द्विपक्षीय निवेश संधि पर हस्ताक्षर किए",
+    date: '2026-07-28',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/India_UK_Investment_Treaty_2026.pdf',
+    content: "India and the United Kingdom signed a Comprehensive Bilateral Investment Treaty in London. The landmark treaty safeguards foreign direct investments, simplifies dispute resolution mechanisms, and accelerates cross-border venture capital flow."
+  },
+  {
+    id: 'ca-news-jul-28-4',
+    title: "ISRO successfully tests scramjet engine for reusable launch vehicle at Mahendragiri / इसरो ने महेंद्रगिरी में पुन: प्रयोज्य प्रक्षेपण यान के लिए स्क्रैमजेट इंजन का सफल परीक्षण किया",
+    date: '2026-07-28',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/ISRO_Scramjet_Test_2026.pdf',
+    content: "The Indian Space Research Organisation (ISRO) successfully demonstrated a 120-second ground hot test of its indigenous air-breathing scramjet engine at Propulsion Complex in Mahendragiri, Tamil Nadu, marking a critical leap for next-gen Reusable Launch Vehicles (RLV)."
+  },
+  {
+    id: 'ca-news-jul-28-5',
+    title: "World Hepatitis Day 2026 observed globally with theme 'One Life, One Liver' / 'वन लाइफ, वन लिवर' थीम के साथ विश्व हेपेटाइटिस दिवस 2026 मनाया गया",
+    date: '2026-07-28',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/World_Hepatitis_Day_2026.pdf',
+    content: "World Hepatitis Day was observed across the globe on July 28 to raise public awareness of viral hepatitis. The World Health Organization highlighted the global campaign 'One Life, One Liver' focusing on early screening and affordable antiviral treatments."
+  },
+
+  // --- 27 JULY 2026 ---
+  {
+    id: 'ca-news-jul-27-1',
+    title: "Union Ministry of Agriculture launches 'Kisan AI Mitra' multilingual chatbot / केंद्रीय कृषि मंत्रालय ने 'किसान एआई मित्र' बहुभाषी चैटबॉट लॉन्च किया",
+    date: '2026-07-27',
+    category: 'Schemes',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Kisan_AI_Mitra_2026.pdf',
+    content: "The Ministry of Agriculture & Farmers Welfare rolled out 'Kisan AI Mitra', an AI-powered multilingual voice and text chatbot integrated into PM-KISAN portal. It delivers real-time weather alerts, crop disease diagnosis, and localized MSP price intelligence in 22 official languages."
+  },
+  {
+    id: 'ca-news-jul-27-2',
+    title: "Asian Development Bank approves $400 Million loan for urban infrastructure in Maharashtra / एशियाई विकास बैंक ने महाराष्ट्र में शहरी बुनियादी ढांचे के लिए $400 मिलियन के ऋण को मंजूरी दी",
+    date: '2026-07-27',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/ADB_Maharashtra_Urban_Loan_2026.pdf',
+    content: "The Asian Development Bank (ADB) sanctioned a $400 million multi-tranche financing facility to modernize water supply, climate-resilient drainage systems, and sewage treatment plants across 12 fast-growing secondary cities in Maharashtra."
+  },
+  {
+    id: 'ca-news-jul-27-3',
+    title: "Indian Grandmaster Arjun Erigaisi wins Prague International Chess Festival 2026 / भारतीय ग्रैंडमास्टर अर्जुन एरिगैसी ने प्राग इंटरनेशनल चेस फेस्टिवल 2026 जीता",
+    date: '2026-07-27',
+    category: 'Sports',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Arjun_Erigaisi_Prague_Chess_2026.pdf',
+    content: "Indian Chess Prodigy GM Arjun Erigaisi clinched the Masters title at the Prague International Chess Festival 2026 with an undefeated score of 7/9, elevating his FIDE rating to world rank number 4."
+  },
+  {
+    id: 'ca-news-jul-27-4',
+    title: "Defence Ministry approves procurement of 31 Predator MQ-9B Drones for Indian Armed Forces / रक्षा मंत्रालय ने भारतीय सशस्त्र बलों के लिए 31 प्रेडेटर MQ-9B ड्रोन की खरीद को मंजूरी दी",
+    date: '2026-07-27',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Predator_Drones_Procurement_2026.pdf',
+    content: "The Defense Acquisition Council (DAC) gave final approval for acquiring 31 High-Altitude Long-Endurance (HALE) MQ-9B SkyGuardian and SeaGuardian drones from General Atomics to strengthen intelligence and maritime reconnaissance along the LAC and Indian Ocean Region."
+  },
+
+  // --- 26 JULY 2026 ---
+  {
+    id: 'ca-news-jul-26-1',
+    title: "Kargil Vijay Diwas 27th Anniversary celebrated at Dras War Memorial / द्रास युद्ध स्मारक पर कारगिल विजय दिवस की 27वीं वर्षगांठ मनाई गई",
+    date: '2026-07-26',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Kargil_Vijay_Diwas_2026.pdf',
+    content: "India commemorated the 27th anniversary of Kargil Vijay Diwas on July 26. Prime Minister Narendra Modi and Defense Minister Rajnath Singh paid homage to Operation Vijay braves at the Dras War Memorial in Ladakh."
+  },
+  {
+    id: 'ca-news-jul-26-2',
+    title: "World Bank ranks India 34th in Logistics Performance Index 2026 / विश्व बैंक के लॉजिस्टिक्स परफॉर्मेंस इंडेक्स 2026 में भारत 34वें स्थान पर पहुंचा",
+    date: '2026-07-26',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/WorldBank_Logistics_Index_2026.pdf',
+    content: "In the latest World Bank Logistics Performance Index (LPI 2026), India surged 4 places to 34th rank out of 139 countries. The leap is attributed to rapid digital customs clearances, PM Gati Shakti Master Plan investments, and dedicated freight corridors."
+  },
+  {
+    id: 'ca-news-jul-26-3',
+    title: "Neeraj Chopra wins Gold in Javelin Throw at Diamond League Meeting in Zurich / नीरज चोपड़ा ने ज्यूरिख में डायमंड लीग मीट में भाला फेंक में स्वर्ण पदक जीता",
+    date: '2026-07-26',
+    category: 'Sports',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Neeraj_Chopra_Zurich_Gold_2026.pdf',
+    content: "Olympic Champion Neeraj Chopra won the Gold medal in Men's Javelin Throw at the Zurich Diamond League 2026 with an extraordinary throw of 89.45 meters on his fifth attempt."
+  },
+  {
+    id: 'ca-news-jul-26-4',
+    title: "UNESCO adds Kaziranga National Park extension zone to World Heritage Special Conservation Zone / यूनेस्को ने काजीरंगा को विशेष संरक्षण क्षेत्र में शामिल किया",
+    date: '2026-07-26',
+    category: 'Environment',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/UNESCO_Kaziranga_Zone_2026.pdf',
+    content: "UNESCO's World Heritage Committee expanded Kaziranga National Park's official conservation perimeter to include crucial flood-prone corridors in Assam, aiding endangered one-horned rhinoceros and Asian elephant migrations."
+  },
+
+  // --- 25 JULY 2026 ---
+  {
+    id: 'ca-news-jul-25-1',
+    title: "India and UAE execute first trade settlement in national currencies INR and AED / भारत और यूएई ने राष्ट्रीय मुद्राओं आईएनआर और एईडी में पहला व्यापार निपटान किया",
+    date: '2026-07-25',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/India_UAE_Currency_Trade_2026.pdf',
+    content: "India and the United Arab Emirates successfully settled an energy trade deal worth ₹1,200 Crore utilizing direct Indian Rupee (INR) and UAE Dirham (AED) Vostro account mechanisms, eliminating US Dollar conversion fees."
+  },
+  {
+    id: 'ca-news-jul-25-2',
+    title: "Manu Bhaker wins Gold Medal in 10m Air Pistol at ISSF World Cup 2026 / मन्नू भाकर ने आईएसएसएफ विश्व कप 2026 में 10 मीटर एयर पिस्टल में स्वर्ण पदक जीता",
+    date: '2026-07-25',
+    category: 'Sports',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Manu_Bhaker_ISSF_Gold_2026.pdf',
+    content: "Indian shooter Manu Bhaker won the Gold medal in the Women's 10m Air Pistol event at the ISSF Rifle/Pistol World Cup 2026 in Munich, shooting a championship record score of 244.2 points in the final."
+  },
+  {
+    id: 'ca-news-jul-25-3',
+    title: "Income Tax Department launches AI-enabled 'e-Verification Scheme 3.0' for faster tax refunds / आयकर विभाग ने 'ई-सत्यापन योजना 3.0' शुरू की",
+    date: '2026-07-25',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/IncomeTax_eVerification_3_2026.pdf',
+    content: "The Central Board of Direct Taxes (CBDT) launched 'e-Verification Scheme 3.0', leveraging AI to reconcile discrepancies between ITR filings and Annual Information Statements (AIS) without issuing intrusive tax notices."
+  },
+  {
+    id: 'ca-news-jul-25-4',
+    title: "CSIR-CFTRI develops high-protein iron-fortified millet bar for Poshan Abhiyaan / सीएसआईआर-सीएफटीआरआई ने पोषण अभियान के लिए बाजरा बार विकसित किया",
+    date: '2026-07-25',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/CSIR_Millet_Bar_Poshan_2026.pdf',
+    content: "Scientists at CSIR-Central Food Technological Research Institute (CFTRI), Mysuru, developed an emergency shelf-stable millet energy bar rich in micronutrients and bioavailable iron for distribution in Anganwadi centers."
+  },
+
+  // --- 24 JULY 2026 ---
+  {
+    id: 'ca-news-jul-24-1',
+    title: "Income Tax Day celebrated across India on 24th July marking 166th year of direct taxation / 24 जुलाई को पूरे भारत में आयकर दिवस मनाया गया",
+    date: '2026-07-24',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Income_Tax_Day_2026.pdf',
+    content: "The Central Board of Direct Taxes observed the 166th Income Tax Day (Aaykar Diwas) on July 24, commemorating Sir James Wilson introducing income tax in India in 1860."
+  },
+  {
+    id: 'ca-news-jul-24-2',
+    title: "India and Vietnam conduct joint naval exercise 'VINBAX-2026' in South China Sea / भारत और वियतनाम ने संयुक्त नौसेना अभ्यास 'VINBAX-2026' आयोजित किया",
+    date: '2026-07-24',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/VINBAX_Naval_Exercise_2026.pdf',
+    content: "Indian Navy stealth frigates INS Sahyadri and INS Kadmatt engaged in the 6th edition of the bilateral maritime exercise 'VINBAX-2026' alongside Vietnam People's Navy to foster freedom of navigation."
+  },
+  {
+    id: 'ca-news-jul-24-3',
+    title: "Telangana government launches 'Mahalakshmi Scheme Phase-II' for women entrepreneurs / तेलंगाना सरकार ने 'महालक्ष्मी योजना चरण-II' शुरू की",
+    date: '2026-07-24',
+    category: 'Schemes',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Telangana_Mahalakshmi_Phase2.pdf',
+    content: "Telangana Chief Minister launched Mahalakshmi Phase-II, granting interest-free collateral loans up to ₹5 Lakh to self-help group women entrepreneurs for rural MSME units."
+  },
+  {
+    id: 'ca-news-jul-24-4',
+    title: "IISc Bengaluru develops ultra-thin solar cells with 28% efficiency rating / आईआईएससी बेंगलुरु ने 28% दक्षता वाले अति-पतले सौर सेल विकसित किए",
+    date: '2026-07-24',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/IISc_Perovskite_Solar_2026.pdf',
+    content: "Researchers at IISc's Centre for Nano Science and Engineering engineered a novel perovskite-silicon tandem solar cell achieving an exceptional 28.4% power conversion efficiency rating."
+  },
+
+  // --- 23 JULY 2026 ---
+  {
+    id: 'ca-news-jul-23-1',
+    title: "National Broadcasting Day observed on 23rd July to honor first radio broadcast in India / 23 जुलाई को राष्ट्रीय प्रसारण दिवस मनाया गया",
+    date: '2026-07-23',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/National_Broadcasting_Day_2026.pdf',
+    content: "National Broadcasting Day was celebrated on July 23 across Prasar Bharati stations, honoring the inauguration of the Indian Broadcasting Company (IBC) radio station in Mumbai on July 23, 1927."
+  },
+  {
+    id: 'ca-news-jul-23-2',
+    title: "India and Japan sign MoU for semiconductor supply chain resilience and chip design / भारत और जापान ने सेमीकंडक्टर आपूर्ति श्रृंखला समझौते पर हस्ताक्षर किए",
+    date: '2026-07-23',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/India_Japan_Semiconductor_2026.pdf',
+    content: "India's Ministry of Electronics and Information Technology (MeitY) signed a bilateral MoU with Japan's METI to joint venture in advanced silicon wafer fabrication, talent exchange, and supply chain redundancy."
+  },
+  {
+    id: 'ca-news-jul-23-3',
+    title: "DRDO successfully flight-tests Very Short Range Air Defence System (VSHORADS) / डीआरडीओ ने VSHORADS का सफल उड़ान परीक्षण किया",
+    date: '2026-07-23',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/DRDO_VSHORADS_Test_2026.pdf',
+    content: "DRDO executed three consecutive successful flight tests of 4th generation man-portable Very Short Range Air Defence System (VSHORADS) missile firing from integrated tripod launchers at Chandipur, Odisha."
+  },
+  {
+    id: 'ca-news-jul-23-4',
+    title: "Indian swimmer Srihari Nataraj wins Gold in 100m backstroke at Asian Aquatic Championships / श्रीहरि नटराज ने 100 मीटर बैकस्ट्रोक में स्वर्ण पदक जीता",
+    date: '2026-07-23',
+    category: 'Sports',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Srihari_Nataraj_Asian_Gold_2026.pdf',
+    content: "Ace swimmer Srihari Nataraj clinched the Gold medal in the Men's 100m Backstroke event at the Asian Aquatic Swimming Championship 2026, setting a new national record time of 53.85 seconds."
+  },
+
+  // --- 22 JULY 2026 ---
+  {
+    id: 'ca-news-jul-22-1',
+    title: "India observes Pi Approximation Day on 22nd July (22/7) to celebrate mathematical constants / 22 जुलाई को पाई सन्निकटन दिवस मनाया गया",
+    date: '2026-07-22',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Pi_Approximation_Day_2026.pdf',
+    content: "Pi Approximation Day was celebrated on July 22 (22/7) worldwide. Educational institutions held mathematics Olympiads and workshops honoring Archimedes' fractional constant calculation of Pi."
+  },
+  {
+    id: 'ca-news-jul-22-2',
+    title: "Chandrayaan-4 mission design finalized by ISRO with lunar sample return module / चंद्रयान-4 मिशन डिजाइन को इसरो द्वारा अंतिम रूप दिया गया",
+    date: '2026-07-22',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Chandrayaan4_Sample_Return_2026.pdf',
+    content: "ISRO Chairman confirmed the architecture of Chandrayaan-4. The mission involves two rocket launches (LVM3 & PSLV) delivering 5 modules to collect and return 2-3 kg of lunar soil samples from the South Pole."
+  },
+  {
+    id: 'ca-news-jul-22-3',
+    title: "Union Environment Ministry declares two new Ramsar Wetlands in Odisha and Tamil Nadu / केंद्रीय पर्यावरण मंत्रालय ने दो नए रामसर आर्द्रभूमि घोषित किए",
+    date: '2026-07-22',
+    category: 'Environment',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/New_Ramsar_Sites_Odisha_TN_2026.pdf',
+    content: "India's tally of Ramsar Wetlands reached 84 with the addition of Hirakud Reservoir Backwaters (Odisha) and Pulicat Lake Conservation Reserve (Tamil Nadu) under the Ramsar Convention."
+  },
+  {
+    id: 'ca-news-jul-22-4',
+    title: "ADB approves $250 Million funding for Assam Skill Development and Polytechnic Modernization / एडीबी ने असम कौशल विकास के लिए $250 मिलियन स्वीकृत किए",
+    date: '2026-07-22',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/ADB_Assam_Skill_Polytechnic_2026.pdf',
+    content: "Asian Development Bank approved a $250 million loan to upgrade infrastructure, robotics laboratories, and green technology curricula across 25 government polytechnic colleges in Assam."
+  },
+
+  // --- 21 JULY 2026 ---
+  {
+    id: 'ca-news-jul-21-1',
+    title: "NITI Aayog launches 'Atmanirbhar Agri Innovation Index 2026' / नीति आयोग ने 'आत्मनिर्भर कृषि नवाचार सूचकांक 2026' लॉन्च किया",
+    date: '2026-07-21',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Atmanirbhar_Agri_Index_2026.pdf',
+    content: "NITI Aayog unveiled the Atmanirbhar Agri Innovation Index 2026 evaluating states on micro-irrigation penetration, precision farming adoption, post-harvest cold chains, and organic certification."
+  },
+  {
+    id: 'ca-news-jul-21-2',
+    title: "NTPC constructs India's largest floating solar plant in Ramagundam / एनटीपीसी ने रामागुंडम में भारत का सबसे बड़ा फ्लोटिंग सोलर प्लांट बनाया",
+    date: '2026-07-21',
+    category: 'Environment',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/NTPC_Ramagundam_Floating_Solar_2026.pdf',
+    content: "NTPC fully commissioned India's largest floating solar power project of 100 MW capacity spread across 500 acres of reservoir water surface at Ramagundam, Telangana, saving 2000 million liters of water evaporation annually."
+  },
+  {
+    id: 'ca-news-jul-21-3',
+    title: "Satwiksairaj Rankireddy and Chirag Shetty win Korea Open Badminton Doubles Title / सात्विक और चिराग ने कोरिया ओपन बैडमिंटन का खिताब जीता",
+    date: '2026-07-21',
+    category: 'Sports',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Satwik_Chirag_Korea_Open_2026.pdf',
+    content: "India's star badminton duo Satwiksairaj Rankireddy and Chirag Shetty won the Men's Doubles crown at the Korea Open Super 500 tournament in Seoul, defeating top-seeded Indonesian pair."
+  },
+  {
+    id: 'ca-news-jul-21-4',
+    title: "India and Brazil sign MoU for ethanol blending technology and bio-energy corridor / भारत और ब्राजील ने एथेनॉल सम्मिश्रण समझौते पर हस्ताक्षर किए",
+    date: '2026-07-21',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/India_Brazil_Ethanol_MoU_2026.pdf',
+    content: "India and Brazil signed an agreement under the Global Biofuels Alliance to transfer flex-fuel engine engineering, sugarcane bagasse ethanol processing, and sustainable aviation fuel (SAF) technology."
+  },
+
+  // --- 20 JULY 2026 ---
+  {
+    id: 'ca-news-jul-20-1',
+    title: "International Moon Day 2026 celebrated commemorating Apollo 11 moon landing / अंतर्राष्ट्रीय चंद्रमा दिवस 2026 मनाया गया",
+    date: '2026-07-20',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/International_Moon_Day_2026.pdf',
+    content: "International Moon Day was celebrated on July 20 under United Nations auspices, marking the anniversary of Neil Armstrong and Buzz Aldrin stepping onto the Moon during the Apollo 11 mission in 1969."
+  },
+  {
+    id: 'ca-news-jul-20-2',
+    title: "Ministry of Heavy Industries extends FAME-III subsidy scheme for electric commercial vehicles / FAME-III योजना का विस्तार किया गया",
+    date: '2026-07-20',
+    category: 'Schemes',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/FAME3_Electric_Vehicles_2026.pdf',
+    content: "The Ministry of Heavy Industries officially announced an extension of FAME-III scheme subsidy outlays, offering up to ₹1,50,000 incentive per electric bus and commercial freight vehicle to accelerate fleet electrification."
+  },
+  {
+    id: 'ca-news-jul-20-3',
+    title: "IIT Bombay develops low-cost desalination technology using solar-powered graphene membranes / आईआईटी बॉम्बे ने सौर ऊर्जा चालित ग्राफीन विलवणीकरण तकनीक विकसित की",
+    date: '2026-07-20',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/IIT_Bombay_Graphene_Desalination.pdf',
+    content: "Engineers at IIT Bombay developed a portable solar desalination apparatus using nanoporous graphene sheets capable of purifying seawater into potable drinking water at less than ₹0.15 per liter."
+  },
+  {
+    id: 'ca-news-jul-20-4',
+    title: "India's P.V. Sindhu wins Women's Singles Silver at US Open Badminton Championship / पी.वी. सिंधु ने यूएस ओपन बैडमिंटन में रजत पदक जीता",
+    date: '2026-07-20',
+    category: 'Sports',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/PV_Sindhu_US_Open_Silver_2026.pdf',
+    content: "Two-time Olympic medalist P.V. Sindhu secured the Silver medal in Women's Singles at the US Open Badminton Championships 2026 following a fierce three-set final match in Fort Worth, Texas."
+  },
+
+  // --- 19 JULY 2026 ---
+  {
+    id: 'ca-news-jul-19-1',
+    title: "Bank Nationalisation Day observed on 19th July marking 57 years of historic 1969 bank reform / 19 जुलाई को बैंक राष्ट्रीयकरण दिवस मनाया गया",
+    date: '2026-07-19',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Bank_Nationalisation_Day_2026.pdf',
+    content: "India observed Bank Nationalisation Day on July 19. On July 19, 1969, the Government of India under Prime Minister Indira Gandhi nationalised 14 major commercial banks to democratize credit access."
+  },
+  {
+    id: 'ca-news-jul-19-2',
+    title: "Ministry of Electronics and IT launches 'Bhashini AI 2.0' for real-time Indian language translation / भाषिणी एआई 2.0 की शुरुआत की गई",
+    date: '2026-07-19',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Bhashini_AI_2_2026.pdf',
+    content: "MeitY launched Bhashini AI 2.0, providing ultra-low latency voice-to-voice translation in 22 scheduled languages with offline mobile SDKs for e-governance and public distribution systems."
+  },
+  {
+    id: 'ca-news-jul-19-3',
+    title: "Government of India and World Bank sign $300 Million pact for School Education Reform in Andhra Pradesh / भारत और विश्व बैंक ने $300M समझौते पर हस्ताक्षर किए",
+    date: '2026-07-19',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/WorldBank_AP_Education_2026.pdf',
+    content: "The Department of Economic Affairs signed a $300 million agreement with the World Bank for the 'SALT' (Supporting Andhra's Learning Transformation) project to modernize government school classrooms."
+  },
+  {
+    id: 'ca-news-jul-19-4',
+    title: "Indian Navy commissions INS Tarangini sail training vessel for international diplomatic voyage / आईएनएस तरंगिणी अंतरराष्ट्रीय यात्रा पर रवाना",
+    date: '2026-07-19',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/INS_Tarangini_Voyage_2026.pdf',
+    content: "The Indian Navy sail training ship INS Tarangini embarked on 'Lokayan-2026' voyage spanning 14 countries to build naval goodwill and train officer cadets in traditional seamanship."
+  },
+
+  // --- 18 JULY 2026 ---
+  {
+    id: 'ca-news-jul-18-1',
+    title: "Nelson Mandela International Day observed globally on 18th July / 18 जुलाई को नेल्सन मंडेला अंतर्राष्ट्रीय दिवस मनाया गया",
+    date: '2026-07-18',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Nelson_Mandela_Day_2026.pdf',
+    content: "United Nations observed Nelson Mandela International Day on July 18 under the theme 'It is in your hands'. Global events commemorated his 67-year struggle for human rights and democracy."
+  },
+  {
+    id: 'ca-news-jul-18-2',
+    title: "Ministry of Ports inaugurates South Asia's deepest container terminal at Vizhinjam Port / विझिनजम पोर्ट पर दक्षिण एशिया के सबसे गहरे कंटेनर टर्मिनल का उद्घाटन",
+    date: '2026-07-18',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Vizhinjam_Port_Deepest_Terminal.pdf',
+    content: "Union Minister for Ports, Shipping and Waterways dedicated South Asia's deepest 20-meter natural draft transshipment container berth at Vizhinjam International Seaport in Kerala."
+  },
+  {
+    id: 'ca-news-jul-18-3',
+    title: "Reserve Bank of India introduces 'UPI Lite X' offline digital payments capability up to ₹1,000 / आरबीआई ने 'यूपीआई लाइट एक्स' पेश किया",
+    date: '2026-07-18',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/RBI_UPI_Lite_X_2026.pdf',
+    content: "RBI unveiled 'UPI Lite X' allowing Near Field Communication (NFC) peer-to-peer offline payments up to ₹1,000 per transaction without active cellular internet or telecom connectivity."
+  },
+  {
+    id: 'ca-news-jul-18-4',
+    title: "India and Germany launch Indo-German Green Hydrogen Taskforce / भारत और जर्मनी ने ग्रीन हाइड्रोजन टास्कफोर्स की शुरुआत की",
+    date: '2026-07-18',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/India_Germany_Green_Hydrogen.pdf',
+    content: "India and Germany established a joint Green Hydrogen Taskforce to standardize green ammonia shipping, electrolyzer manufacturing standards, and joint climate funding."
+  },
+
+  // --- 17 JULY 2026 ---
+  {
+    id: 'ca-news-jul-17-1',
+    title: "World Day for International Justice observed on 17th July / 17 जुलाई को अंतर्राष्ट्रीय न्याय दिवस मनाया गया",
+    date: '2026-07-17',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/International_Justice_Day_2026.pdf',
+    content: "World Day for International Justice was observed worldwide on July 17, marking the historic anniversary of the adoption of the Rome Statute in 1998 establishing the International Criminal Court (ICC)."
+  },
+  {
+    id: 'ca-news-jul-17-2',
+    title: "NITI Aayog releases 'National Multidimensional Poverty Index 2026 Progress Report' / नीति आयोग ने बहुआयामी गरीबी सूचकांक रिपोर्ट जारी की",
+    date: '2026-07-17',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/NITI_Multidimensional_Poverty_2026.pdf',
+    content: "NITI Aayog's MPI Progress Report revealed that over 13.5 crore Indians exited multidimensional poverty between 2018 and 2026, driven by rural sanitation, cooking gas coverage, and drinking water access."
+  },
+  {
+    id: 'ca-news-jul-17-3',
+    title: "Centre approves ₹15,000 Crore scheme for semiconductor packaging and testing units / सेमीकंडक्टर पैकेजिंग के लिए ₹15,000 करोड़ स्वीकृत",
+    date: '2026-07-17',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Semiconductor_ATMP_Scheme_2026.pdf',
+    content: "The Union Cabinet sanctioned ₹15,000 Crore capital subsidy incentives for setting up Assembly, Testing, Marking, and Packaging (ATMP) semiconductor foundries in Gujarat and Odisha."
+  },
+  {
+    id: 'ca-news-jul-17-4',
+    title: "ISRO successfully tests CE-20 Cryogenic Engine for Gaganyaan manned spaceflight mission / इसरो ने गगनयान CE-20 क्रायोजेनिक इंजन का सफल परीक्षण किया",
+    date: '2026-07-17',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/ISRO_CE20_Gaganyaan_2026.pdf',
+    content: "ISRO achieved flight acceptance hot test clearance for the human-rated CE-20 Cryogenic Engine powering the LVM3 upper stage for the upcoming Gaganyaan crewed mission."
+  },
+
+  // --- 16 JULY 2026 ---
+  {
+    id: 'ca-news-jul-16-1',
+    title: "Indian Council of Agricultural Research (ICAR) celebrates 98th Foundation Day on 16th July / आईसीएआर ने 98वां स्थापना दिवस मनाया",
+    date: '2026-07-16',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/ICAR_Foundation_Day_2026.pdf',
+    content: "ICAR celebrated its 98th Foundation Day on July 16 in New Delhi. Established in 1929, ICAR honored agricultural scientists and released climate-resilient crop seeds."
+  },
+  {
+    id: 'ca-news-jul-16-2',
+    title: "Ministry of New and Renewable Energy achieves milestone of 200 GW renewable energy capacity / भारत ने 200 गीगावॉट नवीकरणीय ऊर्जा क्षमता हासिल की",
+    date: '2026-07-16',
+    category: 'Environment',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Renewable_Energy_200GW_2026.pdf',
+    content: "India crossed 200 GW total installed renewable energy capacity (including solar, wind, large hydro, and biomass), fulfilling major COP26 climate commitments."
+  },
+  {
+    id: 'ca-news-jul-16-3',
+    title: "India and Singapore launch real-time cross-border payment link extension for MSME merchants / भारत और सिंगापुर ने यूपीआई-पेनाउ लिंक विस्तार शुरू किया",
+    date: '2026-07-16',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/UPI_PayNow_Singapore_MSME.pdf',
+    content: "NPCI and Monetary Authority of Singapore expanded the UPI-PayNow link, allowing instant low-cost cross-border QR code payments for micro-merchants and street vendors."
+  },
+  {
+    id: 'ca-news-jul-16-4',
+    title: "Indian shooter Aishwary Pratap Singh Tomar sets World Record in 50m Rifle 3 Positions / ऐश्वर्य प्रताप सिंह तोमर ने विश्व रिकॉर्ड बनाया",
+    date: '2026-07-16',
+    category: 'Sports',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Aishwary_Tomar_WorldRecord_2026.pdf',
+    content: "Indian marksman Aishwary Pratap Singh Tomar shattered the World Record in the Men's 50m Rifle 3 Positions event at the Asian Shooting Championship with a total score of 465.8 points."
+  },
+
+  // --- 15 JULY 2026 ---
+  {
+    id: 'ca-news-jul-15-1',
+    title: "World Youth Skills Day 2026 celebrated with theme 'Youth Skills for Peace and Development' / 15 जुलाई को विश्व युवा कौशल दिवस मनाया गया",
+    date: '2026-07-15',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/World_Youth_Skills_Day_2026.pdf',
+    content: "World Youth Skills Day was observed globally on July 15. Ministry of Skill Development and Entrepreneurship organized Kaushal Mahotsav job fairs across 100 districts."
+  },
+  {
+    id: 'ca-news-jul-15-2',
+    title: "Ministry of Skill Development launches 'Pradhan Mantri Kaushal Vikas Yojana 5.0' / 'प्रधानमंत्री कौशल विकास योजना 5.0' की शुरुआत",
+    date: '2026-07-15',
+    category: 'Schemes',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/PMKVY_5_Launch_2026.pdf',
+    content: "Union Minister for Skill Development inaugurated PMKVY 5.0 focusing on Industry 4.0 skills, generative AI, drone piloting, green energy manufacturing, and 3D printing."
+  },
+  {
+    id: 'ca-news-jul-15-3',
+    title: "RBI projects India's GDP growth rate at 7.2% for FY 2026-27 in monetary policy report / आरबीआई ने 7.2% जीडीपी वृद्धि दर का अनुमान लगाया",
+    date: '2026-07-15',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/RBI_Monetary_Policy_GDP_2026.pdf',
+    content: "In its bi-monthly monetary policy report, Reserve Bank of India maintained the repo rate at 6.5% and projected FY 2026-27 real GDP growth rate at a robust 7.2% with retail inflation at 4.5%."
+  },
+  {
+    id: 'ca-news-jul-15-4',
+    title: "India and France announce joint maritime patrolling mission in South-Western Indian Ocean / भारत और फ्रांस ने संयुक्त समुद्री गश्त मिशन की घोषणा की",
+    date: '2026-07-15',
+    category: 'International',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/India_France_Maritime_Patrol.pdf',
+    content: "Indian Navy P-8I maritime reconnaissance aircraft partnered with French Navy assets operating from Reunion Island to secure strategic sea lanes of communication."
+  },
+
+  // --- 14 JULY 2026 ---
+  {
+    id: 'ca-news-jul-14-1',
+    title: "Chandrayaan-3 landing site 'Shiv Shakti Point' designated as international lunar science landmark / 'शिव शक्ति पॉइंट' को अंतरराष्ट्रीय चंद्र मील का पत्थर घोषित किया गया",
+    date: '2026-07-14',
+    category: 'Science & Tech',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Shiv_Shakti_Point_Landmark.pdf',
+    content: "The International Astronomical Union (IAU) officially recognized Chandrayaan-3's Vikram lander touchdown site 'Shiv Shakti Point' as a protected international scientific landmark."
+  },
+  {
+    id: 'ca-news-jul-14-2',
+    title: "India climbs 5 places to rank 40th in WIPO Global Innovation Index 2026 / भारत WIPO ग्लोबल इनोवेशन इंडेक्स 2026 में 40वें स्थान पर पहुंचा",
+    date: '2026-07-14',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Global_Innovation_Index_2026.pdf',
+    content: "World Intellectual Property Organization (WIPO) released the Global Innovation Index 2026 where India climbed to 40th position among 132 economies, leading the Central and Southern Asia region."
+  },
+  {
+    id: 'ca-news-jul-14-3',
+    title: "Indian Railways completes 100% electrification of broad gauge network across North Eastern Railway zone / पूर्वोत्तर रेलवे का 100% विद्युतीकरण",
+    date: '2026-07-14',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/NER_Rail_Electrification_2026.pdf',
+    content: "Indian Railways successfully completed 100% electrification of all broad gauge routes under North Eastern Railway (NER), reducing carbon emissions and operational expenditure."
+  },
+  {
+    id: 'ca-news-jul-14-4',
+    title: "Maharashtra Government launches 'Ladli Behna Yojana' financial aid scheme / महाराष्ट्र सरकार ने 'लाडली बहना योजना' शुरू की",
+    date: '2026-07-14',
+    category: 'Schemes',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Maharashtra_Ladli_Behna_2026.pdf',
+    content: "The Chief Minister of Maharashtra launched the 'Mukhyamantri Majhi Ladli Behna Yojana' granting ₹1,500 monthly direct bank transfer to eligible women aged 21-65."
+  },
+
+  // --- 13 JULY 2026 ---
   {
     id: 'ca-news-jul-13-1',
     title: "India successfully launches GSAT-32 communication satellite aboard LVM3 from Sriharikota / भारत ने श्रीहरिकोटा से एलवीएम3 के जरिए जीएसएटी-32 संचार उपग्रह का सफल प्रक्षेपण किया",
@@ -5505,6 +6024,637 @@ export const CURRENT_AFFAIRS_QUIZ_QUESTIONS: Question[] = [
     correctOptionIndex: 1,
     explanation: 'Eminent Indian writer Arundhati Roy was awarded the European Essay Prize 2026 in Geneva, Switzerland.',
     date: '2026-07-13'
+  },
+
+  // --- 14 JULY 2026 ---
+  {
+    id: 'ca-q-jul14-506',
+    text: 'What is the official name designated by the International Astronomical Union (IAU) for Chandrayaan-3\'s touchdown site on the Moon? / चंद्रमा पर चंद्रयान-3 के लैंडिंग स्थल के लिए अंतर्राष्ट्रीय खगोलीय संघ (IAU) द्वारा आधिकारिक नाम क्या दिया गया है?',
+    options: ['(a) Tiranga Point / तिरंगा प्वाइंट', '(b) Shiv Shakti Point / शिव शक्ति पॉइंट', '(c) Jawahar Point / जवाहर पॉइंट', '(d) Vikram Sthal / विक्रम स्थल'],
+    correctOptionIndex: 1,
+    explanation: 'The International Astronomical Union officially approved "Shiv Shakti Point" as the designated lunar landmark.',
+    date: '2026-07-14'
+  },
+  {
+    id: 'ca-q-jul14-507',
+    text: 'What is India\'s rank in the WIPO Global Innovation Index 2026 among 132 economies? / 132 अर्थव्यवस्थाओं में WIPO ग्लोबल इनोवेशन इंडेक्स 2026 में भारत का कौन सा स्थान है?',
+    options: ['(a) 35th / 35वां', '(b) 40th / 40वां', '(c) 45th / 45वां', '(d) 50th / 50वां'],
+    correctOptionIndex: 1,
+    explanation: 'India climbed 5 spots to rank 40th in the WIPO Global Innovation Index 2026, leading the Central & Southern Asia region.',
+    date: '2026-07-14'
+  },
+  {
+    id: 'ca-q-jul14-508',
+    text: 'Which railway zone of Indian Railways achieved 100% electrification of its broad gauge network in July 2026? / भारतीय रेलवे के किस रेलवे क्षेत्र ने जुलाई 2026 में अपने ब्रॉड गेज नेटवर्क का 100% विद्युतीकरण हासिल किया?',
+    options: ['(a) North Eastern Railway / पूर्वोत्तर रेलवे', '(b) Southern Railway / दक्षिण रेलवे', '(c) Eastern Railway / पूर्वी रेलवे', '(d) Western Railway / पश्चिमी रेलवे'],
+    correctOptionIndex: 0,
+    explanation: 'The North Eastern Railway (NER) zone completed 100% electrification across all its operational broad gauge tracks.',
+    date: '2026-07-14'
+  },
+  {
+    id: 'ca-q-jul14-509',
+    text: 'Which state government launched the "Mukhyamantri Majhi Ladli Behna Yojana" financial aid scheme? / किस राज्य सरकार ने "मुख्यमंत्री माझी लाडली बहना योजना" वित्तीय सहायता योजना शुरू की?',
+    options: ['(a) Madhya Pradesh / मध्य प्रदेश', '(b) Maharashtra / महाराष्ट्र', '(c) Gujarat / गुजरात', '(d) Rajasthan / राजस्थान'],
+    correctOptionIndex: 1,
+    explanation: 'The Maharashtra Government launched the Ladli Behna Yojana providing ₹1,500 monthly financial assistance to women.',
+    date: '2026-07-14'
+  },
+  {
+    id: 'ca-q-jul14-510',
+    text: 'Akash Weapon System, frequently inducted by the Indian Armed Forces, belongs to which category of missiles? / भारतीय सशस्त्र बलों द्वारा अक्सर शामिल की जाने वाली आकाश हथियार प्रणाली किस श्रेणी की मिसाइल है?',
+    options: ['(a) Air-to-Air Missile / हवा से हवा में मार करने वाली मिसाइल', '(b) Surface-to-Air Missile / सतह से हवा में मार करने वाली मिसाइल', '(c) Anti-Tank Missile / टैंकरोधी मिसाइल', '(d) Cruise Missile / क्रूज मिसाइल'],
+    correctOptionIndex: 1,
+    explanation: 'Akash is an indigenous short-range Surface-to-Air Missile (SAM) system developed by DRDO.',
+    date: '2026-07-14'
+  },
+
+  // --- 15 JULY 2026 ---
+  {
+    id: 'ca-q-jul15-511',
+    text: 'What is the theme for World Youth Skills Day celebrated globally on 15th July 2026? / 15 जुलाई 2026 को विश्व स्तर पर मनाए गए विश्व युवा कौशल दिवस की विषय-वस्तु (Theme) क्या है?',
+    options: ['(a) Youth Skills for Peace and Development / शांति और विकास के लिए युवा कौशल', '(b) Digital Skills for All / सभी के लिए डिजिटल कौशल', '(c) Skilling Youth for Green Jobs / हरित नौकरियों के लिए युवाओं का कौशल', '(d) Reimagining Youth Skills / युवा कौशल की पुनर्कल्पना'],
+    correctOptionIndex: 0,
+    explanation: 'World Youth Skills Day 2026 focused on "Youth Skills for Peace and Development" to build peaceful resilient communities.',
+    date: '2026-07-15'
+  },
+  {
+    id: 'ca-q-jul15-512',
+    text: 'Which flagship skill development scheme\'s 5.0 version was launched by the Union Ministry of Skill Development in July 2026? / जुलाई 2026 में केंद्रीय कौशल विकास मंत्रालय द्वारा किस प्रमुख कौशल विकास योजना का 5.0 संस्करण लॉन्च किया गया?',
+    options: ['(a) PM-KVY 5.0 / पीएमकेवीवाई 5.0', '(b) PM-Mudra 5.0 / पीएम-मुद्रा 5.0', '(c) PM-Vishwakarma / पीएम-विश्वकर्मा', '(d) PM-KUSUM / पीएम-कुसुम'],
+    correctOptionIndex: 0,
+    explanation: 'Pradhan Mantri Kaushal Vikas Yojana (PMKVY 5.0) was launched focusing on Industry 4.0, AI, and green technologies.',
+    date: '2026-07-15'
+  },
+  {
+    id: 'ca-q-jul15-513',
+    text: 'What real GDP growth rate for India did the RBI project for FY 2026-27 in its monetary policy report? / आरबीआई ने अपनी मौद्रिक नीति रिपोर्ट में वित्त वर्ष 2026-27 के लिए भारत की वास्तविक सकल घरेलू उत्पाद (जीडीपी) वृद्धि दर कितने प्रतिशत रहने का अनुमान लगाया है?',
+    options: ['(a) 6.8% / 6.8%', '(b) 7.0% / 7.0%', '(c) 7.2% / 7.2%', '(d) 7.5% / 7.5%'],
+    correctOptionIndex: 2,
+    explanation: 'The Reserve Bank of India maintained repo rate at 6.5% and projected FY27 real GDP growth rate at 7.2%.',
+    date: '2026-07-15'
+  },
+  {
+    id: 'ca-q-jul15-514',
+    text: 'India announced a joint maritime patrolling mission in the South-Western Indian Ocean with which country? / भारत ने दक्षिण-पश्चिमी हिंद महासागर में किस देश के साथ संयुक्त समुद्री गश्त मिशन की घोषणा की?',
+    options: ['(a) United States / अमेरिका', '(b) France / फ्रांस', '(c) Australia / ऑस्ट्रेलिया', '(d) Japan / जापान'],
+    correctOptionIndex: 1,
+    explanation: 'India and France announced joint maritime patrolling operating from Reunion Island in the Indian Ocean Region.',
+    date: '2026-07-15'
+  },
+  {
+    id: 'ca-q-jul15-515',
+    text: 'The Department of Telecommunications (DoT) allocated experimental test spectrum in July 2026 for which futuristic wireless technology? / दूरसंचार विभाग (DoT) ने जुलाई 2026 में किस भविष्यवादी वायरलेस तकनीक के लिए प्रायोगिक परीक्षण स्पेक्ट्रम आवंटित किया?',
+    options: ['(a) 5G-Advanced / 5G-एडवांस्ड', '(b) 6G Technology / 6G टेक्नोलॉजी', '(c) Quantum Satellite Link / क्वांटम सैटेलाइट लिंक', '(d) Wi-Fi 7 Plus / वाई-फाई 7 प्लस'],
+    correctOptionIndex: 1,
+    explanation: 'DoT allocated experimental test spectrum to premier academic hubs to establish Bharat 6G testbeds.',
+    date: '2026-07-15'
+  },
+
+  // --- 16 JULY 2026 ---
+  {
+    id: 'ca-q-jul16-516',
+    text: 'In which year was the Indian Council of Agricultural Research (ICAR) established? / भारतीय कृषि अनुसंधान परिषद (ICAR) की स्थापना किस वर्ष की गई थी?',
+    options: ['(a) 1929 / 1929', '(b) 1947 / 1947', '(c) 1950 / 1950', '(d) 1969 / 1969'],
+    correctOptionIndex: 0,
+    explanation: 'ICAR was established on 16 July 1929 as a registered society under the Societies Registration Act.',
+    date: '2026-07-16'
+  },
+  {
+    id: 'ca-q-jul16-517',
+    text: 'What major installed capacity milestone did India surpass in total renewable energy capacity in July 2026? / जुलाई 2026 में भारत ने कुल नवीकरणीय ऊर्जा क्षमता में किस प्रमुख स्थापित क्षमता के मील का पत्थर को पार किया?',
+    options: ['(a) 150 GW / 150 गीगावॉट', '(b) 175 GW / 175 गीगावॉट', '(c) 200 GW / 200 गीगावॉट', '(d) 250 GW / 250 गीगावॉट'],
+    correctOptionIndex: 2,
+    explanation: 'India surpassed 200 GW total installed renewable capacity, including solar, wind, hydro, and bioenergy.',
+    date: '2026-07-16'
+  },
+  {
+    id: 'ca-q-jul16-518',
+    text: 'India extended its real-time UPI cross-border payment link for MSME merchants with which ASEAN country? / भारत ने किस आसियान (ASEAN) देश के साथ एमएसएमई व्यापारियों के लिए अपने वास्तविक समय यूपीआई सीमा पार भुगतान लिंक का विस्तार किया?',
+    options: ['(a) Malaysia / मलेशिया', '(b) Singapore / सिंगापुर', '(c) Thailand / थाईलैंड', '(d) Indonesia / इंडोनेशिया'],
+    correctOptionIndex: 1,
+    explanation: 'NPCI and MAS extended the UPI-PayNow linkage between India and Singapore for cross-border QR payments.',
+    date: '2026-07-16'
+  },
+  {
+    id: 'ca-q-jul16-519',
+    text: 'Which Indian shooter set a new World Record score of 465.8 points in Men\'s 50m Rifle 3 Positions in July 2026? / किस भारतीय निशानेबाज ने जुलाई 2026 में पुरुषों की 50 मीटर राइफल 3 पोजीशन में 465.8 अंकों का नया विश्व रिकॉर्ड बनाया?',
+    options: ['(a) Aishwary Pratap Singh Tomar / ऐश्वर्य प्रताप सिंह तोमर', '(b) Rudrankksh Patil / रुद्राक्ष पाटिल', '(c) Saurabh Chaudhary / सौरभ चौधरी', '(d) Divyansh Singh Panwar / दिव्यांश सिंह पंवार'],
+    correctOptionIndex: 0,
+    explanation: 'Aishwary Pratap Singh Tomar broke the world record in the 50m Rifle 3 Positions event at the Asian Shooting Championship.',
+    date: '2026-07-16'
+  },
+  {
+    id: 'ca-q-jul16-520',
+    text: 'The wildlife corridor of which famous tiger reserve was declared an Eco-Sensitive Zone (ESZ) by the Uttarakhand government in July 2026? / उत्तराखंड सरकार द्वारा जुलाई 2026 में किस प्रसिद्ध टाइगर रिजर्व के वन्यजीव गलियारे को पारिस्थितिकी-संवेदनशील क्षेत्र (ESZ) घोषित किया गया था?',
+    options: ['(a) Rajaji Tiger Reserve / राजाजी टाइगर रिजर्व', '(b) Corbett Tiger Reserve / कॉर्बेट टाइगर रिजर्व', '(c) Dudhwa Tiger Reserve / दुधवा टाइगर रिजर्व', '(d) Valmiki Tiger Reserve / वाल्मीकि टाइगर रिजर्व'],
+    correctOptionIndex: 1,
+    explanation: 'The Uttarakhand government notified the wildlife migration corridor surrounding Corbett Tiger Reserve as an Eco-Sensitive Zone.',
+    date: '2026-07-16'
+  },
+
+  // --- 17 JULY 2026 ---
+  {
+    id: 'ca-q-jul17-521',
+    text: 'World Day for International Justice observed on 17th July marks the adoption anniversary of which treaty? / 17 जुलाई को मनाया जाने वाला अंतर्राष्ट्रीय न्याय के लिए विश्व दिवस किस संधि को अपनाने की वर्षगांठ का प्रतीक है?',
+    options: ['(a) Geneva Convention / जेनेवा कन्वेंशन', '(b) Rome Statute / रोम संविधि', '(c) Treaty of Versailles / वर्साय की संधि', '(d) Hague Convention / हेग कन्वेंशन'],
+    correctOptionIndex: 1,
+    explanation: 'World Day for International Justice marks the anniversary of the adoption of the Rome Statute on July 17, 1998, establishing the ICC.',
+    date: '2026-07-17'
+  },
+  {
+    id: 'ca-q-jul17-522',
+    text: 'According to NITI Aayog\'s Multidimensional Poverty Index 2026 Progress Report, how many Indians exited multidimensional poverty between 2018 and 2026? / नीति आयोग की बहुआयामी गरीबी सूचकांक 2026 प्रगति रिपोर्ट के अनुसार, 2018 और 2026 के बीच कितने भारतीय बहुआयामी गरीबी से बाहर निकले?',
+    options: ['(a) 5.5 Crore / 5.5 करोड़', '(b) 10 Crore / 10 करोड़', '(c) 13.5 Crore / 13.5 करोड़', '(d) 20 Crore / 20 करोड़'],
+    correctOptionIndex: 2,
+    explanation: 'Over 13.5 crore people in India lifted themselves out of multidimensional poverty driven by rural infrastructure & sanitation.',
+    date: '2026-07-17'
+  },
+  {
+    id: 'ca-q-jul17-523',
+    text: 'The Union Cabinet sanctioned ₹15,000 Crore scheme focusing on which critical stage of semiconductor manufacturing? / केंद्रीय मंत्रिमंडल ने सेमीकंडक्टर निर्माण के किस महत्वपूर्ण चरण पर ध्यान केंद्रित करने वाली ₹15,000 करोड़ की योजना को मंजूरी दी?',
+    options: ['(a) Silicon Mining / सिलिकॉन खनन', '(b) Packaging and Testing (ATMP) / पैकेजिंग और परीक्षण (ATMP)', '(c) Raw Quartz Refining / कच्चा क्वार्ट्ज रिफाइनिंग', '(d) Printed Circuit Design / प्रिंटेड सर्किट डिजाइन'],
+    correctOptionIndex: 1,
+    explanation: 'The Union Cabinet approved financial capital support for semiconductor Assembly, Testing, Marking, and Packaging (ATMP) units.',
+    date: '2026-07-17'
+  },
+  {
+    id: 'ca-q-jul17-524',
+    text: 'ISRO successfully tested which cryogenic engine powering the upper stage of LVM3 for the Gaganyaan mission? / इसरो ने गगनयान मिशन के लिए LVM3 के ऊपरी चरण को शक्ति देने वाले किस क्रायोजेनिक इंजन का सफल परीक्षण किया?',
+    options: ['(a) CE-7.5 Engine / CE-7.5 इंजन', '(b) CE-20 Engine / CE-20 इंजन', '(c) Vikas Engine / विकास इंजन', '(d) Kalpana Engine / कल्पना इंजन'],
+    correctOptionIndex: 1,
+    explanation: 'ISRO completed human-rating acceptance qualification tests for the CE-20 Cryogenic Engine.',
+    date: '2026-07-17'
+  },
+  {
+    id: 'ca-q-jul17-525',
+    text: 'Which state government extended its pioneering "Chief Minister\'s Breakfast Scheme" to cover government high schools in July 2026? / किस राज्य सरकार ने जुलाई 2026 में सरकारी हाई स्कूलों को कवर करने के लिए अपनी अग्रणी "मुख्यमंत्री नाश्ता योजना" का विस्तार किया?',
+    options: ['(a) Tamil Nadu / तमिलनाडु', '(b) Karnataka / कर्नाटक', '(c) Kerala / केरल', '(d) Andhra Pradesh / आंध्र प्रदेश'],
+    correctOptionIndex: 0,
+    explanation: 'The Tamil Nadu government expanded the Chief Minister\'s Breakfast Scheme Phase-3 to government high schools across districts.',
+    date: '2026-07-17'
+  },
+
+  // --- 18 JULY 2026 ---
+  {
+    id: 'ca-q-jul18-526',
+    text: 'What was the official theme for Nelson Mandela International Day celebrated on 18th July 2026? / 18 जुलाई 2026 को मनाए गए नेल्सन मंडेला अंतर्राष्ट्रीय दिवस का आधिकारिक विषय (Theme) क्या था?',
+    options: ['(a) "It is in your hands" / "यह आपके हाथों में है"', '(b) "Freedom and Peace" / "स्वतंत्रता और शांति"', '(c) "Ending Apartheid" / "रंगभेद का अंत"', '(d) "Unity in Diversity" / "विविधता में एकता"'],
+    correctOptionIndex: 0,
+    explanation: 'The UN theme for Nelson Mandela Day 2026 was "It is in your hands" encouraging community public service.',
+    date: '2026-07-18'
+  },
+  {
+    id: 'ca-q-jul18-527',
+    text: 'South Asia\'s deepest natural draft container transshipment port terminal was inaugurated at which location? / दक्षिण एशिया के सबसे गहरे प्राकृतिक ड्राफ्ट कंटेनर ट्रांसशिपमेंट पोर्ट टर्मिनल का उद्घाटन किस स्थान पर किया गया था?',
+    options: ['(a) Vizhinjam Port, Kerala / विझिनजम पोर्ट, केरल', '(b) Jawaharlal Nehru Port, Mumbai / जवाहरलाल नेहरू पोर्ट, मुंबई', '(c) VOC Port, Tuticorin / वीओसी पोर्ट, तूतीकोरिन', '(d) Paradip Port, Odisha / पारादीप पोर्ट, ओडिशा'],
+    correctOptionIndex: 0,
+    explanation: 'Vizhinjam International Transshipment Deepwater Multipurpose Seaport in Kerala features a 20-meter natural depth.',
+    date: '2026-07-18'
+  },
+  {
+    id: 'ca-q-jul18-528',
+    text: 'What is the maximum transaction limit for offline NFC payments using RBI\'s newly introduced "UPI Lite X"? / आरबीआई के नए पेश किए गए "यूपीआई लाइट एक्स" (UPI Lite X) का उपयोग करके ऑफलाइन एनएफसी भुगतानों के लिए अधिकतम लेनदेन सीमा क्या है?',
+    options: ['(a) ₹500 / ₹500', '(b) ₹1,000 / ₹1,000', '(c) ₹2,000 / ₹2,000', '(d) ₹5,000 / ₹5,000'],
+    correctOptionIndex: 1,
+    explanation: 'UPI Lite X allows offline peer-to-peer payments via NFC technology up to ₹1,000 without network internet connectivity.',
+    date: '2026-07-18'
+  },
+  {
+    id: 'ca-q-jul18-529',
+    text: 'India launched a joint Green Hydrogen Taskforce in July 2026 in partnership with which European nation? / भारत ने जुलाई 2026 में किस यूरोपीय देश की साझेदारी में एक संयुक्त ग्रीन हाइड्रोजन टास्कफोर्स की शुरुआत की?',
+    options: ['(a) France / फ्रांस', '(b) Germany / जर्मनी', '(c) United Kingdom / यूके', '(d) Sweden / स्वीडन'],
+    correctOptionIndex: 1,
+    explanation: 'India and Germany established the Indo-German Green Hydrogen Taskforce to advance green fuel production & trade.',
+    date: '2026-07-18'
+  },
+  {
+    id: 'ca-q-jul18-530',
+    text: 'Indian athlete Parul Chaudhary won the Gold medal in which athletics discipline at the Asian Athletics Grand Prix in July 2026? / भारतीय एथलीट पारुल चौधरी ने जुलाई 2026 में एशियाई एथलेटिक्स ग्रैंड प्रिक्स में किस एथलेटिक्स स्पर्धा में स्वर्ण पदक जीता?',
+    options: ['(a) 100m Hurdles / 100 मीटर बाधा दौड़', '(b) 3000m Steeplechase / 3000 मीटर स्टीपलचेज़', '(c) 800m Sprint / 800 मीटर स्प्रिंट', '(d) Marathon / मैराथन'],
+    correctOptionIndex: 1,
+    explanation: 'Parul Chaudhary clinched the Gold medal in the Women\'s 3000m Steeplechase event at the Asian Athletics Grand Prix.',
+    date: '2026-07-18'
+  },
+
+  // --- 19 JULY 2026 ---
+  {
+    id: 'ca-q-jul19-531',
+    text: 'Bank Nationalisation Day in India is observed on 19th July marking the nationalisation of how many commercial banks in 1969? / भारत में बैंक राष्ट्रीयकरण दिवस 19 जुलाई को मनाया जाता है, जो 1969 में कितने वाणिज्यिक बैंकों के राष्ट्रीयकरण का प्रतीक है?',
+    options: ['(a) 10 Banks / 10 बैंक', '(b) 12 Banks / 12 बैंक', '(c) 14 Banks / 14 बैंक', '(d) 19 Banks / 19 बैंक'],
+    correctOptionIndex: 2,
+    explanation: 'On July 19, 1969, Prime Minister Indira Gandhi announced the nationalisation of 14 major commercial banks.',
+    date: '2026-07-19'
+  },
+  {
+    id: 'ca-q-jul19-532',
+    text: 'What is the name of the AI platform launched by MeitY for real-time speech translation across 22 scheduled Indian languages? / 22 अनुसूचित भारतीय भाषाओं में वास्तविक समय में भाषण अनुवाद के लिए MeitY द्वारा लॉन्च किए गए AI प्लेटफॉर्म का नाम क्या है?',
+    options: ['(a) Bhashini AI 2.0 / भाषिणी एआई 2.0', '(b) Anuvadak AI / अनुवादक एआई', '(c) IndicVoice 3.0 / इंडिकवॉइस 3.0', '(d) BharatBhasha / भारतभाषा'],
+    correctOptionIndex: 0,
+    explanation: 'Bhashini AI 2.0 provides voice-to-voice translation in 22 official scheduled languages to break linguistic barriers.',
+    date: '2026-07-19'
+  },
+  {
+    id: 'ca-q-jul19-533',
+    text: 'The Government of India signed a $300 Million agreement with the World Bank for school education transformation in which state? / भारत सरकार ने किस राज्य में स्कूली शिक्षा परिवर्तन के लिए विश्व बैंक के साथ $300 मिलियन के समझौते पर हस्ताक्षर किए?',
+    options: ['(a) Odisha / ओडिशा', '(b) Andhra Pradesh / आंध्र प्रदेश', '(c) Telangana / तेलंगाना', '(d) Bihar / बिहार'],
+    correctOptionIndex: 1,
+    explanation: 'The World Bank supported Andhra Pradesh\'s SALT project with $300M funding for learning quality and teacher training.',
+    date: '2026-07-19'
+  },
+  {
+    id: 'ca-q-jul19-534',
+    text: 'Which Indian Navy sail training ship set sail on the international "Lokayan-2026" diplomatic voyage in July 2026? / कौन सा भारतीय नौसेना का नौकायन प्रशिक्षण पोत जुलाई 2026 में अंतर्राष्ट्रीय "लोकायन-2026" राजनयिक यात्रा पर रवाना हुआ?',
+    options: ['(a) INS Tarangini / आईएनएस तरंगिणी', '(b) INS Sudarshini / आईएनएस सुदर्शिनी', '(c) INS Mhadei / आईएनएस म्हादेई', '(d) INS Tarini / आईएनएस तारिणी'],
+    correctOptionIndex: 0,
+    explanation: 'INS Tarangini set sail on the Lokayan-2026 tall ship voyage spanning 14 foreign ports to build diplomatic friendship.',
+    date: '2026-07-19'
+  },
+  {
+    id: 'ca-q-jul19-535',
+    text: 'Which digital technology is heavily utilized under Pradhan Mantri Fasal Bima Yojana (PMFBY) for satellite-based crop damage assessment? / उपग्रह आधारित फसल क्षति मूल्यांकन के लिए प्रधानमंत्री फसल बीमा योजना (PMFBY) के तहत किस डिजिटल तकनीक का अत्यधिक उपयोग किया जाता है?',
+    options: ['(a) YES-TECH Remote Sensing / वाईईएस-टेक रिमोट सेंसिंग', '(b) Kisan Blockchain / किसान ब्लॉकचेन', '(c) Agri-Geofencing / एग्री-जियोफेंसिंग', '(d) LiDAR Sonar / लिडार सोनार'],
+    correctOptionIndex: 0,
+    explanation: 'YES-TECH (Yield Estimation System using Technology) uses remote sensing satellite data for claim settlements under PMFBY.',
+    date: '2026-07-19'
+  },
+
+  // --- 20 JULY 2026 ---
+  {
+    id: 'ca-q-jul20-536',
+    text: 'International Moon Day is celebrated on 20th July every year to commemorate which historical milestone? / अंतर्राष्ट्रीय चंद्रमा दिवस हर साल 20 जुलाई को किस ऐतिहासिक मील का पत्थर के उपलक्ष्य में मनाया जाता है?',
+    options: ['(a) Apollo 11 Lunar Landing in 1969 / 1969 में अपोलो 11 चंद्रमा लैंडिंग', '(b) Sputnik 1 Launch in 1957 / 1957 में स्पुतनिक 1 प्रक्षेपण', '(c) Yuri Gagarin Flight in 1961 / 1961 में यूरी गागरिन उड़ान', '(d) Chandrayaan-1 Launch in 2008 / 2008 में चंद्रयान-1 प्रक्षेपण'],
+    correctOptionIndex: 0,
+    explanation: 'International Moon Day commemorates Neil Armstrong and Buzz Aldrin landing on the Moon on July 20, 1969.',
+    date: '2026-07-20'
+  },
+  {
+    id: 'ca-q-jul20-537',
+    text: 'Subsidies for electric buses and commercial freight vehicles are extended under which flagship scheme by the Ministry of Heavy Industries? / भारी उद्योग मंत्रालय द्वारा किस प्रमुख योजना के तहत इलेक्ट्रिक बसों और वाणिज्यिक माल वाहनों के लिए सब्सिडी बढ़ाई गई है?',
+    options: ['(a) FAME-III Scheme / FAME-III योजना', '(b) PM-E-BUS Sewa / पीएम-ई-बस सेवा', '(c) PLI Auto Scheme / पीएलआई ऑटो योजना', '(d) EV India Mission / ईवी इंडिया मिशन'],
+    correctOptionIndex: 0,
+    explanation: 'FAME-III (Faster Adoption and Manufacturing of Electric Vehicles Phase III) extends subsidies for commercial electric fleets.',
+    date: '2026-07-20'
+  },
+  {
+    id: 'ca-q-jul20-538',
+    text: 'Which premier institute developed low-cost solar desalination apparatus using nanoporous graphene membranes in July 2026? / किस प्रमुख संस्थान ने जुलाई 2026 में नैनोपोरस ग्राफीन झिल्लियों का उपयोग करके कम लागत वाला सौर विलवणीकरण उपकरण विकसित किया?',
+    options: ['(a) IIT Bombay / आईआईटी बॉम्बे', '(b) IIT Delhi / आईआईटी दिल्ली', '(c) IIT Kharagpur / आईआईटी खड़गपुर', '(d) IIT Roorkee / आईआईटी रुड़की'],
+    correctOptionIndex: 0,
+    explanation: 'IIT Bombay researchers developed portable solar-driven graphene membranes purifying seawater at under 15 paise per liter.',
+    date: '2026-07-20'
+  },
+  {
+    id: 'ca-q-jul20-539',
+    text: 'Indian badminton star P.V. Sindhu secured the Silver medal in Women\'s Singles at which tournament in July 2026? / भारतीय बैडमिंटन स्टार पी.वी. सिंधु ने जुलाई 2026 में किस टूर्नामेंट में महिला एकल में रजत पदक हासिल किया?',
+    options: ['(a) US Open Badminton / यूएस ओपन बैडमिंटन', '(b) All England Open / ऑल इंग्लैंड ओपन', '(c) Indonesia Masters / इंडोनेशिया मास्टर्स', '(d) Swiss Open / स्विस ओपन'],
+    correctOptionIndex: 0,
+    explanation: 'P.V. Sindhu finished runner-up and won the Silver medal at the US Open Badminton Championships 2026 in Texas.',
+    date: '2026-07-20'
+  },
+  {
+    id: 'ca-q-jul20-540',
+    text: 'Which state government provides higher education technical scholarships under the "Kalia Farmers Scholarship Scheme"? / कौन सी राज्य सरकार "कालिया किसान छात्रवृत्ति योजना" के तहत उच्च शिक्षा तकनीकी छात्रवृत्ति प्रदान करती है?',
+    options: ['(a) Odisha / ओडिशा', '(b) West Bengal / पश्चिम बंगाल', '(c) Jharkhand / झारखंड', '(d) Chhattisgarh / छत्तीसगढ़'],
+    correctOptionIndex: 0,
+    explanation: 'The Odisha government offers the KALIA Chhatra Brutti scheme to children of beneficiary farmers pursuing technical degrees.',
+    date: '2026-07-20'
+  },
+
+  // --- 21 JULY 2026 ---
+  {
+    id: 'ca-q-jul21-541',
+    text: 'Which organization launched the "Atmanirbhar Agri Innovation Index 2026" to evaluate state agricultural innovations? / राज्य कृषि नवाचारों का मूल्यांकन करने के लिए किस संगठन ने "आत्मनिर्भर कृषि नवाचार सूचकांक 2026" लॉन्च किया?',
+    options: ['(a) NITI Aayog / नीति आयोग', '(b) ICAR / आईसीएआर', '(c) NABARD / नाबार्ड', '(d) Ministry of Agriculture / कृषि मंत्रालय'],
+    correctOptionIndex: 0,
+    explanation: 'NITI Aayog launched the index to benchmark state performance in precision farming, cold chains, and organic certification.',
+    date: '2026-07-21'
+  },
+  {
+    id: 'ca-q-jul21-542',
+    text: 'India\'s largest floating solar power plant constructed by NTPC with a capacity of 100 MW is located in which city/town? / 100 मेगावॉट क्षमता वाला NTPC द्वारा निर्मित भारत का सबसे बड़ा फ्लोटिंग सोलर पावर प्लांट किस शहर/कस्बे में स्थित है?',
+    options: ['(a) Ramagundam, Telangana / रामागुंडम, तेलंगाना', '(b) Kayamkulam, Kerala / कायमकुलम, केरल', '(c) Simhadri, Andhra Pradesh / सिम्हाद्रि, आंध्र प्रदेश', '(d) Omkareshwar, Madhya Pradesh / ओंकारेश्वर, मध्य प्रदेश'],
+    correctOptionIndex: 0,
+    explanation: 'NTPC commissioned the 100 MW floating solar project spread over 500 acres at Ramagundam reservoir in Telangana.',
+    date: '2026-07-21'
+  },
+  {
+    id: 'ca-q-jul21-543',
+    text: 'Satwiksairaj Rankireddy and Chirag Shetty won which Men\'s Doubles badminton championship in July 2026? / सात्विकसाईराज रंकीरेड्डी और चिराग शेट्टी ने जुलाई 2026 में कौन सी पुरुष युगल बैडमिंटन चैंपियनशिप जीती?',
+    options: ['(a) Korea Open / कोरिया ओपन', '(b) Malaysia Open / मलेशिया ओपन', '(c) Japan Open / जापान ओपन', '(d) Singapore Open / सिंगापुर ओपन'],
+    correctOptionIndex: 0,
+    explanation: 'Satwiksairaj Rankireddy and Chirag Shetty won the Korea Open Super 500 Men\'s Doubles title in Seoul.',
+    date: '2026-07-21'
+  },
+  {
+    id: 'ca-q-jul21-544',
+    text: 'India signed an MoU with which South American country under the Global Biofuels Alliance for flex-fuel and ethanol blending tech? / भारत ने फ्लेक्स-फ्यूल और एथेनॉल ब्लेंडिंग तकनीक के लिए ग्लोबल बायोफ्यूल्स एलायंस के तहत किस दक्षिण अमेरिकी देश के साथ समझौता ज्ञापन पर हस्ताक्षर किए?',
+    options: ['(a) Brazil / ब्राजील', '(b) Argentina / अर्जेंटीना', '(c) Chile / चिली', '(d) Colombia / कोलंबिया'],
+    correctOptionIndex: 0,
+    explanation: 'India and Brazil signed an agreement to advance flex-fuel engine engineering and sustainable aviation fuel production.',
+    date: '2026-07-21'
+  },
+  {
+    id: 'ca-q-jul21-545',
+    text: 'What is the full form of PM-VIKAS, a government portal aimed at supporting traditional artisans and craftspeople? / पारंपरिक कारीगरों और शिल्पकारों का समर्थन करने वाले सरकारी पोर्टल PM-VIKAS का पूरा रूप क्या है?',
+    options: ['(a) PM Vishwakarma Kaushal Samman / पीएम विश्वकर्मा कौशल सम्मान', '(b) PM Vikas Industrial Kendra Scheme / पीएम विकास इंडस्ट्रियल केंद्र स्कीम', '(c) PM Village Innovation & Kaushal Scheme / पीएम विलेज इनोवेशन एंड कौशल स्कीम', '(d) PM Value Addition in Artisanal Sector / पीएम वैल्यू एडिशन इन आर्टिसनल सेक्टर'],
+    correctOptionIndex: 0,
+    explanation: 'PM-VIKAS stands for Pradhan Mantri Vishwakarma Kaushal Samman providing financial and skill assistance to traditional artisans.',
+    date: '2026-07-21'
+  },
+
+  // --- 22 JULY 2026 ---
+  {
+    id: 'ca-q-jul22-546',
+    text: 'Pi Approximation Day is celebrated globally on 22nd July because 22/7 approximates the mathematical constant Pi (\u03c0). Who calculated this fraction? / पाई सन्निकटन दिवस विश्व स्तर पर 22 जुलाई को मनाया जाता है क्योंकि 22/7 गणितीय स्थिरांक पाई (\u03c0) का सन्निकटन करता है। इस भिन्न की गणना किसने की थी?',
+    options: ['(a) Archimedes of Syracuse / सिरैक्यूज़ के आर्किमिडीज', '(b) Aryabhata / आर्यभट्ट', '(c) Isaac Newton / आइजैक न्यूटन', '(d) Carl Friedrich Gauss / कार्ल फ्रेडरिक गॉस'],
+    correctOptionIndex: 0,
+    explanation: 'Archimedes of Syracuse calculated that Pi is approximated by 22/7, celebrated on 22 July (22/7 format).',
+    date: '2026-07-22'
+  },
+  {
+    id: 'ca-q-jul22-547',
+    text: 'What is the primary core objective of ISRO\'s Chandrayaan-4 mission whose architecture was finalized in July 2026? / इसरो के चंद्रयान-4 मिशन का प्राथमिक मुख्य उद्देश्य क्या है जिसका आर्किटेक्चर जुलाई 2026 में अंतिम रूप दिया गया था?',
+    options: ['(a) Lunar Soil Sample Return to Earth / पृथ्वी पर चंद्र मिट्टी के नमूने की वापसी', '(b) Manned Lunar Orbiting / मानवयुक्त चंद्रमा परिक्रमा', '(c) Deep Cave Underground Drilling / गहरी गुफा भूमिगत ड्रिलिंग', '(d) Permanent Human Base Setup / स्थायी मानव आधार स्थापना'],
+    correctOptionIndex: 0,
+    explanation: 'Chandrayaan-4 is a lunar sample return mission aiming to bring 2-3 kg of lunar soil back to Earth.',
+    date: '2026-07-22'
+  },
+  {
+    id: 'ca-q-jul22-548',
+    text: 'The World Health Organization (WHO) issued a global alert in July 2026 regarding a resurgence of which Dengue virus serotype? / विश्व स्वास्थ्य संगठन (WHO) ने जुलाई 2026 में किस डेंगू वायरस सेरोटाइप के पुनरुत्थान के संबंध में वैश्विक अलर्ट जारी किया?',
+    options: ['(a) Dengue Serotype-5 / डेंगू सेरोटाइप-5', '(b) Dengue Serotype-2 / डेंगू सेरोटाइप-2', '(c) Dengue Serotype-1 / डेंगू सेरोटाइप-1', '(d) Dengue Serotype-3 / डेंगू सेरोटाइप-3'],
+    correctOptionIndex: 0,
+    explanation: 'WHO alerted international health agencies regarding the emergence of Dengue virus Serotype-5 (DEN-5).',
+    date: '2026-07-22'
+  },
+  {
+    id: 'ca-q-jul22-549',
+    text: 'The Asian Development Bank (ADB) approved $250 Million funding to modernize 25 government polytechnic colleges in which state? / एशियाई विकास बैंक (ADB) ने किस राज्य में 25 सरकारी पॉलीटेक्निक कॉलेजों के आधुनिकीकरण के लिए $250 मिलियन की फंडिंग को मंजूरी दी?',
+    options: ['(a) Assam / असम', '(b) Meghalaya / मेघालय', '(c) Nagaland / नागालैंड', '(d) Tripura / त्रिपुरा'],
+    correctOptionIndex: 0,
+    explanation: 'ADB approved $250 million to upgrade technical infrastructure and robotics labs in Assam polytechnics.',
+    date: '2026-07-22'
+  },
+  {
+    id: 'ca-q-jul22-550',
+    text: 'With the addition of Hirakud Reservoir Backwaters and Pulicat Lake Conservation Reserve in July 2026, what is India\'s total count of Ramsar Wetlands? / जुलाई 2026 में हीराकुड जलाशय के जलक्षेत्र और पुलिकट झील संरक्षण रिजर्व को शामिल करने के साथ, भारत के रामसर आर्द्रभूमि की कुल संख्या कितनी हो गई है?',
+    options: ['(a) 80 Sites / 80 स्थल', '(b) 84 Sites / 84 स्थल', '(c) 90 Sites / 90 स्थल', '(d) 100 Sites / 100 स्थल'],
+    correctOptionIndex: 1,
+    explanation: 'India\'s total tally of Ramsar Wetlands reached 84 protected sites.',
+    date: '2026-07-22'
+  },
+
+  // --- 23 JULY 2026 ---
+  {
+    id: 'ca-q-jul23-551',
+    text: 'National Broadcasting Day is celebrated in India on 23rd July to commemorate the first radio broadcast by which organization in 1927? / भारत में राष्ट्रीय प्रसारण दिवस 23 जुलाई को 1927 में किस संगठन द्वारा पहले रेडियो प्रसारण के उपलक्ष्य में मनाया जाता है?',
+    options: ['(a) Indian Broadcasting Company (IBC) / इंडियन ब्रॉडकास्टिंग कंपनी (IBC)', '(b) All India Radio (AIR) / ऑल इंडिया रेडियो (AIR)', '(c) Prasar Bharati / प्रसार भारती', '(d) Doordarshan / दूरदर्शन'],
+    correctOptionIndex: 0,
+    explanation: 'On July 23, 1927, the private Indian Broadcasting Company (IBC) made its maiden radio broadcast from Mumbai station.',
+    date: '2026-07-23'
+  },
+  {
+    id: 'ca-q-jul23-552',
+    text: 'India signed an MoU with Japan in July 2026 for cooperation in which high-tech manufacturing sector? / भारत ने जुलाई 2026 में किस उच्च तकनीक निर्माण क्षेत्र में सहयोग के लिए जापान के साथ एक समझौता ज्ञापन पर हस्ताक्षर किए?',
+    options: ['(a) Semiconductor Ecosystem & Chip Design / सेमीकंडक्टर पारिस्थितिकी तंत्र और चिप डिजाइन', '(b) Bullet Train Locomotive Engines / बुलेट ट्रेन लोकोमोटिव इंजन', '(c) Deep Sea Submarines / गहरी समुद्री पनडुब्बियां', '(d) Nuclear Fusion Reactors / परमाणु संलयन रिएक्टर'],
+    correctOptionIndex: 0,
+    explanation: 'MeitY and Japan\'s METI signed an MoU for semiconductor supply chain resilience, wafer fabrication, and talent exchange.',
+    date: '2026-07-23'
+  },
+  {
+    id: 'ca-q-jul23-553',
+    text: 'Which defense research organization successfully flight-tested the 4th generation VSHORADS missile system at Chandipur? / किस रक्षा अनुसंधान संगठन ने चांदीपुर में चौथी पीढ़ी की VSHORADS मिसाइल प्रणाली का सफल उड़ान परीक्षण किया?',
+    options: ['(a) DRDO / डीआरडीओ', '(b) ISRO / इसरो', '(c) HAL / एचएएल', '(d) BEL / बीईएल'],
+    correctOptionIndex: 0,
+    explanation: 'DRDO executed successful flight tests of Very Short Range Air Defence System (VSHORADS) missile firing from tripods.',
+    date: '2026-07-23'
+  },
+  {
+    id: 'ca-q-jul23-554',
+    text: 'Ace swimmer Srihari Nataraj won the Gold medal setting a new national record of 53.85s in which swimming event in July 2026? / स्टार तैराक श्रीहरि नटराज ने जुलाई 2026 में किस तैराकी स्पर्धा में 53.85 सेकंड का नया राष्ट्रीय रिकॉर्ड बनाते हुए स्वर्ण पदक जीता?',
+    options: ['(a) Men\'s 100m Backstroke / पुरुषों की 100 मीटर बैकस्ट्रोक', '(b) Men\'s 50m Butterfly / पुरुषों की 50 मीटर बटरफ्लाई', '(c) Men\'s 200m Freestyle / पुरुषों की 200 मीटर फ्रीस्टाइल', '(d) Men\'s 100m Breaststroke / पुरुषों की 100 मीटर ब्रेस्टस्ट्रोक'],
+    correctOptionIndex: 0,
+    explanation: 'Srihari Nataraj won Gold in the Men\'s 100m Backstroke at the Asian Aquatic Championship 2026.',
+    date: '2026-07-23'
+  },
+  {
+    id: 'ca-q-jul23-555',
+    text: 'What real GDP growth trajectory was highlighted for the Indian economy in the Union Budget 2026 review meeting? / केंद्रीय बजट 2026 समीक्षा बैठक में भारतीय अर्थव्यवस्था के लिए किस वास्तविक जीडीपी विकास पथ पर प्रकाश डाला गया था?',
+    options: ['(a) 8.2% / 8.2%', '(b) 7.5% / 7.5%', '(c) 6.9% / 6.9%', '(d) 9.0% / 9.0%'],
+    correctOptionIndex: 0,
+    explanation: 'The Finance Ministry review meeting underscored India\'s 8.2% real GDP growth trajectory.',
+    date: '2026-07-23'
+  },
+
+  // --- 24 JULY 2026 ---
+  {
+    id: 'ca-q-jul24-556',
+    text: 'Income Tax Day (Aaykar Diwas) is celebrated on 24th July in India to mark the introduction of income tax by Sir James Wilson in which year? / भारत में 24 जुलाई को आयकर दिवस (आयकर दिवस) सर जेम्स विल्सन द्वारा किस वर्ष आयकर की शुरुआत के उपलक्ष्य में मनाया जाता है?',
+    options: ['(a) 1860 / 1860', '(b) 1947 / 1947', '(c) 1961 / 1961', '(d) 1950 / 1950'],
+    correctOptionIndex: 0,
+    explanation: 'Sir James Wilson introduced income tax in India on July 24, 1860, marked annually as Income Tax Day.',
+    date: '2026-07-24'
+  },
+  {
+    id: 'ca-q-jul24-557',
+    text: 'What is the name of the bilateral naval exercise conducted by the Indian Navy and Vietnam People\'s Navy in July 2026? / जुलाई 2026 में भारतीय नौसेना और वियतनाम पीपुल्स नेवी द्वारा आयोजित द्विपक्षीय नौसेना अभ्यास का नाम क्या है?',
+    options: ['(a) VINBAX-2026 / VINBAX-2026', '(b) SIMBEX-2026 / SIMBEX-2026', '(c) JIMEX-2026 / JIMEX-2026', '(d) VARUNA-2026 / वरुण-2026'],
+    correctOptionIndex: 0,
+    explanation: 'VINBAX-2026 is the bilateral naval exercise conducted between Indian Navy and Vietnam People\'s Navy in South China Sea.',
+    date: '2026-07-24'
+  },
+  {
+    id: 'ca-q-jul24-558',
+    text: 'Which state government launched "Mahalakshmi Scheme Phase-II" providing interest-free loans up to ₹5 Lakh to self-help group women? / किस राज्य सरकार ने स्व-सहायता समूह की महिलाओं को ₹5 लाख तक का ब्याज मुक्त ऋण प्रदान करने वाली "महालक्ष्मी योजना चरण-II" शुरू की?',
+    options: ['(a) Telangana / तेलंगाना', '(b) Andhra Pradesh / आंध्र प्रदेश', '(c) Karnataka / कर्नाटक', '(d) Tamil Nadu / तमिलनाडु'],
+    correctOptionIndex: 0,
+    explanation: 'Telangana Chief Minister launched Mahalakshmi Phase-II providing collateral-free loans for women micro-entrepreneurs.',
+    date: '2026-07-24'
+  },
+  {
+    id: 'ca-q-jul24-559',
+    text: 'IISc Bengaluru researchers engineered novel perovskite-silicon tandem solar cells achieving what record efficiency rating? / आईआईएससी बेंगलुरु के शोधकर्ताओं ने किस रिकॉर्ड दक्षता रेटिंग को प्राप्त करने वाले नए पेरोव्स्काइट-सिलिकॉन अग्रानुक्रम सौर सेलों का निर्माण किया?',
+    options: ['(a) 28.4% / 28.4%', '(b) 22.0% / 22.0%', '(c) 35.0% / 35.0%', '(d) 18.5% / 18.5%'],
+    correctOptionIndex: 0,
+    explanation: 'IISc researchers achieved 28.4% efficiency in ultra-thin perovskite-silicon solar cell prototypes.',
+    date: '2026-07-24'
+  },
+  {
+    id: 'ca-q-jul24-560',
+    text: 'SEBI relaxed Foreign Portfolio Investor (FPI) investment norms in July 2026 to boost capital inflow in which primary financial instruments? / सेबी ने जुलाई 2026 में किस प्राथमिक वित्तीय साधन में पूंजी प्रवाह को बढ़ावा देने के लिए विदेशी पोर्टफोलियो निवेशक (FPI) निवेश मानदंडों में ढील दी?',
+    options: ['(a) Infrastructure Bonds / इन्फ्रास्ट्रक्चर बॉन्ड', '(b) Crypto Derivatives / क्रिप्टो डेरिवेटिव्स', '(c) Real Estate Investment Trusts / रियल एस्टेट इनवेस्टमेंट ट्रस्ट', '(d) Gold Exchange Traded Funds / गोल्ड एक्सचेंज ट्रेडेड फंड'],
+    correctOptionIndex: 0,
+    explanation: 'SEBI relaxed FPI entry and exposure limits specifically targeting long-term Indian Infrastructure Bonds.',
+    date: '2026-07-24'
+  },
+
+  // --- 25 JULY 2026 ---
+  {
+    id: 'ca-q-jul25-561',
+    text: 'India executed its first energy trade settlement using local currency mechanisms (INR and AED) with which Middle Eastern country in July 2026? / भारत ने जुलाई 2026 में किस मध्य पूर्व देश के साथ स्थानीय मुद्रा तंत्र (INR और AED) का उपयोग करके अपना पहला ऊर्जा व्यापार निपटान निष्पादित किया?',
+    options: ['(a) UAE / संयुक्त अरब अमीरात', '(b) Saudi Arabia / सऊदी अरब', '(c) Qatar / कतर', '(d) Oman / ओमान'],
+    correctOptionIndex: 0,
+    explanation: 'India and UAE settled a ₹1,200 Crore oil and gas trade using direct Rupee-Dirham Vostro accounts.',
+    date: '2026-07-25'
+  },
+  {
+    id: 'ca-q-jul25-562',
+    text: 'Indian shooter Manu Bhaker won the Gold medal in Women\'s 10m Air Pistol with a championship record score of 244.2 points at which ISSF tournament? / भारतीय निशानेबाज मन्नू भाकर ने किस ISSF टूर्नामेंट में 244.2 अंकों के चैम्पियनशिप रिकॉर्ड स्कोर के साथ महिला 10 मीटर एयर पिस्टल में स्वर्ण पदक जीता?',
+    options: ['(a) ISSF World Cup Munich 2026 / आईएसएसएफ विश्व कप म्यूनिख 2026', '(b) ISSF World Cup Baku / आईएसएसएफ विश्व कप बाकू', '(c) Asian Games / एशियाई खेल', '(d) Commonwealth Shooting / राष्ट्रमंडल निशानेबाजी'],
+    correctOptionIndex: 0,
+    explanation: 'Manu Bhaker secured Gold at the ISSF Rifle/Pistol World Cup in Munich shooting 244.2 points.',
+    date: '2026-07-25'
+  },
+  {
+    id: 'ca-q-jul25-563',
+    text: 'What is the name of the AI-driven tax verification framework launched by CBDT to resolve income tax filing discrepancies without intrusive notices? / बिना किसी दखलअंदाजी वाले नोटिस के आयकर फाइलिंग विसंगतियों को दूर करने के लिए सीबीडीटी (CBDT) द्वारा शुरू किए गए एआई-संचालित कर सत्यापन ढांचे का नाम क्या है?',
+    options: ['(a) e-Verification Scheme 3.0 / ई-सत्यापन योजना 3.0', '(b) Faceless Tax AI / फेसलेस टैक्स एआई', '(c) Aaykar Seva 2.0 / आयकर सेवा 2.0', '(d) Tax Mitra Bot / टैक्स मित्र बॉट'],
+    correctOptionIndex: 0,
+    explanation: 'CBDT launched e-Verification Scheme 3.0 leveraging automated AI reconciliation between ITR filings and AIS.',
+    date: '2026-07-25'
+  },
+  {
+    id: 'ca-q-jul25-564',
+    text: 'CSIR-CFTRI developed shelf-stable micronutrient-rich millet energy bars for distribution under which national flagship nutritional initiative? / CSIR-CFTRI ने किस राष्ट्रीय प्रमुख पोषण पहल के तहत वितरण के लिए शेल्फ-स्थिर सूक्ष्म पोषक तत्वों से भरपूर बाजरा ऊर्जा बार विकसित किया?',
+    options: ['(a) Poshan Abhiyaan / पोषण अभियान', '(b) PM-POSHAN Scheme / पीएम-पोषण योजना', '(c) Mission Indradhanush / मिशन इंद्रधनुष', '(d) Integrated Child Development Scheme / एकीकृत बाल विकास योजना'],
+    correctOptionIndex: 0,
+    explanation: 'CSIR-CFTRI, Mysuru engineered iron-fortified millet bars for distribution across Anganwadi hubs under Poshan Abhiyaan.',
+    date: '2026-07-25'
+  },
+  {
+    id: 'ca-q-jul25-565',
+    text: 'Where is the newly expanded world-class "Bharat Mandapam Phase-2" international convention complex located? / नया विस्तारित विश्वस्तरीय "भारत मंडपम फेज-2" अंतर्राष्ट्रीय सम्मेलन परिसर कहाँ स्थित है?',
+    options: ['(a) Pragati Maidan, New Delhi / प्रगति मैदान, नई दिल्ली', '(b) Yashobhoomi, Dwarka / यशोभूमि, द्वारका', '(c) GIFT City, Gujarat / गिफ्ट सिटी, गुजरात', '(d) BKC, Mumbai / बीकेसी, मुंबई'],
+    correctOptionIndex: 0,
+    explanation: 'Bharat Mandapam Phase-2 international convention facility was inaugurated at Pragati Maidan, New Delhi.',
+    date: '2026-07-25'
+  },
+
+  // --- 26 JULY 2026 ---
+  {
+    id: 'ca-q-jul26-566',
+    text: 'Kargil Vijay Diwas is celebrated every year in India on 26th July to commemorate the success of which military operation in 1999? / भारत में हर साल 26 जुलाई को कारगिल विजय दिवस 1999 में किस सैन्य अभियान की सफलता के उपलक्ष्य में मनाया जाता है?',
+    options: ['(a) Operation Vijay / ऑपरेशन विजय', '(b) Operation Meghdoot / ऑपरेशन मेघदूत', '(c) Operation Cactus / ऑपरेशन कैक्टस', '(d) Operation Blue Star / ऑपरेशन ब्लू स्टार'],
+    correctOptionIndex: 0,
+    explanation: 'Kargil Vijay Diwas marks the victorious conclusion of Operation Vijay in the Kargil sector in 1999.',
+    date: '2026-07-26'
+  },
+  {
+    id: 'ca-q-jul26-567',
+    text: 'India jumped to which rank in the World Bank Logistics Performance Index (LPI) 2026 out of 139 evaluated economies? / 139 मूल्यांकन की गई अर्थव्यवस्थाओं में से विश्व बैंक लॉजिस्टिक्स परफॉर्मेंस इंडेक्स (LPI) 2026 में भारत किस स्थान पर पहुंचा?',
+    options: ['(a) 34th Rank / 34वां स्थान', '(b) 38th Rank / 38वां स्थान', '(c) 42nd Rank / 42वां स्थान', '(d) 50th Rank / 50वां स्थान'],
+    correctOptionIndex: 0,
+    explanation: 'India climbed 4 places to 34th rank in the World Bank LPI 2026 driven by PM Gati Shakti Master Plan.',
+    date: '2026-07-26'
+  },
+  {
+    id: 'ca-q-jul26-568',
+    text: 'Olympic Champion Neeraj Chopra won Gold in Men\'s Javelin Throw at the Zurich Diamond League 2026 with what winning distance? / ओलंपिक चैंपियन नीरज चोपड़ा ने ज्यूरिख डायमंड लीग 2026 में किस विजेता दूरी के साथ पुरुष भाला फेंक में स्वर्ण पदक जीता?',
+    options: ['(a) 89.45 meters / 89.45 मीटर', '(b) 88.00 meters / 88.00 मीटर', '(c) 90.12 meters / 90.12 मीटर', '(d) 87.58 meters / 87.58 मीटर'],
+    correctOptionIndex: 0,
+    explanation: 'Neeraj Chopra hurled the javelin to 89.45 meters on his fifth attempt to claim the Zurich Diamond League title.',
+    date: '2026-07-26'
+  },
+  {
+    id: 'ca-q-jul26-569',
+    text: 'UNESCO\'s World Heritage Committee expanded the conservation perimeter of which national park in Assam to protect migration corridors? / यूनेस्को की विश्व धरोहर समिति ने प्रवासन गलियारों की रक्षा के लिए असम के किस राष्ट्रीय उद्यान के संरक्षण क्षेत्र का विस्तार किया?',
+    options: ['(a) Kaziranga National Park / काजीरंगा राष्ट्रीय उद्यान', '(b) Manas National Park / मानस राष्ट्रीय उद्यान', '(c) Orang National Park / ओरांग राष्ट्रीय उद्यान', '(d) Nameri National Park / नामेरी राष्ट्रीय उद्यान'],
+    correctOptionIndex: 0,
+    explanation: 'UNESCO extended Kaziranga National Park\'s world heritage buffer zone to secure Asian elephant and rhino corridors.',
+    date: '2026-07-26'
+  },
+  {
+    id: 'ca-q-jul26-570',
+    text: 'The Reserve Bank of India mandated an enhanced cybersecurity framework in July 2026 for which financial entities? / भारतीय रिजर्व बैंक ने जुलाई 2026 में किन वित्तीय संस्थाओं के लिए एक उन्नत साइबर सुरक्षा ढांचा अनिवार्य किया?',
+    options: ['(a) Urban Cooperative Banks (UCBs) / शहरी सहकारी बैंक (UCBs)', '(b) Payment Banks / पेमेंट बैंक', '(c) Regional Rural Banks / क्षेत्रीय ग्रामीण बैंक', '(d) Small Finance Banks / लघु वित्त बैंक'],
+    correctOptionIndex: 0,
+    explanation: 'RBI mandated Cyber Security and IT Governance frameworks for Tier-1 to Tier-4 Urban Cooperative Banks.',
+    date: '2026-07-26'
+  },
+
+  // --- 27 JULY 2026 ---
+  {
+    id: 'ca-q-jul27-571',
+    text: 'What is the name of the AI-powered multilingual voice and text chatbot integrated into the PM-KISAN portal by the Ministry of Agriculture? / कृषि मंत्रालय द्वारा पीएम-किसान पोर्टल में एकीकृत एआई-संचालित बहुभाषी आवाज और पाठ चैटबॉट का नाम क्या है?',
+    options: ['(a) Kisan AI Mitra / किसान एआई मित्र', '(b) AgriBot India / एग्रीबॉट इंडिया', '(c) Krishi Saathi / कृषि साथी', '(d) PM-Kisan Bot / पीएम-किसान बॉट'],
+    correctOptionIndex: 0,
+    explanation: 'Kisan AI Mitra provides real-time crop disease diagnosis and weather alerts in 22 languages.',
+    date: '2026-07-27'
+  },
+  {
+    id: 'ca-q-jul27-572',
+    text: 'Asian Development Bank (ADB) approved a $400 Million loan facility in July 2026 to modernize urban water supply in which Indian state? / एशियाई विकास बैंक (ADB) ने जुलाई 2026 में किस भारतीय राज्य में शहरी जल आपूर्ति के आधुनिकीकरण के लिए $400 मिलियन के ऋण सुविधा को मंजूरी दी?',
+    options: ['(a) Maharashtra / महाराष्ट्र', '(b) Gujarat / गुजरात', '(c) Rajasthan / राजस्थान', '(d) Madhya Pradesh / मध्य प्रदेश'],
+    correctOptionIndex: 0,
+    explanation: 'ADB approved $400 million multi-tranche funding for climate-resilient water and drainage infrastructure in Maharashtra.',
+    date: '2026-07-27'
+  },
+  {
+    id: 'ca-q-jul27-573',
+    text: 'Indian Grandmaster Arjun Erigaisi won the Masters title with an undefeated score of 7/9 at which prestigious chess tournament in July 2026? / भारतीय ग्रैंडमास्टर अर्जुन एरिगैसी ने जुलाई 2026 में किस प्रतिष्ठित शतरंज टूर्नामेंट में 7/9 के अपराजित स्कोर के साथ मास्टर्स का खिताब जीता?',
+    options: ['(a) Prague International Chess Festival / प्राग इंटरनेशनल चेस फेस्टिवल', '(b) Tata Steel Chess Masters / टाटा स्टील चेस मास्टर्स', '(c) Candidates Chess Tournament / कैंडिडेट्स चेस टूर्नामेंट', '(d) Norway Chess / नॉर्वे चेस'],
+    correctOptionIndex: 0,
+    explanation: 'Arjun Erigaisi clinched the Prague International Chess Festival 2026 title and reached world rank 4.',
+    date: '2026-07-27'
+  },
+  {
+    id: 'ca-q-jul27-574',
+    text: 'The Defense Acquisition Council (DAC) approved the procurement of 31 Predator MQ-9B Drones manufactured by which defense firm? / रक्षा अधिग्रहण परिषद (DAC) ने किस रक्षा फर्म द्वारा निर्मित 31 प्रेडेटर MQ-9B ड्रोन की खरीद को मंजूरी दी?',
+    options: ['(a) General Atomics / जनरल एटॉमिक्स', '(b) Lockheed Martin / लॉकहीड मार्टिन', '(c) Boeing / बोइंग', '(d) Dassault Aviation / डसॉल्ट एविएशन'],
+    correctOptionIndex: 0,
+    explanation: 'MQ-9B SkyGuardian and SeaGuardian drones are manufactured by US defense contractor General Atomics.',
+    date: '2026-07-27'
+  },
+  {
+    id: 'ca-q-jul27-575',
+    text: 'Where is the Dras War Memorial located, where national leaders pay homage every year on Kargil Vijay Diwas? / द्रास युद्ध स्मारक कहाँ स्थित है, जहाँ राष्ट्रीय नेता हर साल कारगिल विजय दिवस पर श्रद्धांजलि अर्पित करते हैं?',
+    options: ['(a) Kargil, Ladakh / कारगिल, लद्दाख', '(b) Srinagar, Jammu & Kashmir / श्रीनगर, जम्मू और कश्मीर', '(c) Leh, Ladakh / लेह, लद्दाख', '(d) Rajouri, Jammu & Kashmir / राजौरी, जम्मू और कश्मीर'],
+    correctOptionIndex: 0,
+    explanation: 'The Dras War Memorial (Vijay Path) built by the Indian Army is located in Dras, Kargil district of Ladakh.',
+    date: '2026-07-27'
+  },
+
+  // --- 28 JULY 2026 ---
+  {
+    id: 'ca-q-jul28-576',
+    text: 'What is the sanctioned financial outlay for Phase-II of the National Green Hydrogen Mission launched by the Union Government in July 2026? / जुलाई 2026 में केंद्र सरकार द्वारा शुरू किए गए राष्ट्रीय ग्रीन हाइड्रोजन मिशन के चरण-II के लिए स्वीकृत वित्तीय व्यय कितना है?',
+    options: ['(a) ₹19,744 Crore / ₹19,744 करोड़', '(b) ₹10,000 Crore / ₹10,000 करोड़', '(c) ₹25,000 Crore / ₹25,000 करोड़', '(d) ₹15,500 Crore / ₹15,500 करोड़'],
+    correctOptionIndex: 0,
+    explanation: 'Phase-II of National Green Hydrogen Mission carries a total budget allocation of ₹19,744 Crore.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-577',
+    text: 'Which state secured the top rank among larger states in NITI Aayog\'s State Energy & Climate Index (SECI 3.0) released in July 2026? / जुलाई 2026 में जारी नीति आयोग के राज्य ऊर्जा और जलवायु सूचकांक (SECI 3.0) में किस राज्य ने बड़े राज्यों में शीर्ष स्थान हासिल किया?',
+    options: ['(a) Gujarat / गुजरात', '(b) Kerala / केरल', '(c) Punjab / पंजाब', '(d) Tamil Nadu / तमिलनाडु'],
+    correctOptionIndex: 0,
+    explanation: 'Gujarat topped NITI Aayog\'s SECI 3.0 index followed by Kerala and Punjab.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-578',
+    text: 'India signed a landmark Comprehensive Bilateral Investment Treaty in London with which major European economy in July 2026? / भारत ने जुलाई 2026 में किस प्रमुख यूरोपीय अर्थव्यवस्था के साथ लंदन में एक ऐतिहासिक व्यापक द्विपक्षीय निवेश संधि पर हस्ताक्षर किए?',
+    options: ['(a) United Kingdom / यूनाइटेड किंगडम', '(b) France / फ्रांस', '(c) Germany / जर्मनी', '(d) Italy / इटली'],
+    correctOptionIndex: 0,
+    explanation: 'India and the United Kingdom signed the Bilateral Investment Treaty in London to safeguard cross-border investments.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-579',
+    text: 'ISRO successfully demonstrated a 120-second hot test of its indigenous scramjet engine at which Propulsion Complex in Tamil Nadu? / इसरो ने तमिलनाडु के किस प्रोपल्शन कॉम्प्लेक्स में अपने स्वदेशी स्क्रैमजेट इंजन के 120 सेकंड के हॉट टेस्ट का सफलतापूर्वक प्रदर्शन किया?',
+    options: ['(a) Mahendragiri / महेंद्रगिरी', '(b) Sriharikota / श्रीहरिकोटा', '(c) Thumba / थुंबा', '(d) Chandipur / चांदीपुर'],
+    correctOptionIndex: 0,
+    explanation: 'ISRO Propulsion Complex (IPRC) is located at Mahendragiri in Tamil Nadu.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-580',
+    text: 'World Hepatitis Day is celebrated annually across the world on 28th July. What was the campaign theme highlighted by WHO for 2026? / विश्व हेपेटाइटिस दिवस हर साल 28 जुलाई को दुनिया भर में मनाया जाता है। WHO द्वारा 2026 के लिए किस अभियान विषय पर प्रकाश डाला गया था?',
+    options: ['(a) "One Life, One Liver" / "वन लाइफ, वन लिवर"', '(b) "Hepatitis Can\'t Wait" / "हेपेटाइटिस इंतजार नहीं कर सकता"', '(c) "Eliminate Hepatitis 2030" / "हेपेटाइटिस 2030 का उन्मूलन"', '(d) "Invest in Eliminating Hepatitis" / "हेपेटाइटिस उन्मूलन में निवेश करें"'],
+    correctOptionIndex: 0,
+    explanation: 'WHO\'s global theme for World Hepatitis Day 2026 was "One Life, One Liver" promoting early viral testing.',
+    date: '2026-07-28'
   }
 ];
+
 

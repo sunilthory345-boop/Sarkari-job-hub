@@ -82,7 +82,7 @@ export interface CurrentAffair {
   title: string;
   date: string;
   content: string;
-  category: 'National' | 'International' | 'Sports' | 'Economy' | 'Science & Tech' | 'Awards';
+  category: 'National' | 'International' | 'Sports' | 'Economy' | 'Science & Tech' | 'Awards' | 'Schemes' | 'Environment';
   pdfUrl: string;
 }
 
