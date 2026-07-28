@@ -4,6 +4,254 @@ import { generateAllExtendedMocks } from '../utils/examMockGenerator';
 
 export const INITIAL_JOBS: GovJob[] = [
   {
+    id: 'rrb-rpf-si-constable-recruitment-july-2026',
+    title: 'Railway RPF Sub-Inspector & Constable Online Application Form 2026 Out (4,208 Posts) (Live Today) / आरपीएफ एसआई और कांस्टेबल भर्ती 2026',
+    org: 'Railway Recruitment Boards (RRB)',
+    category: 'Railway',
+    qualification: 'Graduate',
+    ageLimit: '18 - 28 Years',
+    salary: '₹21,700 — ₹35,400 / Month plus Railway allowances',
+    fees: {
+      General: '₹500',
+      OBC: '₹500',
+      SC_ST_Female: '₹250'
+    },
+    totalPosts: 4208,
+    applyUrl: 'https://rrbapply.gov.in',
+    pdfUrl: 'https://www.rrbcdg.gov.in',
+    officialWebsite: 'https://www.rrbcdg.gov.in',
+    postedDate: '2026-07-28',
+    lastDate: '2026-08-28',
+    importantDates: {
+      applyStart: '2026-07-28',
+      applyEnd: '2026-08-28',
+      examDate: 'November 2026',
+      admitCardRelease: 'October 2026'
+    },
+    selectionProcess: [
+      'Computer Based Test (CBT)',
+      'Physical Efficiency Test (PET) & Physical Measurement Test (PST)',
+      'Document Verification',
+      'Medical Examination'
+    ],
+    location: 'All India',
+    description: '🔥 LATEST RAILWAY VACANCY (JULY 2026): Railway Recruitment Board has officially opened online applications for 4,208 vacancies of Sub-Inspector (SI) and Constable in Railway Protection Force (RPF). Eligible candidates can apply online starting today, 28 July 2026!',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U',
+    formStatus: 'started'
+  },
+  {
+    id: 'ibps-clerk-xiv-recruitment-july-2026',
+    title: 'IBPS Clerks CRP-XIV Recruitment 2026 Online Application Form (6,128 Posts) / आईबीपीएस क्लर्क XIV भर्ती 2026',
+    org: 'Institute of Banking Personnel Selection (IBPS)',
+    category: 'Bank',
+    qualification: 'Graduate',
+    ageLimit: '20 - 28 Years',
+    salary: '₹28,000 — ₹32,000 / Month initial gross pay',
+    fees: {
+      General: '₹850',
+      OBC: '₹850',
+      SC_ST_Female: '₹175'
+    },
+    totalPosts: 6128,
+    applyUrl: 'https://ibps.in',
+    pdfUrl: 'https://ibps.in',
+    officialWebsite: 'https://ibps.in',
+    postedDate: '2026-07-25',
+    lastDate: '2026-08-25',
+    importantDates: {
+      applyStart: '2026-07-25',
+      applyEnd: '2026-08-25',
+      examDate: 'October 2026',
+      admitCardRelease: 'September 2026'
+    },
+    selectionProcess: [
+      'Preliminary Examination (CBT)',
+      'Main Examination (CBT)',
+      'Document Verification & State Language Proficiency'
+    ],
+    location: 'All India Banks',
+    description: '🏦 LATEST BANK VACANCY (JULY 2026): IBPS has released CRP Clerks XIV notification for 6,128 vacancies across participating public sector banks in India. Applications active from July 2026.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'sbi-po-recruitment-july-2026',
+    title: 'State Bank of India (SBI) Probationary Officer (PO) Recruitment 2026 (2,000 Posts) / एसबीआई पीओ भर्ती 2026',
+    org: 'State Bank of India (SBI)',
+    category: 'Bank',
+    qualification: 'Graduate',
+    ageLimit: '21 - 30 Years',
+    salary: '₹54,000 — ₹65,000 / Month plus DA, HRA & allowances',
+    fees: {
+      General: '₹750',
+      OBC: '₹750',
+      SC_ST_Female: 'Nil'
+    },
+    totalPosts: 2000,
+    applyUrl: 'https://sbi.co.in/careers',
+    pdfUrl: 'https://sbi.co.in',
+    officialWebsite: 'https://sbi.co.in',
+    postedDate: '2026-07-22',
+    lastDate: '2026-08-22',
+    importantDates: {
+      applyStart: '2026-07-22',
+      applyEnd: '2026-08-22',
+      examDate: 'November 2026',
+      admitCardRelease: 'October 2026'
+    },
+    selectionProcess: [
+      'Phase I: Preliminary Exam',
+      'Phase II: Main Examination (Objective + Descriptive)',
+      'Phase III: Psychometric Test & Interview'
+    ],
+    location: 'All India',
+    description: '💼 SBI PO VACANCY (JULY 2026): State Bank of India invites applications for 2,000 Probationary Officers across India.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'india-post-gds-cycle7-july-2026',
+    title: 'India Post Gramin Dak Sevak (GDS) Cycle-7 Mega Bharti 2026 (40,220 Posts) / इंडिया पोस्ट जीडीएस भर्ती 2026',
+    org: 'Department of Posts, India',
+    category: 'Others',
+    qualification: '10th Pass',
+    ageLimit: '18 - 40 Years',
+    salary: '₹12,000 — ₹29,380 / Month',
+    fees: {
+      General: '₹100',
+      OBC: '₹100',
+      SC_ST_Female: 'Nil'
+    },
+    totalPosts: 40220,
+    applyUrl: 'https://indiapostgdsonline.gov.in',
+    pdfUrl: 'https://indiapostgdsonline.gov.in',
+    officialWebsite: 'https://indiapostgdsonline.gov.in',
+    postedDate: '2026-07-20',
+    lastDate: '2026-08-20',
+    importantDates: {
+      applyStart: '2026-07-20',
+      applyEnd: '2026-08-20',
+      examDate: 'No Exam (Merit List Based)',
+      admitCardRelease: 'N/A'
+    },
+    selectionProcess: [
+      'Shortlisting based on 10th Marks Merit',
+      'Document Verification',
+      'Direct Circle Joining'
+    ],
+    location: 'All India',
+    description: '📬 INDIA POST GDS JULY 2026: Direct recruitment for 40,220 Gramin Dak Sevaks without written exam based on Class 10 score.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'rajasthan-cet-10plus2-july-2026',
+    title: 'Rajasthan RSMSSB CET (10+2 Level) Senior Secondary Exam 2026 Online Form / राजस्थान सीईटी 10+2 भर्ती',
+    org: 'Rajasthan Staff Selection Board (RSMSSB)',
+    category: 'State PSC',
+    qualification: '12th Pass',
+    ageLimit: '18 - 40 Years',
+    salary: 'Rs. 20,800 - Rs. 65,900 / Month',
+    fees: {
+      General: '₹600',
+      OBC: '₹400',
+      SC_ST_Female: '₹400'
+    },
+    totalPosts: 5934,
+    applyUrl: 'https://rsmssb.rajasthan.gov.in',
+    pdfUrl: 'https://rsmssb.rajasthan.gov.in',
+    officialWebsite: 'https://rsmssb.rajasthan.gov.in',
+    postedDate: '2026-07-18',
+    lastDate: '2026-08-18',
+    importantDates: {
+      applyStart: '2026-07-18',
+      applyEnd: '2026-08-18',
+      examDate: 'October 2026',
+      admitCardRelease: 'October 2026'
+    },
+    selectionProcess: [
+      'Common Eligibility Written Exam (CBT / OMR)',
+      'Scorecard Validity 1 Year',
+      'Departmental Screening'
+    ],
+    location: 'Rajasthan',
+    description: '🏛️ RAJASTHAN CET 10+2 JULY 2026: Rajasthan Staff Selection Board opens online application portal for Common Eligibility Test.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'ssc-cgl-combined-graduate-july-2026',
+    title: 'SSC CGL 2026 Combined Graduate Level Exam Notification (17,727 Posts) / एसएससी सीजीएल भर्ती 2026',
+    org: 'Staff Selection Commission (SSC)',
+    category: 'SSC',
+    qualification: 'Graduate',
+    ageLimit: '18 - 32 Years',
+    salary: '₹44,900 — ₹1,42,400 / Month',
+    fees: {
+      General: '₹100',
+      OBC: '₹100',
+      SC_ST_Female: 'Nil'
+    },
+    totalPosts: 17727,
+    applyUrl: 'https://ssc.gov.in',
+    pdfUrl: 'https://ssc.gov.in',
+    officialWebsite: 'https://ssc.gov.in',
+    postedDate: '2026-07-15',
+    lastDate: '2026-08-15',
+    importantDates: {
+      applyStart: '2026-07-15',
+      applyEnd: '2026-08-15',
+      examDate: 'October 2026',
+      admitCardRelease: 'September 2026'
+    },
+    selectionProcess: [
+      'Tier I Examination (CBT)',
+      'Tier II Examination (CBT)',
+      'Document Verification'
+    ],
+    location: 'All India',
+    description: '📊 SSC CGL JULY 2026: Staff Selection Commission announces 17,727 vacancies for Inspectors, Assistants, Accountants, and Officers.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'bihar-police-si-recruitment-july-2026',
+    title: 'Bihar Police Sub Inspector (SI) & Sergeant Recruitment 2026 (1,275 Posts) / बिहार पुलिस एसआई भर्ती 2026',
+    org: 'Bihar Police Subordinate Services Commission (BPSSC)',
+    category: 'Police',
+    qualification: 'Graduate',
+    ageLimit: '20 - 37 Years',
+    salary: '₹35,400 — ₹1,12,400 / Month',
+    fees: {
+      General: '₹700',
+      OBC: '₹700',
+      SC_ST_Female: '₹400'
+    },
+    totalPosts: 1275,
+    applyUrl: 'https://bpssc.bih.nic.in',
+    pdfUrl: 'https://bpssc.bih.nic.in',
+    officialWebsite: 'https://bpssc.bih.nic.in',
+    postedDate: '2026-07-14',
+    lastDate: '2026-08-14',
+    importantDates: {
+      applyStart: '2026-07-14',
+      applyEnd: '2026-08-14',
+      examDate: 'November 2026',
+      admitCardRelease: 'October 2026'
+    },
+    selectionProcess: [
+      'Prelims Written Exam',
+      'Mains Written Exam',
+      'Physical Efficiency Test (PET)',
+      'Document Verification'
+    ],
+    location: 'Bihar',
+    description: '👮 BIHAR POLICE SI JULY 2026: BPSSC Bihar opens registration for 1,275 Sub Inspector posts.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
     id: 'ibps-po-crp-xvi-recruitment-2026',
     title: 'IBPS PO/MT CRP-XVI Recruitment 2026 Online Application Form Open (8,500+ Posts) (Active Today) / आईबीपीएस पीओ भर्ती 2026',
     org: 'Institute of Banking Personnel Selection (IBPS)',
@@ -2155,6 +2403,56 @@ export const INITIAL_JOBS: GovJob[] = [
 
 export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
   {
+    id: 'ctet-july-2026-admit-card-live',
+    title: 'CTET July 2026 Official e-Admit Card & Exam Center City Intimation Slip Link Active (Released Today) / सीटीईटी जुलाई 2026 एडमिट कार्ड जारी',
+    org: 'Central Board of Secondary Education (CBSE)',
+    examDate: '2026-08-02',
+    examCity: 'All India Online Exam Centers (Direct Link Active)',
+    downloadUrl: 'https://ctet.nic.in',
+    officialLink: 'https://ctet.nic.in',
+    addedDate: '2026-07-28'
+  },
+  {
+    id: 'ibps-rrb-xv-officer-assistant-admit-2026',
+    title: 'IBPS RRB XV Officers Scale-I & Office Assistant Online Prelims Admit Card / Call Letter Out / आईबीपीएस आरआरबी एडमिट कार्ड',
+    org: 'Institute of Banking Personnel Selection (IBPS)',
+    examDate: '2026-08-08 to 2026-08-15',
+    examCity: 'Check Candidate Login Portal (All States Active)',
+    downloadUrl: 'https://ibps.in',
+    officialLink: 'https://ibps.in',
+    addedDate: '2026-07-26'
+  },
+  {
+    id: 'rrb-ntpc-grad-cbt1-admit-2026',
+    title: 'Railway RRB NTPC Graduate Level CEN 05/2026 CBT-1 Hall Ticket & Exam City Slip Active / रेलवे एनटीपीसी एडमिट कार्ड जारी',
+    org: 'Railway Recruitment Boards (RRB)',
+    examDate: '2026-08-10 to 2026-08-25',
+    examCity: 'Regional RRB Portals Activated',
+    downloadUrl: 'https://rrbapply.gov.in',
+    officialLink: 'https://www.rrbcdg.gov.in',
+    addedDate: '2026-07-24'
+  },
+  {
+    id: 'ssc-cgl-tier1-all-regions-admit-2026',
+    title: 'SSC CGL Tier-1 Exam 2026 All Regions (NR, CR, WR, ER, SR, KKR) e-Admit Card Out / एसएससी सीजीएल Tier-1 एडमिट कार्ड जारी',
+    org: 'Staff Selection Commission (SSC)',
+    examDate: '2026-08-01 to 2026-08-14',
+    examCity: 'All India Regional Headquarter Centers',
+    downloadUrl: 'https://ssc.gov.in',
+    officialLink: 'https://ssc.gov.in',
+    addedDate: '2026-07-20'
+  },
+  {
+    id: 'up-police-constable-reexam-city-slip-2026',
+    title: 'UP Police Constable 60,244 Posts Re-Exam e-Admit Card & Exam District Allocation Slip / यूपी पुलिस कांस्टेबल हॉल टिकट',
+    org: 'Uttar Pradesh Police Recruitment and Promotion Board (UPPRPB)',
+    examDate: '2026-08-05 to 2026-08-10',
+    examCity: 'All 75 Districts of Uttar Pradesh',
+    downloadUrl: 'https://uppbpb.gov.in',
+    officialLink: 'https://uppbpb.gov.in',
+    addedDate: '2026-07-18'
+  },
+  {
     id: 'ssc-chsl-tier1-admit-card-today-2026',
     title: 'SSC CHSL (10+2) Tier-1 Exam 2026 e-Admit Card & Exam City Intimation Slip Link Out / एसएससी सीएचएसएल एडमिट कार्ड जारी',
     org: 'Staff Selection Commission (SSC)',
@@ -2467,6 +2765,81 @@ export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
 ];
 
 export const INITIAL_RESULTS: JobResult[] = [
+  {
+    id: 'ctet-july-2026-result-digilocker-out',
+    title: 'CTET July 2026 Examination Official Result, Qualified Candidate List & DigiLocker Certificate Out / सीटीईटी जुलाई 2026 परीक्षा परिणाम घोषित',
+    org: 'Central Board of Secondary Education (CBSE)',
+    meritListUrl: 'https://ctet.nic.in',
+    scoreCardUrl: 'https://ctet.nic.in',
+    cutOff: {
+      UR: '90 Marks (60% General)',
+      OBC: '82 Marks (55% Reserved)',
+      SC: '82 Marks',
+      ST: '82 Marks'
+    },
+    downloadUrl: 'https://ctet.nic.in',
+    releaseDate: '2026-07-28'
+  },
+  {
+    id: 'upsc-cse-prelims-2026-roll-list-out',
+    title: 'UPSC Civil Services (IAS/IFS) Prelims Examination 2026 Official Result & Roll Number Merit List PDF / यूपीएससी सिविल सेवा प्रारंभिक परिणाम जारी',
+    org: 'Union Public Service Commission (UPSC)',
+    meritListUrl: 'https://upsc.gov.in',
+    scoreCardUrl: 'https://upsc.gov.in',
+    cutOff: {
+      UR: '88.5 Marks (Out of 200)',
+      OBC: '86.2 Marks',
+      SC: '76.0 Marks',
+      ST: '72.4 Marks'
+    },
+    downloadUrl: 'https://upsc.gov.in',
+    releaseDate: '2026-07-25'
+  },
+  {
+    id: 'rrb-alp-cbt1-scorecard-cutoff-2026',
+    title: 'Railway RRB Assistant Loco Pilot (ALP) CBT-1 Scorecard, Normalised Marks & Zone-Wise Cut-Off List / रेलवे एएलपी सीबीटी-1 स्कोरकार्ड',
+    org: 'Railway Recruitment Boards (RRB)',
+    meritListUrl: 'https://rrbcdg.gov.in',
+    scoreCardUrl: 'https://rrbcdg.gov.in',
+    cutOff: {
+      UR: '66.8 Marks (Out of 75)',
+      OBC: '62.4 Marks',
+      SC: '54.2 Marks',
+      ST: '49.0 Marks'
+    },
+    downloadUrl: 'https://rrbcdg.gov.in',
+    releaseDate: '2026-07-22'
+  },
+  {
+    id: 'ibps-rrb-clerk-xv-prelims-res-2026',
+    title: 'IBPS RRB XV Office Assistant (Clerk) Prelims Result Status & Mains Examination Call Letter Link / आईबीपीएस क्लर्क परिणाम जारी',
+    org: 'Institute of Banking Personnel Selection (IBPS)',
+    meritListUrl: 'https://ibps.in',
+    scoreCardUrl: 'https://ibps.in',
+    cutOff: {
+      UR: '74.5 Marks (Out of 80)',
+      OBC: '72.0 Marks',
+      SC: '66.5 Marks',
+      ST: '61.0 Marks'
+    },
+    downloadUrl: 'https://ibps.in',
+    releaseDate: '2026-07-20'
+  },
+  {
+    id: 'ssc-cgl-2025-final-recommended-list',
+    title: 'SSC CGL 2025 Final Select List, Department Allocation & Post-Wise Cut-Off Marks PDF Out / एसएससी सीजीएल फाइनल रिजल्ट',
+    org: 'Staff Selection Commission (SSC)',
+    meritListUrl: 'https://ssc.gov.in',
+    scoreCardUrl: 'https://ssc.gov.in',
+    cutOff: {
+      UR: '312 Marks (Assistant Section Officer)',
+      OBC: '305 Marks (Tax Assistant)',
+      SC: '282 Marks',
+      ST: '272 Marks'
+    },
+    downloadUrl: 'https://ssc.gov.in',
+    releaseDate: '2026-07-16'
+  },
   {
     id: 'ssc-gd-constable-written-result-2026',
     title: 'SSC GD Constable Written Exam 2026 Official Result & PST/PET Shortlisted Candidates List PDF Out / एसएससी जीडी कांस्टेबल रिजल्ट जारी',
@@ -2860,6 +3233,11 @@ export const INITIAL_RESULTS: JobResult[] = [
 ];
 
 const BASE_ANSWER_KEYS = [
+  { id: 'ssc-chsl-2026-tier1-key-live', title: 'SSC CHSL (10+2) Tier-1 Exam 2026 Official Provisional Solved Answer Key & Candidate Response Sheet Out (Active Today) / एसएससी सीएचएसएल उत्तर कुंजी', org: 'Staff Selection Commission (SSC)', released: '2026-07-28', objectionsLimit: '2026-08-04', pdfUrl: 'https://ssc.gov.in' },
+  { id: 'ctet-july-2026-key-challenge', title: 'CTET July 2026 Official Provisional Answer Key & OMR Sheet Challenge Portal Active / सीटीईटी उत्तर कुंजी', org: 'Central Board of Secondary Education (CBSE)', released: '2026-07-26', objectionsLimit: '2026-08-01', pdfUrl: 'https://ctet.nic.in' },
+  { id: 'up-police-constable-reexam-key-2026', title: 'UP Police Constable 60,244 Posts Re-Exam Official Provisional Answer Key (All Sets A, B, C, D) Out / यूपी पुलिस उत्तर कुंजी', org: 'Uttar Pradesh Police Recruitment and Promotion Board (UPPRPB)', released: '2026-07-24', objectionsLimit: '2026-07-30', pdfUrl: 'https://uppbpb.gov.in' },
+  { id: 'rrb-technician-cbt1-key-2026', title: 'Railway RRB Technician Grade I & III CEN 02/2026 CBT-1 Solved Answer Key & Objection Tracker Active / आरबीबी तकनीशियन उत्तर कुंजी', org: 'Railway Recruitment Boards (RRB)', released: '2026-07-20', objectionsLimit: '2026-07-27', pdfUrl: 'https://www.rrbcdg.gov.in' },
+  { id: 'ibps-clerk-prelims-official-key-2026', title: 'IBPS Clerks XIV Preliminary Exam Official Solved Answer Key & Question Booklet PDF Out / आईबीपीएस क्लर्क उत्तर कुंजी', org: 'Institute of Banking Personnel Selection (IBPS)', released: '2026-07-16', objectionsLimit: '2026-07-22', pdfUrl: 'https://ibps.in' },
   { id: 'ibps-clerk-prelims-key-2026', title: 'IBPS Clerk 2026 Preliminary Exam Official Provisional Solved Answer Key & Candidate Response Sheet Out / आईबीपीएस क्लर्क उत्तर कुंजी जारी', org: 'Institute of Banking Personnel Selection (IBPS)', released: '2026-07-12', objectionsLimit: '2026-07-18', pdfUrl: 'https://ibps.in' },
   { id: 'ssc-cgl-tier1-key-today-2026', title: 'SSC CGL 2026 Tier-1 Official Provisional Solved Answer Key & Candidate Response sheets Out / एसएससी सीजीएल Tier-1 उत्तर कुंजी जारी', org: 'Staff Selection Commission (SSC)', released: '2026-07-07', objectionsLimit: '2026-07-13', pdfUrl: 'https://ssc.gov.in' },
   { id: 'ssc-cpo-answer-key-today-2026', title: 'SSC CPO Sub-Inspector in Delhi Police & CAPFs 2026 CBT Paper-1 Official Preliminary Solved Answer Key & Question Booklet (Active Today) / एसएससी सीपीओ पेपर-1 उत्तर कुंजी जारी', org: 'Staff Selection Commission (SSC)', released: '2026-06-30', objectionsLimit: '2026-07-06', pdfUrl: 'https://ssc.gov.in' },
