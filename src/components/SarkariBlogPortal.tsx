@@ -34,6 +34,38 @@ interface SarkariBlogPortalProps {
 // Highly detailed SEO pre-populated blogs bilingually mapped
 const SEO_DEFAULT_BLOGS: Blog[] = [
   {
+    id: 'seo-blog-job-sarkari-hub-guide',
+    title: 'Job Sarkari Hub 2026: Official Guide for Sarkari Result, Latest Jobs, Admit Card & Free CBT Mock Tests',
+    category: 'Career Guidance',
+    author: 'Sunil Kumar (Founder & Chief Editor, Job Sarkari Hub)',
+    summary: 'Discover how Job Sarkari Hub provides real-time Sarkari Results, e-Admit Cards, Answer Keys, Official Syllabus PDFs, Daily Current Affairs, and instant WhatsApp & Telegram vacancy alerts.',
+    content: `Welcome to **Job Sarkari Hub (job-sarkari-hub)**, India's most trusted and fastest-growing bilingual government job preparation portal. Whether you are aiming for SSC, UPSC, Railway (RRB), Banking (IBPS/SBI), Defense, Police, or State PSC examinations, Job Sarkari Hub offers an all-in-one digital ecosystem to keep you ahead of millions of candidates.
+
+### 🚀 Key Features Available on Job Sarkari Hub:
+1. **Instant Sarkari Result & Admit Card Updates:** Direct verified links for result scorecards, answer key objection links, and official e-admit cards download for all central and state recruitment boards.
+2. **Daily 100 Bilingual Current Affairs:** Up-to-date daily news capsules and interactive practice quizzes presented bilingually in Hindi and English.
+3. **Free Online CBT Mock Test Room:** Attempt full-length timed mock tests with instant scorecards, nationwide percentile ranks, and detailed answer explanations.
+4. **Official Syllabus & PYQ PDF Vault:** Download official notification PDFs, topic-wise syllabus planners, and past 10-year question papers completely free of cost.
+5. **Instant WhatsApp Channel & Telegram Alerts:** Get instant notifications directly on your mobile device as soon as a new recruitment notification, admit card, or answer key is released.
+
+### 🔍 Top Keywords Indexed on Job Sarkari Hub:
+To help aspirants find authentic information instantly on search engines, our portal indexes verified updates for keywords including:
+* *Sarkari Result 2026, Sarkari Exam, Latest Government Jobs*
+* *SSC CGL / CHSL Syllabus PDF & Mock Test*
+* *Railway Group D, RRB NTPC, RPF SI Admit Card*
+* *UP Police Constable, Bihar Police, MP Police Vacancy*
+* *Daily Current Affairs PDF in Hindi and English*
+
+### 💡 How to Maximize Your Exam Preparation on Job Sarkari Hub:
+* **Step 1:** Check the **Latest Jobs** tab daily for active application deadlines.
+* **Step 2:** Download the official **Syllabus PDF** and create a structured study timeline.
+* **Step 3:** Practice daily 100 Current Affairs questions to master the General Awareness section.
+* **Step 4:** Take 2 full-length **CBT Mock Tests** weekly in our simulated exam portal to build speed and accuracy.
+* **Step 5:** Subscribe to our **WhatsApp & Telegram Broadcast Channels** for zero-delay notifications!`,
+    readTime: '5 min read',
+    date: '2026-07-28'
+  },
+  {
     id: 'seo-blog-up-police',
     title: 'UP Police Constable Recruitment 2026: Official Syllabus & Safe Scoring Target',
     category: 'Government Jobs',
@@ -158,6 +190,25 @@ Attempt 10 localized clinical mock papers bilingually on Job Sarkari Hub. Analyz
 
 // Bilingual translations dictionary mapping for instant language toggling
 const BLOG_TRANSLATIONS: Record<string, { title: string; summary: string; content: string }> = {
+  'seo-blog-job-sarkari-hub-guide': {
+    title: 'जॉब सरकारी हब 2026: सरकारी रिजल्ट, नई भर्तियां, एडमिट कार्ड और मुफ्त मॉक टेस्ट की आधिकारिक गाइड',
+    summary: 'जानिए कैसे जॉब सरकारी हब आपको रियल-टाइम सरकारी रिजल्ट, ई-एडमिट कार्ड, आंसर की, आधिकारिक सिलेबस पीडीएफ, दैनिक करेंट अफेयर्स और वाट्सएप/टेलीग्राम जॉब अलर्ट प्रदान करता है।',
+    content: `**जॉब सरकारी हब (Job Sarkari Hub)** में आपका स्वागत है - यह भारत का सबसे विश्वसनीय और तेजी से बढ़ता हुआ द्विभाषी सरकारी नौकरी तैयारी पोर्टल है। चाहे आप एसएससी (SSC), यूपीएससी (UPSC), रेलवे (RRB), बैंकिंग (IBPS/SBI), रक्षा, पुलिस या राज्य लोक सेवा आयोग (State PSC) परीक्षाओं की तैयारी कर रहे हों, जॉब सरकारी हब आपको लाखों प्रतिस्पर्धियों से आगे रखने के लिए ऑल-इन-वन डिजिटल प्लेटफॉर्म प्रदान करता है।
+
+### 🚀 जॉब सरकारी हब पर उपलब्ध मुख्य विशेषताएं:
+1. **त्वरित सरकारी रिजल्ट और एडमिट कार्ड अपडेट:** सभी केंद्रीय और राज्य भर्ती बोर्डों के लिए रिजल्ट स्कोरकार्ड, आंसर की आपत्ति लिंक और आधिकारिक ई-एडमिट कार्ड डाउनलोड के सीधे सत्यापित लिंक।
+2. **दैनिक 100 द्विभाषी करेंट अफेयर्स:** हिंदी और अंग्रेजी में प्रस्तुत नवीनतम दैनिक समाचार कैप्सूल और इंटरैक्टिव अभ्यास प्रश्न।
+3. **मुफ्त ऑनलाइन सीबीटी मॉक टेस्ट रूम:** त्वरित स्कोरकार्ड, राष्ट्रव्यापी प्रतिशत रैंक और विस्तृत व्याख्याओं के साथ पूर्ण-लंबाई वाले समयबद्ध मॉक टेस्ट हल करें।
+4. **आधिकारिक पाठ्यक्रम और PYQ पीडीएफ वॉल्ट:** आधिकारिक अधिसूचना पीडीएफ, विषय-वार पाठ्यक्रम गाइड और पिछले 10 वर्षों के प्रश्न पत्र पूरी तरह से निःशुल्क डाउनलोड करें।
+5. **त्वरित व्हाट्सएप चैनल और टेलीग्राम अलर्ट:** नई भर्ती अधिसूचना, प्रवेश पत्र या उत्तर कुंजी जारी होते ही सीधे अपने मोबाइल पर तुरंत सूचनाएं प्राप्त करें।
+
+### 💡 अपनी परीक्षा तैयारी को कैसे बेहतर बनाएं:
+* **चरण 1:** आवेदन की अंतिम तिथि देखने के लिए प्रतिदिन **Latest Jobs** टैब देखें।
+* **चरण 2:** आधिकारिक **Syllabus PDF** डाउनलोड करें और एक अध्ययन योजना बनाएं।
+* **चरण 3:** सामान्य ज्ञान अनुभाग में महारत हासिल करने के लिए रोजाना 100 करेंट अफेयर्स प्रश्नों का अभ्यास करें।
+* **चरण 4:** स्पीड और सटीकता बढ़ाने के लिए हमारे परीक्षा पोर्टल पर साप्ताहिक 2 **CBT Mock Tests** दें।
+* **चरण 5:** शून्य-विलंब सूचनाओं के लिए हमारे **WhatsApp और Telegram Broadcast Channels** की सदस्यता लें!`
+  },
   'seo-blog-up-police': {
     title: 'यूपी पुलिस कांस्टेबल भर्ती 2026: आधिकारिक नया पाठ्यक्रम और सुरक्षित स्कोर का लक्ष्य',
     summary: 'UPPRPB यूपी पुलिस कांस्टेबल रिक्तियों पर सीधी अपडेट। विस्तृत 150 एमसीक्यू विश्लेषण, विषय-वार वेटेज, और प्रिंट करने योग्य मॉक गाइड।',
@@ -253,6 +304,20 @@ Job Sarkari Hub पर दिए गए नर्सिंग विशिष्
 
 // MCQ Assessment Quizzes for default blogs
 const BLOG_QUIZZES: Record<string, { question: string; options: string[]; correctIndex: number; explanation: string }[]> = {
+  'seo-blog-job-sarkari-hub-guide': [
+    {
+      question: 'Which instant messaging channels does Job Sarkari Hub use for broadcasting instant vacancy & result notifications?',
+      options: ['Slack & Discord', 'WhatsApp Channel & Telegram Channel', 'Signal & Skype', 'Viber & WeChat'],
+      correctIndex: 1,
+      explanation: 'Job Sarkari Hub dispatches instant automated alerts directly through its official WhatsApp Channel and Telegram Channel.'
+    },
+    {
+      question: 'What language formats are available for Mock Tests and Daily Current Affairs on Job Sarkari Hub?',
+      options: ['English Only', 'Hindi Only', 'Bilingual (Hindi & English)', 'Regional Dialects Only'],
+      correctIndex: 2,
+      explanation: 'Job Sarkari Hub provides all daily current affairs capsules and mock test series bilingually in Hindi and English.'
+    }
+  ],
   'seo-blog-up-police': [
     {
       question: 'What is the negative marking penalty for an incorrect option in UP Police Constable Exam?',
