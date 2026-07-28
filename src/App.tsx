@@ -364,8 +364,8 @@ export default function App() {
   const [todayQuizIdx, setTodayQuizIdx] = useState(0);
   const [todayAnswers, setTodayAnswers] = useState<{[key: string]: number}>({}); // maps question ID to selected option index
   const [todayActiveSubTab, setTodayActiveSubTab] = useState<'questions' | 'capsules'>('questions');
-  const [caQuizDate, setCaQuizDate] = useState<string>('2026-07-13');
-  const [homeQuizDate, setHomeQuizDate] = useState<string>('2026-07-13');
+  const [caQuizDate, setCaQuizDate] = useState<string>('2026-07-28');
+  const [homeQuizDate, setHomeQuizDate] = useState<string>('2026-07-28');
   const [caSearchQuery, setCaSearchQuery] = useState('');
   const [caSelectedCategory, setCaSelectedCategory] = useState<string>('All');
   const [caVisibleCount, setCaVisibleCount] = useState(6);
@@ -423,14 +423,27 @@ export default function App() {
   const getAvailableDates = () => {
     const datesSet = new Set<string>();
     // Default key dates
+    datesSet.add('2026-07-28');
+    datesSet.add('2026-07-27');
+    datesSet.add('2026-07-26');
+    datesSet.add('2026-07-25');
+    datesSet.add('2026-07-24');
+    datesSet.add('2026-07-23');
+    datesSet.add('2026-07-22');
+    datesSet.add('2026-07-21');
+    datesSet.add('2026-07-20');
+    datesSet.add('2026-07-19');
+    datesSet.add('2026-07-18');
+    datesSet.add('2026-07-17');
+    datesSet.add('2026-07-16');
+    datesSet.add('2026-07-15');
+    datesSet.add('2026-07-14');
+    datesSet.add('2026-07-13');
     datesSet.add('2026-07-07');
     datesSet.add('2026-07-06');
     datesSet.add('2026-07-02');
     datesSet.add('2026-07-01');
     datesSet.add('2026-06-30');
-    datesSet.add('2026-06-29');
-    datesSet.add('2026-06-28');
-    datesSet.add('2026-06-27');
     
     currentAffairs.forEach(ca => {
       if (ca.date) datesSet.add(ca.date);
@@ -444,8 +457,22 @@ export default function App() {
   };
 
   const formatCADate = (dateStr: string, isHindi: boolean) => {
-    if (dateStr === '2026-07-13') return isHindi ? 'सोमवार, 13 जुलाई 2026 (आज के विशेष)' : 'Monday, 13 July 2026 (Today)';
-    if (dateStr === '2026-07-12') return isHindi ? 'रविवार, 12 जुलाई 2026 (कल के विशेष)' : 'Sunday, 12 July 2026 (Yesterday)';
+    if (dateStr === '2026-07-28') return isHindi ? 'मंगलवार, 28 जुलाई 2026 (आज के विशेष Live)' : 'Tuesday, 28 July 2026 (Today Live)';
+    if (dateStr === '2026-07-27') return isHindi ? 'सोमवार, 27 जुलाई 2026 (कल के विशेष)' : 'Monday, 27 July 2026 (Yesterday)';
+    if (dateStr === '2026-07-26') return isHindi ? 'रविवार, 26 जुलाई 2026' : 'Sunday, 26 July 2026';
+    if (dateStr === '2026-07-25') return isHindi ? 'शनिवार, 25 जुलाई 2026' : 'Saturday, 25 July 2026';
+    if (dateStr === '2026-07-24') return isHindi ? 'शुक्रवार, 24 जुलाई 2026' : 'Friday, 24 July 2026';
+    if (dateStr === '2026-07-23') return isHindi ? 'गुरुवार, 23 जुलाई 2026' : 'Thursday, 23 July 2026';
+    if (dateStr === '2026-07-22') return isHindi ? 'बुधवार, 22 जुलाई 2026' : 'Wednesday, 22 July 2026';
+    if (dateStr === '2026-07-21') return isHindi ? 'मंगलवार, 21 जुलाई 2026' : 'Tuesday, 21 July 2026';
+    if (dateStr === '2026-07-20') return isHindi ? 'सोमवार, 20 जुलाई 2026' : 'Monday, 20 July 2026';
+    if (dateStr === '2026-07-19') return isHindi ? 'रविवार, 19 जुलाई 2026' : 'Sunday, 19 July 2026';
+    if (dateStr === '2026-07-18') return isHindi ? 'शनिवार, 18 जुलाई 2026' : 'Saturday, 18 July 2026';
+    if (dateStr === '2026-07-17') return isHindi ? 'शुक्रवार, 17 जुलाई 2026' : 'Friday, 17 July 2026';
+    if (dateStr === '2026-07-16') return isHindi ? 'गुरुवार, 16 जुलाई 2026' : 'Thursday, 16 July 2026';
+    if (dateStr === '2026-07-15') return isHindi ? 'बुधवार, 15 जुलाई 2026' : 'Wednesday, 15 July 2026';
+    if (dateStr === '2026-07-14') return isHindi ? 'मंगलवार, 14 जुलाई 2026' : 'Tuesday, 14 July 2026';
+    if (dateStr === '2026-07-13') return isHindi ? 'सोमवार, 13 जुलाई 2026' : 'Monday, 13 July 2026';
     if (dateStr === '2026-07-07') return isHindi ? 'मंगलवार, 7 जुलाई 2026' : 'Tuesday, 7 July 2026';
     if (dateStr === '2026-07-06') return isHindi ? 'सोमवार, 6 जुलाई 2026' : 'Monday, 6 July 2026';
     if (dateStr === '2026-07-02') return isHindi ? 'गुरुवार, 2 जुलाई 2026' : 'Thursday, 2 July 2026';
