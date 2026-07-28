@@ -55,12 +55,12 @@ export default function AdminConsole({
 
   // --- CURRENT AFFAIRS UPLOADER STATES ---
   const [caCapsuleTitle, setCaCapsuleTitle] = useState('');
-  const [caCapsuleDate, setCaCapsuleDate] = useState('2026-06-30');
+  const [caCapsuleDate, setCaCapsuleDate] = useState(() => new Date().toISOString().split('T')[0]);
   const [caCapsuleCategory, setCaCapsuleCategory] = useState<'National' | 'International' | 'Sports' | 'Economy' | 'Science & Tech' | 'Awards'>('National');
   const [caCapsuleContent, setCaCapsuleContent] = useState('');
   const [caCapsulePdfUrl, setCaCapsulePdfUrl] = useState('');
 
-  const [caQuestDate, setCaQuestDate] = useState('2026-06-30');
+  const [caQuestDate, setCaQuestDate] = useState(() => new Date().toISOString().split('T')[0]);
   const [caQuestText, setCaQuestText] = useState('');
   const [caQuestOptA, setCaQuestOptA] = useState('');
   const [caQuestOptB, setCaQuestOptB] = useState('');
@@ -316,9 +316,9 @@ export default function AdminConsole({
     localStorage.setItem('sarkari_wa_feed_broadcasts', JSON.stringify(waAutoBroadcasts));
   }, [waAutoBroadcasts]);
 
-  // Central automated dispatch function for WhatsApp Channel Notifications
+  // Central automated dispatch function for WhatsApp Channel & Telegram Channel Notifications
   const dispatchAutoWhatsAppAlert = (
-    type: 'jobs' | 'admit-card' | 'result' | 'answer-key' | 'mock-test',
+    type: 'jobs' | 'admit-card' | 'result' | 'answer-key' | 'mock-test' | 'current-affair',
     title: string,
     org: string,
     fields: Record<string, any>
@@ -343,6 +343,10 @@ export default function AdminConsole({
       header = `🔑 *SARKARI JOB HUB - ANSWER KEY PUBLISHED* 🔑\n\n🏢 *${org}* की आधिकारिक आंसर की जारी कर दी गयी है! आपत्तियां दर्ज करें! 👇\n\n`;
       body = `*🎯 Exam Post:* ${title}\n*📅 Released Date:* ${fields.released || 'Declared today'}\n*⏰ Objections Closes on:* ${fields.objectionsLimit || 'As per norms'}\n\n`;
       links = `🔗 *Validate Answer Solutions PDF:* \n${fields.pdfUrl || 'https://sarkari-job-hub-v595.onrender.com'}\n\n`;
+    } else if (type === 'current-affair') {
+      header = `🔥 *SARKARI JOB HUB - TODAY CURRENT AFFAIRS UPDATE* 🔥\n\nआज के महत्वपूर्ण करेंट अफेयर्स प्रश्न/कैप्सूल ऑनलाइन पोर्टल पर प्रकाशित कर दिए गए हैं! 👇\n\n`;
+      body = `*📌 Update Title:* ${title}\n*📁 Category/Topic:* ${org || 'National & International'}\n*📅 Date:* ${fields.date || new Date().toISOString().split('T')[0]}\n*📝 Key Details:* ${fields.content ? (fields.content.length > 180 ? fields.content.substring(0, 180) + '...' : fields.content) : 'Daily Quiz Practice Questions Live Now!'}\n\n`;
+      links = `🔗 *Read Full Current Affairs & Practice Daily Quiz:* \nhttps://sarkari-job-hub-v595.onrender.com/?tab=current-affairs\n\n📄 *Download Daily PDF:* \n${fields.pdfUrl || 'https://sarkari-job-hub-v595.onrender.com/?tab=current-affairs'}\n\n`;
     } else {
       header = `📝 *SARKARI MOCK HUB - PREMIUM TEST LIVE* 📝\n\nतैयारी को मजबूत करने के लिए नया MCQ मॉक टेस्ट पेपर ऑनलाइन पोर्टल पर अपलोड कर दिया गया है! बिल्कुल मुफ्त हल करें! 👇\n\n`;
       body = `*🎯 Mock test:* ${title}\n*📚 Exam Segment:* ${org || 'All Exams Syllabus'}\n*⏱️ Time Limit:* ${fields.durationMinutes || 15} mins\n*📊 Total Marks:* ${fields.totalMarks || 30} Marks\n\n`;
@@ -358,7 +362,7 @@ export default function AdminConsole({
     // Add to WA and Telegram Auto Broadcasts
     const newBroadcast = {
       id: `wa-auto-${Date.now()}`,
-      type: type === 'jobs' ? 'Job Alert' : type === 'admit-card' ? 'Admit Card' : type === 'result' ? 'Result' : type === 'answer-key' ? 'Answer Key' : 'Free Mock Test',
+      type: type === 'jobs' ? 'Job Alert' : type === 'admit-card' ? 'Admit Card' : type === 'result' ? 'Result' : type === 'answer-key' ? 'Answer Key' : type === 'current-affair' ? 'Current Affairs' : 'Free Mock Test',
       title: `${org} - ${title}`,
       timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + ', Today',
       message: fullMessage,
@@ -1396,10 +1400,15 @@ What is the standard pH level of pure distilled water at normal room temperature
     
     if (onAddCurrentAffair) {
       onAddCurrentAffair(newItem);
+      dispatchAutoWhatsAppAlert('current-affair', newItem.title, newItem.category, {
+        date: newItem.date,
+        content: newItem.content,
+        pdfUrl: newItem.pdfUrl
+      });
       setCaCapsuleTitle('');
       setCaCapsuleContent('');
       setCaCapsulePdfUrl('');
-      setStatusMessage(`✅ Successfully uploaded Current Affairs News Capsule for date: ${caCapsuleDate}!`);
+      setStatusMessage(`✅ Current Affairs News Capsule uploaded & instantly sent to WhatsApp Channel & Telegram!`);
       setTimeout(() => setStatusMessage(null), 4000);
     } else {
       setStatusMessage(`⚠️ Error: Current Affairs upload callback is not configured.`);
@@ -1430,6 +1439,11 @@ What is the standard pH level of pure distilled water at normal room temperature
     
     if (onAddCurrentAffairsQuestion) {
       onAddCurrentAffairsQuestion(newQ);
+      dispatchAutoWhatsAppAlert('current-affair', `Daily Quiz: ${newQ.text}`, `Daily Quiz (${newQ.date})`, {
+        date: newQ.date,
+        content: `Q: ${newQ.text}\nOptions:\n(a) ${newQ.options[0]}\n(b) ${newQ.options[1]}\n(c) ${newQ.options[2]}\n(d) ${newQ.options[3]}`,
+        pdfUrl: 'https://sarkari-job-hub-v595.onrender.com/?tab=current-affairs'
+      });
       setCaQuestText('');
       setCaQuestOptA('');
       setCaQuestOptB('');
@@ -1437,7 +1451,7 @@ What is the standard pH level of pure distilled water at normal room temperature
       setCaQuestOptD('');
       setCaQuestCorrectOpt(0);
       setCaQuestExplanation('');
-      setStatusMessage(`✅ Successfully uploaded bilingual Interactive Quiz Question for date: ${caQuestDate}!`);
+      setStatusMessage(`✅ Daily Quiz Question uploaded & instant notification pushed to WhatsApp & Telegram!`);
       setTimeout(() => setStatusMessage(null), 4000);
     } else {
       setStatusMessage(`⚠️ Error: Quiz question upload callback is not configured.`);
