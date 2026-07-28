@@ -6654,6 +6654,366 @@ export const CURRENT_AFFAIRS_QUIZ_QUESTIONS: Question[] = [
     correctOptionIndex: 0,
     explanation: 'WHO\'s global theme for World Hepatitis Day 2026 was "One Life, One Liver" promoting early viral testing.',
     date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-581',
+    text: 'World Nature Conservation Day is observed globally on which date every year? / विश्व प्रकृति संरक्षण दिवस हर साल दुनिया भर में किस तारीख को मनाया जाता है?',
+    options: ['(a) 28 July / 28 जुलाई', '(b) 22 April / 22 अप्रैल', '(c) 5 June / 5 जून', '(d) 16 September / 16 सितंबर'],
+    correctOptionIndex: 0,
+    explanation: 'World Nature Conservation Day is celebrated annually on 28th July to raise awareness about conserving natural resources.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-582',
+    text: 'Asian Development Bank (ADB) approved a $400 Million loan for integrated urban flood risk management in which Indian coastal city in July 2026? / एशियाई विकास बैंक (ADB) ने जुलाई 2026 में किस भारतीय तटीय शहर में एकीकृत शहरी बाढ़ जोखिम प्रबंधन के लिए $400 मिलियन के ऋण को मंजूरी दी?',
+    options: ['(a) Chennai / चेन्नई', '(b) Mumbai / मुंबई', '(c) Kochi / कोच्चि', '(d) Visakhapatnam / विशाखापत्तनम'],
+    correctOptionIndex: 0,
+    explanation: 'ADB approved $400 Million funding for Chennai Basin Urban Flood Management Project in Tamil Nadu.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-583',
+    text: 'Reserve Bank of India (RBI) initiated cross-border Digital Rupee (e-Rupee) settlement trials in collaboration with the Central Bank of which country? / भारतीय रिजर्व बैंक (RBI) ने किस देश के केंद्रीय बैंक के सहयोग से सीमा पार डिजिटल रुपया (e-Rupee) निपटान परीक्षण शुरू किया?',
+    options: ['(a) United Arab Emirates (UAE) / संयुक्त अरब अमीरात (यूएई)', '(b) Singapore / सिंगापुर', '(c) Japan / जापान', '(d) United Kingdom / यूनाइटेड किंगडम'],
+    correctOptionIndex: 0,
+    explanation: 'RBI and the Central Bank of the UAE (CBUAE) executed bilateral cross-border CBDC transactions using Central Bank Digital Currency.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-584',
+    text: 'DRDO successfully flight-tested the long-range Supersonic Missile Assisted Release of Torpedo (SMART) system off the coast of which state? / डीआरडीओ ने किस राज्य के तट से लंबी दूरी की सुपरसोनिक मिसाइल असिस्टेड रिलीज ऑफ टारपीडो (SMART) प्रणाली का सफल उड़ान परीक्षण किया?',
+    options: ['(a) Odisha (Dr. APJ Abdul Kalam Island) / ओडिशा (डॉ. एपीजे अब्दुल कलाम द्वीप)', '(b) Andhra Pradesh (Sriharikota) / आंध्र प्रदेश (श्रीहरिकोटा)', '(c) Kerala (Kochi) / केरल (कोच्चि)', '(d) Gujarat (Chandipur) / गुजरात (चांदीपुर)'],
+    correctOptionIndex: 0,
+    explanation: 'SMART system was successfully launched from Dr. APJ Abdul Kalam Island off the coast of Odisha.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-585',
+    text: 'India\'s first AI-powered Integrated Smart City Command & Operations Center (I-SCOC) was inaugurated in which city in July 2026? / जुलाई 2026 में भारत के पहले एआई-संचालित एकीकृत स्मार्ट सिटी कमांड एंड ऑपरेशंस सेंटर (I-SCOC) का उद्घाटन किस शहर में किया गया था?',
+    options: ['(a) GIFT City, Gandhinagar / गिफ्ट सिटी, गांधीनगर', '(b) Bengaluru / बेंगलुरु', '(c) Hyderabad / हैदराबाद', '(d) Pune / पुणे'],
+    correctOptionIndex: 0,
+    explanation: 'The state-of-the-art AI-driven Smart City Operations Center was operationalized at GIFT City, Gandhinagar.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-586',
+    text: 'Which state government launched the "Mukhyamantri Maiya Samman Yojana" providing ₹1,000 monthly assistance to women aged 21-50? / किस राज्य सरकार ने 21-50 वर्ष की महिलाओं को ₹1,000 मासिक सहायता प्रदान करने वाली "मुख्यमंत्री मैया सम्मान योजना" शुरू की?',
+    options: ['(a) Jharkhand / झारखंड', '(b) Bihar / बिहार', '(c) Odisha / ओडिशा', '(d) Chhattisgarh / छत्तीसगढ़'],
+    correctOptionIndex: 0,
+    explanation: 'The Jharkhand state government launched Mukhyamantri Maiya Samman Yojana for women economic empowerment.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-587',
+    text: 'Ahead of Global Tiger Day (29th July), which tiger reserve in India was declared as the best-managed tiger reserve in MEA evaluation 2026? / अंतर्राष्ट्रीय बाघ दिवस (29 जुलाई) से पहले, MEA मूल्यांकन 2026 में भारत के किस बाघ अभयारण्य को सर्वश्रेष्ठ प्रबंधित बाघ अभयारण्य घोषित किया गया?',
+    options: ['(a) Periyar Tiger Reserve, Kerala / पेरियार टाइगर रिजर्व, केरल', '(b) Corbett Tiger Reserve, Uttarakhand / कॉर्बेट टाइगर रिजर्व, उत्तराखंड', '(c) Bandipur Tiger Reserve, Karnataka / बांदीपुर टाइगर रिजर्व, कर्नाटक', '(d) Pench Tiger Reserve, MP / पेंच टाइगर रिजर्व, मध्य प्रदेश'],
+    correctOptionIndex: 0,
+    explanation: 'Periyar Tiger Reserve in Kerala topped the Management Effectiveness Evaluation (MEE) list of tiger reserves in India.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-588',
+    text: 'Assam\'s historic mound-burial system of the Ahom Dynasty, "Charaideo Moidams", was officially inscribed as UNESCO World Heritage Site under which category? / अहोम राजवंश की असम की ऐतिहासिक टीला-दफन प्रणाली "चराईदेव मोइदाम" को किस श्रेणी के तहत यूनेस्को की विश्व धरोहर स्थल के रूप में आधिकारिक तौर पर शामिल किया गया था?',
+    options: ['(a) Cultural Heritage / सांस्कृतिक विरासत', '(b) Natural Heritage / प्राकृतिक विरासत', '(c) Mixed Site / मिश्रित स्थल', '(d) Intangible Heritage / अमूर्त विरासत'],
+    correctOptionIndex: 0,
+    explanation: 'Charaideo Moidams became India\'s 43rd UNESCO World Heritage Site under the Cultural Heritage category.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-589',
+    text: 'Where was the 15th Ministerial Meeting of the India-US Trade Policy Forum (TPF) held in July 2026? / जुलाई 2026 में भारत-अमेरिका व्यापार नीति फोरम (TPF) की 15वीं मंत्रिस्तरीय बैठक कहाँ आयोजित की गई थी?',
+    options: ['(a) New Delhi / नई दिल्ली', '(b) Washington D.C. / वाशिंगटन डी.सी.', '(c) New York / न्यूयॉर्क', '(d) Bengaluru / बेंगलुरु'],
+    correctOptionIndex: 0,
+    explanation: 'The 15th India-US Trade Policy Forum meeting was held in New Delhi co-chaired by Piyush Goyal and US Trade Representative.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-590',
+    text: 'Which Indian public sector bank introduced the special "Suraksha Term Deposit Scheme" tailored for senior citizens with higher interest benefits in July 2026? / किस भारतीय सार्वजनिक क्षेत्र के बैंक ने जुलाई 2026 में उच्च ब्याज लाभ वाले वरिष्ठ नागरिकों के लिए विशेष "सुरक्षा मियादी जमा योजना" शुरू की?',
+    options: ['(a) State Bank of India (SBI) / भारतीय स्टेट बैंक (SBI)', '(b) Punjab National Bank (PNB) / पंजाब नेशनल बैंक (PNB)', '(c) Bank of Baroda (BoB) / बैंक ऑफ बड़ौदा (BoB)', '(d) Canara Bank / केनरा बैंक'],
+    correctOptionIndex: 0,
+    explanation: 'State Bank of India launched SBI Suraksha FD providing an additional 0.80% interest rate for senior citizen depositors.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-591',
+    text: 'Indian Olympic Champion Neeraj Chopra won the Gold medal in Men\'s Javelin Throw at the Ostrava Golden Spike 2026 with what winning distance? / भारतीय ओलंपिक चैंपियन नीरज चोपड़ा ने ओस्ट्रावा गोल्डन स्पाइक 2026 में पुरुषों की भाला फेंक में किस दूरी के साथ स्वर्ण पदक जीता?',
+    options: ['(a) 88.38 meters / 88.38 मीटर', '(b) 89.94 meters / 89.94 मीटर', '(c) 87.58 meters / 87.58 मीटर', '(d) 90.12 meters / 90.12 मीटर'],
+    correctOptionIndex: 0,
+    explanation: 'Neeraj Chopra clinched the Gold medal with a powerful throw of 88.38m at the World Athletics Continental Tour event in Ostrava.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-592',
+    text: 'India\'s indigenous aircraft carrier INS Vikrant completed its first operational battle group deployment in which strategic oceanic region? / भारत के स्वदेशी विमानवाहक पोत INS विक्रान्त ने किस रणनीतिक महासागरीय क्षेत्र में अपना पहला परिचालन युद्ध समूह तैनात पूरा किया?',
+    options: ['(a) Bay of Bengal / बंगाल की खाड़ी', '(b) Arabian Sea / अरब सागर', '(c) Gulf of Aden / अदन की खाड़ी', '(d) South China Sea / दक्षिण चीन सागर'],
+    correctOptionIndex: 0,
+    explanation: 'INS Vikrant executed carrier strike group exercises with full MiG-29K fighter squad integration in the Bay of Bengal.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-593',
+    text: 'Under PM Surya Ghar: Muft Bijli Yojana, what is the target number of households to be provided with free solar electricity up to 300 units monthly? / पीएम सूर्य घर: मुफ्त बिजली योजना के तहत प्रति माह 300 यूनिट तक मुफ्त सौर बिजली प्रदान करने वाले परिवारों की लक्षित संख्या क्या है?',
+    options: ['(a) 1 Crore Households / 1 करोड़ परिवार', '(b) 50 Lakh Households / 50 लाख परिवार', '(c) 2 Crore Households / 2 करोड़ परिवार', '(d) 5 Crore Households / 5 करोड़ परिवार'],
+    correctOptionIndex: 0,
+    explanation: 'PM Surya Ghar scheme targets 1 Crore households to install rooftop solar systems with up to 300 units free monthly power.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-594',
+    text: 'What rank did India secure in the Henley Passport Index 2026 edition granting visa-free access to 62 destinations? / 62 गंतव्यों के लिए वीजा-मुक्त पहुंच प्रदान करने वाले हेनले पासपोर्ट इंडेक्स 2026 संस्करण में भारत ने कौन सा स्थान हासिल किया?',
+    options: ['(a) 80th Rank / 80वां स्थान', '(b) 85th Rank / 85वां स्थान', '(c) 75th Rank / 75वां स्थान', '(d) 90th Rank / 90वां स्थान'],
+    correctOptionIndex: 0,
+    explanation: 'India stands at 80th position on the Henley Passport Index 2026 with visa-free travel to 62 countries.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-595',
+    text: 'Which Indian city was chosen by the Ministry of Textiles to set up the first state-of-the-art PM MITRA Textile Park in Maharashtra? / कपड़ा मंत्रालय द्वारा महाराष्ट्र में पहला अत्याधुनिक पीएम मित्रा टेक्सटाइल पार्क स्थापित करने के लिए किस भारतीय शहर को चुना गया?',
+    options: ['(a) Amravati / अमरावती', '(b) Nagpur / नागपुर', '(c) Nashik / नासिक', '(d) Solapur / सोलापुर'],
+    correctOptionIndex: 0,
+    explanation: 'The foundation stone for PM Mega Integrated Textile Region and Apparel (PM MITRA) Park was laid at Amravati in Vidarbha region.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-596',
+    text: 'What is the strike range of the new generation Agni-Prime (Agni-P) nuclear-capable ballistic missile tested by DRDO? / डीआरडीओ द्वारा परीक्षण की गई नई पीढ़ी की अग्नि-प्राइम (अग्नि-पी) परमाणु सक्षम बैलिस्टिक मिसाइल की मारक क्षमता कितनी है?',
+    options: ['(a) 1,000 to 2,000 km / 1,000 से 2,000 किमी', '(b) 3,000 to 4,000 km / 3,000 से 4,000 किमी', '(c) 500 to 800 km / 500 से 800 किमी', '(d) 5,000 km+ / 5,000 किमी+'],
+    correctOptionIndex: 0,
+    explanation: 'Agni-P is a canisterised surface-to-surface ballistic missile with a strike range between 1,000 km and 2,000 km.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-597',
+    text: 'Which country chaired the G20 Finance Ministers and Central Bank Governors (FMCBG) meeting in July 2026 under its G20 Presidency? / जुलाई 2026 में किस देश ने अपनी G20 अध्यक्षता के तहत G20 वित्त मंत्रियों और सेंट्रल बैंक गवर्नर्स (FMCBG) की बैठक की अध्यक्षता की?',
+    options: ['(a) Brazil / ब्राजील', '(b) South Africa / दक्षिण अफ्रीका', '(c) India / भारत', '(d) Indonesia / इंडोनेशिया'],
+    correctOptionIndex: 0,
+    explanation: 'Brazil hosted the G20 FMCBG meeting under its 2026 G20 Presidency theme "Building a Just World and a Sustainable Planet".',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-598',
+    text: 'Where did the National Disaster Response Force (NDRF) open its new dedicated Maritime & Coastal Disaster Rescue Command Center? / राष्ट्रीय आपदा प्रतिक्रिया बल (NDRF) ने अपना नया समर्पित समुद्री और तटीय आपदा बचाव कमान केंद्र कहाँ खोला?',
+    options: ['(a) Visakhapatnam, Andhra Pradesh / विशाखापत्तनम, आंध्र प्रदेश', '(b) Paradeep, Odisha / पारादीप, ओडिशा', '(c) Mangaluru, Karnataka / मंगलुरु, कर्नाटक', '(d) Port Blair, A&N Islands / पोर्ट ब्लेयर, एएंडएन द्वीप समूह'],
+    correctOptionIndex: 0,
+    explanation: 'NDRF inaugurated its advanced 10th Battalion coastal disaster response facility in Visakhapatnam.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-599',
+    text: 'IIT Madras established its first international offshore campus outside India at which location? / आईआईटी मद्रास ने भारत के बाहर अपना पहला अंतर्राष्ट्रीय अपतटीय परिसर किस स्थान पर स्थापित किया?',
+    options: ['(a) Zanzibar, Tanzania / ज़ांज़ीबार, तंजानिया', '(b) Abu Dhabi, UAE / अबू धाबी, यूएई', '(c) Colombo, Sri Lanka / कोलंबो, श्रीलंका', '(d) Port Louis, Mauritius / पोर्ट लुई, मॉरीशस'],
+    correctOptionIndex: 0,
+    explanation: 'IIT Madras Zanzibar campus offers data science and AI degree programs in Tanzania, Africa.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-600',
+    text: 'According to the United Nations World Population Prospects Report, in which year is global human population projected to peak at around 10.3 Billion? / संयुक्त राष्ट्र विश्व जनसंख्या संभावना रिपोर्ट के अनुसार, किस वर्ष वैश्विक मानव आबादी लगभग 10.3 बिलियन के शिखर पर पहुंचने का अनुमान है?',
+    options: ['(a) 2080s / 2080 का दशक', '(b) 2050s / 2050 का दशक', '(c) 2100s / 2100 का दशक', '(d) 2040s / 2040 का दशक'],
+    correctOptionIndex: 0,
+    explanation: 'UN DESA report projects global population to peak at ~10.3 billion during the mid-2080s before gradually declining.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-601',
+    text: 'Who was awarded the prestigious Sangeet Natak Akademi Fellowship (Akademi Ratna) for Hindustani Classical Vocal Music in 2026? / 2026 में हिंदुस्तानी शास्त्रीय गायन संगीत के लिए प्रतिष्ठित संगीत नाटक अकादमी फेलोशिप (अकादमी रत्न) से किसे सम्मानित किया गया?',
+    options: ['(a) Pt. Ajoy Chakrabarty / पं. अजय चक्रवर्ती', '(b) Rashid Khan / राशिद खान', '(c) Kaushiki Chakraborty / कौशिकी चक्रवर्ती', '(d) Shubha Mudgal / शुभा मुद्गल'],
+    correctOptionIndex: 0,
+    explanation: 'Eminent vocalist Pt. Ajoy Chakrabarty was conferred the prestigious Akademi Ratna by President Droupadi Murmu.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-602',
+    text: 'India\'s first national inland water container terminal constructed by IWAI on National Waterway-1 (NW-1) is situated in which holy city? / राष्ट्रीय जलमार्ग-1 (NW-1) पर IWAI द्वारा निर्मित भारत का पहला राष्ट्रीय अंतर्देशीय जल कंटेनर टर्मिनल किस पवित्र शहर में स्थित है?',
+    options: ['(a) Varanasi (Ralpura) / वाराणसी (राल्हूपुर)', '(b) Prayagraj / प्रयागराज', '(c) Patna / पटना', '(d) Haldia / हल्दिया'],
+    correctOptionIndex: 0,
+    explanation: 'Varanasi Multimodal Terminal on River Ganga was developed as India\'s flagship inland port under Jal Marg Vikas Project.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-603',
+    text: 'Which state launched the massive "Vriksharopan Jan Abhiyan 2026" planting over 35 Crore saplings in a single day? / किस राज्य ने एक ही दिन में 35 करोड़ से अधिक पौधे लगाकर विशाल "वृक्षारोपण जन अभियान 2026" शुरू किया?',
+    options: ['(a) Uttar Pradesh / उत्तर प्रदेश', '(b) Madhya Pradesh / मध्य प्रदेश', '(c) Rajasthan / राजस्थान', '(d) Gujarat / गुजरात'],
+    correctOptionIndex: 0,
+    explanation: 'Uttar Pradesh Chief Minister Yogi Adityanath inaugurated the Vriksharopan Jan Abhiyan aiming to plant 35 crore trees.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-604',
+    text: 'Which prominent Indian industrialist was awarded France\'s highest civilian honor, "Chevalier de la Légion d\'Honneur" in July 2026? / किस प्रमुख भारतीय उद्योगपति को जुलाई 2026 में फ्रांस के सर्वोच्च नागरिक सम्मान "शेवेलियर डी ला लेगियन डी\'होनूर" से सम्मानित किया गया था?',
+    options: ['(a) N. Chandrasekaran / एन. चंद्रशेखरन', '(b) Gautam Adani / गौतम अडानी', '(c) Anand Mahindra / आनंद महिंद्रा', '(d) Kumar Mangalam Birla / कुमार मंगलम बिड़ला'],
+    correctOptionIndex: 0,
+    explanation: 'Tata Sons Chairman N. Chandrasekaran was conferred France\'s Grand Legion of Honour for strengthening India-France trade relations.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-605',
+    text: 'What was the code name of the Indian Navy\'s maritime evacuation operation from conflict zones in Sudan? / सूडान के संघर्ष क्षेत्रों से भारतीय नौसेना के समुद्री निकासी अभियान का कोड नाम क्या था?',
+    options: ['(a) Operation Kaveri / ऑपरेशन कावेरी', '(b) Operation Ganga / ऑपरेशन गंगा', '(c) Operation Indravati / ऑपरेशन इंद्रावती', '(d) Operation Ajay / ऑपरेशन अजय'],
+    correctOptionIndex: 0,
+    explanation: 'Operation Kaveri was launched by India to evacuate stranded citizens from war-torn Sudan using naval ships & military aircraft.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-606',
+    text: 'The Ministry of Social Justice & Empowerment integrated the Bhashini AI tool with which portal for doorstep welfare access? / सामाजिक न्याय एवं अधिकारिता मंत्रालय ने दरवाजे पर कल्याणकारी पहुंच के लिए भाषिणी एआई उपकरण को किस पोर्टल के साथ एकीकृत किया?',
+    options: ['(a) PM-ANUDAN Portal / पीएम-अनुदान पोर्टल', '(b) Sugamya Bharat / सुगम्य भारत', '(c) e-Shram Portal / ई-श्रम पोर्टल', '(d) Jan Samarth Portal / जन समर्थ पोर्टल'],
+    correctOptionIndex: 0,
+    explanation: 'Bhashini AI was embedded into PM-ANUDAN portal to allow beneficiaries to apply using voice commands in 22 regional languages.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-607',
+    text: 'Which young author won the Sahitya Akademi Yuva Puraskar 2026 in Hindi language for his poetry collection? / किस युवा लेखक ने अपने कविता संग्रह के लिए हिंदी भाषा में साहित्य अकादमी युवा पुरस्कार 2026 जीता?',
+    options: ['(a) Gaurav Pandey / गौरव पांडे', '(b) Atul Kumar Rai / अतुल कुमार राय', '(c) Bhagwant Anmol / भगवंत अनमोल', '(d) Nilotpal Soinal / नीलोत्पल मृणाल'],
+    correctOptionIndex: 0,
+    explanation: 'Gaurav Pandey received the Sahitya Akademi Yuva Puraskar 2026 for his celebrated Hindi poetry work.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-608',
+    text: 'To commemorate the 75th Anniversary of the Supreme Court of India, a special commemorative coin of what denomination was unveiled by PM Modi? / भारत के सर्वोच्च न्यायालय की 75वीं वर्षगांठ के उपलक्ष्य में, पीएम मोदी द्वारा किस मूल्यवर्ग का एक विशेष स्मारक सिक्का अनावरण किया गया?',
+    options: ['(a) ₹75 Coin / ₹75 का सिक्का', '(b) ₹100 Coin / ₹100 का सिक्का', '(c) ₹50 Coin / ₹50 का सिक्का', '(d) ₹500 Coin / ₹500 का सिक्का'],
+    correctOptionIndex: 0,
+    explanation: 'Prime Minister Narendra Modi released a special ₹75 commemorative coin & postage stamp celebrating 75 years of Supreme Court of India.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-609',
+    text: 'What is India\'s rank in the World Economic Forum (WEF) Global Gender Gap Index 2026 among 146 economies? / 146 अर्थव्यवस्थाओं में विश्व आर्थिक मंच (WEF) ग्लोबल जेंडर गैप इंडेक्स 2026 में भारत का कौन सा स्थान है?',
+    options: ['(a) 129th / 129वां', '(b) 135th / 135वां', '(c) 115th / 115वां', '(d) 140th / 140वां'],
+    correctOptionIndex: 0,
+    explanation: 'India ranked 129th in the WEF Global Gender Gap Index 2026, registering progress in economic participation & educational attainment.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-610',
+    text: 'Which Indian naval warship conducted the bilateral Maritime Partnership Exercise (MPX) with the Royal Australian Navy in the Indian Ocean in July 2026? / किस भारतीय नौसेना युद्धपोत ने जुलाई 2026 में हिंद महासागर में रॉयल ऑस्ट्रेलियाई नौसेना के साथ द्विपक्षीय समुद्री भागीदारी अभ्यास (MPX) आयोजित किया?',
+    options: ['(a) INS Sahyadri / आईएनएस सह्याद्रि', '(b) INS Delhi / आईएनएस दिल्ली', '(c) INS Kolkata / आईएनएस कोलकाता', '(d) INS Kochi / आईएनएस कोच्चि'],
+    correctOptionIndex: 0,
+    explanation: 'INS Sahyadri represented the Indian Navy during the high-tempo tactical drills with Australian Navy frigate HMAS Warramunga.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-611',
+    text: 'Which public sector enterprise was granted the coveted "Navratna Status" by the Ministry of Finance in July 2026? / जुलाई 2026 में वित्त मंत्रालय द्वारा किस सार्वजनिक क्षेत्र के उद्यम को वांछित "नवरत्न दर्जा" दिया गया था?',
+    options: ['(a) Housing & Urban Development Corporation (HUDCO) / हुडको', '(b) Mazagon Dock Shipbuilders / माझगांव डॉक', '(c) IREDA / इरेडा', '(d) RVNL / आरवीएनएल'],
+    correctOptionIndex: 0,
+    explanation: 'HUDCO was conferred Navratna status, raising total Navratna Central Public Sector Enterprises in India.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-612',
+    text: 'The Union Cabinet approved the establishment of India\'s 12th Industrial Smart City under NICDP in which state? / केंद्रीय मंत्रिमंडल ने NICDP के तहत किस राज्य में भारत के 12वें औद्योगिक स्मार्ट सिटी की स्थापना को मंजूरी दी?',
+    options: ['(a) Kerala (Palakkad) / केरल (पालक्काड)', '(b) Andhra Pradesh (Orvakal) / आंध्र प्रदेश (ओरवाकल)', '(c) Bihar (Gaya) / बिहार (गया)', '(d) Uttarakhand (Khurpia) / उत्तराखंड (खुरपिया)'],
+    correctOptionIndex: 0,
+    explanation: 'Industrial Smart City Palakkad in Kerala was sanctioned under National Industrial Corridor Development Programme.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-613',
+    text: 'Who won the Men\'s Singles title at the Wimbledon Tennis Championship 2026 in London? / लंदन में विंबलडन टेनिस चैंपियनशिप 2026 में पुरुष एकल का खिताब किसने जीता?',
+    options: ['(a) Carlos Alcaraz / कार्लोस अल्कराज', '(b) Novak Djokovic / नोवाक जोकोविच', '(c) Jannik Sinner / जैनिक सिन्नर', '(d) Daniil Medvedev / दानील मेदवेदेव'],
+    correctOptionIndex: 0,
+    explanation: 'Spanish tennis star Carlos Alcaraz defeated Novak Djokovic to retain his Wimbledon Men\'s Singles crown.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-614',
+    text: 'Who secured the Women\'s Singles crown at the Wimbledon Championship 2026? / विंबलडन चैंपियनशिप 2026 में महिला एकल का ताज किसने हासिल किया?',
+    options: ['(a) Barbora Krejcikova / बारबोरा क्रेजकिकोवा', '(b) Jasmine Paolini / जैस्मीन पाओलिनी', '(c) Iga Swiatek / इगा स्वियातेक', '(d) Aryna Sabalenka / एरिना सबालेंका'],
+    correctOptionIndex: 0,
+    explanation: 'Barbora Krejcikova won her maiden Wimbledon Women\'s Singles title defeating Jasmine Paolini in the final.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-615',
+    text: 'Which Indian chess Grandmaster won the Prague Masters Chess Tournament 2026 title with an unbeaten score? / किस भारतीय शतरंज ग्रैंडमास्टर ने बिना हारे प्राग मास्टर्स शतरंज टूर्नामेंट 2026 का खिताब जीता?',
+    options: ['(a) R. Praggnanandhaa / आर. प्रज्ञानानंद', '(b) D. Gukesh / डी. गुकेश', '(c) Arjun Erigaisi / अर्जुन एरिगैसी', '(d) Vidit Gujrathi / विदित गुजराती'],
+    correctOptionIndex: 0,
+    explanation: 'R. Praggnanandhaa claimed the Prague Masters title after outperforming top international grandmasters.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-616',
+    text: 'Which country joined the New Development Bank (NDB) established by BRICS nations as its newest member in 2026? / कौन सा देश 2026 में अपने नए सदस्य के रूप में ब्रिक्स देशों द्वारा स्थापित नए विकास बैंक (NDB) में शामिल हुआ?',
+    options: ['(a) Algeria / अल्जीरिया', '(b) Egypt / मिस्र', '(c) Bangladesh / बांग्लादेश', '(d) Uruguay / उरुग्वे'],
+    correctOptionIndex: 0,
+    explanation: 'The NDB Board of Governors officially approved Algeria\'s membership to expand global South infrastructure development.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-617',
+    text: 'What is the target year set by Indian Railways to achieve Net-Zero Carbon Emitter status across all operations? / सभी परिचालनों में नेट-जीरो कार्बन उत्सर्जक का दर्जा हासिल करने के लिए भारतीय रेलवे द्वारा निर्धारित लक्ष्य वर्ष क्या है?',
+    options: ['(a) 2030 / 2030', '(b) 2035 / 2035', '(c) 2040 / 2040', '(d) 2050 / 2050'],
+    correctOptionIndex: 0,
+    explanation: 'Indian Railways has set a clear mission roadmap to transition into a 100% Green Network and Net-Zero Emitter by 2030.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-618',
+    text: 'India\'s first indigenously developed quadruped robot and wearable exoskeleton for military application was developed by which startup? / सैन्य अनुप्रयोग के लिए भारत का पहला स्वदेशी रूप से विकसित चौपाया रोबोट (Quadruped Robot) और वियरेबल एक्सोस्केलेटन किस स्टार्टअप द्वारा विकसित किया गया था?',
+    options: ['(a) Svaya Robotics / स्वाया रोबोटिक्स', '(b) Skyroot Aerospace / स्काईरूट एयरोस्पेस', '(c) Agnikul Cosmos / अग्निकुल कॉस्मॉस', '(d) Tonbo Imaging / टोनबो इमेजिंग'],
+    correctOptionIndex: 0,
+    explanation: 'Svaya Robotics in partnership with DRDO labs built the quadruped defense payload robot.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-619',
+    text: 'Which state government announced "CM-SURYAGHAR Digital Subsidy Portal" for instant DBT transfers to solar rooftop installers? / किस राज्य सरकार ने सोलर रूफटॉप इंस्टॉलर को त्वरित डीबीटी हस्तांतरण के लिए "सीएम-सूर्यघर डिजिटल सब्सिडी पोर्टल" की घोषणा की?',
+    options: ['(a) Madhya Pradesh / मध्य प्रदेश', '(b) Rajasthan / राजस्थान', '(c) Gujarat / गुजरात', '(d) Maharashtra / महाराष्ट्र'],
+    correctOptionIndex: 0,
+    explanation: 'Madhya Pradesh government introduced the CM Solar Portal providing instant state top-up subsidies for rooftop installations.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-620',
+    text: 'Which Indian airport became the first in South Asia to launch automated Biometric Boarding System using DigiYatra across all gates? / सभी गेटों पर डिजीयात्रा का उपयोग करके स्वचालित बायोमेट्रिक बोर्डिंग सिस्टम शुरू करने वाला दक्षिण एशिया का पहला भारतीय हवाई अड्डा कौन सा बना?',
+    options: ['(a) Indira Gandhi International Airport, Delhi / आईजीआई हवाई अड्डा, दिल्ली', '(b) Kempegowda International Airport, Bengaluru / केम्पेगौड़ा हवाई अड्डा, बेंगलुरु', '(c) Chhatrapati Shivaji Maharaj Airport, Mumbai / सीएसएमआई हवाई अड्डा, मुंबई', '(d) Rajiv Gandhi International Airport, Hyderabad / आरजीआई हवाई अड्डा, हैदराबाद'],
+    correctOptionIndex: 0,
+    explanation: 'IGI Airport Delhi implemented 100% facial recognition DigiYatra gates across T1, T2, and T3 terminals.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-621',
+    text: 'Which Indian space tech startup successfully launched "Agnibaan SOrTEED", world\'s first 3D-printed single-piece semi-cryogenic engine rocket? / किस भारतीय अंतरिक्ष तकनीक स्टार्टअप ने "अग्निबाण सॉर्टेड", दुनिया का पहला 3D-प्रिंटेड सिंगल-पीस सेमी-क्रायोजेनिक इंजन रॉकेट सफलतापूर्वक लॉन्च किया?',
+    options: ['(a) Agnikul Cosmos / अग्निकुल कॉस्मॉस', '(b) Skyroot Aerospace / स्काईरूट एयरोस्पेस', '(c) Pixxel / पिक्सेल', '(d) Bellatrix Aerospace / बेलाट्रिक्स एयरोस्पेस'],
+    correctOptionIndex: 0,
+    explanation: 'Agnikul Cosmos launched Agnibaan SOrTEED powered by Agnilet 3D-printed rocket engine from Sriharikota launchpad.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-622',
+    text: 'In July 2026, which country hosted the 24th Meeting of the Council of Heads of State of the Shanghai Cooperation Organisation (SCO)? / जुलाई 2026 में, किस देश ने शंघाई सहयोग संगठन (SCO) के राष्ट्राध्यक्षों की परिषद की 24वीं बैठक की मेजबानी की?',
+    options: ['(a) Kazakhstan (Astana) / कजाकिस्तान (अस्ताना)', '(b) Uzbekistan (Tashkent) / उज्बेकिस्तान (ताशकंद)', '(c) China (Beijing) / चीन (बीजिंग)', '(d) India (New Delhi) / भारत (नई दिल्ली)'],
+    correctOptionIndex: 0,
+    explanation: 'Astana, Kazakhstan hosted the SCO Summit where members signed the Astana Declaration on multilateral security.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-623',
+    text: 'What is the total length of the newly inaugurated Z-Morh Tunnel in Jammu & Kashmir providing all-weather connectivity to Sonamarg? / जम्मू-कश्मीर में सोनमर्ग को हर मौसम में कनेक्टिविटी प्रदान करने वाली नवनिर्मित जेड-मोड़ सुरंग (Z-Morh Tunnel) की कुल लंबाई कितनी है?',
+    options: ['(a) 6.5 km / 6.5 किमी', '(b) 8.8 km / 8.8 किमी', '(c) 12.0 km / 12.0 किमी', '(d) 4.5 km / 4.5 किमी'],
+    correctOptionIndex: 0,
+    explanation: 'The 6.5 km long Z-Morh Tunnel on NH-1 connects Gagangir to Sonamarg bypassing avalanche-prone zones.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-624',
+    text: 'Ministry of Defence signed a ₹3,000 Crore contract with Bharat Electronics Limited (BEL) for supply of which radar system to Indian Army? / रक्षा मंत्रालय ने भारतीय सेना को किस रडार प्रणाली की आपूर्ति के लिए भारत इलेक्ट्रॉनिक्स लिमिटेड (BEL) के साथ ₹3,000 करोड़ के अनुबंध पर हस्ताक्षर किए?',
+    options: ['(a) Swathi Weapon Locating Radar (Mountain Variant) / स्वाति वेपन लोकेटिंग रडार', '(b) Ashlesha Radar / आशलेषा रडार', '(c) Rohini 3D Radar / रोहिणी 3D रडार', '(d) Indra Radar / इंद्र रडार'],
+    correctOptionIndex: 0,
+    explanation: 'Swathi WLR Mountain Version radars designed by DRDO and produced by BEL track enemy artillery and mortar positions.',
+    date: '2026-07-28'
+  },
+  {
+    id: 'ca-q-jul28-625',
+    text: 'Which national agency launched the "Bhartiya Bhasha Kosh" digital repository to preserve endangered tribal languages across India? / भारत भर में संकटग्रस्त जनजातीय भाषाओं को संरक्षित करने के लिए किस राष्ट्रीय एजेंसी ने "भारतीय भाषा कोष" डिजिटल भंडार लॉन्च किया?',
+    options: ['(a) Central Institute of Indian Languages (CIIL), Mysore / केंद्रीय भारतीय भाषा संस्थान, मैसूरु', '(b) Sahitya Akademi / साहित्य अकादमी', '(c) NITI Aayog / नीति आयोग', '(d) IGNOU / इग्नू'],
+    correctOptionIndex: 0,
+    explanation: 'CIIL Mysore launched the digital repository preserving audio, text, and grammar matrices of 117 endangered indigenous dialects.',
+    date: '2026-07-28'
   }
 ];
 
