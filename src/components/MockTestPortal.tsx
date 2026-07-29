@@ -21,6 +21,7 @@ interface MockTestPortalProps {
   onChangeTab?: (tab: string) => void;
   initialActiveTestId?: string | null;
   onClearInitialActiveTestId?: () => void;
+  onOpenAiDoubt?: (questionText: string) => void;
 }
 
 export default function MockTestPortal({ 
@@ -30,7 +31,8 @@ export default function MockTestPortal({
   setPremiumModal,
   onChangeTab,
   initialActiveTestId,
-  onClearInitialActiveTestId
+  onClearInitialActiveTestId,
+  onOpenAiDoubt
 }: MockTestPortalProps) {
   const [activeTest, setActiveTest] = useState<MockTest | null>(null);
   const [isCertificateOpen, setIsCertificateOpen] = useState(false);
@@ -780,9 +782,21 @@ export default function MockTestPortal({
                   <span>
                     SECTION: {getQuestionSection(currentQuestionIdx, activeTest.questions.length, activeTest.category).toUpperCase()}
                   </span>
-                  <span>
-                    QUESTION NO: {currentQuestionIdx + 1}
-                  </span>
+                  <div className="flex items-center gap-3">
+                    {onOpenAiDoubt && (
+                      <button
+                        type="button"
+                        onClick={() => onOpenAiDoubt(activeTest.questions[currentQuestionIdx].text)}
+                        className="bg-amber-400 hover:bg-amber-300 text-slate-950 px-2.5 py-1 rounded font-extrabold text-[10px] flex items-center gap-1 transition shadow-xs"
+                      >
+                        <Sparkles className="h-3 w-3 fill-slate-950" />
+                        Ask AI Doubt Mitra (एआई से हल समझें)
+                      </button>
+                    )}
+                    <span>
+                      QUESTION NO: {currentQuestionIdx + 1}
+                    </span>
+                  </div>
                 </div>
 
                 <div className="p-4 md:p-6 space-y-6">
@@ -1106,7 +1120,19 @@ export default function MockTestPortal({
                     </div>
 
                     <div className="mt-3 bg-blue-50/50 p-3 rounded-xl border border-blue-100 text-xs text-sky-950">
-                      <p className="font-extrabold text-blue-900 font-mono">Detailed Explanation / विस्तारपूर्वक हल:</p>
+                      <div className="flex items-center justify-between gap-2 border-b border-blue-100 pb-1.5 mb-1.5">
+                        <p className="font-extrabold text-blue-900 font-mono">Detailed Explanation / विस्तारपूर्वक हल:</p>
+                        {onOpenAiDoubt && (
+                          <button
+                            type="button"
+                            onClick={() => onOpenAiDoubt(q.text)}
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1 rounded font-bold text-[10px] flex items-center gap-1 transition shadow-xs"
+                          >
+                            <Sparkles className="h-3 w-3 text-amber-300" />
+                            Ask AI Doubt Mitra (शॉर्ट ट्रिक व पूर्ण समाधान)
+                          </button>
+                        )}
+                      </div>
                       <p className="mt-1 leading-relaxed whitespace-pre-wrap">{q.explanation}</p>
                     </div>
                   </div>

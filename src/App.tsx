@@ -34,6 +34,7 @@ import PrivacyPolicyModal from './components/PrivacyPolicyModal';
 import AboutUsModal from './components/AboutUsModal';
 import TrafficDashboardModal from './components/TrafficDashboardModal';
 import WhatsAppChannelHub from './components/WhatsAppChannelHub';
+import AiDoubtSolver from './components/AiDoubtSolver';
 import { initializeGA, trackPageView } from './utils/analytics';
 import { updateSEOMetadata } from './utils/seoHelper';
 import { fetchWithRetry } from './utils/fetchHelper';
@@ -542,6 +543,15 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
   const [newPyqUrl, setNewPyqUrl] = useState('');
   const [pyqUploadMode, setPyqUploadMode] = useState<'file' | 'link'>('file');
 
+  // AI Doubt Solver Modal States
+  const [isAiDoubtModalOpen, setIsAiDoubtModalOpen] = useState(false);
+  const [aiDoubtInitialQuestion, setAiDoubtInitialQuestion] = useState('');
+
+  const handleOpenAiDoubtWithQuestion = (questionText: string) => {
+    setAiDoubtInitialQuestion(questionText);
+    setIsAiDoubtModalOpen(true);
+  };
+
   const [user, setUser] = useState<UserProfile>(() => {
     const saved = localStorage.getItem('sarkari_user_profile');
     return saved ? JSON.parse(saved) : {
@@ -606,7 +616,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
     const path = window.location.pathname.replace(/^\//, '');
     const validTabs = [
       'jobs', 'admit-cards', 'results', 'mock-tests', 'syllabus', 
-      'calendar', 'current-affairs', 'blog', 'premium', 'contact', 'dashboard', 'admin', 'whatsapp-alerts'
+      'calendar', 'current-affairs', 'blog', 'premium', 'contact', 'dashboard', 'admin', 'whatsapp-alerts', 'ai-doubt-solver'
     ];
     if (validTabs.includes(path)) {
       return path;
@@ -3003,7 +3013,37 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
               onChangeTab={setActiveTab}
               initialActiveTestId={selectedMockTestId}
               onClearInitialActiveTestId={() => setSelectedMockTestId(null)}
+              onOpenAiDoubt={handleOpenAiDoubtWithQuestion}
             />
+          </div>
+        )}
+
+        {/* TAB 6.5: FULL-SCREEN DEDICATED AI DOUBT SOLVER */}
+        {activeTab === 'ai-doubt-solver' && (
+          <div className="space-y-6 animate-fadeIn">
+            <div className="bg-[#0f172a] text-white p-6 rounded-3xl border border-slate-800 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <span className="text-[10px] font-mono font-bold bg-blue-500/20 text-blue-300 border border-blue-400/30 px-2.5 py-1 rounded-full uppercase tracking-widest inline-flex items-center gap-1 mb-2">
+                  <Sparkles className="h-3 w-3 text-amber-300 animate-spin" /> Sarkari AI Hub Engine v3.0
+                </span>
+                <h2 className="text-xl font-black tracking-tight text-white flex items-center gap-2">
+                  <span>AI Doubt Solver (सरकारी एआई प्रश्न मित्र)</span>
+                </h2>
+                <p className="text-xs text-slate-300 mt-1 max-w-2xl leading-relaxed">
+                  Voice Search, Image Upload, and instant Bilingual (हिन्दी + English) step-by-step solutions for SSC, UPSC, Banking, Railways & State Level competitive exams.
+                </p>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setActiveTab('mock-tests')}
+                  className="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-4 py-2.5 rounded-xl border border-slate-700 transition"
+                >
+                  📝 Return to Mock Tests
+                </button>
+              </div>
+            </div>
+
+            <AiDoubtSolver />
           </div>
         )}
 
@@ -5767,6 +5807,29 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
           {locale === 'hi' ? 'व्हाट्सएप ज्वाइन करें' : 'Join WhatsApp'}
         </span>
       </a>
+
+      {/* Floating AI Doubt Mitra 24/7 Action Button */}
+      <button
+        type="button"
+        onClick={() => {
+          setAiDoubtInitialQuestion('');
+          setIsAiDoubtModalOpen(true);
+        }}
+        className="fixed bottom-6 right-48 sm:right-52 z-40 flex items-center gap-2 rounded-full px-4 py-3 bg-linear-to-r from-blue-600 to-indigo-700 text-white shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 font-sans text-xs font-black border border-blue-400/30 cursor-pointer"
+        id="ai-doubt-floating-trigger-btn"
+      >
+        <Sparkles className="h-4 w-4 text-amber-300 animate-spin" />
+        <span>⚡ AI Doubt Solver</span>
+      </button>
+
+      {/* AI Doubt Solver Pop-up Modal */}
+      {isAiDoubtModalOpen && (
+        <AiDoubtSolver 
+          isModal 
+          onClose={() => setIsAiDoubtModalOpen(false)} 
+          initialQuestion={aiDoubtInitialQuestion} 
+        />
+      )}
 
     </div>
   );
