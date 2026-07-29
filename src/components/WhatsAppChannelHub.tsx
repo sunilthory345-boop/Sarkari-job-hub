@@ -15,7 +15,21 @@ export default function WhatsAppChannelHub({ locale, triggerToast }: WhatsAppCha
   const [selectedQual, setSelectedQual] = useState<string>('all');
   const [selectedState, setSelectedState] = useState<string>('all');
   const [showConfetti, setShowConfetti] = useState(false);
-  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(() => {
+    return localStorage.getItem('sarkari_wa_alerts_enabled') === 'true';
+  });
+
+  const handleSetWhatsAppAlert = () => {
+    setIsSubscribed(true);
+    localStorage.setItem('sarkari_wa_alerts_enabled', 'true');
+    setShowConfetti(true);
+    triggerToast(
+      isHindi 
+        ? "🔔 व्हाट्सएप चैनल अलर्ट सफलतापूर्वक सक्रिय (ACTIVE) हो गया है! अब आपको डेली भर्ती, एडमिट कार्ड व रिजल्ट का नोटिफिकेशन मिलेगा।" 
+        : "🔔 WhatsApp Channel Alert ACTIVE! You will receive daily Job, Result & Admit Card updates."
+    );
+    setTimeout(() => setShowConfetti(false), 5000);
+  };
   
   // Interactive WhatsApp Bot state
   const [botPlatform, setBotPlatform] = useState<'make' | 'cloud_api' | 'baileys'>('cloud_api');
@@ -229,13 +243,34 @@ export default function WhatsAppChannelHub({ locale, triggerToast }: WhatsAppCha
           </p>
         </div>
 
-        <div className="flex shrink-0 gap-3 w-full sm:w-auto">
+        <div className="flex flex-col sm:flex-row shrink-0 gap-3 w-full sm:w-auto">
+          <button
+            type="button"
+            onClick={handleSetWhatsAppAlert}
+            className={`flex items-center justify-center gap-2 rounded-xl px-5 py-3.5 font-sans font-black text-sm tracking-wide transition-all active:scale-95 cursor-pointer ${
+              isSubscribed
+                ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/50 shadow-md'
+                : 'bg-linear-to-r from-amber-500 to-orange-600 text-white shadow-lg shadow-amber-500/30 hover:brightness-110'
+            }`}
+            title="Set WhatsApp Alerts"
+          >
+            <Bell className={`h-5 w-5 ${isSubscribed ? 'text-emerald-400' : 'text-yellow-200 animate-bounce'}`} />
+            <span>
+              {isSubscribed 
+                ? (isHindi ? '🔔 अलर्ट सक्रिय (ACTIVE)' : '🔔 ALERT ACTIVE') 
+                : (isHindi ? '🔔 व्हाट्सएप चैनल अलर्ट सेट करें' : '🔔 SET WHATSAPP ALERT')}
+            </span>
+          </button>
+
           {selectedPlatform === 'whatsapp' ? (
             <a
               href="https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U"
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => triggerToast("✨ Forwarding to verified WhatsApp updates channel...")}
+              onClick={() => {
+                handleSetWhatsAppAlert();
+                triggerToast("✨ Forwarding to verified WhatsApp updates channel...");
+              }}
               className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3.5 font-sans font-black text-sm tracking-wide shadow-lg shadow-emerald-600/30 transition-all active:scale-95 border border-emerald-400/20"
             >
               <svg className="h-5 w-5 fill-white" viewBox="0 0 24 24">
