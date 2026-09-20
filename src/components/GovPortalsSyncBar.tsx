@@ -1,34 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import { RefreshCw, Zap, ExternalLink, ShieldCheck, ChevronRight, CheckCircle, Award, Sparkles } from 'lucide-react';
-import { SscLiveNotice, UpscLiveNotice } from '../types';
+import { RefreshCw, Zap, ExternalLink, ShieldCheck, ChevronRight, CheckCircle, Award, Sparkles, Train } from 'lucide-react';
+import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice } from '../types';
 
 interface GovPortalsSyncBarProps {
   locale?: string;
   onOpenSscHub: () => void;
   onOpenUpscHub: () => void;
+  onOpenRrbHub: () => void;
   onQuickSscSync: () => void;
   onQuickUpscSync: () => void;
+  onQuickRrbSync: () => void;
   onQuickSyncAll?: () => void;
   isSscSyncing?: boolean;
   isUpscSyncing?: boolean;
+  isRrbSyncing?: boolean;
   latestSscNotice?: SscLiveNotice | null;
   latestUpscNotice?: UpscLiveNotice | null;
+  latestRrbNotice?: RrbLiveNotice | null;
 }
 
 export default function GovPortalsSyncBar({
   locale = 'en',
   onOpenSscHub,
   onOpenUpscHub,
+  onOpenRrbHub,
   onQuickSscSync,
   onQuickUpscSync,
+  onQuickRrbSync,
   onQuickSyncAll,
   isSscSyncing = false,
   isUpscSyncing = false,
+  isRrbSyncing = false,
   latestSscNotice,
-  latestUpscNotice
+  latestUpscNotice,
+  latestRrbNotice
 }: GovPortalsSyncBarProps) {
   const [secondsRemaining, setSecondsRemaining] = useState(45);
-  const [activePortalTab, setActivePortalTab] = useState<'upsc' | 'ssc'>('upsc');
+  const [activePortalTab, setActivePortalTab] = useState<'rrb' | 'upsc' | 'ssc'>('rrb');
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -37,7 +45,7 @@ export default function GovPortalsSyncBar({
     return () => clearInterval(timer);
   }, []);
 
-  const isSyncingAny = isSscSyncing || isUpscSyncing;
+  const isSyncingAny = isSscSyncing || isUpscSyncing || isRrbSyncing;
 
   return (
     <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 text-white border-b border-slate-800 shadow-md py-2 px-3 sm:px-4">
@@ -46,6 +54,24 @@ export default function GovPortalsSyncBar({
         {/* Left: Portals Switcher & Live Indicator */}
         <div className="flex flex-wrap items-center gap-2">
           
+          {/* RRB Pill Tab */}
+          <button
+            onClick={() => {
+              setActivePortalTab('rrb');
+              onOpenRrbHub();
+            }}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold transition border cursor-pointer ${
+              activePortalTab === 'rrb'
+                ? 'bg-red-600/30 text-red-300 border-red-500/50 shadow-xs'
+                : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:text-white'
+            }`}
+          >
+            <span className="h-2 w-2 rounded-full bg-red-400 animate-ping"></span>
+            <span className="h-2 w-2 rounded-full bg-red-400 -ml-3.5"></span>
+            <Train className="h-3 w-3 text-red-400" />
+            <span>RRBAPPLY.GOV.IN LIVE</span>
+          </button>
+
           {/* UPSC Pill Tab */}
           <button
             onClick={() => {
@@ -58,8 +84,7 @@ export default function GovPortalsSyncBar({
                 : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:text-white'
             }`}
           >
-            <span className="h-2 w-2 rounded-full bg-amber-400 animate-ping"></span>
-            <span className="h-2 w-2 rounded-full bg-amber-400 -ml-3.5"></span>
+            <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse"></span>
             <span>UPSC.GOV.IN LIVE</span>
           </button>
 
@@ -80,8 +105,21 @@ export default function GovPortalsSyncBar({
           </button>
 
           {/* Active Ticker */}
-          <div className="hidden md:flex items-center gap-1.5 text-[11px] border-l border-slate-700 pl-2.5 max-w-lg lg:max-w-xl truncate">
-            {activePortalTab === 'upsc' ? (
+          <div className="hidden lg:flex items-center gap-1.5 text-[11px] border-l border-slate-700 pl-2.5 max-w-md xl:max-w-lg truncate">
+            {activePortalTab === 'rrb' ? (
+              latestRrbNotice ? (
+                <div className="flex items-center gap-1.5 truncate text-red-200">
+                  <span className="bg-red-500/20 text-red-300 px-1.5 py-0.2 rounded font-mono font-bold text-[9px] uppercase shrink-0">
+                    RRB {latestRrbNotice.cenNumber || latestRrbNotice.category}
+                  </span>
+                  <span className="truncate">{latestRrbNotice.title}</span>
+                </div>
+              ) : (
+                <span className="text-slate-400 truncate">
+                  {locale === 'hi' ? '🚆 रेलवे भर्ती बोर्ड (RRB) लाइव मॉनिटर सक्रिय' : '🚆 Railway Recruitment Boards live auto-monitor active'}
+                </span>
+              )
+            ) : activePortalTab === 'upsc' ? (
               latestUpscNotice ? (
                 <div className="flex items-center gap-1.5 truncate text-amber-200">
                   <span className="bg-amber-400/20 text-amber-300 px-1.5 py-0.2 rounded font-mono font-bold text-[9px] uppercase shrink-0">
@@ -114,18 +152,29 @@ export default function GovPortalsSyncBar({
         {/* Right: Quick Action Controls */}
         <div className="flex items-center gap-2 shrink-0">
           <span className="text-[10px] font-mono text-slate-400 hidden sm:inline">
-            Auto-Sync in: <strong className="text-amber-300">{secondsRemaining}s</strong>
+            Auto-Sync in: <strong className="text-red-400">{secondsRemaining}s</strong>
           </span>
+
+          {/* Quick Sync RRB Button */}
+          <button
+            onClick={onQuickRrbSync}
+            disabled={isRrbSyncing}
+            className="flex items-center gap-1 bg-red-600 hover:bg-red-500 text-white font-bold px-2.5 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75"
+            title="Sync latest from https://www.rrbapply.gov.in/#/auth/landing"
+          >
+            <RefreshCw className={`h-3 w-3 ${isRrbSyncing ? 'animate-spin' : ''}`} />
+            <span>{locale === 'hi' ? '🚆 RRB सिंक' : '🚆 RRB Sync'}</span>
+          </button>
 
           {/* Quick Sync UPSC Button */}
           <button
             onClick={onQuickUpscSync}
             disabled={isUpscSyncing}
-            className="flex items-center gap-1 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black px-2.5 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75"
+            className="flex items-center gap-1 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black px-2 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75"
             title="Sync latest from https://www.upsc.gov.in/"
           >
             <RefreshCw className={`h-3 w-3 ${isUpscSyncing ? 'animate-spin' : ''}`} />
-            <span>{locale === 'hi' ? '⚡ UPSC सिंक' : '⚡ Sync UPSC'}</span>
+            <span>UPSC</span>
           </button>
 
           {/* Quick Sync SSC Button */}
@@ -139,12 +188,12 @@ export default function GovPortalsSyncBar({
             <span>SSC</span>
           </button>
 
-          {/* Direct Link to Hubs */}
+          {/* Direct Link to RRB Hub */}
           <button
-            onClick={onOpenUpscHub}
+            onClick={onOpenRrbHub}
             className="flex items-center gap-1 bg-white/10 hover:bg-white/20 text-white font-bold px-2.5 py-1 rounded-lg text-[11px] transition border border-white/15 cursor-pointer"
           >
-            <span>{locale === 'hi' ? 'UPSC हब' : 'UPSC Hub'}</span>
+            <span>{locale === 'hi' ? 'रेलवे हब' : 'RRB Hub'}</span>
             <ChevronRight className="h-3 w-3" />
           </button>
         </div>

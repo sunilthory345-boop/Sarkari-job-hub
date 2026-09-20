@@ -1,6 +1,6 @@
 {
   "name": "Job Sarkari Hub",
-  "description": "Comprehensive Indian Government Job Portal with real-time automatic synchronization for UPSC (https://www.upsc.gov.in/) and SSC (https://ssc.gov.in/) notifications, vacancies, admit cards, results, answer keys, mock tests, and daily current affairs.",
+  "description": "Comprehensive Indian Government Job Portal with real-time automatic synchronization for RRB (https://www.rrbapply.gov.in/), UPSC (https://www.upsc.gov.in/), and SSC (https://ssc.gov.in/) notifications, vacancies, admit cards, results, answer keys, mock tests, and daily current affairs.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

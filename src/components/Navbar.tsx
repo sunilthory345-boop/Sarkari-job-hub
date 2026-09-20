@@ -3,7 +3,7 @@ import {
   Briefcase, FileText, Award, BookOpen, Clock, 
   Sparkles, Mail, Bell, Menu, X, CheckSquare, 
   GraduationCap, MessageSquare, Download, LogIn,
-  Moon, Sun, HelpCircle, FileDown, Star, Calendar, FileUp, Globe, Newspaper, Zap
+  Moon, Sun, HelpCircle, FileDown, Star, Calendar, FileUp, Globe, Newspaper, Zap, Train
 } from 'lucide-react';
 import { UserProfile } from '../types';
 import { LANGUAGES, TRANSLATIONS, LocaleType } from '../utils/lang';
@@ -45,6 +45,7 @@ export default function Navbar({
   const menuItems = [
     { id: 'home', label: t.home, icon: BookOpen, category: 'Main' },
     { id: 'jobs', label: t.latestJobs, icon: Briefcase, category: 'Main' },
+    { id: 'rrb-sync', label: locale === 'hi' ? '🚆 RRB रेलवे लाइव (rrbapply.gov.in)' : '🚆 RRB Railway Live', icon: Train, category: 'Main', highlight: true },
     { id: 'upsc-sync', label: locale === 'hi' ? '🏛️ UPSC लाइव (upsc.gov.in)' : '🏛️ UPSC.gov.in Live', icon: Award, category: 'Main', highlight: true },
     { id: 'ssc-sync', label: locale === 'hi' ? '⚡ SSC लाइव (ssc.gov.in)' : '⚡ SSC.gov.in Live', icon: Zap, category: 'Main', highlight: true },
     { id: 'calendar', label: t.examCalendar, icon: Calendar, category: 'Main' },

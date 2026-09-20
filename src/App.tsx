@@ -38,8 +38,9 @@ import AiDoubtSolver from './components/AiDoubtSolver';
 import SscLiveSyncHub from './components/SscLiveSyncHub';
 import SscLiveSyncBar from './components/SscLiveSyncBar';
 import UpscLiveSyncHub from './components/UpscLiveSyncHub';
+import RrbLiveSyncHub from './components/RrbLiveSyncHub';
 import GovPortalsSyncBar from './components/GovPortalsSyncBar';
-import { SscLiveNotice, UpscLiveNotice } from './types';
+import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice } from './types';
 import { initializeGA, trackPageView } from './utils/analytics';
 import { updateSEOMetadata } from './utils/seoHelper';
 import { fetchWithRetry } from './utils/fetchHelper';
@@ -1139,6 +1140,80 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
     return () => clearInterval(upscInterval);
   }, []);
 
+  // RRBAPPLY.GOV.IN REAL-TIME AUTO-MONITOR & SYNCHRONIZER
+  const [rrbSyncing, setRrbSyncing] = useState(false);
+  const [latestRrbNotice, setLatestRrbNotice] = useState<RrbLiveNotice | null>(null);
+
+  const runRrbAutoSync = async (notifyIfNoNew = false) => {
+    setRrbSyncing(true);
+    try {
+      const res = await fetch('/api/rrb/live-feed');
+      if (res.ok) {
+        const data = await res.json();
+        const notices: RrbLiveNotice[] = data.notices || [];
+        if (notices.length > 0) {
+          setLatestRrbNotice(notices[0]);
+        }
+
+        // Check against existing IDs
+        const existingJIds = new Set(jobs.map(j => j.id));
+        const existingAIds = new Set(admitCards.map(a => a.id));
+        const existingRIds = new Set(results.map(r => r.id));
+        const existingKIds = new Set(answerKeys.map(k => k.id));
+
+        // Read already auto-imported notice IDs
+        const autoImported: string[] = JSON.parse(localStorage.getItem('sarkari_auto_imported_rrb_ids') || '[]');
+        const importedSet = new Set(autoImported);
+
+        let newItemsAdded = 0;
+
+        for (const notice of notices) {
+          if (importedSet.has(notice.id)) continue;
+
+          if (notice.category === 'vacancy' && notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'admit-card' && notice.admitCardData && !existingAIds.has(notice.admitCardData.id)) {
+            handleNewLaunch('Admit Card', notice.title, notice.org, 'admitCards', notice.admitCardData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'result' && notice.resultData && !existingRIds.has(notice.resultData.id)) {
+            handleNewLaunch('Result', notice.title, notice.org, 'results', notice.resultData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'answer-key' && notice.answerKeyData && !existingKIds.has(notice.answerKeyData.id)) {
+            handleNewLaunch('Answer Key', notice.title, notice.org, 'answerKeys', notice.answerKeyData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          }
+        }
+
+        if (newItemsAdded > 0) {
+          localStorage.setItem('sarkari_auto_imported_rrb_ids', JSON.stringify(Array.from(importedSet)));
+          triggerToast(`🚆 [RRBAPPLY.GOV.IN] ${newItemsAdded} Railway release(s) auto-synced to your website!`);
+        } else if (notifyIfNoNew) {
+          triggerToast('🟢 Railway Recruitment Portal (https://www.rrbapply.gov.in/) is checked. All notices are currently up to date.');
+        }
+      }
+    } catch (e) {
+      console.warn('RRB Auto-Sync error:', e);
+    } finally {
+      setRrbSyncing(false);
+    }
+  };
+
+  useEffect(() => {
+    runRrbAutoSync(false);
+
+    // Auto-poll rrbapply.gov.in every 45 seconds
+    const rrbInterval = setInterval(() => {
+      runRrbAutoSync(false);
+    }, 45000);
+
+    return () => clearInterval(rrbInterval);
+  }, []);
+
   const [premiumModalOpen, setPremiumModalOpen] = useState(false);
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
   const [showWhyPremium, setShowWhyPremium] = useState(false);
@@ -1548,22 +1623,44 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
         liveNotifications={liveNotifications}
       />
 
-      {/* ⚡ UPSC & SSC REAL-TIME LIVE UPDATE BAR */}
+      {/* ⚡ RRB, UPSC & SSC REAL-TIME LIVE UPDATE BAR */}
       <GovPortalsSyncBar
         locale={locale}
         onOpenSscHub={() => setActiveTab('ssc-sync')}
         onOpenUpscHub={() => setActiveTab('upsc-sync')}
+        onOpenRrbHub={() => setActiveTab('rrb-sync')}
         onQuickSscSync={() => runSscAutoSync(true)}
         onQuickUpscSync={() => runUpscAutoSync(true)}
+        onQuickRrbSync={() => runRrbAutoSync(true)}
         isSscSyncing={sscSyncing}
         isUpscSyncing={upscSyncing}
+        isRrbSyncing={rrbSyncing}
         latestSscNotice={latestSscNotice}
         latestUpscNotice={latestUpscNotice}
+        latestRrbNotice={latestRrbNotice}
       />
 
       {/* Main Body wrap */}
       <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 flex-1">
         
+        {/* TAB: RRBAPPLY.GOV.IN REAL-TIME MONITOR HUB */}
+        {activeTab === 'rrb-sync' && (
+          <div className="space-y-6">
+            <RrbLiveSyncHub
+              locale={locale}
+              onAddJob={(newJob) => handleNewLaunch('Vacancy', newJob.title, newJob.org, 'jobs', newJob)}
+              onAddAdmitCard={(newCard) => handleNewLaunch('Admit Card', newCard.title, newCard.org, 'admitCards', newCard)}
+              onAddResult={(newRes) => handleNewLaunch('Result', newRes.title, newRes.org, 'results', newRes)}
+              onAddAnswerKey={(newKey) => handleNewLaunch('Answer Key', newKey.title, newKey.org, 'answerKeys', newKey)}
+              triggerToast={triggerToast}
+              existingJobIds={jobs.map(j => j.id)}
+              existingAdmitCardIds={admitCards.map(c => c.id)}
+              existingResultIds={results.map(r => r.id)}
+              existingAnswerKeyIds={answerKeys.map(k => k.id)}
+            />
+          </div>
+        )}
+
         {/* TAB: UPSC.GOV.IN REAL-TIME MONITOR HUB */}
         {activeTab === 'upsc-sync' && (
           <div className="space-y-6">

@@ -234,6 +234,46 @@ export interface UpscSyncStatus {
   newNoticesCount: number;
 }
 
+export interface RrbLiveNotice {
+  id: string;
+  category: 'vacancy' | 'admit-card' | 'result' | 'answer-key';
+  title: string;
+  titleHi: string;
+  org: string;
+  cenNumber?: string; // e.g. CEN 01/2026, CEN 05/2026
+  publishedDate: string;
+  officialUrl: string;
+  pdfUrl?: string;
+  isNew?: boolean;
+  statusBadge: string;
+  details: {
+    posts?: number;
+    examDate?: string;
+    lastDate?: string;
+    cutoff?: string;
+    stage?: string;
+    summary?: string;
+    qualification?: string;
+    salary?: string;
+    cityIntimationDate?: string;
+  };
+  jobData?: GovJob;
+  admitCardData?: AdmitCard;
+  resultData?: JobResult;
+  answerKeyData?: AnswerKey;
+}
+
+export interface RrbSyncStatus {
+  online: boolean;
+  portal: string;
+  status: string;
+  lastChecked: string;
+  latencyMs: number;
+  autoSyncIntervalSec: number;
+  totalLiveNotices: number;
+  newNoticesCount: number;
+}
+
 
 
 

@@ -7,6 +7,7 @@ import {
 import { GovJob, AdmitCard, JobResult, MockTest, Question, AnswerKey, Newspaper, CurrentAffair } from '../types';
 import SscLiveSyncHub from './SscLiveSyncHub';
 import UpscLiveSyncHub from './UpscLiveSyncHub';
+import RrbLiveSyncHub from './RrbLiveSyncHub';
 
 interface AdminConsoleProps {
   jobs: GovJob[];
@@ -52,7 +53,7 @@ export default function AdminConsole({
   onAddCurrentAffair,
   onAddCurrentAffairsQuestion
 }: AdminConsoleProps) {
-  const [activeAdminTab, setActiveAdminTab] = useState<'jobs' | 'mocks' | 'cards' | 'whatsapp' | 'payments' | 'newspapers' | 'current-affairs' | 'ssc-sync' | 'upsc-sync'>('jobs');
+  const [activeAdminTab, setActiveAdminTab] = useState<'jobs' | 'mocks' | 'cards' | 'whatsapp' | 'payments' | 'newspapers' | 'current-affairs' | 'ssc-sync' | 'upsc-sync' | 'rrb-sync'>('jobs');
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
 
   // --- CURRENT AFFAIRS UPLOADER STATES ---
@@ -1468,6 +1469,7 @@ What is the standard pH level of pure distilled water at normal room temperature
       <div className="border-b border-slate-200 flex flex-wrap gap-4 pb-2 justify-between items-center bg-white p-4 rounded-2xl shadow-xs">
         <div className="flex gap-2">
           {[
+            { id: 'rrb-sync', label: '🚆 RRB.gov.in Live Auto-Updater' },
             { id: 'upsc-sync', label: '🏛️ UPSC.gov.in Live Auto-Updater' },
             { id: 'ssc-sync', label: '⚡ SSC.gov.in Live Auto-Updater' },
             { id: 'jobs', label: 'Government Positions & Vacancies' },
@@ -3576,6 +3578,21 @@ What is the standard pH level of pure distilled water at normal room temperature
             </div>
           </div>
         </div>
+      )}
+
+      {/* RRB LIVE AUTO-SYNC DASHBOARD */}
+      {activeAdminTab === 'rrb-sync' && (
+        <RrbLiveSyncHub
+          onAddJob={onAddJob}
+          onAddAdmitCard={onAddAdmitCard}
+          onAddResult={onAddResult}
+          onAddAnswerKey={onAddAnswerKey}
+          triggerToast={(msg) => setStatusMessage(msg)}
+          existingJobIds={jobs.map(j => j.id)}
+          existingAdmitCardIds={admitCards.map(c => c.id)}
+          existingResultIds={results.map(r => r.id)}
+          existingAnswerKeyIds={answerKeys.map(k => k.id)}
+        />
       )}
 
       {/* UPSC LIVE AUTO-SYNC DASHBOARD */}

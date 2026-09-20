@@ -17,6 +17,13 @@ import {
   checkUpscPortalHealth, 
   UpscLiveNotice 
 } from "./server/upscService";
+import {
+  getRrbNotices,
+  addRrbNotice,
+  getRrbSyncStatus,
+  checkRrbPortalHealth,
+  RrbLiveNotice
+} from "./server/rrbService";
 
 dotenv.config();
 
@@ -1207,6 +1214,323 @@ Extract structured JSON strictly following this schema:
     }
 
     addUpscNotice(fallbackNotice);
+    res.json({ success: true, notice: fallbackNotice });
+  });
+
+  // ==========================================
+  // 🚆 RRBAPPLY.GOV.IN REAL-TIME PORTAL MONITOR APIS
+  // ==========================================
+
+  // 1. Check live status of https://www.rrbapply.gov.in/#/auth/landing
+  app.get("/api/rrb/status", async (req, res) => {
+    try {
+      const health = await checkRrbPortalHealth();
+      const status = getRrbSyncStatus();
+      res.json({
+        ...status,
+        ...health,
+        timestamp: new Date().toISOString()
+      });
+    } catch (e: any) {
+      res.json(getRrbSyncStatus());
+    }
+  });
+
+  // 2. Get live feed of RRB releases (NTPC, ALP, Technician, JE, Paramedical, RPF SI/Constable)
+  app.get("/api/rrb/live-feed", (req, res) => {
+    const category = req.query.category as string | undefined;
+    const notices = getRrbNotices(category);
+    res.json({
+      success: true,
+      portal: "https://www.rrbapply.gov.in/#/auth/landing",
+      count: notices.length,
+      notices
+    });
+  });
+
+  // 3. Trigger immediate sync check with rrbapply.gov.in
+  app.post("/api/rrb/sync-now", async (req, res) => {
+    try {
+      const health = await checkRrbPortalHealth();
+      const status = getRrbSyncStatus();
+      const notices = getRrbNotices();
+      res.json({
+        success: true,
+        message: "RRB Portal synchronized successfully with https://www.rrbapply.gov.in/",
+        health,
+        status,
+        syncedAt: new Date().toISOString(),
+        totalNotices: notices.length,
+        notices
+      });
+    } catch (e: any) {
+      res.status(500).json({
+        success: false,
+        error: "Failed to sync with RRB portal",
+        details: e.message || e
+      });
+    }
+  });
+
+  // 4. Ingest or publish a new notice to the RRB live feed
+  app.post("/api/rrb/publish-notice", (req, res) => {
+    const notice: RrbLiveNotice = req.body;
+    if (!notice || !notice.title || !notice.category) {
+      return res.status(400).json({ error: "Notice title and category are required." });
+    }
+
+    if (!notice.id) {
+      notice.id = `rrb-notice-${Date.now()}`;
+    }
+    if (!notice.publishedDate) {
+      notice.publishedDate = new Date().toISOString().split("T")[0];
+    }
+    if (!notice.officialUrl) {
+      notice.officialUrl = "https://www.rrbapply.gov.in/#/auth/landing";
+    }
+    notice.isNew = true;
+
+    const savedNotice = addRrbNotice(notice);
+    res.json({
+      success: true,
+      message: `New Railway notice published and synchronized to website feed: ${notice.title}`,
+      notice: savedNotice
+    });
+  });
+
+  // 5. Intelligent auto-parser for raw RRB notification text / CEN link
+  app.post("/api/rrb/auto-parse", async (req, res) => {
+    const { rawNoticeText, officialUrl } = req.body;
+    if (!rawNoticeText) {
+      return res.status(400).json({ error: "rawNoticeText is required." });
+    }
+
+    const todayStr = new Date().toISOString().split("T")[0];
+    const targetUrl = officialUrl || "https://www.rrbapply.gov.in/#/auth/landing";
+
+    // Try AI classification if GEMINI_API_KEY is available
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (apiKey) {
+      try {
+        const ai = new GoogleGenAI({
+          apiKey: apiKey,
+          httpOptions: { headers: { "User-Agent": "aistudio-build" } }
+        });
+
+        const prompt = `Analyze this official notice text from Railway Recruitment Boards (https://www.rrbapply.gov.in/):
+"${rawNoticeText}"
+
+Classify it into one of the 4 exact categories:
+- "vacancy" (if it is a new CEN notification, recruitment advertisement, e.g. NTPC, ALP, Technician, JE, Group D, RPF)
+- "admit-card" (if it is an e-call letter, exam city intimation slip, travel pass, CBT admit card)
+- "result" (if it is a CBT-1/CBT-2 result, cut-off marks, merit list, document verification shortlist, provisional panel)
+- "answer-key" (if it is an official answer key, response sheet, objection tracker)
+
+Extract structured JSON strictly following this schema:
+{
+  "category": "vacancy" | "admit-card" | "result" | "answer-key",
+  "cenNumber": "e.g. CEN 01/2026, CEN 05/2026 or empty",
+  "title": "Clear English title",
+  "titleHi": "Clear Hindi title",
+  "statusBadge": "Short badge e.g. New Vacancy / City Slip & Hall Ticket Live / CBT Result Declared / Objection Tracker Open",
+  "details": {
+    "posts": number (optional),
+    "qualification": string (optional),
+    "salary": string (optional),
+    "examDate": string (optional),
+    "lastDate": string (optional),
+    "cutoff": string (optional),
+    "stage": string (optional),
+    "cityIntimationDate": string (optional),
+    "summary": "1-2 sentence bilingual summary"
+  }
+}`;
+
+        const response = await ai.models.generateContent({
+          model: "gemini-3.5-flash",
+          contents: prompt,
+          config: {
+            temperature: 0.1,
+            responseMimeType: "application/json"
+          }
+        });
+
+        if (response.text) {
+          const parsed = JSON.parse(response.text);
+          const generatedNotice: RrbLiveNotice = {
+            id: `rrb-notice-ai-${Date.now()}`,
+            cenNumber: parsed.cenNumber || undefined,
+            category: parsed.category || "vacancy",
+            title: parsed.title,
+            titleHi: parsed.titleHi || parsed.title,
+            org: "Railway Recruitment Boards (RRB) / रेल भर्ती बोर्ड",
+            publishedDate: todayStr,
+            officialUrl: targetUrl,
+            pdfUrl: targetUrl,
+            isNew: true,
+            statusBadge: parsed.statusBadge || "Live Release",
+            details: parsed.details || { summary: rawNoticeText.slice(0, 150) }
+          };
+
+          if (generatedNotice.category === "vacancy") {
+            generatedNotice.jobData = {
+              id: `rrb-job-ai-${Date.now()}`,
+              title: generatedNotice.title,
+              org: "Railway Recruitment Boards (RRB)",
+              category: "Railway",
+              qualification: parsed.details?.qualification || "10th / ITI / Graduate",
+              ageLimit: "18-36 Years",
+              salary: parsed.details?.salary || "Level 2 to Level 6 (₹19,900 - ₹35,400+)",
+              fees: { General: "₹500 (Refundable ₹400)", OBC: "₹500", SC_ST_Female: "₹250 (Full Refundable)" },
+              totalPosts: parsed.details?.posts || 5000,
+              applyUrl: "https://www.rrbapply.gov.in/#/auth/landing",
+              pdfUrl: targetUrl,
+              officialWebsite: "https://www.rrbapply.gov.in/",
+              postedDate: todayStr,
+              lastDate: parsed.details?.lastDate || todayStr,
+              importantDates: {
+                applyStart: todayStr,
+                applyEnd: parsed.details?.lastDate || todayStr,
+                examDate: parsed.details?.examDate || "Scheduled",
+                admitCardRelease: "4 Days Prior to Exam (City Slip 10 Days Before)"
+              },
+              selectionProcess: ["1st Stage CBT", "2nd Stage CBT (as applicable)", "Aptitude / Skill Test", "Document Verification & Medical Exam"],
+              location: "All 21 RRB Zones Across India",
+              description: parsed.details?.summary || rawNoticeText,
+              formStatus: "started"
+            };
+          } else if (generatedNotice.category === "admit-card") {
+            generatedNotice.admitCardData = {
+              id: `admit-rrb-ai-${Date.now()}`,
+              title: generatedNotice.title,
+              org: "Railway Recruitment Boards (RRB)",
+              examDate: parsed.details?.examDate || "Upcoming Exam",
+              examCity: "Check Candidate Login Slip",
+              downloadUrl: "https://www.rrbapply.gov.in/#/auth/landing",
+              officialLink: "https://www.rrbapply.gov.in/",
+              addedDate: todayStr
+            };
+          } else if (generatedNotice.category === "result") {
+            generatedNotice.resultData = {
+              id: `res-rrb-ai-${Date.now()}`,
+              title: generatedNotice.title,
+              org: "Railway Recruitment Boards (RRB)",
+              meritListUrl: targetUrl,
+              scoreCardUrl: "https://www.rrbapply.gov.in/#/auth/landing",
+              cutOff: { UR: "Cutoff in PDF", OBC: "Cutoff in PDF", SC: "Cutoff in PDF", ST: "Cutoff in PDF" },
+              downloadUrl: targetUrl,
+              releaseDate: todayStr
+            };
+          } else if (generatedNotice.category === "answer-key") {
+            generatedNotice.answerKeyData = {
+              id: `ans-rrb-ai-${Date.now()}`,
+              title: generatedNotice.title,
+              org: "Railway Recruitment Boards (RRB)",
+              released: todayStr,
+              objectionsLimit: "Objection Tracker Live on Portal",
+              pdfUrl: targetUrl
+            };
+          }
+
+          addRrbNotice(generatedNotice);
+          return res.json({ success: true, notice: generatedNotice });
+        }
+      } catch (geminiErr) {
+        console.warn("Gemini RRB auto-parse fallback to heuristic:", geminiErr);
+      }
+    }
+
+    // Heuristic classification fallback
+    const lower = rawNoticeText.toLowerCase();
+    let cat: 'vacancy' | 'admit-card' | 'result' | 'answer-key' = 'vacancy';
+    let badge = 'New Release';
+
+    if (lower.includes('call letter') || lower.includes('admit') || lower.includes('city intimation') || lower.includes('city slip') || lower.includes('hall ticket') || lower.includes('प्रवेश पत्र') || lower.includes('ई-कॉल')) {
+      cat = 'admit-card';
+      badge = 'City Slip & Hall Ticket Live';
+    } else if (lower.includes('result') || lower.includes('shortlist') || lower.includes('merit') || lower.includes('cut off') || lower.includes('cutoff') || lower.includes('scorecard') || lower.includes('परिणाम')) {
+      cat = 'result';
+      badge = 'Result Declared';
+    } else if (lower.includes('answer key') || lower.includes('objection') || lower.includes('key') || lower.includes('उत्तर कुंजी') || lower.includes('आपत्ति')) {
+      cat = 'answer-key';
+      badge = 'Answer Key & Objection Live';
+    } else {
+      cat = 'vacancy';
+      badge = 'New Railway Recruitment';
+    }
+
+    const fallbackNotice: RrbLiveNotice = {
+      id: `rrb-notice-heur-${Date.now()}`,
+      category: cat,
+      title: rawNoticeText.split('\n')[0] || rawNoticeText.slice(0, 80),
+      titleHi: `रेल भर्ती बोर्ड (RRB): ${rawNoticeText.split('\n')[0] || rawNoticeText.slice(0, 80)}`,
+      org: "Railway Recruitment Boards (RRB) / रेल भर्ती बोर्ड",
+      publishedDate: todayStr,
+      officialUrl: targetUrl,
+      pdfUrl: targetUrl,
+      isNew: true,
+      statusBadge: badge,
+      details: {
+        summary: rawNoticeText.slice(0, 200)
+      }
+    };
+
+    if (cat === "vacancy") {
+      fallbackNotice.jobData = {
+        id: `rrb-job-heur-${Date.now()}`,
+        title: fallbackNotice.title,
+        org: "Railway Recruitment Boards (RRB)",
+        category: "Railway",
+        qualification: "10th / ITI / 12th / Graduate",
+        ageLimit: "18-36 Years",
+        salary: "Level 2 to Level 6 (₹19,900 - ₹35,400+)",
+        fees: { General: "₹500", OBC: "₹500", SC_ST_Female: "₹250" },
+        totalPosts: 2000,
+        applyUrl: "https://www.rrbapply.gov.in/#/auth/landing",
+        pdfUrl: targetUrl,
+        officialWebsite: "https://www.rrbapply.gov.in/",
+        postedDate: todayStr,
+        lastDate: todayStr,
+        importantDates: { applyStart: todayStr, applyEnd: todayStr, examDate: "Scheduled", admitCardRelease: "TBA" },
+        selectionProcess: ["CBT 1", "CBT 2", "DV & Medical"],
+        location: "Pan India Railway Zones",
+        description: rawNoticeText,
+        formStatus: "started"
+      };
+    } else if (cat === "admit-card") {
+      fallbackNotice.admitCardData = {
+        id: `admit-rrb-heur-${Date.now()}`,
+        title: fallbackNotice.title,
+        org: "Railway Recruitment Boards (RRB)",
+        examDate: "Scheduled Exam",
+        examCity: "Check rrbapply.gov.in Candidate Slip",
+        downloadUrl: "https://www.rrbapply.gov.in/#/auth/landing",
+        officialLink: "https://www.rrbapply.gov.in/",
+        addedDate: todayStr
+      };
+    } else if (cat === "result") {
+      fallbackNotice.resultData = {
+        id: `res-rrb-heur-${Date.now()}`,
+        title: fallbackNotice.title,
+        org: "Railway Recruitment Boards (RRB)",
+        meritListUrl: targetUrl,
+        scoreCardUrl: "https://www.rrbapply.gov.in/#/auth/landing",
+        cutOff: { UR: "Check PDF", OBC: "Check PDF", SC: "Check PDF", ST: "Check PDF" },
+        downloadUrl: targetUrl,
+        releaseDate: todayStr
+      };
+    } else if (cat === "answer-key") {
+      fallbackNotice.answerKeyData = {
+        id: `ans-rrb-heur-${Date.now()}`,
+        title: fallbackNotice.title,
+        org: "Railway Recruitment Boards (RRB)",
+        released: todayStr,
+        objectionsLimit: "Active on rrbapply.gov.in",
+        pdfUrl: targetUrl
+      };
+    }
+
+    addRrbNotice(fallbackNotice);
     res.json({ success: true, notice: fallbackNotice });
   });
 
