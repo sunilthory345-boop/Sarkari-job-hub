@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { RefreshCw, Zap, ExternalLink, ShieldCheck, ChevronRight, CheckCircle, Award, Sparkles, Train, Landmark } from 'lucide-react';
-import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice, IbpsLiveNotice, SbiLiveNotice, RajLiveNotice } from '../types';
+import { RefreshCw, Zap, ExternalLink, ShieldCheck, ChevronRight, CheckCircle, Award, Sparkles, Train, Landmark, Swords, Shield } from 'lucide-react';
+import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice, IbpsLiveNotice, SbiLiveNotice, RajLiveNotice, ArmyLiveNotice } from '../types';
 
 interface GovPortalsSyncBarProps {
   locale?: string;
@@ -10,12 +10,14 @@ interface GovPortalsSyncBarProps {
   onOpenIbpsHub: () => void;
   onOpenSbiHub: () => void;
   onOpenRajHub: () => void;
+  onOpenArmyHub: () => void;
   onQuickSscSync: () => void;
   onQuickUpscSync: () => void;
   onQuickRrbSync: () => void;
   onQuickIbpsSync: () => void;
   onQuickSbiSync: () => void;
   onQuickRajSync: () => void;
+  onQuickArmySync: () => void;
   onQuickSyncAll?: () => void;
   isSscSyncing?: boolean;
   isUpscSyncing?: boolean;
@@ -23,12 +25,14 @@ interface GovPortalsSyncBarProps {
   isIbpsSyncing?: boolean;
   isSbiSyncing?: boolean;
   isRajSyncing?: boolean;
+  isArmySyncing?: boolean;
   latestSscNotice?: SscLiveNotice | null;
   latestUpscNotice?: UpscLiveNotice | null;
   latestRrbNotice?: RrbLiveNotice | null;
   latestIbpsNotice?: IbpsLiveNotice | null;
   latestSbiNotice?: SbiLiveNotice | null;
   latestRajNotice?: RajLiveNotice | null;
+  latestArmyNotice?: ArmyLiveNotice | null;
 }
 
 export default function GovPortalsSyncBar({
@@ -39,12 +43,14 @@ export default function GovPortalsSyncBar({
   onOpenIbpsHub,
   onOpenSbiHub,
   onOpenRajHub,
+  onOpenArmyHub,
   onQuickSscSync,
   onQuickUpscSync,
   onQuickRrbSync,
   onQuickIbpsSync,
   onQuickSbiSync,
   onQuickRajSync,
+  onQuickArmySync,
   onQuickSyncAll,
   isSscSyncing = false,
   isUpscSyncing = false,
@@ -52,15 +58,17 @@ export default function GovPortalsSyncBar({
   isIbpsSyncing = false,
   isSbiSyncing = false,
   isRajSyncing = false,
+  isArmySyncing = false,
   latestSscNotice,
   latestUpscNotice,
   latestRrbNotice,
   latestIbpsNotice,
   latestSbiNotice,
-  latestRajNotice
+  latestRajNotice,
+  latestArmyNotice
 }: GovPortalsSyncBarProps) {
   const [secondsRemaining, setSecondsRemaining] = useState(45);
-  const [activePortalTab, setActivePortalTab] = useState<'raj' | 'sbi' | 'ibps' | 'rrb' | 'upsc' | 'ssc'>('raj');
+  const [activePortalTab, setActivePortalTab] = useState<'army' | 'raj' | 'sbi' | 'ibps' | 'rrb' | 'upsc' | 'ssc'>('army');
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -69,7 +77,7 @@ export default function GovPortalsSyncBar({
     return () => clearInterval(timer);
   }, []);
 
-  const isSyncingAny = isSscSyncing || isUpscSyncing || isRrbSyncing || isIbpsSyncing || isSbiSyncing || isRajSyncing;
+  const isSyncingAny = isSscSyncing || isUpscSyncing || isRrbSyncing || isIbpsSyncing || isSbiSyncing || isRajSyncing || isArmySyncing;
 
   return (
     <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 text-white border-b border-slate-800 shadow-md py-2 px-3 sm:px-4">
@@ -78,6 +86,24 @@ export default function GovPortalsSyncBar({
         {/* Left: Portals Switcher & Live Indicator */}
         <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           
+          {/* JOIN INDIAN ARMY Pill Tab */}
+          <button
+            onClick={() => {
+              setActivePortalTab('army');
+              onOpenArmyHub();
+            }}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold transition border cursor-pointer ${
+              activePortalTab === 'army'
+                ? 'bg-emerald-700/60 text-emerald-200 border-emerald-400/80 shadow-xs'
+                : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:text-white'
+            }`}
+          >
+            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span className="h-2 w-2 rounded-full bg-emerald-400 -ml-3.5"></span>
+            <Swords className="h-3 w-3 text-amber-400" />
+            <span>ARMY LIVE</span>
+          </button>
+
           {/* RAJASTHAN SSO RECRUITMENT Pill Tab */}
           <button
             onClick={() => {
@@ -181,7 +207,20 @@ export default function GovPortalsSyncBar({
 
           {/* Active Ticker */}
           <div className="hidden xl:flex items-center gap-1.5 text-[11px] border-l border-slate-700 pl-2.5 max-w-sm 2xl:max-w-md truncate">
-            {activePortalTab === 'raj' ? (
+            {activePortalTab === 'army' ? (
+              latestArmyNotice ? (
+                <div className="flex items-center gap-1.5 truncate text-emerald-200">
+                  <span className="bg-emerald-500/20 text-emerald-300 px-1.5 py-0.2 rounded font-mono font-bold text-[9px] uppercase shrink-0">
+                    ARMY {latestArmyNotice.trade || latestArmyNotice.category}
+                  </span>
+                  <span className="truncate">{latestArmyNotice.title}</span>
+                </div>
+              ) : (
+                <span className="text-emerald-200/80 truncate">
+                  {locale === 'hi' ? '⚔️ भारतीय सेना (joinindianarmy.nic.in) लाइव मॉनिटर सक्रिय' : '⚔️ Join Indian Army (joinindianarmy.nic.in) live monitor active'}
+                </span>
+              )
+            ) : activePortalTab === 'raj' ? (
               latestRajNotice ? (
                 <div className="flex items-center gap-1.5 truncate text-amber-200">
                   <span className="bg-amber-500/20 text-amber-300 px-1.5 py-0.2 rounded font-mono font-bold text-[9px] uppercase shrink-0">
@@ -269,6 +308,17 @@ export default function GovPortalsSyncBar({
             Auto-Sync: <strong className="text-amber-400">{secondsRemaining}s</strong>
           </span>
 
+          {/* Quick Sync Army Button */}
+          <button
+            onClick={onQuickArmySync}
+            disabled={isArmySyncing}
+            className="flex items-center gap-1 bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-2.5 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75"
+            title="Sync latest Join Indian Army releases from https://joinindianarmy.nic.in/"
+          >
+            <RefreshCw className={`h-3 w-3 ${isArmySyncing ? 'animate-spin' : ''}`} />
+            <span>{locale === 'hi' ? '⚔️ सेना' : '⚔️ ARMY'}</span>
+          </button>
+
           {/* Quick Sync Rajasthan SSO Button */}
           <button
             onClick={onQuickRajSync}
@@ -333,6 +383,15 @@ export default function GovPortalsSyncBar({
           >
             <RefreshCw className={`h-3 w-3 ${isSscSyncing ? 'animate-spin' : ''}`} />
             <span>SSC</span>
+          </button>
+
+          {/* Direct Link to Army Hub */}
+          <button
+            onClick={onOpenArmyHub}
+            className="flex items-center gap-1 bg-emerald-700/30 hover:bg-emerald-700/50 text-emerald-200 font-bold px-2.5 py-1 rounded-lg text-[11px] transition border border-emerald-400/40 cursor-pointer"
+          >
+            <span>{locale === 'hi' ? 'भारतीय सेना हब' : 'Army Hub'}</span>
+            <ChevronRight className="h-3 w-3" />
           </button>
 
           {/* Direct Link to Rajasthan Hub */}

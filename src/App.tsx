@@ -42,8 +42,9 @@ import RrbLiveSyncHub from './components/RrbLiveSyncHub';
 import IbpsLiveSyncHub from './components/IbpsLiveSyncHub';
 import SbiLiveSyncHub from './components/SbiLiveSyncHub';
 import RajasthanLiveSyncHub from './components/RajasthanLiveSyncHub';
+import ArmyLiveSyncHub from './components/ArmyLiveSyncHub';
 import GovPortalsSyncBar from './components/GovPortalsSyncBar';
-import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice, IbpsLiveNotice, SbiLiveNotice, RajLiveNotice } from './types';
+import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice, IbpsLiveNotice, SbiLiveNotice, RajLiveNotice, ArmyLiveNotice } from './types';
 import { initializeGA, trackPageView } from './utils/analytics';
 import { updateSEOMetadata } from './utils/seoHelper';
 import { fetchWithRetry } from './utils/fetchHelper';
@@ -1499,6 +1500,93 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
     return () => clearInterval(rajInterval);
   }, []);
 
+  // JOIN INDIAN ARMY REAL-TIME AUTO-MONITOR & SYNCHRONIZER (https://joinindianarmy.nic.in/)
+  const [armySyncing, setArmySyncing] = useState(false);
+  const [latestArmyNotice, setLatestArmyNotice] = useState<ArmyLiveNotice | null>(null);
+
+  const runArmyAutoSync = async (notifyIfNoNew = false) => {
+    setArmySyncing(true);
+    try {
+      const res = await fetch('/api/army/live-feed');
+      if (res.ok) {
+        const data = await res.json();
+        const notices: ArmyLiveNotice[] = data.notices || [];
+        if (notices.length > 0) {
+          setLatestArmyNotice(notices[0]);
+        }
+
+        // Check against existing IDs
+        const existingJIds = new Set(jobs.map(j => j.id));
+        const existingAIds = new Set(admitCards.map(a => a.id));
+        const existingRIds = new Set(results.map(r => r.id));
+        const existingKIds = new Set(answerKeys.map(k => k.id));
+
+        // Read already auto-imported notice IDs
+        const autoImported: string[] = JSON.parse(localStorage.getItem('sarkari_auto_imported_army_ids') || '[]');
+        const importedSet = new Set(autoImported);
+
+        let newItemsAdded = 0;
+
+        for (const notice of notices) {
+          if (importedSet.has(notice.id)) continue;
+
+          if (notice.category === 'vacancy' && notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'admit-card' && notice.admitCardData && !existingAIds.has(notice.admitCardData.id)) {
+            handleNewLaunch('Admit Card', notice.title, notice.org, 'admitCards', notice.admitCardData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'result' && notice.resultData && !existingRIds.has(notice.resultData.id)) {
+            const sanitizedResult: JobResult = {
+              ...notice.resultData,
+              cutOff: {
+                UR: notice.resultData.cutOff?.UR || notice.details?.cutoff || 'Declared on Portal',
+                OBC: notice.resultData.cutOff?.OBC || 'Declared on Portal',
+                SC: notice.resultData.cutOff?.SC || 'Declared on Portal',
+                ST: notice.resultData.cutOff?.ST || 'Declared on Portal'
+              }
+            };
+            handleNewLaunch('Result', notice.title, notice.org, 'results', sanitizedResult);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'answer-key' && notice.answerKeyData && !existingKIds.has(notice.answerKeyData.id)) {
+            handleNewLaunch('Answer Key', notice.title, notice.org, 'answerKeys', notice.answerKeyData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'rally-schedule' && notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          }
+        }
+
+        if (newItemsAdded > 0) {
+          localStorage.setItem('sarkari_auto_imported_army_ids', JSON.stringify(Array.from(importedSet)));
+          triggerToast(`⚔️ [JOIN INDIAN ARMY] ${newItemsAdded} Indian Army rally/notification(s) auto-synced to your website!`);
+        } else if (notifyIfNoNew) {
+          triggerToast('🟢 Join Indian Army Portal (https://joinindianarmy.nic.in/) is checked. All notices are up to date.');
+        }
+      }
+    } catch (e) {
+      console.warn('Indian Army Auto-Sync error:', e);
+    } finally {
+      setArmySyncing(false);
+    }
+  };
+
+  useEffect(() => {
+    runArmyAutoSync(false);
+
+    // Auto-poll joinindianarmy.nic.in every 45 seconds
+    const armyInterval = setInterval(() => {
+      runArmyAutoSync(false);
+    }, 45000);
+
+    return () => clearInterval(armyInterval);
+  }, []);
+
   const [premiumModalOpen, setPremiumModalOpen] = useState(false);
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
   const [showWhyPremium, setShowWhyPremium] = useState(false);
@@ -1908,27 +1996,31 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
         liveNotifications={liveNotifications}
       />
 
-      {/* ⚡ RAJASTHAN SSO, SBI, IBPS, RRB, UPSC & SSC REAL-TIME LIVE UPDATE BAR */}
+      {/* ⚡ JOIN INDIAN ARMY, RAJASTHAN SSO, SBI, IBPS, RRB, UPSC & SSC REAL-TIME LIVE UPDATE BAR */}
       <GovPortalsSyncBar
         locale={locale}
+        onOpenArmyHub={() => setActiveTab('army-sync')}
         onOpenRajHub={() => setActiveTab('rajasthan-sync')}
         onOpenSbiHub={() => setActiveTab('sbi-sync')}
         onOpenIbpsHub={() => setActiveTab('ibps-sync')}
         onOpenSscHub={() => setActiveTab('ssc-sync')}
         onOpenUpscHub={() => setActiveTab('upsc-sync')}
         onOpenRrbHub={() => setActiveTab('rrb-sync')}
+        onQuickArmySync={() => runArmyAutoSync(true)}
         onQuickRajSync={() => runRajAutoSync(true)}
         onQuickSbiSync={() => runSbiAutoSync(true)}
         onQuickIbpsSync={() => runIbpsAutoSync(true)}
         onQuickSscSync={() => runSscAutoSync(true)}
         onQuickUpscSync={() => runUpscAutoSync(true)}
         onQuickRrbSync={() => runRrbAutoSync(true)}
+        isArmySyncing={armySyncing}
         isRajSyncing={rajSyncing}
         isSbiSyncing={sbiSyncing}
         isIbpsSyncing={ibpsSyncing}
         isSscSyncing={sscSyncing}
         isUpscSyncing={upscSyncing}
         isRrbSyncing={rrbSyncing}
+        latestArmyNotice={latestArmyNotice}
         latestRajNotice={latestRajNotice}
         latestSbiNotice={latestSbiNotice}
         latestIbpsNotice={latestIbpsNotice}
@@ -1940,6 +2032,24 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
       {/* Main Body wrap */}
       <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 flex-1">
         
+        {/* TAB: JOIN INDIAN ARMY REAL-TIME MONITOR HUB */}
+        {activeTab === 'army-sync' && (
+          <div className="space-y-6">
+            <ArmyLiveSyncHub
+              locale={locale}
+              onAddJob={(newJob) => handleNewLaunch('Vacancy', newJob.title, newJob.org, 'jobs', newJob)}
+              onAddAdmitCard={(newCard) => handleNewLaunch('Admit Card', newCard.title, newCard.org, 'admitCards', newCard)}
+              onAddResult={(newRes) => handleNewLaunch('Result', newRes.title, newRes.org, 'results', newRes)}
+              onAddAnswerKey={(newKey) => handleNewLaunch('Answer Key', newKey.title, newKey.org, 'answerKeys', newKey)}
+              triggerToast={triggerToast}
+              existingJobIds={jobs.map(j => j.id)}
+              existingAdmitCardIds={admitCards.map(c => c.id)}
+              existingResultIds={results.map(r => r.id)}
+              existingAnswerKeyIds={answerKeys.map(k => k.id)}
+            />
+          </div>
+        )}
+
         {/* TAB: RAJASTHAN STATE RECRUITMENT REAL-TIME MONITOR HUB */}
         {activeTab === 'rajasthan-sync' && (
           <div className="space-y-6">

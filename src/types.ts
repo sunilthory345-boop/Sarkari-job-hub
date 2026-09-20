@@ -400,3 +400,98 @@ export interface RajSyncStatus {
   totalLiveNotices: number;
   newNoticesCount: number;
 }
+
+export interface ArmyLiveNotice {
+  id: string;
+  category: 'vacancy' | 'admit-card' | 'result' | 'answer-key' | 'rally-schedule';
+  entryType: 'agniveer' | 'officer' | 'nursing-tech' | 'women-mp' | 'havildar-sac' | 'rally' | 'other';
+  title: string;
+  titleHi: string;
+  org: string; // e.g. Indian Army / Directorate General of Recruiting
+  zro: string; // e.g. Jaipur, Danapur, Lucknow, Jalandhar, Pune, Ambala, Kolkata, All India
+  aro?: string; // e.g. ARO Alwar, ARO Jhunjhunu, ARO Kota, ARO Meerut, ARO Agra, etc.
+  trade?: string; // Agniveer General Duty (GD), Technical, Clerk/SKT, Tradesman (10th/8th), NA, TGC, TES
+  noticeNo?: string;
+  portalUrl: string; // https://joinindianarmy.nic.in/
+  publishedDate: string;
+  officialUrl: string;
+  pdfUrl?: string;
+  isNew?: boolean;
+  statusBadge: string;
+  details: {
+    posts?: number | string;
+    rallyDates?: string;
+    ceeDate?: string;
+    examDate?: string;
+    lastDate?: string;
+    ageLimit?: string;
+    heightChest?: string;
+    qualification?: string;
+    salary?: string;
+    cutoff?: string;
+    summary?: string;
+    stage?: string;
+    stateDistrict?: string;
+  };
+  jobData?: any;
+  admitCardData?: any;
+  resultData?: any;
+  answerKeyData?: any;
+}
+
+export interface ArmySyncStatus {
+  online: boolean;
+  portal: string;
+  status: string;
+  lastChecked: string;
+  latencyMs: number;
+  autoSyncIntervalSec: number;
+  totalLiveNotices: number;
+  newNoticesCount: number;
+}
+
+export interface NavyLiveNotice {
+  id: string;
+  category: 'vacancy' | 'admit-card' | 'result' | 'answer-key' | 'training-schedule';
+  entryType: 'agniveer-ssr' | 'agniveer-mr' | 'officer' | 'cadet-btech' | 'tradesman' | 'other';
+  title: string;
+  titleHi: string;
+  org: string; // Indian Navy / भारतीय नौसेना
+  batch: string; // e.g. Batch 01/2027 or 02/2026
+  branch?: string; // Executive, Technical, Electrical, Logistics, Education, Aviation
+  noticeNo?: string;
+  portalUrl: string; // https://www.joinindiannavy.gov.in/
+  publishedDate: string;
+  officialUrl: string;
+  pdfUrl?: string;
+  isNew?: boolean;
+  statusBadge: string;
+  details: {
+    posts?: number | string;
+    examDate?: string;
+    lastDate?: string;
+    ageLimit?: string;
+    heightChest?: string;
+    qualification?: string;
+    salary?: string;
+    cutoff?: string;
+    trainingCenter?: string; // e.g. INS Chilka, INA Ezhimala
+    summary?: string;
+    stage?: string;
+  };
+  jobData?: any;
+  admitCardData?: any;
+  resultData?: any;
+  answerKeyData?: any;
+}
+
+export interface NavySyncStatus {
+  online: boolean;
+  portal: string;
+  status: string;
+  lastChecked: string;
+  latencyMs: number;
+  autoSyncIntervalSec: number;
+  totalLiveNotices: number;
+  newNoticesCount: number;
+}

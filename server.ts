@@ -39,6 +39,7 @@ import {
   SbiLiveNotice
 } from "./server/sbiService";
 import { rajasthanRecruitmentService } from "./server/rajasthanService";
+import { armyRecruitmentService } from "./server/armyService";
 
 dotenv.config();
 
@@ -2247,6 +2248,92 @@ Return JSON strictly.`;
       res.json({ success: true, notice });
     } catch (err: any) {
       res.status(500).json({ error: err.message || "Failed to parse Rajasthan notice" });
+    }
+  });
+
+  // ==========================================
+  // JOIN INDIAN ARMY PORTAL API (https://joinindianarmy.nic.in/)
+  // ==========================================
+
+  // 1. Get Join Indian Army Portal Status & Health
+  app.get("/api/army/status", (req, res) => {
+    try {
+      const status = armyRecruitmentService.getStatus();
+      res.json(status);
+    } catch (err) {
+      res.status(500).json({ error: "Failed to retrieve Join Indian Army portal status" });
+    }
+  });
+
+  // 2. Get Live Notices Monitored from joinindianarmy.nic.in
+  app.get("/api/army/live-feed", (req, res) => {
+    try {
+      const { category, entryType, zro, search } = req.query;
+      const notices = armyRecruitmentService.getLiveNotices({
+        category: category as string,
+        entryType: entryType as string,
+        zro: zro as string,
+        search: search as string
+      });
+      const status = armyRecruitmentService.getStatus();
+      res.json({
+        portal: "https://joinindianarmy.nic.in/",
+        status,
+        count: notices.length,
+        notices
+      });
+    } catch (err) {
+      res.status(500).json({ error: "Failed to fetch Join Indian Army live feed" });
+    }
+  });
+
+  // 3. Force Instant Sync with Official Join Indian Army Portal
+  app.post("/api/army/sync-now", async (req, res) => {
+    try {
+      const syncRes = await armyRecruitmentService.syncWithPortal();
+      const status = armyRecruitmentService.getStatus();
+      res.json({
+        success: true,
+        message: "Join Indian Army Portal (https://joinindianarmy.nic.in/) synced successfully.",
+        syncRes,
+        status
+      });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Indian Army sync failed" });
+    }
+  });
+
+  // 4. Publish Notice to Army Feed
+  app.post("/api/army/publish-notice", (req, res) => {
+    const { notice } = req.body;
+    if (!notice || !notice.title || !notice.category) {
+      return res.status(400).json({ error: "Notice title and category are required" });
+    }
+    const saved = armyRecruitmentService.addNotice({
+      ...notice,
+      id: notice.id || `army-manual-${Date.now()}`,
+      portalUrl: "https://joinindianarmy.nic.in/",
+      publishedDate: notice.publishedDate || new Date().toISOString().split("T")[0],
+      officialUrl: notice.officialUrl || "https://joinindianarmy.nic.in/",
+      isNew: true
+    });
+    res.json({ success: true, notice: saved });
+  });
+
+  // 5. AI-Powered Join Indian Army Notice / Rally Press Release Analyzer
+  app.post("/api/army/auto-parse", async (req, res) => {
+    const { rawNoticeText, sourceUrl } = req.body;
+    if (!rawNoticeText) {
+      return res.status(400).json({ error: "rawNoticeText is required" });
+    }
+    try {
+      const notice = await armyRecruitmentService.parseRawNoticeWithGemini(
+        rawNoticeText,
+        sourceUrl || "https://joinindianarmy.nic.in/"
+      );
+      res.json({ success: true, notice });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to parse Join Indian Army notice" });
     }
   });
 

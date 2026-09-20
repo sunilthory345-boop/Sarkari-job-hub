@@ -3,7 +3,7 @@ import {
   Briefcase, FileText, Award, BookOpen, Clock, 
   Sparkles, Mail, Bell, Menu, X, CheckSquare, 
   GraduationCap, MessageSquare, Download, LogIn,
-  Moon, Sun, HelpCircle, FileDown, Star, Calendar, FileUp, Globe, Newspaper, Zap, Train, Landmark
+  Moon, Sun, HelpCircle, FileDown, Star, Calendar, FileUp, Globe, Newspaper, Zap, Train, Landmark, Swords
 } from 'lucide-react';
 import { UserProfile } from '../types';
 import { LANGUAGES, TRANSLATIONS, LocaleType } from '../utils/lang';
@@ -45,6 +45,7 @@ export default function Navbar({
   const menuItems = [
     { id: 'home', label: t.home, icon: BookOpen, category: 'Main' },
     { id: 'jobs', label: t.latestJobs, icon: Briefcase, category: 'Main' },
+    { id: 'army-sync', label: locale === 'hi' ? '⚔️ भारतीय सेना लाइव (joinindianarmy.nic.in)' : '⚔️ Join Indian Army Live', icon: Swords, category: 'Main', highlight: true },
     { id: 'rajasthan-sync', label: locale === 'hi' ? '🏛️ राजस्थान भर्ती लाइव (recruitment.rajasthan.gov.in)' : '🏛️ Rajasthan Recruitment Live', icon: Landmark, category: 'Main', highlight: true },
     { id: 'sbi-sync', label: locale === 'hi' ? '🏛️ SBI करियर लाइव (sbi.bank.in)' : '🏛️ SBI Careers Live', icon: Landmark, category: 'Main', highlight: true },
     { id: 'ibps-sync', label: locale === 'hi' ? '🏦 IBPS बैंकिंग लाइव (ibps.in)' : '🏦 IBPS Banking Live', icon: Landmark, category: 'Main', highlight: true },
