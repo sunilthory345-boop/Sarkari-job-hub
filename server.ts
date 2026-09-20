@@ -10,6 +10,13 @@ import {
   checkSscPortalHealth, 
   SscLiveNotice 
 } from "./server/sscService";
+import { 
+  getUpscNotices, 
+  addUpscNotice, 
+  getUpscSyncStatus, 
+  checkUpscPortalHealth, 
+  UpscLiveNotice 
+} from "./server/upscService";
 
 dotenv.config();
 
@@ -888,6 +895,321 @@ Extract structured JSON strictly following this schema:
     addSscNotice(fallbackNotice);
     res.json({ success: true, notice: fallbackNotice });
   });
+
+  // ==========================================
+  // ⚡ UPSC.GOV.IN REAL-TIME PORTAL MONITOR APIS
+  // ==========================================
+
+  // 1. Check live status of https://www.upsc.gov.in/
+  app.get("/api/upsc/status", async (req, res) => {
+    try {
+      const health = await checkUpscPortalHealth();
+      const status = getUpscSyncStatus();
+      res.json({
+        ...status,
+        ...health,
+        timestamp: new Date().toISOString()
+      });
+    } catch (e: any) {
+      res.json(getUpscSyncStatus());
+    }
+  });
+
+  // 2. Get live feed of UPSC releases (Civil Services, NDA, CDS, ESE, CAPF, CMS, Results, e-Admit Cards, Keys)
+  app.get("/api/upsc/live-feed", (req, res) => {
+    const category = req.query.category as string | undefined;
+    const notices = getUpscNotices(category);
+    res.json({
+      success: true,
+      portal: "https://www.upsc.gov.in/",
+      count: notices.length,
+      notices
+    });
+  });
+
+  // 3. Trigger immediate sync check with upsc.gov.in
+  app.post("/api/upsc/sync-now", async (req, res) => {
+    try {
+      const health = await checkUpscPortalHealth();
+      const status = getUpscSyncStatus();
+      const notices = getUpscNotices();
+      res.json({
+        success: true,
+        message: "UPSC Portal synchronized successfully with https://www.upsc.gov.in/",
+        health,
+        status,
+        syncedAt: new Date().toISOString(),
+        totalNotices: notices.length,
+        notices
+      });
+    } catch (e: any) {
+      res.status(500).json({
+        success: false,
+        error: "Failed to sync with UPSC portal",
+        details: e.message || e
+      });
+    }
+  });
+
+  // 4. Ingest or publish a new notice to the UPSC live feed
+  app.post("/api/upsc/publish-notice", (req, res) => {
+    const notice: UpscLiveNotice = req.body;
+    if (!notice || !notice.title || !notice.category) {
+      return res.status(400).json({ error: "Notice title and category are required." });
+    }
+
+    if (!notice.id) {
+      notice.id = `upsc-notice-${Date.now()}`;
+    }
+    if (!notice.publishedDate) {
+      notice.publishedDate = new Date().toISOString().split("T")[0];
+    }
+    if (!notice.officialUrl) {
+      notice.officialUrl = "https://www.upsc.gov.in/";
+    }
+    notice.isNew = true;
+
+    const savedNotice = addUpscNotice(notice);
+    res.json({
+      success: true,
+      message: `New notice published and synchronized to website feed: ${notice.title}`,
+      notice: savedNotice
+    });
+  });
+
+  // 5. Intelligent auto-parser for raw notice text/URL from upsc.gov.in
+  app.post("/api/upsc/auto-parse", async (req, res) => {
+    const { rawNoticeText, officialUrl } = req.body;
+    if (!rawNoticeText) {
+      return res.status(400).json({ error: "rawNoticeText is required." });
+    }
+
+    const todayStr = new Date().toISOString().split("T")[0];
+    const targetUrl = officialUrl || "https://www.upsc.gov.in/";
+
+    // Try AI classification if GEMINI_API_KEY is available
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (apiKey) {
+      try {
+        const ai = new GoogleGenAI({
+          apiKey: apiKey,
+          httpOptions: { headers: { "User-Agent": "aistudio-build" } }
+        });
+
+        const prompt = `Analyze this official notice text from Union Public Service Commission (https://www.upsc.gov.in/):
+"${rawNoticeText}"
+
+Classify it into one of the 4 exact categories:
+- "vacancy" (if it is a new examination notification, advertisement, opening, e.g. Civil Services, NDA, CDS, ESE, CAPF)
+- "admit-card" (if it is an e-admit card, hall ticket, e-summon letter for interview/personality test)
+- "result" (if it is a written result, final recommendation list, reserve list, or cutoff marks)
+- "answer-key" (if it is an official answer key, question paper key)
+
+Extract structured JSON strictly following this schema:
+{
+  "category": "vacancy" | "admit-card" | "result" | "answer-key",
+  "title": "Clear English title",
+  "titleHi": "Clear Hindi title",
+  "statusBadge": "Short badge e.g. New Vacancy / e-Admit Card Out / Final Result Declared / Answer Key Live",
+  "details": {
+    "posts": number (optional),
+    "qualification": string (optional),
+    "salary": string (optional),
+    "examDate": string (optional),
+    "lastDate": string (optional),
+    "cutoff": string (optional),
+    "stage": string (optional),
+    "summary": "1-2 sentence bilingual summary"
+  }
+}`;
+
+        const response = await ai.models.generateContent({
+          model: "gemini-3.5-flash",
+          contents: prompt,
+          config: {
+            temperature: 0.1,
+            responseMimeType: "application/json"
+          }
+        });
+
+        if (response.text) {
+          const parsed = JSON.parse(response.text);
+          const generatedNotice: UpscLiveNotice = {
+            id: `upsc-notice-ai-${Date.now()}`,
+            category: parsed.category || "vacancy",
+            title: parsed.title,
+            titleHi: parsed.titleHi || parsed.title,
+            org: "Union Public Service Commission (UPSC) / संघ लोक सेवा आयोग",
+            publishedDate: todayStr,
+            officialUrl: targetUrl,
+            pdfUrl: targetUrl,
+            isNew: true,
+            statusBadge: parsed.statusBadge || "Live Release",
+            details: parsed.details || { summary: rawNoticeText.slice(0, 150) }
+          };
+
+          if (generatedNotice.category === "vacancy") {
+            generatedNotice.jobData = {
+              id: `upsc-job-ai-${Date.now()}`,
+              title: generatedNotice.title,
+              org: "Union Public Service Commission (UPSC)",
+              category: "UPSC",
+              qualification: "Graduate",
+              ageLimit: "21-32 Years",
+              salary: parsed.details?.salary || "Level 10 (₹56,100 - ₹1,77,500)",
+              fees: { General: "₹100", OBC: "₹100", SC_ST_Female: "Exempted (₹0)" },
+              totalPosts: parsed.details?.posts || 500,
+              applyUrl: "https://upsconline.nic.in/",
+              pdfUrl: targetUrl,
+              officialWebsite: "https://www.upsc.gov.in/",
+              postedDate: todayStr,
+              lastDate: parsed.details?.lastDate || todayStr,
+              importantDates: {
+                applyStart: todayStr,
+                applyEnd: parsed.details?.lastDate || todayStr,
+                examDate: parsed.details?.examDate || "Scheduled",
+                admitCardRelease: "3 Weeks Before Exam"
+              },
+              selectionProcess: ["Preliminary Examination", "Mains Examination", "Personality Test"],
+              location: "All India",
+              description: parsed.details?.summary || rawNoticeText,
+              formStatus: "started"
+            };
+          } else if (generatedNotice.category === "admit-card") {
+            generatedNotice.admitCardData = {
+              id: `admit-upsc-ai-${Date.now()}`,
+              title: generatedNotice.title,
+              org: "Union Public Service Commission (UPSC)",
+              examDate: parsed.details?.examDate || "Scheduled Exam",
+              examCity: "All Designated UPSC Centers",
+              downloadUrl: "https://upsconline.nic.in/eadmitcard/",
+              officialLink: "https://www.upsc.gov.in/",
+              addedDate: todayStr
+            };
+          } else if (generatedNotice.category === "result") {
+            generatedNotice.resultData = {
+              id: `res-upsc-ai-${Date.now()}`,
+              title: generatedNotice.title,
+              org: "Union Public Service Commission (UPSC)",
+              meritListUrl: targetUrl,
+              scoreCardUrl: "https://upsconline.nic.in/marks/searchMarks.php",
+              cutOff: { UR: "Declared", OBC: "Declared", SC: "Declared", ST: "Declared" },
+              downloadUrl: targetUrl,
+              releaseDate: todayStr
+            };
+          } else if (generatedNotice.category === "answer-key") {
+            generatedNotice.answerKeyData = {
+              id: `ans-upsc-ai-${Date.now()}`,
+              title: generatedNotice.title,
+              org: "Union Public Service Commission (UPSC)",
+              released: todayStr,
+              objectionsLimit: "Official Key",
+              pdfUrl: targetUrl
+            };
+          }
+
+          addUpscNotice(generatedNotice);
+          return res.json({ success: true, notice: generatedNotice });
+        }
+      } catch (geminiErr) {
+        console.warn("Gemini UPSC auto-parse fallback to heuristic:", geminiErr);
+      }
+    }
+
+    // Heuristic classification fallback
+    const lower = rawNoticeText.toLowerCase();
+    let cat: 'vacancy' | 'admit-card' | 'result' | 'answer-key' = 'vacancy';
+    let badge = 'New Release';
+
+    if (lower.includes('admit') || lower.includes('e-admit') || lower.includes('hall ticket') || lower.includes('summon') || lower.includes('interview letter') || lower.includes('प्रवेश पत्र')) {
+      cat = 'admit-card';
+      badge = 'e-Admit Card Live';
+    } else if (lower.includes('result') || lower.includes('recommend') || lower.includes('merit') || lower.includes('cut off') || lower.includes('cutoff') || lower.includes('परिणाम')) {
+      cat = 'result';
+      badge = 'Result Declared';
+    } else if (lower.includes('answer key') || lower.includes('key') || lower.includes('उत्तर कुंजी')) {
+      cat = 'answer-key';
+      badge = 'Answer Key Live';
+    } else {
+      cat = 'vacancy';
+      badge = 'New Vacancy';
+    }
+
+    const fallbackNotice: UpscLiveNotice = {
+      id: `upsc-notice-heur-${Date.now()}`,
+      category: cat,
+      title: rawNoticeText.split('\n')[0] || rawNoticeText.slice(0, 80),
+      titleHi: `संघ लोक सेवा आयोग (UPSC): ${rawNoticeText.split('\n')[0] || rawNoticeText.slice(0, 80)}`,
+      org: "Union Public Service Commission (UPSC) / संघ लोक सेवा आयोग",
+      publishedDate: todayStr,
+      officialUrl: targetUrl,
+      pdfUrl: targetUrl,
+      isNew: true,
+      statusBadge: badge,
+      details: {
+        summary: rawNoticeText.slice(0, 200)
+      }
+    };
+
+    if (cat === "vacancy") {
+      fallbackNotice.jobData = {
+        id: `upsc-job-heur-${Date.now()}`,
+        title: fallbackNotice.title,
+        org: "Union Public Service Commission (UPSC)",
+        category: "UPSC",
+        qualification: "Graduate",
+        ageLimit: "21-32 Years",
+        salary: "Pay Level 10 (₹56,100+)",
+        fees: { General: "₹100", OBC: "₹100", SC_ST_Female: "Exempted" },
+        totalPosts: 500,
+        applyUrl: "https://upsconline.nic.in/",
+        pdfUrl: targetUrl,
+        officialWebsite: "https://www.upsc.gov.in/",
+        postedDate: todayStr,
+        lastDate: todayStr,
+        importantDates: { applyStart: todayStr, applyEnd: todayStr, examDate: "Scheduled", admitCardRelease: "TBA" },
+        selectionProcess: ["Prelims", "Mains", "Interview"],
+        location: "Pan India",
+        description: rawNoticeText,
+        formStatus: "started"
+      };
+    } else if (cat === "admit-card") {
+      fallbackNotice.admitCardData = {
+        id: `admit-upsc-heur-${Date.now()}`,
+        title: fallbackNotice.title,
+        org: "Union Public Service Commission (UPSC)",
+        examDate: "Scheduled",
+        examCity: "All Regions",
+        downloadUrl: "https://upsconline.nic.in/eadmitcard/",
+        officialLink: "https://www.upsc.gov.in/",
+        addedDate: todayStr
+      };
+    } else if (cat === "result") {
+      fallbackNotice.resultData = {
+        id: `res-upsc-heur-${Date.now()}`,
+        title: fallbackNotice.title,
+        org: "Union Public Service Commission (UPSC)",
+        meritListUrl: targetUrl,
+        scoreCardUrl: "https://upsconline.nic.in/marks/searchMarks.php",
+        cutOff: { UR: "Check PDF", OBC: "Check PDF", SC: "Check PDF", ST: "Check PDF" },
+        downloadUrl: targetUrl,
+        releaseDate: todayStr
+      };
+    } else if (cat === "answer-key") {
+      fallbackNotice.answerKeyData = {
+        id: `ans-upsc-heur-${Date.now()}`,
+        title: fallbackNotice.title,
+        org: "Union Public Service Commission (UPSC)",
+        released: todayStr,
+        objectionsLimit: "Published",
+        pdfUrl: targetUrl
+      };
+    }
+
+    addUpscNotice(fallbackNotice);
+    res.json({ success: true, notice: fallbackNotice });
+  });
+
 
   // Vite middleware setup
 

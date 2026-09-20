@@ -45,6 +45,7 @@ export default function Navbar({
   const menuItems = [
     { id: 'home', label: t.home, icon: BookOpen, category: 'Main' },
     { id: 'jobs', label: t.latestJobs, icon: Briefcase, category: 'Main' },
+    { id: 'upsc-sync', label: locale === 'hi' ? '🏛️ UPSC लाइव (upsc.gov.in)' : '🏛️ UPSC.gov.in Live', icon: Award, category: 'Main', highlight: true },
     { id: 'ssc-sync', label: locale === 'hi' ? '⚡ SSC लाइव (ssc.gov.in)' : '⚡ SSC.gov.in Live', icon: Zap, category: 'Main', highlight: true },
     { id: 'calendar', label: t.examCalendar, icon: Calendar, category: 'Main' },
     { id: 'admit-cards', label: t.admitCard, icon: FileText, category: 'Main' },

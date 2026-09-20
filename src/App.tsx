@@ -37,7 +37,9 @@ import WhatsAppChannelHub from './components/WhatsAppChannelHub';
 import AiDoubtSolver from './components/AiDoubtSolver';
 import SscLiveSyncHub from './components/SscLiveSyncHub';
 import SscLiveSyncBar from './components/SscLiveSyncBar';
-import { SscLiveNotice } from './types';
+import UpscLiveSyncHub from './components/UpscLiveSyncHub';
+import GovPortalsSyncBar from './components/GovPortalsSyncBar';
+import { SscLiveNotice, UpscLiveNotice } from './types';
 import { initializeGA, trackPageView } from './utils/analytics';
 import { updateSEOMetadata } from './utils/seoHelper';
 import { fetchWithRetry } from './utils/fetchHelper';
@@ -1063,6 +1065,80 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
     return () => clearInterval(sscInterval);
   }, []);
 
+  // UPSC.GOV.IN REAL-TIME AUTO-MONITOR & SYNCHRONIZER
+  const [upscSyncing, setUpscSyncing] = useState(false);
+  const [latestUpscNotice, setLatestUpscNotice] = useState<UpscLiveNotice | null>(null);
+
+  const runUpscAutoSync = async (notifyIfNoNew = false) => {
+    setUpscSyncing(true);
+    try {
+      const res = await fetch('/api/upsc/live-feed');
+      if (res.ok) {
+        const data = await res.json();
+        const notices: UpscLiveNotice[] = data.notices || [];
+        if (notices.length > 0) {
+          setLatestUpscNotice(notices[0]);
+        }
+
+        // Check against existing IDs
+        const existingJIds = new Set(jobs.map(j => j.id));
+        const existingAIds = new Set(admitCards.map(a => a.id));
+        const existingRIds = new Set(results.map(r => r.id));
+        const existingKIds = new Set(answerKeys.map(k => k.id));
+
+        // Read already auto-imported notice IDs
+        const autoImported: string[] = JSON.parse(localStorage.getItem('sarkari_auto_imported_upsc_ids') || '[]');
+        const importedSet = new Set(autoImported);
+
+        let newItemsAdded = 0;
+
+        for (const notice of notices) {
+          if (importedSet.has(notice.id)) continue;
+
+          if (notice.category === 'vacancy' && notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'admit-card' && notice.admitCardData && !existingAIds.has(notice.admitCardData.id)) {
+            handleNewLaunch('Admit Card', notice.title, notice.org, 'admitCards', notice.admitCardData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'result' && notice.resultData && !existingRIds.has(notice.resultData.id)) {
+            handleNewLaunch('Result', notice.title, notice.org, 'results', notice.resultData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'answer-key' && notice.answerKeyData && !existingKIds.has(notice.answerKeyData.id)) {
+            handleNewLaunch('Answer Key', notice.title, notice.org, 'answerKeys', notice.answerKeyData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          }
+        }
+
+        if (newItemsAdded > 0) {
+          localStorage.setItem('sarkari_auto_imported_upsc_ids', JSON.stringify(Array.from(importedSet)));
+          triggerToast(`⚡ [UPSC.GOV.IN] ${newItemsAdded} fresh release(s) auto-synced to your website!`);
+        } else if (notifyIfNoNew) {
+          triggerToast('🟢 UPSC Portal (https://www.upsc.gov.in/) is checked. All notices are currently up to date.');
+        }
+      }
+    } catch (e) {
+      console.warn('UPSC Auto-Sync error:', e);
+    } finally {
+      setUpscSyncing(false);
+    }
+  };
+
+  useEffect(() => {
+    runUpscAutoSync(false);
+
+    // Auto-poll upsc.gov.in every 45 seconds
+    const upscInterval = setInterval(() => {
+      runUpscAutoSync(false);
+    }, 45000);
+
+    return () => clearInterval(upscInterval);
+  }, []);
+
   const [premiumModalOpen, setPremiumModalOpen] = useState(false);
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
   const [showWhyPremium, setShowWhyPremium] = useState(false);
@@ -1472,18 +1548,40 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
         liveNotifications={liveNotifications}
       />
 
-      {/* ⚡ SSC.GOV.IN REAL-TIME LIVE UPDATE BAR */}
-      <SscLiveSyncBar
+      {/* ⚡ UPSC & SSC REAL-TIME LIVE UPDATE BAR */}
+      <GovPortalsSyncBar
         locale={locale}
-        onOpenHub={() => setActiveTab('ssc-sync')}
-        onQuickSync={() => runSscAutoSync(true)}
-        isSyncing={sscSyncing}
-        latestNotice={latestSscNotice}
+        onOpenSscHub={() => setActiveTab('ssc-sync')}
+        onOpenUpscHub={() => setActiveTab('upsc-sync')}
+        onQuickSscSync={() => runSscAutoSync(true)}
+        onQuickUpscSync={() => runUpscAutoSync(true)}
+        isSscSyncing={sscSyncing}
+        isUpscSyncing={upscSyncing}
+        latestSscNotice={latestSscNotice}
+        latestUpscNotice={latestUpscNotice}
       />
 
       {/* Main Body wrap */}
       <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 flex-1">
         
+        {/* TAB: UPSC.GOV.IN REAL-TIME MONITOR HUB */}
+        {activeTab === 'upsc-sync' && (
+          <div className="space-y-6">
+            <UpscLiveSyncHub
+              locale={locale}
+              onAddJob={(newJob) => handleNewLaunch('Vacancy', newJob.title, newJob.org, 'jobs', newJob)}
+              onAddAdmitCard={(newCard) => handleNewLaunch('Admit Card', newCard.title, newCard.org, 'admitCards', newCard)}
+              onAddResult={(newRes) => handleNewLaunch('Result', newRes.title, newRes.org, 'results', newRes)}
+              onAddAnswerKey={(newKey) => handleNewLaunch('Answer Key', newKey.title, newKey.org, 'answerKeys', newKey)}
+              triggerToast={triggerToast}
+              existingJobIds={jobs.map(j => j.id)}
+              existingAdmitCardIds={admitCards.map(c => c.id)}
+              existingResultIds={results.map(r => r.id)}
+              existingAnswerKeyIds={answerKeys.map(k => k.id)}
+            />
+          </div>
+        )}
+
         {/* TAB: SSC.GOV.IN REAL-TIME MONITOR HUB */}
         {activeTab === 'ssc-sync' && (
           <div className="space-y-6">

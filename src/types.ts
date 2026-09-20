@@ -196,6 +196,44 @@ export interface SscSyncStatus {
   newNoticesCount: number;
 }
 
+export interface UpscLiveNotice {
+  id: string;
+  category: 'vacancy' | 'admit-card' | 'result' | 'answer-key';
+  title: string;
+  titleHi: string;
+  org: string;
+  publishedDate: string;
+  officialUrl: string;
+  pdfUrl?: string;
+  isNew?: boolean;
+  statusBadge: string;
+  details: {
+    posts?: number;
+    examDate?: string;
+    lastDate?: string;
+    cutoff?: string;
+    stage?: string;
+    summary?: string;
+    qualification?: string;
+    salary?: string;
+  };
+  jobData?: GovJob;
+  admitCardData?: AdmitCard;
+  resultData?: JobResult;
+  answerKeyData?: AnswerKey;
+}
+
+export interface UpscSyncStatus {
+  online: boolean;
+  portal: string;
+  status: string;
+  lastChecked: string;
+  latencyMs: number;
+  autoSyncIntervalSec: number;
+  totalLiveNotices: number;
+  newNoticesCount: number;
+}
+
 
 
 
