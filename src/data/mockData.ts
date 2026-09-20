@@ -4,6 +4,43 @@ import { generateAllExtendedMocks } from '../utils/examMockGenerator';
 
 export const INITIAL_JOBS: GovJob[] = [
   {
+    id: 'india-post-gds-recruitment-july-29-2026',
+    title: 'India Post GDS (Gramin Dak Sevak) 44,228 Posts Mega Recruitment 2026 Online Form Active (Live Today 29 July 2026) / इंडिया पोस्ट जीडीएस भर्ती 2026',
+    org: 'Department of Posts (India Post)',
+    category: 'Railway',
+    qualification: '10th Pass',
+    ageLimit: '18 - 40 Years (Age relaxation applicable as per central norms)',
+    salary: '₹12,000 — ₹29,380 / Month (TRCA Level-1 & Level-2)',
+    fees: {
+      General: '₹100',
+      OBC: '₹100',
+      SC_ST_Female: '₹0 (Exempted)'
+    },
+    totalPosts: 44228,
+    applyUrl: 'https://indiapostgdsonline.gov.in',
+    pdfUrl: 'https://indiapostgdsonline.gov.in',
+    officialWebsite: 'https://indiapostgdsonline.gov.in',
+    postedDate: '2026-07-29',
+    lastDate: '2026-08-25',
+    importantDates: {
+      applyStart: '2026-07-29',
+      applyEnd: '2026-08-25',
+      examDate: 'Direct 10th Merit Based (No Written Exam)',
+      admitCardRelease: 'August 2026 Merit List'
+    },
+    selectionProcess: [
+      'System-generated automated Merit List based on 10th Class / SSC examination marks',
+      'Zero Written Examination or Physical Test',
+      'Document Verification at allotted Postal Divisions',
+      'Final Appointment as Branch Postmaster (BPM) / Assistant Branch Postmaster (ABPM) / Dak Sevak'
+    ],
+    location: 'All India (All 23 Postal Circles)',
+    description: '🔥 LATEST MEGA VACANCY (TODAY 29 JULY 2026): Department of Posts has officially released the detailed recruitment notification and activated the online application portal for 44,228 Gramin Dak Sevak (GDS), Branch Postmaster (BPM), and Assistant Branch Postmaster (ABPM) posts across all 23 postal circles. No examination required. 10th pass candidates can apply starting today, 29 July 2026!',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U',
+    formStatus: 'started'
+  },
+  {
     id: 'rrb-rpf-si-constable-recruitment-july-2026',
     title: 'Railway RPF Sub-Inspector & Constable Online Application Form 2026 Out (4,208 Posts) (Live Today) / आरपीएफ एसआई और कांस्टेबल भर्ती 2026',
     org: 'Railway Recruitment Boards (RRB)',
@@ -2403,6 +2440,16 @@ export const INITIAL_JOBS: GovJob[] = [
 
 export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
   {
+    id: 'ssc-chsl-tier1-2026-admit-card-live-29jul',
+    title: 'SSC CHSL (10+2) Tier-1 Exam 2026 Official Region-Wise e-Admit Card & City Intimation Slip Link Active (Released Today 29 July 2026) / एसएससी सीएचएसएल Tier-1 एडमिट कार्ड जारी',
+    org: 'Staff Selection Commission (SSC)',
+    examDate: '2026-08-10 to 2026-08-22',
+    examCity: 'All India Regional Centers (NR, CR, WR, ER, SR, KKR, MPR, NWR, NER Active)',
+    downloadUrl: 'https://ssc.gov.in',
+    officialLink: 'https://ssc.gov.in',
+    addedDate: '2026-07-29'
+  },
+  {
     id: 'ctet-july-2026-admit-card-live',
     title: 'CTET July 2026 Official e-Admit Card & Exam Center City Intimation Slip Link Active (Released Today) / सीटीईटी जुलाई 2026 एडमिट कार्ड जारी',
     org: 'Central Board of Secondary Education (CBSE)',
@@ -2765,6 +2812,21 @@ export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
 ];
 
 export const INITIAL_RESULTS: JobResult[] = [
+  {
+    id: 'ssc-cpo-si-delhi-police-2026-result-29jul',
+    title: 'SSC CPO Sub-Inspector in Delhi Police & CAPFs Paper-1 Exam 2026 Official Result, Qualified Merit List PDF & Category-Wise Cut-Off Out (Declared Today 29 July 2026) / एसएससी सीपीओ पेपर-1 परिणाम जारी',
+    org: 'Staff Selection Commission (SSC)',
+    meritListUrl: 'https://ssc.gov.in',
+    scoreCardUrl: 'https://ssc.gov.in',
+    cutOff: {
+      UR: '135.5 Marks (Paper-1 General)',
+      OBC: '131.2 Marks',
+      SC: '118.0 Marks',
+      ST: '112.5 Marks'
+    },
+    downloadUrl: 'https://ssc.gov.in',
+    releaseDate: '2026-07-29'
+  },
   {
     id: 'ctet-july-2026-result-digilocker-out',
     title: 'CTET July 2026 Examination Official Result, Qualified Candidate List & DigiLocker Certificate Out / सीटीईटी जुलाई 2026 परीक्षा परिणाम घोषित',
@@ -3233,6 +3295,7 @@ export const INITIAL_RESULTS: JobResult[] = [
 ];
 
 const BASE_ANSWER_KEYS = [
+  { id: 'rrb-rpf-si-key-29jul-2026', title: 'Railway RRB RPF Sub-Inspector (SI) CBT-1 Exam 2026 Official Provisional Solved Answer Key & Response Sheet Out (Active Today 29 July 2026) / आरपीएफ एसआई उत्तर कुंजी', org: 'Railway Recruitment Boards (RRB)', released: '2026-07-29', objectionsLimit: '2026-08-05', pdfUrl: 'https://rrbapply.gov.in' },
   { id: 'ssc-chsl-2026-tier1-key-live', title: 'SSC CHSL (10+2) Tier-1 Exam 2026 Official Provisional Solved Answer Key & Candidate Response Sheet Out (Active Today) / एसएससी सीएचएसएल उत्तर कुंजी', org: 'Staff Selection Commission (SSC)', released: '2026-07-28', objectionsLimit: '2026-08-04', pdfUrl: 'https://ssc.gov.in' },
   { id: 'ctet-july-2026-key-challenge', title: 'CTET July 2026 Official Provisional Answer Key & OMR Sheet Challenge Portal Active / सीटीईटी उत्तर कुंजी', org: 'Central Board of Secondary Education (CBSE)', released: '2026-07-26', objectionsLimit: '2026-08-01', pdfUrl: 'https://ctet.nic.in' },
   { id: 'up-police-constable-reexam-key-2026', title: 'UP Police Constable 60,244 Posts Re-Exam Official Provisional Answer Key (All Sets A, B, C, D) Out / यूपी पुलिस उत्तर कुंजी', org: 'Uttar Pradesh Police Recruitment and Promotion Board (UPPRPB)', released: '2026-07-24', objectionsLimit: '2026-07-30', pdfUrl: 'https://uppbpb.gov.in' },

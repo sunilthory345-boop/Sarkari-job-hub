@@ -3,7 +3,7 @@ import {
   Briefcase, FileText, Award, BookOpen, Clock, 
   Sparkles, Mail, Bell, Menu, X, CheckSquare, 
   GraduationCap, MessageSquare, Download, LogIn,
-  Moon, Sun, HelpCircle, FileDown, Star, Calendar, FileUp, Globe, Newspaper
+  Moon, Sun, HelpCircle, FileDown, Star, Calendar, FileUp, Globe, Newspaper, Zap
 } from 'lucide-react';
 import { UserProfile } from '../types';
 import { LANGUAGES, TRANSLATIONS, LocaleType } from '../utils/lang';
@@ -45,6 +45,7 @@ export default function Navbar({
   const menuItems = [
     { id: 'home', label: t.home, icon: BookOpen, category: 'Main' },
     { id: 'jobs', label: t.latestJobs, icon: Briefcase, category: 'Main' },
+    { id: 'ssc-sync', label: locale === 'hi' ? '⚡ SSC लाइव (ssc.gov.in)' : '⚡ SSC.gov.in Live', icon: Zap, category: 'Main', highlight: true },
     { id: 'calendar', label: t.examCalendar, icon: Calendar, category: 'Main' },
     { id: 'admit-cards', label: t.admitCard, icon: FileText, category: 'Main' },
     { id: 'results', label: t.result, icon: Award, category: 'Main' },
@@ -106,7 +107,7 @@ export default function Navbar({
 
           {/* Desktop Horizontal Navigation Links (High Density Layout) */}
           <div className="hidden md:flex items-center gap-4 text-xs font-semibold">
-            {menuItems.filter(item => ['home', 'jobs', 'ai-doubt-solver', 'newspapers', 'calendar', 'admit-cards', 'results', 'current-affairs', 'whatsapp-alerts', 'premium'].includes(item.id)).map((item) => {
+            {menuItems.filter(item => ['home', 'jobs', 'ssc-sync', 'ai-doubt-solver', 'newspapers', 'calendar', 'admit-cards', 'results', 'current-affairs', 'whatsapp-alerts', 'premium'].includes(item.id)).map((item) => {
               const isSelected = activeTab === item.id;
               return (
                 <button
@@ -115,15 +116,17 @@ export default function Navbar({
                   className={`hover:text-blue-200 transition-all cursor-pointer pb-0.5 border-b-2 ${
                     isSelected 
                       ? 'border-white text-white font-extrabold' 
-                      : item.id === 'ai-doubt-solver'
-                        ? 'border-transparent text-amber-300 hover:text-amber-200 font-extrabold uppercase animate-pulse flex items-center gap-1'
-                        : item.id === 'current-affairs'
-                          ? 'border-transparent text-amber-300 hover:text-amber-200 font-extrabold uppercase animate-pulse'
-                          : item.id === 'whatsapp-alerts' 
-                            ? 'border-transparent text-emerald-400 hover:text-emerald-300 font-bold uppercase animate-pulse'
-                            : item.highlight 
-                              ? 'border-transparent text-yellow-300 hover:text-yellow-400 font-bold uppercase' 
-                              : 'border-transparent text-blue-100'
+                      : item.id === 'ssc-sync'
+                        ? 'border-transparent text-amber-300 hover:text-amber-200 font-extrabold uppercase animate-pulse flex items-center gap-1 bg-amber-400/10 px-2 py-0.5 rounded-full border border-amber-400/30'
+                        : item.id === 'ai-doubt-solver'
+                          ? 'border-transparent text-amber-300 hover:text-amber-200 font-extrabold uppercase animate-pulse flex items-center gap-1'
+                          : item.id === 'current-affairs'
+                            ? 'border-transparent text-amber-300 hover:text-amber-200 font-extrabold uppercase animate-pulse'
+                            : item.id === 'whatsapp-alerts' 
+                              ? 'border-transparent text-emerald-400 hover:text-emerald-300 font-bold uppercase animate-pulse'
+                              : item.highlight 
+                                ? 'border-transparent text-yellow-300 hover:text-yellow-400 font-bold uppercase' 
+                                : 'border-transparent text-blue-100'
                   }`}
                 >
                   {item.label}

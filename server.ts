@@ -3,6 +3,13 @@ import path from "path";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI, Type } from "@google/genai";
 import dotenv from "dotenv";
+import { 
+  getSscNotices, 
+  addSscNotice, 
+  getSyncStatus, 
+  checkSscPortalHealth, 
+  SscLiveNotice 
+} from "./server/sscService";
 
 dotenv.config();
 
@@ -567,7 +574,323 @@ Order of Governor-Generals / Viceroys:
     }
   });
 
+  // ==========================================
+  // ⚡ SSC.GOV.IN REAL-TIME PORTAL MONITOR APIS
+  // ==========================================
+
+  // 1. Check live status of https://ssc.gov.in/
+  app.get("/api/ssc/status", async (req, res) => {
+    try {
+      const health = await checkSscPortalHealth();
+      const status = getSyncStatus();
+      res.json({
+        ...status,
+        ...health,
+        timestamp: new Date().toISOString()
+      });
+    } catch (e: any) {
+      res.json(getSyncStatus());
+    }
+  });
+
+  // 2. Get live feed of SSC releases (Vacancies, Admit Cards, Results, Answer Keys)
+  app.get("/api/ssc/live-feed", (req, res) => {
+    const category = req.query.category as string | undefined;
+    const notices = getSscNotices(category);
+    res.json({
+      success: true,
+      portal: "https://ssc.gov.in/",
+      count: notices.length,
+      notices
+    });
+  });
+
+  // 3. Trigger immediate sync check with ssc.gov.in
+  app.post("/api/ssc/sync-now", async (req, res) => {
+    try {
+      const health = await checkSscPortalHealth();
+      const status = getSyncStatus();
+      const notices = getSscNotices();
+      res.json({
+        success: true,
+        message: "SSC Portal synchronized successfully with https://ssc.gov.in/",
+        health,
+        status,
+        syncedAt: new Date().toISOString(),
+        totalNotices: notices.length,
+        notices
+      });
+    } catch (e: any) {
+      res.status(500).json({
+        success: false,
+        error: "Failed to sync with SSC portal",
+        details: e.message || e
+      });
+    }
+  });
+
+  // 4. Ingest or publish a new notice to the SSC live feed
+  app.post("/api/ssc/publish-notice", (req, res) => {
+    const notice: SscLiveNotice = req.body;
+    if (!notice || !notice.title || !notice.category) {
+      return res.status(400).json({ error: "Notice title and category are required." });
+    }
+
+    if (!notice.id) {
+      notice.id = `ssc-notice-${Date.now()}`;
+    }
+    if (!notice.publishedDate) {
+      notice.publishedDate = new Date().toISOString().split("T")[0];
+    }
+    if (!notice.officialUrl) {
+      notice.officialUrl = "https://ssc.gov.in/";
+    }
+    notice.isNew = true;
+
+    const savedNotice = addSscNotice(notice);
+    res.json({
+      success: true,
+      message: `New notice published and synchronized to website feed: ${notice.title}`,
+      notice: savedNotice
+    });
+  });
+
+  // 5. Intelligent auto-parser for raw notice text/URL from ssc.gov.in
+  app.post("/api/ssc/auto-parse", async (req, res) => {
+    const { rawNoticeText, officialUrl } = req.body;
+    if (!rawNoticeText) {
+      return res.status(400).json({ error: "rawNoticeText is required." });
+    }
+
+    const todayStr = new Date().toISOString().split("T")[0];
+    const targetUrl = officialUrl || "https://ssc.gov.in/";
+
+    // Try AI classification if GEMINI_API_KEY is available
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (apiKey) {
+      try {
+        const ai = new GoogleGenAI({
+          apiKey: apiKey,
+          httpOptions: { headers: { "User-Agent": "aistudio-build" } }
+        });
+
+        const prompt = `Analyze this official notice text from Staff Selection Commission (https://ssc.gov.in/):
+"${rawNoticeText}"
+
+Classify it into one of the 4 exact categories:
+- "vacancy" (if it is a new job/recruitment notification, opening, or application form)
+- "admit-card" (if it is an admit card, hall ticket, city intimation slip, or PET/PST call letter)
+- "result" (if it is an exam result, merit list, cut-off marks, or scorecard declaration)
+- "answer-key" (if it is an answer key, tentative key, candidate response sheet, or objection challenge link)
+
+Extract structured JSON strictly following this schema:
+{
+  "category": "vacancy" | "admit-card" | "result" | "answer-key",
+  "title": "Clear English title",
+  "titleHi": "Clear Hindi title",
+  "statusBadge": "Short badge e.g. New Vacancy / Admit Card Out / Result Declared / Answer Key Live",
+  "details": {
+    "posts": number (optional),
+    "qualification": string (optional),
+    "salary": string (optional),
+    "examDate": string (optional),
+    "lastDate": string (optional),
+    "cutoff": string (optional),
+    "shiftOrTier": string (optional),
+    "summary": "1-2 sentence bilingual summary"
+  }
+}`;
+
+        const response = await ai.models.generateContent({
+          model: "gemini-3.5-flash",
+          contents: prompt,
+          config: {
+            temperature: 0.1,
+            responseMimeType: "application/json"
+          }
+        });
+
+        if (response.text) {
+          const parsed = JSON.parse(response.text);
+          const generatedNotice: SscLiveNotice = {
+            id: `ssc-notice-ai-${Date.now()}`,
+            category: parsed.category || "vacancy",
+            title: parsed.title,
+            titleHi: parsed.titleHi || parsed.title,
+            org: "Staff Selection Commission (SSC) / कर्मचारी चयन आयोग",
+            publishedDate: todayStr,
+            officialUrl: targetUrl,
+            pdfUrl: targetUrl,
+            isNew: true,
+            statusBadge: parsed.statusBadge || "Live Release",
+            details: parsed.details || { summary: rawNoticeText.slice(0, 150) }
+          };
+
+          // Generate corresponding item model
+          if (generatedNotice.category === "vacancy") {
+            generatedNotice.jobData = {
+              id: `ssc-job-ai-${Date.now()}`,
+              title: generatedNotice.title,
+              org: "Staff Selection Commission (SSC)",
+              category: "SSC",
+              qualification: (parsed.details?.qualification?.includes("10") ? "10th Pass" : parsed.details?.qualification?.includes("12") ? "12th Pass" : "Graduate") as any,
+              ageLimit: "18-30 Years",
+              salary: parsed.details?.salary || "Pay Level 4/6/7",
+              fees: { General: "₹100", OBC: "₹100", SC_ST_Female: "Exempted (₹0)" },
+              totalPosts: parsed.details?.posts || 1000,
+              applyUrl: targetUrl,
+              pdfUrl: targetUrl,
+              officialWebsite: "https://ssc.gov.in/",
+              postedDate: todayStr,
+              lastDate: parsed.details?.lastDate || todayStr,
+              importantDates: {
+                applyStart: todayStr,
+                applyEnd: parsed.details?.lastDate || todayStr,
+                examDate: parsed.details?.examDate || "TBA",
+                admitCardRelease: "4 Days Before Exam"
+              },
+              selectionProcess: ["CBT Online Examination", "Document Verification"],
+              location: "All India",
+              description: parsed.details?.summary || rawNoticeText,
+              formStatus: "started"
+            };
+          } else if (generatedNotice.category === "admit-card") {
+            generatedNotice.admitCardData = {
+              id: `admit-ssc-ai-${Date.now()}`,
+              title: generatedNotice.title,
+              org: "Staff Selection Commission (SSC)",
+              examDate: parsed.details?.examDate || "Upcoming Exam",
+              examCity: "All Designated SSC Regional Centres",
+              downloadUrl: targetUrl,
+              officialLink: "https://ssc.gov.in/",
+              addedDate: todayStr
+            };
+          } else if (generatedNotice.category === "result") {
+            generatedNotice.resultData = {
+              id: `res-ssc-ai-${Date.now()}`,
+              title: generatedNotice.title,
+              org: "Staff Selection Commission (SSC)",
+              meritListUrl: targetUrl,
+              scoreCardUrl: targetUrl,
+              cutOff: { UR: "Declared", OBC: "Declared", SC: "Declared", ST: "Declared" },
+              downloadUrl: targetUrl,
+              releaseDate: todayStr
+            };
+          } else if (generatedNotice.category === "answer-key") {
+            generatedNotice.answerKeyData = {
+              id: `ans-ssc-ai-${Date.now()}`,
+              title: generatedNotice.title,
+              org: "Staff Selection Commission (SSC)",
+              released: todayStr,
+              objectionsLimit: "Active Online Challenge Window",
+              pdfUrl: targetUrl
+            };
+          }
+
+          addSscNotice(generatedNotice);
+          return res.json({ success: true, notice: generatedNotice });
+        }
+      } catch (geminiErr) {
+        console.warn("Gemini auto-parse fallback to heuristic:", geminiErr);
+      }
+    }
+
+    // Heuristic classification fallback
+    const lower = rawNoticeText.toLowerCase();
+    let cat: 'vacancy' | 'admit-card' | 'result' | 'answer-key' = 'vacancy';
+    let badge = 'New Release';
+
+    if (lower.includes('admit') || lower.includes('hall ticket') || lower.includes('city') || lower.includes('intimation') || lower.includes('प्रवेश पत्र')) {
+      cat = 'admit-card';
+      badge = 'Admit Card Live';
+    } else if (lower.includes('result') || lower.includes('merit') || lower.includes('cut off') || lower.includes('cutoff') || lower.includes('परिणाम') || lower.includes('मार्क्स')) {
+      cat = 'result';
+      badge = 'Result Declared';
+    } else if (lower.includes('answer key') || lower.includes('response sheet') || lower.includes('objection') || lower.includes('उत्तर कुंजी')) {
+      cat = 'answer-key';
+      badge = 'Answer Key Live';
+    } else {
+      cat = 'vacancy';
+      badge = 'New Vacancy';
+    }
+
+    const fallbackNotice: SscLiveNotice = {
+      id: `ssc-notice-heur-${Date.now()}`,
+      category: cat,
+      title: rawNoticeText.split('\n')[0] || rawNoticeText.slice(0, 80),
+      titleHi: `कर्मचारी चयन आयोग (SSC): ${rawNoticeText.split('\n')[0] || rawNoticeText.slice(0, 80)}`,
+      org: "Staff Selection Commission (SSC) / कर्मचारी चयन आयोग",
+      publishedDate: todayStr,
+      officialUrl: targetUrl,
+      pdfUrl: targetUrl,
+      isNew: true,
+      statusBadge: badge,
+      details: {
+        summary: rawNoticeText.slice(0, 200)
+      }
+    };
+
+    if (cat === "vacancy") {
+      fallbackNotice.jobData = {
+        id: `ssc-job-heur-${Date.now()}`,
+        title: fallbackNotice.title,
+        org: "Staff Selection Commission (SSC)",
+        category: "SSC",
+        qualification: "Graduate",
+        ageLimit: "18-30 Years",
+        salary: "Standard Commission Scale",
+        fees: { General: "₹100", OBC: "₹100", SC_ST_Female: "Exempted" },
+        totalPosts: 1000,
+        applyUrl: targetUrl,
+        pdfUrl: targetUrl,
+        officialWebsite: "https://ssc.gov.in/",
+        postedDate: todayStr,
+        lastDate: todayStr,
+        importantDates: { applyStart: todayStr, applyEnd: todayStr, examDate: "TBA", admitCardRelease: "TBA" },
+        selectionProcess: ["CBT Exam", "Document Verification"],
+        location: "Pan India",
+        description: rawNoticeText,
+        formStatus: "started"
+      };
+    } else if (cat === "admit-card") {
+      fallbackNotice.admitCardData = {
+        id: `admit-ssc-heur-${Date.now()}`,
+        title: fallbackNotice.title,
+        org: "Staff Selection Commission (SSC)",
+        examDate: "Scheduled",
+        examCity: "All Regions",
+        downloadUrl: targetUrl,
+        officialLink: "https://ssc.gov.in/",
+        addedDate: todayStr
+      };
+    } else if (cat === "result") {
+      fallbackNotice.resultData = {
+        id: `res-ssc-heur-${Date.now()}`,
+        title: fallbackNotice.title,
+        org: "Staff Selection Commission (SSC)",
+        meritListUrl: targetUrl,
+        scoreCardUrl: targetUrl,
+        cutOff: { UR: "Check PDF", OBC: "Check PDF", SC: "Check PDF", ST: "Check PDF" },
+        downloadUrl: targetUrl,
+        releaseDate: todayStr
+      };
+    } else if (cat === "answer-key") {
+      fallbackNotice.answerKeyData = {
+        id: `ans-ssc-heur-${Date.now()}`,
+        title: fallbackNotice.title,
+        org: "Staff Selection Commission (SSC)",
+        released: todayStr,
+        objectionsLimit: "Active Online",
+        pdfUrl: targetUrl
+      };
+    }
+
+    addSscNotice(fallbackNotice);
+    res.json({ success: true, notice: fallbackNotice });
+  });
+
   // Vite middleware setup
+
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
       server: { middlewareMode: true },

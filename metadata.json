@@ -1,6 +1,6 @@
 {
   "name": "Job Sarkari Hub",
-  "description": "Premium Indian Government Job Portal providing latest notifications, mock tests, results, admit cards, and current affairs.",
+  "description": "Comprehensive Indian Government Job Portal with real-time automatic synchronization for SSC notifications (https://ssc.gov.in/), vacancies, admit cards, results, answer keys, mock tests, and daily current affairs.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

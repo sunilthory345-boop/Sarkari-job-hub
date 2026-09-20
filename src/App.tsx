@@ -35,6 +35,9 @@ import AboutUsModal from './components/AboutUsModal';
 import TrafficDashboardModal from './components/TrafficDashboardModal';
 import WhatsAppChannelHub from './components/WhatsAppChannelHub';
 import AiDoubtSolver from './components/AiDoubtSolver';
+import SscLiveSyncHub from './components/SscLiveSyncHub';
+import SscLiveSyncBar from './components/SscLiveSyncBar';
+import { SscLiveNotice } from './types';
 import { initializeGA, trackPageView } from './utils/analytics';
 import { updateSEOMetadata } from './utils/seoHelper';
 import { fetchWithRetry } from './utils/fetchHelper';
@@ -365,8 +368,8 @@ export default function App() {
   const [todayQuizIdx, setTodayQuizIdx] = useState(0);
   const [todayAnswers, setTodayAnswers] = useState<{[key: string]: number}>({}); // maps question ID to selected option index
   const [todayActiveSubTab, setTodayActiveSubTab] = useState<'questions' | 'capsules'>('questions');
-  const [caQuizDate, setCaQuizDate] = useState<string>('2026-07-28');
-  const [homeQuizDate, setHomeQuizDate] = useState<string>('2026-07-28');
+  const [caQuizDate, setCaQuizDate] = useState<string>('2026-07-29');
+  const [homeQuizDate, setHomeQuizDate] = useState<string>('2026-07-29');
   const [caSearchQuery, setCaSearchQuery] = useState('');
   const [caSelectedCategory, setCaSelectedCategory] = useState<string>('All');
   const [caVisibleCount, setCaVisibleCount] = useState(6);
@@ -424,6 +427,7 @@ export default function App() {
   const getAvailableDates = () => {
     const datesSet = new Set<string>();
     // Default key dates
+    datesSet.add('2026-07-29');
     datesSet.add('2026-07-28');
     datesSet.add('2026-07-27');
     datesSet.add('2026-07-26');
@@ -458,8 +462,9 @@ export default function App() {
   };
 
   const formatCADate = (dateStr: string, isHindi: boolean) => {
-    if (dateStr === '2026-07-28') return isHindi ? 'मंगलवार, 28 जुलाई 2026 (आज के विशेष Live)' : 'Tuesday, 28 July 2026 (Today Live)';
-    if (dateStr === '2026-07-27') return isHindi ? 'सोमवार, 27 जुलाई 2026 (कल के विशेष)' : 'Monday, 27 July 2026 (Yesterday)';
+    if (dateStr === '2026-07-29') return isHindi ? 'बुधवार, 29 जुलाई 2026 (आज के विशेष Live)' : 'Wednesday, 29 July 2026 (Today Live)';
+    if (dateStr === '2026-07-28') return isHindi ? 'मंगलवार, 28 जुलाई 2026 (कल के विशेष)' : 'Tuesday, 28 July 2026 (Yesterday)';
+    if (dateStr === '2026-07-27') return isHindi ? 'सोमवार, 27 जुलाई 2026' : 'Monday, 27 July 2026';
     if (dateStr === '2026-07-26') return isHindi ? 'रविवार, 26 जुलाई 2026' : 'Sunday, 26 July 2026';
     if (dateStr === '2026-07-25') return isHindi ? 'शनिवार, 25 जुलाई 2026' : 'Saturday, 25 July 2026';
     if (dateStr === '2026-07-24') return isHindi ? 'शुक्रवार, 24 जुलाई 2026' : 'Friday, 24 July 2026';
@@ -726,6 +731,10 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
   });
   const [liveNotifications, setLiveNotifications] = useState<any[]>(() => {
     const defaultNotifs = [
+      { id: 'notif-29jul2026-vacancy-post-gds', category: 'Vacancy', title: 'Department of Posts (India Post) - India Post GDS 44,228 Gramin Dak Sevak Recruitment 2026 Online Application Form Live (Today 29 July 2026) / इंडिया पोस्ट जीडीएस 44,228 पद ऑनलाइन फॉर्म शुरू', timestamp: 'Just now (29 July 2026)', url: '?tab=jobs' },
+      { id: 'notif-29jul2026-admit-ssc-chsl', category: 'Admit Card', title: 'Staff Selection Commission (SSC) - SSC CHSL (10+2) Tier-1 Exam 2026 All Regions e-Admit Card & City Intimation Slip Link Active (Released Today 29 July 2026) / एसएससी सीएचएसएल Tier-1 एडमिट कार्ड जारी', timestamp: 'Just now (29 July 2026)', url: '?tab=admit-cards' },
+      { id: 'notif-29jul2026-result-ssc-cpo', category: 'Result', title: 'Staff Selection Commission (SSC) - SSC CPO Sub-Inspector in Delhi Police & CAPF Paper-1 Exam 2026 Official Result & Cut-off Marks Declared (Today 29 July 2026) / एसएससी सीपीओ रिजल्ट जारी', timestamp: 'Just now (29 July 2026)', url: '?tab=results' },
+      { id: 'notif-29jul2026-key-rpf-si', category: 'Answer Key', title: 'Railway Recruitment Boards (RRB) - RPF Sub-Inspector (SI) CBT-1 Exam 2026 Official Provisional Solved Answer Key & Response Sheet Link Active (Released Today 29 July 2026) / आरपीएफ एसआई उत्तर कुंजी जारी', timestamp: 'Just now (29 July 2026)', url: '?tab=answer-key' },
       { id: 'notif-ssc-cpo-vacancy-2026', category: 'Vacancy', title: 'Staff Selection Commission (SSC) - SSC CPO Sub-Inspector in Delhi Police & CAPF Exam 2026 Online Application Form (4,187 Posts) (Active Today) / एसएससी सीपीओ सब-इस्पेक्टर भर्ती 2026', timestamp: 'Just now', url: '?tab=jobs' },
       { id: 'notif-ssc-chsl-admit-2026', category: 'Admit Card', title: 'Staff Selection Commission (SSC) - SSC CHSL (10+2) Tier-1 Exam 2026 Region-Wise e-Admit Card & City Intimation Slip (Active Today) / एसएससी सीएचएसएल Tier-1 एडमिट कार्ड जारी', timestamp: 'Just now', url: '?tab=admit-cards' },
       { id: 'notif-ssc-mts-result-2025', category: 'Result', title: 'Staff Selection Commission (SSC) - SSC Multi-Tasking (Non-Technical) Staff & Havaldar (CBIC & CBN) Exam 2025 Final Recommended Merit List & Cut-off Marks (Declared Today) / एसएससी एमटीएस फाइनल रिजल्ट जारी', timestamp: 'Just now', url: '?tab=results' },
@@ -979,6 +988,80 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
     // 7. Toast alert
     triggerToast(`🔔 Auto-Refreshed: New ${category} is now Live!`);
   };
+
+  // SSC.GOV.IN REAL-TIME AUTO-MONITOR & SYNCHRONIZER
+  const [sscSyncing, setSscSyncing] = useState(false);
+  const [latestSscNotice, setLatestSscNotice] = useState<SscLiveNotice | null>(null);
+
+  const runSscAutoSync = async (notifyIfNoNew = false) => {
+    setSscSyncing(true);
+    try {
+      const res = await fetch('/api/ssc/live-feed');
+      if (res.ok) {
+        const data = await res.json();
+        const notices: SscLiveNotice[] = data.notices || [];
+        if (notices.length > 0) {
+          setLatestSscNotice(notices[0]);
+        }
+
+        // Check against existing IDs
+        const existingJIds = new Set(jobs.map(j => j.id));
+        const existingAIds = new Set(admitCards.map(a => a.id));
+        const existingRIds = new Set(results.map(r => r.id));
+        const existingKIds = new Set(answerKeys.map(k => k.id));
+
+        // Read already auto-imported notice IDs
+        const autoImported: string[] = JSON.parse(localStorage.getItem('sarkari_auto_imported_ssc_ids') || '[]');
+        const importedSet = new Set(autoImported);
+
+        let newItemsAdded = 0;
+
+        for (const notice of notices) {
+          if (importedSet.has(notice.id)) continue;
+
+          if (notice.category === 'vacancy' && notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'admit-card' && notice.admitCardData && !existingAIds.has(notice.admitCardData.id)) {
+            handleNewLaunch('Admit Card', notice.title, notice.org, 'admitCards', notice.admitCardData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'result' && notice.resultData && !existingRIds.has(notice.resultData.id)) {
+            handleNewLaunch('Result', notice.title, notice.org, 'results', notice.resultData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'answer-key' && notice.answerKeyData && !existingKIds.has(notice.answerKeyData.id)) {
+            handleNewLaunch('Answer Key', notice.title, notice.org, 'answerKeys', notice.answerKeyData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          }
+        }
+
+        if (newItemsAdded > 0) {
+          localStorage.setItem('sarkari_auto_imported_ssc_ids', JSON.stringify(Array.from(importedSet)));
+          triggerToast(`⚡ [SSC.GOV.IN] ${newItemsAdded} fresh release(s) auto-synced to your website!`);
+        } else if (notifyIfNoNew) {
+          triggerToast('🟢 SSC Portal (https://ssc.gov.in/) is checked. All notices are currently up to date.');
+        }
+      }
+    } catch (e) {
+      console.warn('SSC Auto-Sync error:', e);
+    } finally {
+      setSscSyncing(false);
+    }
+  };
+
+  useEffect(() => {
+    runSscAutoSync(false);
+
+    // Auto-poll ssc.gov.in every 45 seconds
+    const sscInterval = setInterval(() => {
+      runSscAutoSync(false);
+    }, 45000);
+
+    return () => clearInterval(sscInterval);
+  }, []);
 
   const [premiumModalOpen, setPremiumModalOpen] = useState(false);
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
@@ -1389,9 +1472,36 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
         liveNotifications={liveNotifications}
       />
 
+      {/* ⚡ SSC.GOV.IN REAL-TIME LIVE UPDATE BAR */}
+      <SscLiveSyncBar
+        locale={locale}
+        onOpenHub={() => setActiveTab('ssc-sync')}
+        onQuickSync={() => runSscAutoSync(true)}
+        isSyncing={sscSyncing}
+        latestNotice={latestSscNotice}
+      />
+
       {/* Main Body wrap */}
       <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 flex-1">
         
+        {/* TAB: SSC.GOV.IN REAL-TIME MONITOR HUB */}
+        {activeTab === 'ssc-sync' && (
+          <div className="space-y-6">
+            <SscLiveSyncHub
+              locale={locale}
+              onAddJob={(newJob) => handleNewLaunch('Vacancy', newJob.title, newJob.org, 'jobs', newJob)}
+              onAddAdmitCard={(newCard) => handleNewLaunch('Admit Card', newCard.title, newCard.org, 'admitCards', newCard)}
+              onAddResult={(newRes) => handleNewLaunch('Result', newRes.title, newRes.org, 'results', newRes)}
+              onAddAnswerKey={(newKey) => handleNewLaunch('Answer Key', newKey.title, newKey.org, 'answerKeys', newKey)}
+              triggerToast={triggerToast}
+              existingJobIds={jobs.map(j => j.id)}
+              existingAdmitCardIds={admitCards.map(c => c.id)}
+              existingResultIds={results.map(r => r.id)}
+              existingAnswerKeyIds={answerKeys.map(k => k.id)}
+            />
+          </div>
+        )}
+
         {/* TAB 1: HOME PAGE (DASHBOARD HIGHLIGHTS) */}
         {activeTab === 'home' && (
           <div className="space-y-10">

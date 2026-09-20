@@ -1,4 +1,5 @@
 import { CurrentAffair, Question } from '../types';
+import { QUESTIONS_29_JULY_2026 } from './questions29July2026';
 
 // 50 Daily Current Affairs News Items (Bilingual / English-Hindi mix for authenticity)
 export const DAILY_CURRENT_AFFAIRS_ITEMS: CurrentAffair[] = [
@@ -42,6 +43,46 @@ export const DAILY_CURRENT_AFFAIRS_ITEMS: CurrentAffair[] = [
     category: 'Economy',
     pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Navratna_IREDA_RailTel_2026.pdf',
     content: "Ministry of Finance elevated Indian Renewable Energy Development Agency (IREDA) and RailTel Corporation to Navratna status granting autonomy for capital expenditure up to ₹1,000 Crore."
+  },
+  {
+    id: 'ca-news-jul-29-6',
+    title: "Department of Posts launches mega recruitment drive for 44,228 Gramin Dak Sevak (GDS) posts / डाक विभाग ने 44,228 ग्रामीण डाक सेवक पदों के लिए भर्ती अभियान शुरू किया",
+    date: '2026-07-29',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/India_Post_GDS_44228_July_2026.pdf',
+    content: "India Post opened its centralized online application portal across 23 postal circles for 44,228 Gramin Dak Sevak, Branch Postmaster and Assistant Branch Postmaster vacancies, evaluated purely on 10th-grade board examination merit without written test."
+  },
+  {
+    id: 'ca-news-jul-29-7',
+    title: "India's foreign exchange reserves surpass milestone mark of $700 Billion / भारत का विदेशी मुद्रा भंडार $700 बिलियन के मील के पत्थर को पार कर गया",
+    date: '2026-07-29',
+    category: 'Economy',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/India_Forex_700B_July_2026.pdf',
+    content: "According to RBI statistical data released on 29 July 2026, foreign portfolio capital inflows and record services exports pushed India's forex reserves past $700 Billion, solidifying macro-stability."
+  },
+  {
+    id: 'ca-news-jul-29-8',
+    title: "Neeraj Chopra secures top rank at prestigious World Athletics League Meet / नीरज चोपड़ा ने प्रतिष्ठित विश्व एथलेटिक्स लीग मीट में शीर्ष स्थान हासिल किया",
+    date: '2026-07-29',
+    category: 'Sports',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Neeraj_Chopra_Victory_July_2026.pdf',
+    content: "Olympic gold medalist Neeraj Chopra produced an 89.45-meter throw in his second attempt to lead the international javelin throw contest, maintaining top global ranking in track and field."
+  },
+  {
+    id: 'ca-news-jul-29-9',
+    title: "Supreme Court of India expands e-Courts Phase-III digital filing and case tracking / भारत के सर्वोच्च न्यायालय ने ई-कोर्ट्स चरण-III डिजिटल फाइलिंग का विस्तार किया",
+    date: '2026-07-29',
+    category: 'National',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/Supreme_Court_eCourts3_July_2026.pdf',
+    content: "The Supreme Court e-Committee rolled out cloud-backed digital case tracking and AI translation modules across 5,000 subordinate courts, speeding up access to justice for vernacular litigants."
+  },
+  {
+    id: 'ca-news-jul-29-10',
+    title: "Ministry of Environment designates three new Ramsar wetland sites in India / पर्यावरण मंत्रालय ने भारत में तीन नए रामसर आर्द्रभूमि स्थलों को नामित किया",
+    date: '2026-07-29',
+    category: 'Environment',
+    pdfUrl: 'https://jobsarkarihub.pdf/current-affairs/New_Ramsar_Sites_India_2026.pdf',
+    content: "The Ramsar Convention Secretariat recognized three new high-biodiversity wetland sanctuaries in India, expanding the nation's Ramsar network and bolstering bird conservation corridors."
   },
 
   // --- 28 JULY 2026 ---
@@ -1919,6 +1960,7 @@ export const DAILY_CURRENT_AFFAIRS_ITEMS: CurrentAffair[] = [
 
 // 50 Interactive Current Affairs Quiz Questions (Bilingual formatting)
 export const CURRENT_AFFAIRS_QUIZ_QUESTIONS: Question[] = [
+  ...QUESTIONS_29_JULY_2026,
   {
     id: 'ca-q-today-201',
     text: 'What is the budget allocated for the global infrastructure partnership fund finalized by G7 nations in Rome? / रोम में जी7 (G7) देशों द्वारा अंतिम रूप दिए गए वैश्विक बुनियादी ढांचा साझेदारी कोष के लिए कितना बजट आवंटित किया गया है?',
