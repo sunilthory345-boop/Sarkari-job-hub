@@ -356,3 +356,47 @@ export interface SbiSyncStatus {
   totalLiveNotices: number;
   newNoticesCount: number;
 }
+
+export interface RajLiveNotice {
+  id: string;
+  category: 'vacancy' | 'admit-card' | 'result' | 'answer-key' | 'otr';
+  title: string;
+  titleHi: string;
+  org: string; // e.g. RSMSSB, RPSC, Rajasthan Police, Dept of Education, Medical Health
+  board: 'RSMSSB' | 'RPSC' | 'RajPolice' | 'Education' | 'Medical' | 'HighCourt' | 'Other';
+  advtNo?: string; // e.g. 05/2026, 12/2026-27
+  ssoPortalUrl: string; // https://www.recruitment.rajasthan.gov.in/
+  publishedDate: string;
+  officialUrl: string;
+  pdfUrl?: string;
+  isNew?: boolean;
+  statusBadge: string;
+  details: {
+    posts?: number;
+    examDate?: string;
+    lastDate?: string;
+    cutoff?: string;
+    stage?: string;
+    summary?: string;
+    qualification?: string;
+    salary?: string;
+    cetRequired?: 'CET (Graduation Level)' | 'CET (Senior Secondary 10+2)' | 'None';
+    otrFee?: string;
+    districts?: string[];
+  };
+  jobData?: any;
+  admitCardData?: any;
+  resultData?: any;
+  answerKeyData?: any;
+}
+
+export interface RajSyncStatus {
+  online: boolean;
+  portal: string;
+  status: string;
+  lastChecked: string;
+  latencyMs: number;
+  autoSyncIntervalSec: number;
+  totalLiveNotices: number;
+  newNoticesCount: number;
+}

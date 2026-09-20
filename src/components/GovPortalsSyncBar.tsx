@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { RefreshCw, Zap, ExternalLink, ShieldCheck, ChevronRight, CheckCircle, Award, Sparkles, Train, Landmark } from 'lucide-react';
-import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice, IbpsLiveNotice, SbiLiveNotice } from '../types';
+import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice, IbpsLiveNotice, SbiLiveNotice, RajLiveNotice } from '../types';
 
 interface GovPortalsSyncBarProps {
   locale?: string;
@@ -9,22 +9,26 @@ interface GovPortalsSyncBarProps {
   onOpenRrbHub: () => void;
   onOpenIbpsHub: () => void;
   onOpenSbiHub: () => void;
+  onOpenRajHub: () => void;
   onQuickSscSync: () => void;
   onQuickUpscSync: () => void;
   onQuickRrbSync: () => void;
   onQuickIbpsSync: () => void;
   onQuickSbiSync: () => void;
+  onQuickRajSync: () => void;
   onQuickSyncAll?: () => void;
   isSscSyncing?: boolean;
   isUpscSyncing?: boolean;
   isRrbSyncing?: boolean;
   isIbpsSyncing?: boolean;
   isSbiSyncing?: boolean;
+  isRajSyncing?: boolean;
   latestSscNotice?: SscLiveNotice | null;
   latestUpscNotice?: UpscLiveNotice | null;
   latestRrbNotice?: RrbLiveNotice | null;
   latestIbpsNotice?: IbpsLiveNotice | null;
   latestSbiNotice?: SbiLiveNotice | null;
+  latestRajNotice?: RajLiveNotice | null;
 }
 
 export default function GovPortalsSyncBar({
@@ -34,25 +38,29 @@ export default function GovPortalsSyncBar({
   onOpenRrbHub,
   onOpenIbpsHub,
   onOpenSbiHub,
+  onOpenRajHub,
   onQuickSscSync,
   onQuickUpscSync,
   onQuickRrbSync,
   onQuickIbpsSync,
   onQuickSbiSync,
+  onQuickRajSync,
   onQuickSyncAll,
   isSscSyncing = false,
   isUpscSyncing = false,
   isRrbSyncing = false,
   isIbpsSyncing = false,
   isSbiSyncing = false,
+  isRajSyncing = false,
   latestSscNotice,
   latestUpscNotice,
   latestRrbNotice,
   latestIbpsNotice,
-  latestSbiNotice
+  latestSbiNotice,
+  latestRajNotice
 }: GovPortalsSyncBarProps) {
   const [secondsRemaining, setSecondsRemaining] = useState(45);
-  const [activePortalTab, setActivePortalTab] = useState<'sbi' | 'ibps' | 'rrb' | 'upsc' | 'ssc'>('sbi');
+  const [activePortalTab, setActivePortalTab] = useState<'raj' | 'sbi' | 'ibps' | 'rrb' | 'upsc' | 'ssc'>('raj');
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -61,7 +69,7 @@ export default function GovPortalsSyncBar({
     return () => clearInterval(timer);
   }, []);
 
-  const isSyncingAny = isSscSyncing || isUpscSyncing || isRrbSyncing || isIbpsSyncing || isSbiSyncing;
+  const isSyncingAny = isSscSyncing || isUpscSyncing || isRrbSyncing || isIbpsSyncing || isSbiSyncing || isRajSyncing;
 
   return (
     <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 text-white border-b border-slate-800 shadow-md py-2 px-3 sm:px-4">
@@ -70,6 +78,24 @@ export default function GovPortalsSyncBar({
         {/* Left: Portals Switcher & Live Indicator */}
         <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           
+          {/* RAJASTHAN SSO RECRUITMENT Pill Tab */}
+          <button
+            onClick={() => {
+              setActivePortalTab('raj');
+              onOpenRajHub();
+            }}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold transition border cursor-pointer ${
+              activePortalTab === 'raj'
+                ? 'bg-amber-600/40 text-amber-300 border-amber-400/70 shadow-xs'
+                : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:text-white'
+            }`}
+          >
+            <span className="h-2 w-2 rounded-full bg-amber-400 animate-ping"></span>
+            <span className="h-2 w-2 rounded-full bg-amber-400 -ml-3.5"></span>
+            <Landmark className="h-3 w-3 text-amber-400" />
+            <span>RAJASTHAN SSO LIVE</span>
+          </button>
+
           {/* SBI.BANK.IN Pill Tab */}
           <button
             onClick={() => {
@@ -82,10 +108,9 @@ export default function GovPortalsSyncBar({
                 : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:text-white'
             }`}
           >
-            <span className="h-2 w-2 rounded-full bg-sky-400 animate-ping"></span>
-            <span className="h-2 w-2 rounded-full bg-sky-400 -ml-3.5"></span>
+            <span className="h-2 w-2 rounded-full bg-sky-400 animate-pulse"></span>
             <Landmark className="h-3 w-3 text-sky-400" />
-            <span>SBI.BANK.IN LIVE</span>
+            <span>SBI.BANK.IN</span>
           </button>
 
           {/* IBPS Pill Tab */}
@@ -102,7 +127,7 @@ export default function GovPortalsSyncBar({
           >
             <span className="h-2 w-2 rounded-full bg-blue-400 animate-pulse"></span>
             <Landmark className="h-3 w-3 text-blue-400" />
-            <span>IBPS.IN LIVE</span>
+            <span>IBPS.IN</span>
           </button>
 
           {/* RRB Pill Tab */}
@@ -119,7 +144,7 @@ export default function GovPortalsSyncBar({
           >
             <span className="h-2 w-2 rounded-full bg-red-400 animate-pulse"></span>
             <Train className="h-3 w-3 text-red-400" />
-            <span>RRB LIVE</span>
+            <span>RRB</span>
           </button>
 
           {/* UPSC Pill Tab */}
@@ -135,7 +160,7 @@ export default function GovPortalsSyncBar({
             }`}
           >
             <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse"></span>
-            <span>UPSC LIVE</span>
+            <span>UPSC</span>
           </button>
 
           {/* SSC Pill Tab */}
@@ -151,12 +176,25 @@ export default function GovPortalsSyncBar({
             }`}
           >
             <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>SSC LIVE</span>
+            <span>SSC</span>
           </button>
 
           {/* Active Ticker */}
           <div className="hidden xl:flex items-center gap-1.5 text-[11px] border-l border-slate-700 pl-2.5 max-w-sm 2xl:max-w-md truncate">
-            {activePortalTab === 'sbi' ? (
+            {activePortalTab === 'raj' ? (
+              latestRajNotice ? (
+                <div className="flex items-center gap-1.5 truncate text-amber-200">
+                  <span className="bg-amber-500/20 text-amber-300 px-1.5 py-0.2 rounded font-mono font-bold text-[9px] uppercase shrink-0">
+                    RAJ {latestRajNotice.board || latestRajNotice.category}
+                  </span>
+                  <span className="truncate">{latestRajNotice.title}</span>
+                </div>
+              ) : (
+                <span className="text-amber-200/80 truncate">
+                  {locale === 'hi' ? '🏛️ राजस्थान स्टेट रिक्रूटमेंट पोर्टल (recruitment.rajasthan.gov.in) लाइव सक्रिय' : '🏛️ Rajasthan State Recruitment Portal (recruitment.rajasthan.gov.in) live'}
+                </span>
+              )
+            ) : activePortalTab === 'sbi' ? (
               latestSbiNotice ? (
                 <div className="flex items-center gap-1.5 truncate text-sky-200">
                   <span className="bg-sky-500/20 text-sky-300 px-1.5 py-0.2 rounded font-mono font-bold text-[9px] uppercase shrink-0">
@@ -228,18 +266,29 @@ export default function GovPortalsSyncBar({
         {/* Right: Quick Action Controls */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           <span className="text-[10px] font-mono text-slate-400 hidden lg:inline">
-            Auto-Sync: <strong className="text-sky-400">{secondsRemaining}s</strong>
+            Auto-Sync: <strong className="text-amber-400">{secondsRemaining}s</strong>
           </span>
+
+          {/* Quick Sync Rajasthan SSO Button */}
+          <button
+            onClick={onQuickRajSync}
+            disabled={isRajSyncing}
+            className="flex items-center gap-1 bg-amber-600 hover:bg-amber-500 text-white font-bold px-2.5 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75"
+            title="Sync latest Rajasthan notices from https://www.recruitment.rajasthan.gov.in/"
+          >
+            <RefreshCw className={`h-3 w-3 ${isRajSyncing ? 'animate-spin' : ''}`} />
+            <span>{locale === 'hi' ? '🏛️ राजस्थान' : '🏛️ RAJ SSO'}</span>
+          </button>
 
           {/* Quick Sync SBI Button */}
           <button
             onClick={onQuickSbiSync}
             disabled={isSbiSyncing}
-            className="flex items-center gap-1 bg-sky-600 hover:bg-sky-500 text-white font-bold px-2.5 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75"
+            className="flex items-center gap-1 bg-sky-600 hover:bg-sky-500 text-white font-bold px-2 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75"
             title="Sync latest SBI career notices from https://sbi.bank.in/web/careers/current-openings"
           >
             <RefreshCw className={`h-3 w-3 ${isSbiSyncing ? 'animate-spin' : ''}`} />
-            <span>{locale === 'hi' ? '🏛️ SBI' : '🏛️ SBI'}</span>
+            <span>SBI</span>
           </button>
 
           {/* Quick Sync IBPS Button */}
@@ -286,12 +335,12 @@ export default function GovPortalsSyncBar({
             <span>SSC</span>
           </button>
 
-          {/* Direct Link to SBI Hub */}
+          {/* Direct Link to Rajasthan Hub */}
           <button
-            onClick={onOpenSbiHub}
-            className="flex items-center gap-1 bg-sky-500/20 hover:bg-sky-500/30 text-sky-200 font-bold px-2.5 py-1 rounded-lg text-[11px] transition border border-sky-400/30 cursor-pointer"
+            onClick={onOpenRajHub}
+            className="flex items-center gap-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 font-bold px-2.5 py-1 rounded-lg text-[11px] transition border border-amber-400/40 cursor-pointer"
           >
-            <span>{locale === 'hi' ? 'एसबीआई करियर' : 'SBI Hub'}</span>
+            <span>{locale === 'hi' ? 'राजस्थान पोर्टल' : 'Rajasthan SSO Hub'}</span>
             <ChevronRight className="h-3 w-3" />
           </button>
         </div>

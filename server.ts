@@ -38,6 +38,7 @@ import {
   checkSbiPortalHealth,
   SbiLiveNotice
 } from "./server/sbiService";
+import { rajasthanRecruitmentService } from "./server/rajasthanService";
 
 dotenv.config();
 
@@ -2167,6 +2168,86 @@ Return JSON strictly.`;
 
     addSbiNotice(fallbackNotice);
     res.json({ success: true, notice: fallbackNotice });
+  });
+
+  // ==========================================
+  // RAJASTHAN SSO RECRUITMENT PORTAL API (https://www.recruitment.rajasthan.gov.in/)
+  // ==========================================
+
+  // 1. Get Portal Status & Health
+  app.get("/api/rajasthan/status", (req, res) => {
+    try {
+      const status = rajasthanRecruitmentService.getStatus();
+      res.json(status);
+    } catch (err) {
+      res.status(500).json({ error: "Failed to retrieve Rajasthan recruitment portal status" });
+    }
+  });
+
+  // 2. Get Live Notices Monitored from recruitment.rajasthan.gov.in
+  app.get("/api/rajasthan/live-feed", (req, res) => {
+    try {
+      const notices = rajasthanRecruitmentService.getNotices();
+      const status = rajasthanRecruitmentService.getStatus();
+      res.json({
+        portal: "https://www.recruitment.rajasthan.gov.in/",
+        status,
+        count: notices.length,
+        notices
+      });
+    } catch (err) {
+      res.status(500).json({ error: "Failed to fetch Rajasthan recruitment feed" });
+    }
+  });
+
+  // 3. Force Instant Sync with Official Rajasthan Recruitment Portal
+  app.post("/api/rajasthan/sync-now", async (req, res) => {
+    try {
+      const syncRes = await rajasthanRecruitmentService.syncWithOfficialPortal();
+      const status = rajasthanRecruitmentService.getStatus();
+      res.json({
+        success: true,
+        message: "State Recruitment Portal (https://www.recruitment.rajasthan.gov.in/) synced successfully.",
+        syncRes,
+        status
+      });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Rajasthan sync failed" });
+    }
+  });
+
+  // 4. Publish Notice to Rajasthan Feed
+  app.post("/api/rajasthan/publish-notice", (req, res) => {
+    const { notice } = req.body;
+    if (!notice || !notice.title || !notice.category) {
+      return res.status(400).json({ error: "Notice title and category are required" });
+    }
+    const saved = rajasthanRecruitmentService.addNotice({
+      ...notice,
+      id: notice.id || `raj-manual-${Date.now()}`,
+      ssoPortalUrl: "https://www.recruitment.rajasthan.gov.in/",
+      publishedDate: notice.publishedDate || new Date().toISOString().split("T")[0],
+      officialUrl: notice.officialUrl || "https://www.recruitment.rajasthan.gov.in/",
+      isNew: true
+    });
+    res.json({ success: true, notice: saved });
+  });
+
+  // 5. AI-Powered Rajasthan Notice Analyzer
+  app.post("/api/rajasthan/auto-parse", async (req, res) => {
+    const { rawNoticeText, sourceUrl } = req.body;
+    if (!rawNoticeText) {
+      return res.status(400).json({ error: "rawNoticeText is required" });
+    }
+    try {
+      const notice = await rajasthanRecruitmentService.parseRawNoticeWithGemini(
+        rawNoticeText,
+        sourceUrl || "https://www.recruitment.rajasthan.gov.in/"
+      );
+      res.json({ success: true, notice });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to parse Rajasthan notice" });
+    }
   });
 
 
