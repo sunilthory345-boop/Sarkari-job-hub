@@ -48,11 +48,12 @@ export interface JobResult {
   org: string;
   meritListUrl: string;
   scoreCardUrl: string;
-  cutOff: {
-    UR: string;
-    OBC: string;
-    SC: string;
-    ST: string;
+  cutOff?: {
+    UR?: string;
+    OBC?: string;
+    SC?: string;
+    ST?: string;
+    [key: string]: string | undefined;
   };
   downloadUrl: string;
   releaseDate: string;
@@ -264,6 +265,47 @@ export interface RrbLiveNotice {
 }
 
 export interface RrbSyncStatus {
+  online: boolean;
+  portal: string;
+  status: string;
+  lastChecked: string;
+  latencyMs: number;
+  autoSyncIntervalSec: number;
+  totalLiveNotices: number;
+  newNoticesCount: number;
+}
+
+export interface IbpsLiveNotice {
+  id: string;
+  category: 'vacancy' | 'admit-card' | 'result' | 'answer-key';
+  title: string;
+  titleHi: string;
+  org: string;
+  crpCode?: string; // e.g. CRP PO/MT-XVI, CRP CLERK-XVI, CRP RRBs-XV, CRP SPL-XVI
+  cadre?: 'PO' | 'Clerk' | 'SO' | 'RRB' | 'Specialist';
+  publishedDate: string;
+  officialUrl: string;
+  pdfUrl?: string;
+  isNew?: boolean;
+  statusBadge: string;
+  details: {
+    posts?: number;
+    examDate?: string;
+    lastDate?: string;
+    cutoff?: string;
+    stage?: string; // Prelims / Mains / Interview / Final Allotment
+    summary?: string;
+    qualification?: string;
+    salary?: string;
+    participatingBanks?: string[];
+  };
+  jobData?: GovJob;
+  admitCardData?: AdmitCard;
+  resultData?: JobResult;
+  answerKeyData?: AnswerKey;
+}
+
+export interface IbpsSyncStatus {
   online: boolean;
   portal: string;
   status: string;

@@ -39,8 +39,9 @@ import SscLiveSyncHub from './components/SscLiveSyncHub';
 import SscLiveSyncBar from './components/SscLiveSyncBar';
 import UpscLiveSyncHub from './components/UpscLiveSyncHub';
 import RrbLiveSyncHub from './components/RrbLiveSyncHub';
+import IbpsLiveSyncHub from './components/IbpsLiveSyncHub';
 import GovPortalsSyncBar from './components/GovPortalsSyncBar';
-import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice } from './types';
+import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice, IbpsLiveNotice } from './types';
 import { initializeGA, trackPageView } from './utils/analytics';
 import { updateSEOMetadata } from './utils/seoHelper';
 import { fetchWithRetry } from './utils/fetchHelper';
@@ -212,7 +213,16 @@ export default function App() {
     if (saved) {
       try {
         const parsed = JSON.parse(saved) as JobResult[];
-        const deduplicated = deduplicateById(parsed);
+        const sanitized = (parsed || []).map(r => ({
+          ...r,
+          cutOff: {
+            UR: r.cutOff?.UR || 'Declared on Portal',
+            OBC: r.cutOff?.OBC || 'Declared on Portal',
+            SC: r.cutOff?.SC || 'Declared on Portal',
+            ST: r.cutOff?.ST || 'Declared on Portal'
+          }
+        }));
+        const deduplicated = deduplicateById(sanitized);
         const existingIds = new Set(deduplicated.map(r => r.id));
         const missingResults = INITIAL_RESULTS.filter(r => !existingIds.has(r.id));
         if (missingResults.length > 0 || deduplicated.length !== parsed.length) {
@@ -897,7 +907,18 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
         } catch (err) { console.error(err); }
       } else if (e.key === 'sarkari_results') {
         try {
-          if (e.newValue) setResults(JSON.parse(e.newValue));
+          if (e.newValue) {
+            const raw = JSON.parse(e.newValue);
+            setResults((raw || []).map((r: any) => ({
+              ...r,
+              cutOff: {
+                UR: r.cutOff?.UR || 'Declared on Portal',
+                OBC: r.cutOff?.OBC || 'Declared on Portal',
+                SC: r.cutOff?.SC || 'Declared on Portal',
+                ST: r.cutOff?.ST || 'Declared on Portal'
+              }
+            })));
+          }
         } catch (err) { console.error(err); }
       } else if (e.key === 'sarkari_answer_keys') {
         try {
@@ -930,7 +951,18 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
             const savedAdmit = localStorage.getItem('sarkari_admit_cards');
             if (savedAdmit) setAdmitCards(JSON.parse(savedAdmit));
             const savedResults = localStorage.getItem('sarkari_results');
-            if (savedResults) setResults(JSON.parse(savedResults));
+            if (savedResults) {
+              const raw = JSON.parse(savedResults);
+              setResults((raw || []).map((r: any) => ({
+                ...r,
+                cutOff: {
+                  UR: r.cutOff?.UR || 'Declared on Portal',
+                  OBC: r.cutOff?.OBC || 'Declared on Portal',
+                  SC: r.cutOff?.SC || 'Declared on Portal',
+                  ST: r.cutOff?.ST || 'Declared on Portal'
+                }
+              })));
+            }
             const savedKeys = localStorage.getItem('sarkari_answer_keys');
             if (savedKeys) setAnswerKeys(JSON.parse(savedKeys));
             const savedNotifs = localStorage.getItem('sarkari_live_notifications');
@@ -948,7 +980,18 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
     // 1. Update list state
     if (itemType === 'jobs') setJobs(prev => [item, ...prev]);
     else if (itemType === 'admitCards') setAdmitCards(prev => [item, ...prev]);
-    else if (itemType === 'results') setResults(prev => [item, ...prev]);
+    else if (itemType === 'results') {
+      const sanitizedRes: JobResult = {
+        ...item,
+        cutOff: {
+          UR: item.cutOff?.UR || 'Declared on Portal',
+          OBC: item.cutOff?.OBC || 'Declared on Portal',
+          SC: item.cutOff?.SC || 'Declared on Portal',
+          ST: item.cutOff?.ST || 'Declared on Portal'
+        }
+      };
+      setResults(prev => [sanitizedRes, ...prev]);
+    }
     else if (itemType === 'answerKeys') setAnswerKeys(prev => [item, ...prev]);
     else if (itemType === 'newspapers') setNewspapers(prev => [item, ...prev]);
 
@@ -1212,6 +1255,80 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
     }, 45000);
 
     return () => clearInterval(rrbInterval);
+  }, []);
+
+  // IBPS.IN REAL-TIME AUTO-MONITOR & SYNCHRONIZER (Banking - PO, Clerk, RRB, SO)
+  const [ibpsSyncing, setIbpsSyncing] = useState(false);
+  const [latestIbpsNotice, setLatestIbpsNotice] = useState<IbpsLiveNotice | null>(null);
+
+  const runIbpsAutoSync = async (notifyIfNoNew = false) => {
+    setIbpsSyncing(true);
+    try {
+      const res = await fetch('/api/ibps/live-feed');
+      if (res.ok) {
+        const data = await res.json();
+        const notices: IbpsLiveNotice[] = data.notices || [];
+        if (notices.length > 0) {
+          setLatestIbpsNotice(notices[0]);
+        }
+
+        // Check against existing IDs
+        const existingJIds = new Set(jobs.map(j => j.id));
+        const existingAIds = new Set(admitCards.map(a => a.id));
+        const existingRIds = new Set(results.map(r => r.id));
+        const existingKIds = new Set(answerKeys.map(k => k.id));
+
+        // Read already auto-imported notice IDs
+        const autoImported: string[] = JSON.parse(localStorage.getItem('sarkari_auto_imported_ibps_ids') || '[]');
+        const importedSet = new Set(autoImported);
+
+        let newItemsAdded = 0;
+
+        for (const notice of notices) {
+          if (importedSet.has(notice.id)) continue;
+
+          if (notice.category === 'vacancy' && notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'admit-card' && notice.admitCardData && !existingAIds.has(notice.admitCardData.id)) {
+            handleNewLaunch('Admit Card', notice.title, notice.org, 'admitCards', notice.admitCardData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'result' && notice.resultData && !existingRIds.has(notice.resultData.id)) {
+            handleNewLaunch('Result', notice.title, notice.org, 'results', notice.resultData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'answer-key' && notice.answerKeyData && !existingKIds.has(notice.answerKeyData.id)) {
+            handleNewLaunch('Answer Key', notice.title, notice.org, 'answerKeys', notice.answerKeyData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          }
+        }
+
+        if (newItemsAdded > 0) {
+          localStorage.setItem('sarkari_auto_imported_ibps_ids', JSON.stringify(Array.from(importedSet)));
+          triggerToast(`🏦 [IBPS.IN] ${newItemsAdded} Banking release(s) auto-synced to your website!`);
+        } else if (notifyIfNoNew) {
+          triggerToast('🟢 IBPS Portal (https://www.ibps.in/) is checked. All banking notices are currently up to date.');
+        }
+      }
+    } catch (e) {
+      console.warn('IBPS Auto-Sync error:', e);
+    } finally {
+      setIbpsSyncing(false);
+    }
+  };
+
+  useEffect(() => {
+    runIbpsAutoSync(false);
+
+    // Auto-poll ibps.in every 45 seconds
+    const ibpsInterval = setInterval(() => {
+      runIbpsAutoSync(false);
+    }, 45000);
+
+    return () => clearInterval(ibpsInterval);
   }, []);
 
   const [premiumModalOpen, setPremiumModalOpen] = useState(false);
@@ -1623,18 +1740,22 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
         liveNotifications={liveNotifications}
       />
 
-      {/* ⚡ RRB, UPSC & SSC REAL-TIME LIVE UPDATE BAR */}
+      {/* ⚡ IBPS, RRB, UPSC & SSC REAL-TIME LIVE UPDATE BAR */}
       <GovPortalsSyncBar
         locale={locale}
+        onOpenIbpsHub={() => setActiveTab('ibps-sync')}
         onOpenSscHub={() => setActiveTab('ssc-sync')}
         onOpenUpscHub={() => setActiveTab('upsc-sync')}
         onOpenRrbHub={() => setActiveTab('rrb-sync')}
+        onQuickIbpsSync={() => runIbpsAutoSync(true)}
         onQuickSscSync={() => runSscAutoSync(true)}
         onQuickUpscSync={() => runUpscAutoSync(true)}
         onQuickRrbSync={() => runRrbAutoSync(true)}
+        isIbpsSyncing={ibpsSyncing}
         isSscSyncing={sscSyncing}
         isUpscSyncing={upscSyncing}
         isRrbSyncing={rrbSyncing}
+        latestIbpsNotice={latestIbpsNotice}
         latestSscNotice={latestSscNotice}
         latestUpscNotice={latestUpscNotice}
         latestRrbNotice={latestRrbNotice}
@@ -1643,6 +1764,24 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
       {/* Main Body wrap */}
       <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 flex-1">
         
+        {/* TAB: IBPS.IN REAL-TIME MONITOR HUB */}
+        {activeTab === 'ibps-sync' && (
+          <div className="space-y-6">
+            <IbpsLiveSyncHub
+              locale={locale}
+              onAddJob={(newJob) => handleNewLaunch('Vacancy', newJob.title, newJob.org, 'jobs', newJob)}
+              onAddAdmitCard={(newCard) => handleNewLaunch('Admit Card', newCard.title, newCard.org, 'admitCards', newCard)}
+              onAddResult={(newRes) => handleNewLaunch('Result', newRes.title, newRes.org, 'results', newRes)}
+              onAddAnswerKey={(newKey) => handleNewLaunch('Answer Key', newKey.title, newKey.org, 'answerKeys', newKey)}
+              triggerToast={triggerToast}
+              existingJobIds={jobs.map(j => j.id)}
+              existingAdmitCardIds={admitCards.map(c => c.id)}
+              existingResultIds={results.map(r => r.id)}
+              existingAnswerKeyIds={answerKeys.map(k => k.id)}
+            />
+          </div>
+        )}
+
         {/* TAB: RRBAPPLY.GOV.IN REAL-TIME MONITOR HUB */}
         {activeTab === 'rrb-sync' && (
           <div className="space-y-6">
@@ -3004,8 +3143,8 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                         
                         {/* Cutoff micro block */}
                         <div className="bg-white p-1.5 rounded border border-slate-100 grid grid-cols-2 gap-1 text-[9px] text-slate-500 font-semibold">
-                          <div>Gen/UR: <span className="font-bold text-slate-800">{res.cutOff.UR}</span></div>
-                          <div>OBC: <span className="font-bold text-slate-800">{res.cutOff.OBC}</span></div>
+                          <div>Gen/UR: <span className="font-bold text-slate-800">{res.cutOff?.UR || 'N/A'}</span></div>
+                          <div>OBC: <span className="font-bold text-slate-800">{res.cutOff?.OBC || 'N/A'}</span></div>
                         </div>
 
                         <a 
@@ -3270,10 +3409,10 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
 
                   {/* Cutoff breakdown */}
                   <div className="p-3 bg-white border border-slate-100 rounded-2xl grid grid-cols-2 gap-2 text-[11px]">
-                    <div>Unreserved (UR): <span className="font-bold text-slate-700">{res.cutOff.UR}</span></div>
-                    <div>Backward (OBC): <span className="font-bold text-slate-700">{res.cutOff.OBC}</span></div>
-                    <div>Scheduled (SC): <span className="font-bold text-slate-700">{res.cutOff.SC}</span></div>
-                    <div>Scheduled (ST): <span className="font-bold text-slate-700">{res.cutOff.ST}</span></div>
+                    <div>Unreserved (UR): <span className="font-bold text-slate-700">{res.cutOff?.UR || 'Declared'}</span></div>
+                    <div>Backward (OBC): <span className="font-bold text-slate-700">{res.cutOff?.OBC || 'Declared'}</span></div>
+                    <div>Scheduled (SC): <span className="font-bold text-slate-700">{res.cutOff?.SC || 'Declared'}</span></div>
+                    <div>Scheduled (ST): <span className="font-bold text-slate-700">{res.cutOff?.ST || 'Declared'}</span></div>
                   </div>
 
                   <div className="flex gap-2 text-xs pt-1.5">

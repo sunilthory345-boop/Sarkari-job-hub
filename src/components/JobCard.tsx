@@ -642,9 +642,9 @@ export default function JobCard({
                 <div className="rounded-2xl border border-slate-150 p-4 text-xs space-y-2">
                   <span className="font-sans text-[11px] font-bold text-slate-400 uppercase tracking-widest">Application Challan Fees</span>
                   <div className="space-y-1">
-                    <div className="flex justify-between"><span className="text-slate-500 font-medium">Unreserved / General:</span> <span className="font-bold text-slate-800">{selectedJob.fees.General}</span></div>
-                    <div className="flex justify-between"><span className="text-slate-500 font-medium">Other Backward Class:</span> <span className="font-bold text-slate-800">{selectedJob.fees.OBC}</span></div>
-                    <div className="flex justify-between"><span className="text-slate-500 font-medium">SC / ST / Women:</span> <span className="font-bold text-emerald-600">{selectedJob.fees.SC_ST_Female}</span></div>
+                    <div className="flex justify-between"><span className="text-slate-500 font-medium">Unreserved / General:</span> <span className="font-bold text-slate-800">{selectedJob.fees?.General || '₹0'}</span></div>
+                    <div className="flex justify-between"><span className="text-slate-500 font-medium">Other Backward Class:</span> <span className="font-bold text-slate-800">{selectedJob.fees?.OBC || '₹0'}</span></div>
+                    <div className="flex justify-between"><span className="text-slate-500 font-medium">SC / ST / Women:</span> <span className="font-bold text-emerald-600">{selectedJob.fees?.SC_ST_Female || '₹0'}</span></div>
                   </div>
                 </div>
               </div>

@@ -24,6 +24,13 @@ import {
   checkRrbPortalHealth,
   RrbLiveNotice
 } from "./server/rrbService";
+import {
+  getIbpsNotices,
+  addIbpsNotice,
+  getIbpsSyncStatus,
+  checkIbpsPortalHealth,
+  IbpsLiveNotice
+} from "./server/ibpsService";
 
 dotenv.config();
 
@@ -1531,6 +1538,320 @@ Extract structured JSON strictly following this schema:
     }
 
     addRrbNotice(fallbackNotice);
+    res.json({ success: true, notice: fallbackNotice });
+  });
+
+  // ==========================================
+  // 🏦 IBPS.IN REAL-TIME PORTAL MONITOR APIS
+  // ==========================================
+
+  // 1. Check live status of https://www.ibps.in/
+  app.get("/api/ibps/status", async (req, res) => {
+    try {
+      const health = await checkIbpsPortalHealth();
+      const status = getIbpsSyncStatus();
+      res.json({
+        ...status,
+        ...health,
+        timestamp: new Date().toISOString()
+      });
+    } catch (e: any) {
+      res.json(getIbpsSyncStatus());
+    }
+  });
+
+  // 2. Get live feed of IBPS releases (CRP PO/MT, CRP Clerk, CRP RRBs, CRP SPL)
+  app.get("/api/ibps/live-feed", (req, res) => {
+    const category = req.query.category as string | undefined;
+    const cadre = req.query.cadre as string | undefined;
+    const notices = getIbpsNotices(category, cadre);
+    res.json({
+      success: true,
+      portal: "https://www.ibps.in/",
+      count: notices.length,
+      notices
+    });
+  });
+
+  // 3. Instant On-Demand Refresh / Re-check of https://www.ibps.in/
+  app.post("/api/ibps/sync-now", async (req, res) => {
+    try {
+      const health = await checkIbpsPortalHealth();
+      const notices = getIbpsNotices();
+      res.json({
+        success: true,
+        message: "IBPS Portal (https://www.ibps.in/) successfully contacted and synchronized.",
+        health,
+        totalNotices: notices.length,
+        notices
+      });
+    } catch (err: any) {
+      res.status(500).json({ error: "Failed to sync with IBPS portal", details: err?.message });
+    }
+  });
+
+  // 4. Manually publish new live IBPS notice
+  app.post("/api/ibps/publish-notice", (req, res) => {
+    const notice: IbpsLiveNotice = req.body;
+    if (!notice || !notice.title || !notice.category) {
+      return res.status(400).json({ error: "Notice title and category are required." });
+    }
+
+    if (!notice.id) {
+      notice.id = `ibps-notice-${Date.now()}`;
+    }
+    if (!notice.publishedDate) {
+      notice.publishedDate = new Date().toISOString().split("T")[0];
+    }
+    if (!notice.officialUrl) {
+      notice.officialUrl = "https://www.ibps.in/";
+    }
+    notice.isNew = true;
+
+    const savedNotice = addIbpsNotice(notice);
+    res.json({
+      success: true,
+      message: `New notice published and synchronized to IBPS live feed: ${notice.title}`,
+      notice: savedNotice
+    });
+  });
+
+  // 5. Intelligent auto-parser for raw notice text/URL from ibps.in
+  app.post("/api/ibps/auto-parse", async (req, res) => {
+    const { rawNoticeText, officialUrl } = req.body;
+    if (!rawNoticeText) {
+      return res.status(400).json({ error: "rawNoticeText is required." });
+    }
+
+    const todayStr = new Date().toISOString().split("T")[0];
+    const targetUrl = officialUrl || "https://www.ibps.in/";
+
+    // Try AI classification if GEMINI_API_KEY is available
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (apiKey) {
+      try {
+        const ai = new GoogleGenAI({
+          apiKey: apiKey,
+          httpOptions: { headers: { "User-Agent": "aistudio-build" } }
+        });
+
+        const prompt = `Analyze this official notification text from Institute of Banking Personnel Selection - IBPS (https://www.ibps.in/):
+"${rawNoticeText}"
+
+Classify it into one of the 4 exact categories:
+- "vacancy" (if it is a new bank recruitment advertisement, CRP PO/MT, CRP Clerk, CRP RRBs, CRP Specialist Officers)
+- "admit-card" (if it is an online prelims/mains exam call letter, interview call letter, PET call letter)
+- "result" (if it is a preliminary/main score display, cutoff marks, provisional allotment list or reserve list)
+- "answer-key" (if it is a response sheet, tentative answer key, objection link, or annual calendar)
+
+Extract structured JSON strictly following this schema:
+{
+  "category": "vacancy" | "admit-card" | "result" | "answer-key",
+  "crpCode": string (e.g. "CRP PO/MT-XVI", "CRP CLERK-XVI", "CRP RRBs-XV", "CRP SPL-XVI"),
+  "cadre": "PO" | "Clerk" | "SO" | "RRB" | "Specialist",
+  "title": "Clear English title",
+  "titleHi": "Clear Hindi title",
+  "statusBadge": "Short badge e.g. PO Vacancy Live / Call Letter Out / Prelims Scores Out / Allotment List",
+  "details": {
+    "posts": number (optional),
+    "qualification": string (optional),
+    "salary": string (optional),
+    "examDate": string (optional),
+    "lastDate": string (optional),
+    "cutoff": string (optional),
+    "stage": string (optional),
+    "summary": "1-2 sentence bilingual summary"
+  }
+}`;
+
+        const response = await ai.models.generateContent({
+          model: "gemini-3.5-flash",
+          contents: prompt,
+          config: {
+            temperature: 0.1,
+            responseMimeType: "application/json"
+          }
+        });
+
+        if (response.text) {
+          const parsed = JSON.parse(response.text);
+          const generatedNotice: IbpsLiveNotice = {
+            id: `ibps-notice-ai-${Date.now()}`,
+            crpCode: parsed.crpCode || "CRP-2026",
+            cadre: parsed.cadre || "PO",
+            category: parsed.category || "vacancy",
+            title: parsed.title,
+            titleHi: parsed.titleHi || parsed.title,
+            org: "Institute of Banking Personnel Selection (IBPS) / बैंकिंग कार्मिक चयन संस्थान",
+            publishedDate: todayStr,
+            officialUrl: targetUrl,
+            pdfUrl: targetUrl,
+            isNew: true,
+            statusBadge: parsed.statusBadge || "Live Release",
+            details: parsed.details || { summary: rawNoticeText.slice(0, 150) }
+          };
+
+          if (generatedNotice.category === "vacancy") {
+            generatedNotice.jobData = {
+              id: `ibps-job-ai-${Date.now()}`,
+              title: generatedNotice.title,
+              org: "Institute of Banking Personnel Selection (IBPS)",
+              category: "Banking",
+              qualification: parsed.details?.qualification || "Graduate Degree",
+              ageLimit: "20-30 Years (As per banking norms)",
+              salary: parsed.details?.salary || "Basic ₹36,000 - ₹63,840+ (Scale I / Clerical)",
+              fees: { General: "₹850", OBC: "₹850", SC_ST_Female: "₹175" },
+              totalPosts: parsed.details?.posts || 3000,
+              applyUrl: "https://www.ibps.in/",
+              pdfUrl: targetUrl,
+              officialWebsite: "https://www.ibps.in/",
+              postedDate: todayStr,
+              lastDate: parsed.details?.lastDate || todayStr,
+              importantDates: {
+                applyStart: todayStr,
+                applyEnd: parsed.details?.lastDate || todayStr,
+                examDate: parsed.details?.examDate || "Scheduled",
+                admitCardRelease: "10-15 Days Before Exam"
+              },
+              selectionProcess: ["Online Preliminary Examination", "Online Main Examination", "Interview / Merit List"],
+              location: "All Participating Public Sector Banks Across India",
+              description: parsed.details?.summary || rawNoticeText,
+              formStatus: "started"
+            };
+          } else if (generatedNotice.category === "admit-card") {
+            generatedNotice.admitCardData = {
+              id: `admit-ibps-ai-${Date.now()}`,
+              title: generatedNotice.title,
+              org: "Institute of Banking Personnel Selection (IBPS)",
+              examDate: parsed.details?.examDate || "Upcoming Exam",
+              examCity: "All Major Examination Centers",
+              downloadUrl: "https://www.ibps.in/",
+              officialLink: "https://www.ibps.in/",
+              addedDate: todayStr
+            };
+          } else if (generatedNotice.category === "result") {
+            generatedNotice.resultData = {
+              id: `res-ibps-ai-${Date.now()}`,
+              title: generatedNotice.title,
+              org: "Institute of Banking Personnel Selection (IBPS)",
+              meritListUrl: targetUrl,
+              scoreCardUrl: "https://www.ibps.in/",
+              cutOff: { UR: parsed.details?.cutoff || "Check Scores", OBC: "Check Scores", SC: "Check Scores", ST: "Check Scores" },
+              downloadUrl: targetUrl,
+              releaseDate: todayStr
+            };
+          } else if (generatedNotice.category === "answer-key") {
+            generatedNotice.answerKeyData = {
+              id: `ans-ibps-ai-${Date.now()}`,
+              title: generatedNotice.title,
+              org: "Institute of Banking Personnel Selection (IBPS)",
+              released: todayStr,
+              objectionsLimit: "Active on ibps.in",
+              pdfUrl: targetUrl
+            };
+          }
+
+          addIbpsNotice(generatedNotice);
+          return res.json({ success: true, notice: generatedNotice });
+        }
+      } catch (aiErr) {
+        console.warn("Gemini AI Parsing failed for IBPS notice, falling back to heuristics:", aiErr);
+      }
+    }
+
+    // Heuristic Fallback
+    const lower = rawNoticeText.toLowerCase();
+    let cat: "vacancy" | "admit-card" | "result" | "answer-key" = "vacancy";
+    let badge = "Live IBPS Release";
+
+    if (lower.includes("call letter") || lower.includes("admit") || lower.includes("handout") || lower.includes("प्रवेश पत्र")) {
+      cat = "admit-card";
+      badge = "Call Letter Out";
+    } else if (lower.includes("score") || lower.includes("result") || lower.includes("allotment") || lower.includes("cutoff") || lower.includes("परिणाम")) {
+      cat = "result";
+      badge = "Result & Scores Live";
+    } else if (lower.includes("answer key") || lower.includes("response sheet") || lower.includes("objection") || lower.includes("calendar")) {
+      cat = "answer-key";
+      badge = "Answer Key / Notice";
+    } else {
+      cat = "vacancy";
+      badge = "Banking Recruitment Live";
+    }
+
+    const fallbackNotice: IbpsLiveNotice = {
+      id: `ibps-notice-heur-${Date.now()}`,
+      category: cat,
+      crpCode: "CRP-2026",
+      cadre: "PO",
+      title: rawNoticeText.split("\n")[0] || rawNoticeText.slice(0, 80),
+      titleHi: `आईबीपीएस: ${rawNoticeText.split("\n")[0] || rawNoticeText.slice(0, 80)}`,
+      org: "Institute of Banking Personnel Selection (IBPS) / बैंकिंग कार्मिक चयन संस्थान",
+      publishedDate: todayStr,
+      officialUrl: targetUrl,
+      pdfUrl: targetUrl,
+      isNew: true,
+      statusBadge: badge,
+      details: {
+        summary: rawNoticeText.slice(0, 200)
+      }
+    };
+
+    if (cat === "vacancy") {
+      fallbackNotice.jobData = {
+        id: `ibps-job-heur-${Date.now()}`,
+        title: fallbackNotice.title,
+        org: "Institute of Banking Personnel Selection (IBPS)",
+        category: "Banking",
+        qualification: "Graduate Degree",
+        ageLimit: "20-30 Years",
+        salary: "Basic ₹36,000 - ₹63,840+",
+        fees: { General: "₹850", OBC: "₹850", SC_ST_Female: "₹175" },
+        totalPosts: 3000,
+        applyUrl: "https://www.ibps.in/",
+        pdfUrl: targetUrl,
+        officialWebsite: "https://www.ibps.in/",
+        postedDate: todayStr,
+        lastDate: todayStr,
+        importantDates: { applyStart: todayStr, applyEnd: todayStr, examDate: "Scheduled", admitCardRelease: "TBA" },
+        selectionProcess: ["Prelims", "Mains", "Interview"],
+        location: "Pan India Public Sector Banks",
+        description: rawNoticeText,
+        formStatus: "started"
+      };
+    } else if (cat === "admit-card") {
+      fallbackNotice.admitCardData = {
+        id: `admit-ibps-heur-${Date.now()}`,
+        title: fallbackNotice.title,
+        org: "Institute of Banking Personnel Selection (IBPS)",
+        examDate: "Scheduled",
+        examCity: "All Centers",
+        downloadUrl: "https://www.ibps.in/",
+        officialLink: "https://www.ibps.in/",
+        addedDate: todayStr
+      };
+    } else if (cat === "result") {
+      fallbackNotice.resultData = {
+        id: `res-ibps-heur-${Date.now()}`,
+        title: fallbackNotice.title,
+        org: "Institute of Banking Personnel Selection (IBPS)",
+        meritListUrl: targetUrl,
+        scoreCardUrl: "https://www.ibps.in/",
+        cutOff: { UR: "Check Scores", OBC: "Check Scores", SC: "Check Scores", ST: "Check Scores" },
+        downloadUrl: targetUrl,
+        releaseDate: todayStr
+      };
+    } else if (cat === "answer-key") {
+      fallbackNotice.answerKeyData = {
+        id: `ans-ibps-heur-${Date.now()}`,
+        title: fallbackNotice.title,
+        org: "Institute of Banking Personnel Selection (IBPS)",
+        released: todayStr,
+        objectionsLimit: "Active on ibps.in",
+        pdfUrl: targetUrl
+      };
+    }
+
+    addIbpsNotice(fallbackNotice);
     res.json({ success: true, notice: fallbackNotice });
   });
 
