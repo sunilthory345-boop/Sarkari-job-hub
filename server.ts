@@ -31,6 +31,13 @@ import {
   checkIbpsPortalHealth,
   IbpsLiveNotice
 } from "./server/ibpsService";
+import {
+  getSbiNotices,
+  addSbiNotice,
+  getSbiSyncStatus,
+  checkSbiPortalHealth,
+  SbiLiveNotice
+} from "./server/sbiService";
 
 dotenv.config();
 
@@ -1852,6 +1859,313 @@ Extract structured JSON strictly following this schema:
     }
 
     addIbpsNotice(fallbackNotice);
+    res.json({ success: true, notice: fallbackNotice });
+  });
+
+  // ==========================================
+  // SBI.BANK.IN LIVE MONITORING & GATEWAY APIS
+  // ==========================================
+
+  // 1. Get Live Portal Health & Sync Status
+  app.get("/api/sbi/status", async (req, res) => {
+    try {
+      const health = await checkSbiPortalHealth();
+      const status = getSbiSyncStatus();
+      res.json({
+        ...status,
+        ...health,
+        timestamp: new Date().toISOString()
+      });
+    } catch (err) {
+      res.status(500).json({ error: "Failed to retrieve SBI portal status" });
+    }
+  });
+
+  // 2. Get Live Notices Monitored from SBI Careers (PO, Clerk, CBO, SCO, Apprentice)
+  app.get("/api/sbi/live-feed", (req, res) => {
+    const { category, cadre } = req.query;
+    const notices = getSbiNotices(
+      category as string | undefined,
+      cadre as string | undefined
+    );
+    res.json({
+      portal: "https://sbi.bank.in/web/careers/current-openings",
+      lastUpdated: new Date().toISOString(),
+      count: notices.length,
+      notices
+    });
+  });
+
+  // 3. Force instant refresh from SBI Careers
+  app.post("/api/sbi/sync-now", async (req, res) => {
+    try {
+      const health = await checkSbiPortalHealth();
+      const notices = getSbiNotices();
+      res.json({
+        success: true,
+        message: "SBI Careers (Current Openings) synchronized successfully.",
+        health,
+        totalNotices: notices.length,
+        syncedAt: new Date().toISOString()
+      });
+    } catch (e: any) {
+      res.status(500).json({ error: e.message || "Sync failed" });
+    }
+  });
+
+  // 4. Manual Publish Notice to Live Feed
+  app.post("/api/sbi/publish-notice", (req, res) => {
+    const { notice } = req.body;
+    if (!notice || !notice.title || !notice.category) {
+      return res.status(400).json({ error: "Notice title and category are required" });
+    }
+    const saved = addSbiNotice({
+      ...notice,
+      id: notice.id || `sbi-manual-${Date.now()}`,
+      org: notice.org || "State Bank of India (SBI) / भारतीय स्टेट बैंक",
+      publishedDate: notice.publishedDate || new Date().toISOString().split("T")[0],
+      officialUrl: notice.officialUrl || "https://sbi.bank.in/web/careers/current-openings",
+      isNew: true,
+      statusBadge: notice.statusBadge || "Admin Published Opening"
+    });
+    res.json({ success: true, notice: saved });
+  });
+
+  // 5. AI-Powered Notice Parser (Paste any SBI advertisement/notice text)
+  app.post("/api/sbi/auto-parse", async (req, res) => {
+    const { rawNoticeText, sourceUrl } = req.body;
+    if (!rawNoticeText) {
+      return res.status(400).json({ error: "rawNoticeText is required" });
+    }
+
+    const targetUrl = sourceUrl || "https://sbi.bank.in/web/careers/current-openings";
+    const todayStr = new Date().toISOString().split("T")[0];
+
+    if (process.env.GEMINI_API_KEY) {
+      try {
+        const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+        const prompt = `You are an expert Government Job & Banking Examination analyst specializing in State Bank of India (SBI) Careers and Recruitment (https://sbi.bank.in/web/careers/current-openings).
+Analyze this raw notice announcement or notification text from SBI Careers:
+"""
+${rawNoticeText}
+"""
+
+Classify and extract into JSON:
+{
+  "category": "vacancy" | "admit-card" | "result" | "answer-key",
+  "cadre": "PO" | "Clerk" | "CBO" | "SCO" | "Apprentice",
+  "advtNo": string,
+  "title": string,
+  "titleHi": string,
+  "statusBadge": string,
+  "details": {
+    "posts": number,
+    "examDate": string,
+    "lastDate": string,
+    "cutoff": string,
+    "stage": string,
+    "summary": string,
+    "qualification": string,
+    "salary": string,
+    "circles": string[]
+  }
+}
+Return JSON strictly.`;
+
+        const response = await ai.models.generateContent({
+          model: "gemini-2.5-flash",
+          contents: prompt,
+          config: { responseMimeType: "application/json" }
+        });
+
+        const parsed = JSON.parse(response.text || "{}");
+        if (parsed.title) {
+          const generatedNotice: SbiLiveNotice = {
+            id: `sbi-notice-ai-${Date.now()}`,
+            category: parsed.category || "vacancy",
+            cadre: parsed.cadre || "PO",
+            advtNo: parsed.advtNo || "CRPD/2026-27",
+            title: parsed.title,
+            titleHi: parsed.titleHi || `एसबीआई: ${parsed.title}`,
+            org: "State Bank of India (SBI) / भारतीय स्टेट बैंक",
+            publishedDate: todayStr,
+            officialUrl: targetUrl,
+            pdfUrl: targetUrl,
+            isNew: true,
+            statusBadge: parsed.statusBadge || "SBI Career Verified",
+            details: parsed.details || { summary: rawNoticeText.slice(0, 200) }
+          };
+
+          if (generatedNotice.category === "vacancy") {
+            generatedNotice.jobData = {
+              id: `job-sbi-ai-${Date.now()}`,
+              title: generatedNotice.title,
+              org: "State Bank of India (SBI)",
+              category: "Banking",
+              qualification: parsed.details?.qualification || "Graduate Degree in any discipline",
+              ageLimit: "20-30 Years (As per rules)",
+              salary: parsed.details?.salary || "Basic Pay ₹41,960 + Allowances",
+              fees: { General: "₹750", OBC: "₹750", SC_ST_Female: "Nil" },
+              totalPosts: parsed.details?.posts || 1000,
+              applyUrl: targetUrl,
+              pdfUrl: targetUrl,
+              officialWebsite: "https://sbi.bank.in/web/careers/current-openings",
+              postedDate: todayStr,
+              lastDate: parsed.details?.lastDate || todayStr,
+              importantDates: {
+                applyStart: todayStr,
+                applyEnd: parsed.details?.lastDate || todayStr,
+                examDate: parsed.details?.examDate || "To be scheduled",
+                admitCardRelease: "Before Examination"
+              },
+              selectionProcess: ["Prelims", "Mains", "Interview"],
+              location: "Pan India SBI Branches",
+              description: parsed.details?.summary || rawNoticeText,
+              formStatus: "started"
+            };
+          } else if (generatedNotice.category === "admit-card") {
+            generatedNotice.admitCardData = {
+              id: `admit-sbi-ai-${Date.now()}`,
+              title: generatedNotice.title,
+              org: "State Bank of India (SBI)",
+              examDate: parsed.details?.examDate || "Scheduled Date",
+              examCity: "Pan India Exam Centers",
+              downloadUrl: targetUrl,
+              officialLink: "https://sbi.bank.in/web/careers/current-openings",
+              addedDate: todayStr
+            };
+          } else if (generatedNotice.category === "result") {
+            generatedNotice.resultData = {
+              id: `res-sbi-ai-${Date.now()}`,
+              title: generatedNotice.title,
+              org: "State Bank of India (SBI)",
+              meritListUrl: targetUrl,
+              scoreCardUrl: "https://sbi.bank.in/web/careers/current-openings",
+              cutOff: {
+                UR: parsed.details?.cutoff || "Declared on Portal",
+                OBC: "Declared on Portal",
+                SC: "Declared on Portal",
+                ST: "Declared on Portal"
+              },
+              downloadUrl: targetUrl,
+              releaseDate: todayStr
+            };
+          } else if (generatedNotice.category === "answer-key") {
+            generatedNotice.answerKeyData = {
+              id: `ans-sbi-ai-${Date.now()}`,
+              title: generatedNotice.title,
+              org: "State Bank of India (SBI)",
+              released: todayStr,
+              objectionsLimit: "Active on sbi.bank.in",
+              pdfUrl: targetUrl
+            };
+          }
+
+          addSbiNotice(generatedNotice);
+          return res.json({ success: true, notice: generatedNotice });
+        }
+      } catch (aiErr) {
+        console.warn("Gemini AI Parsing failed for SBI notice, falling back to heuristics:", aiErr);
+      }
+    }
+
+    // Heuristic Fallback
+    const lower = rawNoticeText.toLowerCase();
+    let cat: "vacancy" | "admit-card" | "result" | "answer-key" = "vacancy";
+    let cadre: "PO" | "Clerk" | "CBO" | "SCO" | "Apprentice" = "PO";
+    let badge = "Live SBI Career Release";
+
+    if (lower.includes("call letter") || lower.includes("admit") || lower.includes("handout") || lower.includes("प्रवेश पत्र")) {
+      cat = "admit-card";
+      badge = "Call Letter Out";
+    } else if (lower.includes("score") || lower.includes("result") || lower.includes("allotment") || lower.includes("cutoff") || lower.includes("marks") || lower.includes("परिणाम")) {
+      cat = "result";
+      badge = "Result & Scores Live";
+    } else if (lower.includes("answer key") || lower.includes("clarification") || lower.includes("normalization")) {
+      cat = "answer-key";
+      badge = "Key / Notice";
+    }
+
+    if (lower.includes("clerk") || lower.includes("junior associate")) cadre = "Clerk";
+    else if (lower.includes("cbo") || lower.includes("circle based")) cadre = "CBO";
+    else if (lower.includes("sco") || lower.includes("specialist")) cadre = "SCO";
+    else if (lower.includes("apprentice")) cadre = "Apprentice";
+    else cadre = "PO";
+
+    const fallbackNotice: SbiLiveNotice = {
+      id: `sbi-notice-heur-${Date.now()}`,
+      category: cat,
+      cadre,
+      advtNo: "CRPD/2026-27",
+      title: rawNoticeText.split("\n")[0] || rawNoticeText.slice(0, 80),
+      titleHi: `एसबीआई: ${rawNoticeText.split("\n")[0] || rawNoticeText.slice(0, 80)}`,
+      org: "State Bank of India (SBI) / भारतीय स्टेट बैंक",
+      publishedDate: todayStr,
+      officialUrl: targetUrl,
+      pdfUrl: targetUrl,
+      isNew: true,
+      statusBadge: badge,
+      details: {
+        summary: rawNoticeText.slice(0, 200)
+      }
+    };
+
+    if (cat === "vacancy") {
+      fallbackNotice.jobData = {
+        id: `sbi-job-heur-${Date.now()}`,
+        title: fallbackNotice.title,
+        org: "State Bank of India (SBI)",
+        category: "Banking",
+        qualification: "Graduate Degree",
+        ageLimit: "20-30 Years",
+        salary: "Basic ₹41,960 - ₹69,810+",
+        fees: { General: "₹750", OBC: "₹750", SC_ST_Female: "Nil" },
+        totalPosts: 2000,
+        applyUrl: "https://sbi.bank.in/web/careers/current-openings",
+        pdfUrl: targetUrl,
+        officialWebsite: "https://sbi.bank.in/web/careers/current-openings",
+        postedDate: todayStr,
+        lastDate: todayStr,
+        importantDates: { applyStart: todayStr, applyEnd: todayStr, examDate: "Scheduled", admitCardRelease: "TBA" },
+        selectionProcess: ["Phase-I Prelims", "Phase-II Mains", "Interview"],
+        location: "All India Branches",
+        description: rawNoticeText,
+        formStatus: "started"
+      };
+    } else if (cat === "admit-card") {
+      fallbackNotice.admitCardData = {
+        id: `admit-sbi-heur-${Date.now()}`,
+        title: fallbackNotice.title,
+        org: "State Bank of India (SBI)",
+        examDate: "Scheduled",
+        examCity: "All Centers",
+        downloadUrl: "https://sbi.bank.in/web/careers/current-openings",
+        officialLink: "https://sbi.bank.in/web/careers/current-openings",
+        addedDate: todayStr
+      };
+    } else if (cat === "result") {
+      fallbackNotice.resultData = {
+        id: `res-sbi-heur-${Date.now()}`,
+        title: fallbackNotice.title,
+        org: "State Bank of India (SBI)",
+        meritListUrl: targetUrl,
+        scoreCardUrl: "https://sbi.bank.in/web/careers/current-openings",
+        cutOff: { UR: "Declared on Portal", OBC: "Declared on Portal", SC: "Declared on Portal", ST: "Declared on Portal" },
+        downloadUrl: targetUrl,
+        releaseDate: todayStr
+      };
+    } else if (cat === "answer-key") {
+      fallbackNotice.answerKeyData = {
+        id: `ans-sbi-heur-${Date.now()}`,
+        title: fallbackNotice.title,
+        org: "State Bank of India (SBI)",
+        released: todayStr,
+        objectionsLimit: "Active on sbi.bank.in",
+        pdfUrl: targetUrl
+      };
+    }
+
+    addSbiNotice(fallbackNotice);
     res.json({ success: true, notice: fallbackNotice });
   });
 

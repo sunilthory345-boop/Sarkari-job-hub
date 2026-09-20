@@ -316,6 +316,43 @@ export interface IbpsSyncStatus {
   newNoticesCount: number;
 }
 
+export interface SbiLiveNotice {
+  id: string;
+  category: 'vacancy' | 'admit-card' | 'result' | 'answer-key';
+  title: string;
+  titleHi: string;
+  org: string;
+  advtNo?: string; // e.g. CRPD/PO/2026-27/01, CRPD/CR/2026-27/02, CRPD/CBO/2026-27/03
+  cadre?: 'PO' | 'Clerk' | 'CBO' | 'SCO' | 'Apprentice';
+  publishedDate: string;
+  officialUrl: string;
+  pdfUrl?: string;
+  isNew?: boolean;
+  statusBadge: string;
+  details: {
+    posts?: number;
+    examDate?: string;
+    lastDate?: string;
+    cutoff?: string;
+    stage?: string; // Prelims / Mains / Interview / Final Merit List
+    summary?: string;
+    qualification?: string;
+    salary?: string;
+    circles?: string[];
+  };
+  jobData?: GovJob;
+  admitCardData?: AdmitCard;
+  resultData?: JobResult;
+  answerKeyData?: AnswerKey;
+}
 
-
-
+export interface SbiSyncStatus {
+  online: boolean;
+  portal: string;
+  status: string;
+  lastChecked: string;
+  latencyMs: number;
+  autoSyncIntervalSec: number;
+  totalLiveNotices: number;
+  newNoticesCount: number;
+}

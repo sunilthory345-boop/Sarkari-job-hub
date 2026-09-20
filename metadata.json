@@ -1,6 +1,6 @@
 {
   "name": "Job Sarkari Hub",
-  "description": "Comprehensive Indian Government Job Portal with real-time automatic synchronization for IBPS (https://www.ibps.in/), RRB (https://www.rrbapply.gov.in/), UPSC (https://www.upsc.gov.in/), and SSC (https://ssc.gov.in/) notifications, banking vacancies, admit cards, results, answer keys, mock tests, and daily current affairs.",
+  "description": "Comprehensive Indian Government Job Portal with real-time automatic synchronization for SBI Careers (https://sbi.bank.in/web/careers/current-openings), IBPS (https://www.ibps.in/), RRB (https://www.rrbapply.gov.in/), UPSC (https://www.upsc.gov.in/), and SSC (https://ssc.gov.in/) notifications, banking vacancies, admit cards, results, answer keys, mock tests, and daily current affairs.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

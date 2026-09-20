@@ -45,6 +45,7 @@ export default function Navbar({
   const menuItems = [
     { id: 'home', label: t.home, icon: BookOpen, category: 'Main' },
     { id: 'jobs', label: t.latestJobs, icon: Briefcase, category: 'Main' },
+    { id: 'sbi-sync', label: locale === 'hi' ? '🏛️ SBI करियर लाइव (sbi.bank.in)' : '🏛️ SBI Careers Live', icon: Landmark, category: 'Main', highlight: true },
     { id: 'ibps-sync', label: locale === 'hi' ? '🏦 IBPS बैंकिंग लाइव (ibps.in)' : '🏦 IBPS Banking Live', icon: Landmark, category: 'Main', highlight: true },
     { id: 'rrb-sync', label: locale === 'hi' ? '🚆 RRB रेलवे लाइव (rrbapply.gov.in)' : '🚆 RRB Railway Live', icon: Train, category: 'Main', highlight: true },
     { id: 'upsc-sync', label: locale === 'hi' ? '🏛️ UPSC लाइव (upsc.gov.in)' : '🏛️ UPSC.gov.in Live', icon: Award, category: 'Main', highlight: true },

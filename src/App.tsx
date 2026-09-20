@@ -40,8 +40,9 @@ import SscLiveSyncBar from './components/SscLiveSyncBar';
 import UpscLiveSyncHub from './components/UpscLiveSyncHub';
 import RrbLiveSyncHub from './components/RrbLiveSyncHub';
 import IbpsLiveSyncHub from './components/IbpsLiveSyncHub';
+import SbiLiveSyncHub from './components/SbiLiveSyncHub';
 import GovPortalsSyncBar from './components/GovPortalsSyncBar';
-import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice, IbpsLiveNotice } from './types';
+import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice, IbpsLiveNotice, SbiLiveNotice } from './types';
 import { initializeGA, trackPageView } from './utils/analytics';
 import { updateSEOMetadata } from './utils/seoHelper';
 import { fetchWithRetry } from './utils/fetchHelper';
@@ -1331,6 +1332,89 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
     return () => clearInterval(ibpsInterval);
   }, []);
 
+  // SBI.BANK.IN REAL-TIME AUTO-MONITOR & SYNCHRONIZER (https://sbi.bank.in/web/careers/current-openings)
+  const [sbiSyncing, setSbiSyncing] = useState(false);
+  const [latestSbiNotice, setLatestSbiNotice] = useState<SbiLiveNotice | null>(null);
+
+  const runSbiAutoSync = async (notifyIfNoNew = false) => {
+    setSbiSyncing(true);
+    try {
+      const res = await fetch('/api/sbi/live-feed');
+      if (res.ok) {
+        const data = await res.json();
+        const notices: SbiLiveNotice[] = data.notices || [];
+        if (notices.length > 0) {
+          setLatestSbiNotice(notices[0]);
+        }
+
+        // Check against existing IDs
+        const existingJIds = new Set(jobs.map(j => j.id));
+        const existingAIds = new Set(admitCards.map(a => a.id));
+        const existingRIds = new Set(results.map(r => r.id));
+        const existingKIds = new Set(answerKeys.map(k => k.id));
+
+        // Read already auto-imported notice IDs
+        const autoImported: string[] = JSON.parse(localStorage.getItem('sarkari_auto_imported_sbi_ids') || '[]');
+        const importedSet = new Set(autoImported);
+
+        let newItemsAdded = 0;
+
+        for (const notice of notices) {
+          if (importedSet.has(notice.id)) continue;
+
+          if (notice.category === 'vacancy' && notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'admit-card' && notice.admitCardData && !existingAIds.has(notice.admitCardData.id)) {
+            handleNewLaunch('Admit Card', notice.title, notice.org, 'admitCards', notice.admitCardData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'result' && notice.resultData && !existingRIds.has(notice.resultData.id)) {
+            const sanitizedResult: JobResult = {
+              ...notice.resultData,
+              cutOff: {
+                UR: notice.resultData.cutOff?.UR || notice.details?.cutoff || 'Declared on Portal',
+                OBC: notice.resultData.cutOff?.OBC || 'Declared on Portal',
+                SC: notice.resultData.cutOff?.SC || 'Declared on Portal',
+                ST: notice.resultData.cutOff?.ST || 'Declared on Portal'
+              }
+            };
+            handleNewLaunch('Result', notice.title, notice.org, 'results', sanitizedResult);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'answer-key' && notice.answerKeyData && !existingKIds.has(notice.answerKeyData.id)) {
+            handleNewLaunch('Answer Key', notice.title, notice.org, 'answerKeys', notice.answerKeyData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          }
+        }
+
+        if (newItemsAdded > 0) {
+          localStorage.setItem('sarkari_auto_imported_sbi_ids', JSON.stringify(Array.from(importedSet)));
+          triggerToast(`🏛️ [SBI CAREERS] ${newItemsAdded} SBI opening(s) auto-synced to your website!`);
+        } else if (notifyIfNoNew) {
+          triggerToast('🟢 SBI Careers Portal (https://sbi.bank.in/web/careers/current-openings) is checked. All notices are up to date.');
+        }
+      }
+    } catch (e) {
+      console.warn('SBI Auto-Sync error:', e);
+    } finally {
+      setSbiSyncing(false);
+    }
+  };
+
+  useEffect(() => {
+    runSbiAutoSync(false);
+
+    // Auto-poll sbi.bank.in every 45 seconds
+    const sbiInterval = setInterval(() => {
+      runSbiAutoSync(false);
+    }, 45000);
+
+    return () => clearInterval(sbiInterval);
+  }, []);
+
   const [premiumModalOpen, setPremiumModalOpen] = useState(false);
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
   const [showWhyPremium, setShowWhyPremium] = useState(false);
@@ -1740,21 +1824,25 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
         liveNotifications={liveNotifications}
       />
 
-      {/* ⚡ IBPS, RRB, UPSC & SSC REAL-TIME LIVE UPDATE BAR */}
+      {/* ⚡ SBI, IBPS, RRB, UPSC & SSC REAL-TIME LIVE UPDATE BAR */}
       <GovPortalsSyncBar
         locale={locale}
+        onOpenSbiHub={() => setActiveTab('sbi-sync')}
         onOpenIbpsHub={() => setActiveTab('ibps-sync')}
         onOpenSscHub={() => setActiveTab('ssc-sync')}
         onOpenUpscHub={() => setActiveTab('upsc-sync')}
         onOpenRrbHub={() => setActiveTab('rrb-sync')}
+        onQuickSbiSync={() => runSbiAutoSync(true)}
         onQuickIbpsSync={() => runIbpsAutoSync(true)}
         onQuickSscSync={() => runSscAutoSync(true)}
         onQuickUpscSync={() => runUpscAutoSync(true)}
         onQuickRrbSync={() => runRrbAutoSync(true)}
+        isSbiSyncing={sbiSyncing}
         isIbpsSyncing={ibpsSyncing}
         isSscSyncing={sscSyncing}
         isUpscSyncing={upscSyncing}
         isRrbSyncing={rrbSyncing}
+        latestSbiNotice={latestSbiNotice}
         latestIbpsNotice={latestIbpsNotice}
         latestSscNotice={latestSscNotice}
         latestUpscNotice={latestUpscNotice}
@@ -1764,6 +1852,24 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
       {/* Main Body wrap */}
       <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 flex-1">
         
+        {/* TAB: SBI CAREERS REAL-TIME MONITOR HUB */}
+        {activeTab === 'sbi-sync' && (
+          <div className="space-y-6">
+            <SbiLiveSyncHub
+              locale={locale}
+              onAddJob={(newJob) => handleNewLaunch('Vacancy', newJob.title, newJob.org, 'jobs', newJob)}
+              onAddAdmitCard={(newCard) => handleNewLaunch('Admit Card', newCard.title, newCard.org, 'admitCards', newCard)}
+              onAddResult={(newRes) => handleNewLaunch('Result', newRes.title, newRes.org, 'results', newRes)}
+              onAddAnswerKey={(newKey) => handleNewLaunch('Answer Key', newKey.title, newKey.org, 'answerKeys', newKey)}
+              triggerToast={triggerToast}
+              existingJobIds={jobs.map(j => j.id)}
+              existingAdmitCardIds={admitCards.map(c => c.id)}
+              existingResultIds={results.map(r => r.id)}
+              existingAnswerKeyIds={answerKeys.map(k => k.id)}
+            />
+          </div>
+        )}
+
         {/* TAB: IBPS.IN REAL-TIME MONITOR HUB */}
         {activeTab === 'ibps-sync' && (
           <div className="space-y-6">

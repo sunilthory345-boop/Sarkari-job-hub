@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { RefreshCw, Zap, ExternalLink, ShieldCheck, ChevronRight, CheckCircle, Award, Sparkles, Train, Landmark } from 'lucide-react';
-import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice, IbpsLiveNotice } from '../types';
+import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice, IbpsLiveNotice, SbiLiveNotice } from '../types';
 
 interface GovPortalsSyncBarProps {
   locale?: string;
@@ -8,19 +8,23 @@ interface GovPortalsSyncBarProps {
   onOpenUpscHub: () => void;
   onOpenRrbHub: () => void;
   onOpenIbpsHub: () => void;
+  onOpenSbiHub: () => void;
   onQuickSscSync: () => void;
   onQuickUpscSync: () => void;
   onQuickRrbSync: () => void;
   onQuickIbpsSync: () => void;
+  onQuickSbiSync: () => void;
   onQuickSyncAll?: () => void;
   isSscSyncing?: boolean;
   isUpscSyncing?: boolean;
   isRrbSyncing?: boolean;
   isIbpsSyncing?: boolean;
+  isSbiSyncing?: boolean;
   latestSscNotice?: SscLiveNotice | null;
   latestUpscNotice?: UpscLiveNotice | null;
   latestRrbNotice?: RrbLiveNotice | null;
   latestIbpsNotice?: IbpsLiveNotice | null;
+  latestSbiNotice?: SbiLiveNotice | null;
 }
 
 export default function GovPortalsSyncBar({
@@ -29,22 +33,26 @@ export default function GovPortalsSyncBar({
   onOpenUpscHub,
   onOpenRrbHub,
   onOpenIbpsHub,
+  onOpenSbiHub,
   onQuickSscSync,
   onQuickUpscSync,
   onQuickRrbSync,
   onQuickIbpsSync,
+  onQuickSbiSync,
   onQuickSyncAll,
   isSscSyncing = false,
   isUpscSyncing = false,
   isRrbSyncing = false,
   isIbpsSyncing = false,
+  isSbiSyncing = false,
   latestSscNotice,
   latestUpscNotice,
   latestRrbNotice,
-  latestIbpsNotice
+  latestIbpsNotice,
+  latestSbiNotice
 }: GovPortalsSyncBarProps) {
   const [secondsRemaining, setSecondsRemaining] = useState(45);
-  const [activePortalTab, setActivePortalTab] = useState<'ibps' | 'rrb' | 'upsc' | 'ssc'>('ibps');
+  const [activePortalTab, setActivePortalTab] = useState<'sbi' | 'ibps' | 'rrb' | 'upsc' | 'ssc'>('sbi');
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -53,7 +61,7 @@ export default function GovPortalsSyncBar({
     return () => clearInterval(timer);
   }, []);
 
-  const isSyncingAny = isSscSyncing || isUpscSyncing || isRrbSyncing || isIbpsSyncing;
+  const isSyncingAny = isSscSyncing || isUpscSyncing || isRrbSyncing || isIbpsSyncing || isSbiSyncing;
 
   return (
     <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 text-white border-b border-slate-800 shadow-md py-2 px-3 sm:px-4">
@@ -62,6 +70,24 @@ export default function GovPortalsSyncBar({
         {/* Left: Portals Switcher & Live Indicator */}
         <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           
+          {/* SBI.BANK.IN Pill Tab */}
+          <button
+            onClick={() => {
+              setActivePortalTab('sbi');
+              onOpenSbiHub();
+            }}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold transition border cursor-pointer ${
+              activePortalTab === 'sbi'
+                ? 'bg-sky-600/30 text-sky-300 border-sky-400/60 shadow-xs'
+                : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:text-white'
+            }`}
+          >
+            <span className="h-2 w-2 rounded-full bg-sky-400 animate-ping"></span>
+            <span className="h-2 w-2 rounded-full bg-sky-400 -ml-3.5"></span>
+            <Landmark className="h-3 w-3 text-sky-400" />
+            <span>SBI.BANK.IN LIVE</span>
+          </button>
+
           {/* IBPS Pill Tab */}
           <button
             onClick={() => {
@@ -74,8 +100,7 @@ export default function GovPortalsSyncBar({
                 : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:text-white'
             }`}
           >
-            <span className="h-2 w-2 rounded-full bg-blue-400 animate-ping"></span>
-            <span className="h-2 w-2 rounded-full bg-blue-400 -ml-3.5"></span>
+            <span className="h-2 w-2 rounded-full bg-blue-400 animate-pulse"></span>
             <Landmark className="h-3 w-3 text-blue-400" />
             <span>IBPS.IN LIVE</span>
           </button>
@@ -131,7 +156,20 @@ export default function GovPortalsSyncBar({
 
           {/* Active Ticker */}
           <div className="hidden xl:flex items-center gap-1.5 text-[11px] border-l border-slate-700 pl-2.5 max-w-sm 2xl:max-w-md truncate">
-            {activePortalTab === 'ibps' ? (
+            {activePortalTab === 'sbi' ? (
+              latestSbiNotice ? (
+                <div className="flex items-center gap-1.5 truncate text-sky-200">
+                  <span className="bg-sky-500/20 text-sky-300 px-1.5 py-0.2 rounded font-mono font-bold text-[9px] uppercase shrink-0">
+                    SBI {latestSbiNotice.cadre || latestSbiNotice.category}
+                  </span>
+                  <span className="truncate">{latestSbiNotice.title}</span>
+                </div>
+              ) : (
+                <span className="text-slate-400 truncate">
+                  {locale === 'hi' ? '🏛️ भारतीय स्टेट बैंक (SBI Careers) लाइव मॉनिटर सक्रिय' : '🏛️ State Bank of India (sbi.bank.in) live auto-monitor active'}
+                </span>
+              )
+            ) : activePortalTab === 'ibps' ? (
               latestIbpsNotice ? (
                 <div className="flex items-center gap-1.5 truncate text-blue-200">
                   <span className="bg-blue-500/20 text-blue-300 px-1.5 py-0.2 rounded font-mono font-bold text-[9px] uppercase shrink-0">
@@ -190,18 +228,29 @@ export default function GovPortalsSyncBar({
         {/* Right: Quick Action Controls */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           <span className="text-[10px] font-mono text-slate-400 hidden lg:inline">
-            Auto-Sync: <strong className="text-blue-400">{secondsRemaining}s</strong>
+            Auto-Sync: <strong className="text-sky-400">{secondsRemaining}s</strong>
           </span>
+
+          {/* Quick Sync SBI Button */}
+          <button
+            onClick={onQuickSbiSync}
+            disabled={isSbiSyncing}
+            className="flex items-center gap-1 bg-sky-600 hover:bg-sky-500 text-white font-bold px-2.5 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75"
+            title="Sync latest SBI career notices from https://sbi.bank.in/web/careers/current-openings"
+          >
+            <RefreshCw className={`h-3 w-3 ${isSbiSyncing ? 'animate-spin' : ''}`} />
+            <span>{locale === 'hi' ? '🏛️ SBI' : '🏛️ SBI'}</span>
+          </button>
 
           {/* Quick Sync IBPS Button */}
           <button
             onClick={onQuickIbpsSync}
             disabled={isIbpsSyncing}
-            className="flex items-center gap-1 bg-blue-600 hover:bg-blue-500 text-white font-bold px-2.5 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75"
+            className="flex items-center gap-1 bg-blue-600 hover:bg-blue-500 text-white font-bold px-2 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75"
             title="Sync latest banking notices from https://www.ibps.in/"
           >
             <RefreshCw className={`h-3 w-3 ${isIbpsSyncing ? 'animate-spin' : ''}`} />
-            <span>{locale === 'hi' ? '🏦 IBPS' : '🏦 IBPS'}</span>
+            <span>IBPS</span>
           </button>
 
           {/* Quick Sync RRB Button */}
@@ -237,12 +286,12 @@ export default function GovPortalsSyncBar({
             <span>SSC</span>
           </button>
 
-          {/* Direct Link to IBPS Hub */}
+          {/* Direct Link to SBI Hub */}
           <button
-            onClick={onOpenIbpsHub}
-            className="flex items-center gap-1 bg-white/10 hover:bg-white/20 text-white font-bold px-2.5 py-1 rounded-lg text-[11px] transition border border-white/15 cursor-pointer"
+            onClick={onOpenSbiHub}
+            className="flex items-center gap-1 bg-sky-500/20 hover:bg-sky-500/30 text-sky-200 font-bold px-2.5 py-1 rounded-lg text-[11px] transition border border-sky-400/30 cursor-pointer"
           >
-            <span>{locale === 'hi' ? 'बैंकिंग हब' : 'IBPS Hub'}</span>
+            <span>{locale === 'hi' ? 'एसबीआई करियर' : 'SBI Hub'}</span>
             <ChevronRight className="h-3 w-3" />
           </button>
         </div>
