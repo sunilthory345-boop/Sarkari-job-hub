@@ -66,6 +66,8 @@ export interface Question {
   correctOptionIndex: number;
   explanation: string;
   date?: string;
+  section?: string;
+  marks?: number;
 }
 
 export interface MockTest {

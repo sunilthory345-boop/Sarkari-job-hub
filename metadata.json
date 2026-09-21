@@ -1,6 +1,6 @@
 {
   "name": "Job Sarkari Hub",
-  "description": "Comprehensive Indian Government Job Portal with real-time automatic synchronization for PGRKAM Punjab (https://www.pgrkam.com/), UPPBPB UP Police (https://uppbpb.gov.in/), MPESB MP Vyapam (https://esb.mponline.gov.in/), HPSC Haryana (https://hpsc.gov.in/), BTSC Bihar (https://btsc.bihar.gov.in/hi/recruitment), Join Indian Navy (https://www.joinindiannavy.gov.in/), Join Indian Army (https://joinindianarmy.nic.in/), Rajasthan SSO Recruitment (https://www.recruitment.rajasthan.gov.in/), SBI Careers, IBPS, RRB, UPSC, and SSC notifications, vacancies, admit cards, results, and mock tests.",
+  "description": "Comprehensive Indian Government Job Portal featuring an advanced 7-Day SSC New Pattern AI Mock Test Generator (CGL/CHSL/MTS/CPO/GD Tier 1 & 2 CBT simulator) with real-time automatic synchronization for PGRKAM Punjab, UPPBPB UP Police, MPESB MP Vyapam, HPSC, BTSC Bihar, Indian Navy, Indian Army, Rajasthan SSO, SBI, IBPS, RRB, UPSC, and SSC portals.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

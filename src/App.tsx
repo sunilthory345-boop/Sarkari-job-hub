@@ -50,10 +50,12 @@ import PgrkamLiveSyncHub from './components/PgrkamLiveSyncHub';
 import UppbpbLiveSyncHub from './components/UppbpbLiveSyncHub';
 import MpesbLiveSyncHub from './components/MpesbLiveSyncHub';
 import GovPortalsSyncBar from './components/GovPortalsSyncBar';
+import SscAiMockGenerator from './components/SscAiMockGenerator';
 import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice, IbpsLiveNotice, SbiLiveNotice, RajLiveNotice, ArmyLiveNotice, NavyLiveNotice, BtscLiveNotice, HpscLiveNotice, PgrkamLiveNotice, UppbpbLiveNotice, MpesbLiveNotice } from './types';
 import { initializeGA, trackPageView } from './utils/analytics';
 import { updateSEOMetadata } from './utils/seoHelper';
 import { fetchWithRetry } from './utils/fetchHelper';
+import { safeGetItem, safeSetItem, safeGetJSON, safeSetJSON, safeRemoveItem } from './utils/safeStorage';
 
 const INITIAL_PYQS = [
   // 2026 Series
@@ -269,11 +271,11 @@ export default function App() {
   });
 
   useEffect(() => {
-    localStorage.setItem('sarkari_answer_keys', JSON.stringify(answerKeys));
+    safeSetJSON('sarkari_answer_keys', answerKeys);
   }, [answerKeys]);
 
   const [newspapers, setNewspapers] = useState<Newspaper[]>(() => {
-    const saved = localStorage.getItem('sarkari_newspapers');
+    const saved = safeGetItem('sarkari_newspapers');
     if (saved) {
       try {
         const parsed = JSON.parse(saved) as Newspaper[];
@@ -282,7 +284,7 @@ export default function App() {
         const missingNewspapers = INITIAL_NEWSPAPERS.filter(n => !existingIds.has(n.id));
         if (missingNewspapers.length > 0 || deduplicated.length !== parsed.length) {
           const merged = deduplicateById([...missingNewspapers, ...deduplicated]);
-          localStorage.setItem('sarkari_newspapers', JSON.stringify(merged));
+          safeSetJSON('sarkari_newspapers', merged);
           return merged;
         }
         return deduplicated;
@@ -294,11 +296,11 @@ export default function App() {
   });
 
   useEffect(() => {
-    localStorage.setItem('sarkari_newspapers', JSON.stringify(newspapers));
+    safeSetJSON('sarkari_newspapers', newspapers);
   }, [newspapers]);
 
   const [mockTests, setMockTests] = useState<MockTest[]>(() => {
-    const deletedSaved = localStorage.getItem('sarkari_deleted_mock_ids');
+    const deletedSaved = safeGetItem('sarkari_deleted_mock_ids');
     let deletedSet = new Set<string>();
     deletedSet.add('ssc-cgl-quant-1');
     deletedSet.add('upsc-gs-1');
@@ -313,28 +315,31 @@ export default function App() {
       }
     }
 
-    const saved = localStorage.getItem('sarkari_mock_tests');
-    if (saved) {
+    const initialNonDeleted = INITIAL_MOCK_TESTS.filter(t => !deletedSet.has(t.id));
+    const initialIds = new Set(initialNonDeleted.map(t => t.id));
+
+    // Retrieve custom/user-added mock tests first to avoid large storage payload
+    const customSaved = safeGetItem('sarkari_custom_mock_tests') || safeGetItem('sarkari_mock_tests');
+    if (customSaved) {
       try {
-        const parsed = JSON.parse(saved) as MockTest[];
+        const parsed = JSON.parse(customSaved) as MockTest[];
         const filteredParsed = parsed.filter(t => !deletedSet.has(t.id));
-        const existingIds = new Set(filteredParsed.map(t => t.id));
-        const missingMocks = INITIAL_MOCK_TESTS.filter(t => !existingIds.has(t.id) && !deletedSet.has(t.id));
-        if (missingMocks.length > 0) {
-          const merged = [...filteredParsed, ...missingMocks];
-          localStorage.setItem('sarkari_mock_tests', JSON.stringify(merged));
-          return merged;
-        }
-        return filteredParsed;
+        // Only keep custom ones from storage that aren't duplicates of initial mocks
+        const customOnly = filteredParsed.filter(t => !initialIds.has(t.id));
+        return [...customOnly, ...initialNonDeleted];
       } catch (e) {
-        return INITIAL_MOCK_TESTS.filter(t => !deletedSet.has(t.id));
+        return initialNonDeleted;
       }
     }
-    return INITIAL_MOCK_TESTS.filter(t => !deletedSet.has(t.id));
+    return initialNonDeleted;
   });
 
   useEffect(() => {
-    localStorage.setItem('sarkari_mock_tests', JSON.stringify(mockTests));
+    // Only store custom/generated tests in localStorage to prevent 5MB storage quota exhaustion
+    const initialIds = new Set(INITIAL_MOCK_TESTS.map(t => t.id));
+    const customTests = mockTests.filter(t => !initialIds.has(t.id));
+    safeSetJSON('sarkari_custom_mock_tests', customTests);
+    safeSetJSON('sarkari_mock_tests', customTests);
   }, [mockTests]);
 
   const [currentAffairs, setCurrentAffairs] = useState<CurrentAffair[]>(() => {
@@ -378,11 +383,11 @@ export default function App() {
   });
 
   useEffect(() => {
-    localStorage.setItem('sarkari_current_affairs', JSON.stringify(currentAffairs));
+    safeSetJSON('sarkari_current_affairs', currentAffairs);
   }, [currentAffairs]);
 
   useEffect(() => {
-    localStorage.setItem('sarkari_quiz_questions', JSON.stringify(quizQuestions));
+    safeSetJSON('sarkari_quiz_questions', quizQuestions);
   }, [quizQuestions]);
 
   const [currentQuizIdx, setCurrentQuizIdx] = useState(0);
@@ -419,11 +424,11 @@ export default function App() {
   });
 
   useEffect(() => {
-    localStorage.setItem('sarkari_blogs_seo', JSON.stringify(blogs));
+    safeSetJSON('sarkari_blogs_seo', blogs);
   }, [blogs]);
 
   const [pyqsList, setPyqsList] = useState<{ title: string; type: string; size: string; year: number; exam: string; premium: boolean; downloadUrl?: string }[]>(() => {
-    const saved = localStorage.getItem('sarkari_pyqs');
+    const saved = safeGetItem('sarkari_pyqs');
     if (saved) {
       try {
         const parsed = JSON.parse(saved) as typeof INITIAL_PYQS;
@@ -431,7 +436,7 @@ export default function App() {
         const missing = INITIAL_PYQS.filter(x => !existingTitles.has(x.title));
         if (missing.length > 0) {
           const merged = [...parsed, ...missing];
-          localStorage.setItem('sarkari_pyqs', JSON.stringify(merged));
+          safeSetJSON('sarkari_pyqs', merged);
           return merged;
         }
         return parsed;
@@ -443,7 +448,7 @@ export default function App() {
   });
 
   useEffect(() => {
-    localStorage.setItem('sarkari_pyqs', JSON.stringify(pyqsList));
+    safeSetJSON('sarkari_pyqs', pyqsList);
   }, [pyqsList]);
 
   const getAvailableDates = () => {
@@ -643,7 +648,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
       // Determine initial activeTab based on pathname first
       const path = window.location.pathname.replace(/^\//, '');
       const validTabs = [
-        'jobs', 'admit-cards', 'results', 'mock-tests', 'syllabus', 
+        'jobs', 'admit-cards', 'results', 'mock-tests', 'ssc-ai-mock', 'syllabus', 
         'calendar', 'current-affairs', 'blog', 'premium', 'contact', 'dashboard', 'admin', 'whatsapp-alerts', 'ai-doubt-solver',
         'pgrkam-sync', 'uppbpb-sync', 'mpesb-sync', 'hpsc-sync', 'btsc-sync', 'navy-sync', 'army-sync', 'rajasthan-sync', 'sbi-sync', 'ibps-sync', 'rrb-sync', 'upsc-sync', 'ssc-sync'
       ];
@@ -668,7 +673,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
       try {
         const path = window.location.pathname.replace(/^\//, '');
         const validTabs = [
-          'jobs', 'admit-cards', 'results', 'mock-tests', 'syllabus', 
+          'jobs', 'admit-cards', 'results', 'mock-tests', 'ssc-ai-mock', 'syllabus', 
           'calendar', 'current-affairs', 'blog', 'premium', 'contact', 'dashboard', 'admin', 'whatsapp-alerts', 'ai-doubt-solver',
           'pgrkam-sync', 'uppbpb-sync', 'mpesb-sync', 'hpsc-sync', 'btsc-sync', 'navy-sync', 'army-sync', 'rajasthan-sync', 'sbi-sync', 'ibps-sync', 'rrb-sync', 'upsc-sync', 'ssc-sync'
         ];
@@ -805,23 +810,23 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
   });
 
   useEffect(() => {
-    localStorage.setItem('sarkari_notif_sound', String(notificationSoundEnabled));
+    safeSetItem('sarkari_notif_sound', String(notificationSoundEnabled));
   }, [notificationSoundEnabled]);
 
   useEffect(() => {
-    localStorage.setItem('sarkari_notif_push', String(browserPushEnabled));
+    safeSetItem('sarkari_notif_push', String(browserPushEnabled));
   }, [browserPushEnabled]);
 
   useEffect(() => {
-    localStorage.setItem('sarkari_notif_sync', String(liveSyncEnabled));
+    safeSetItem('sarkari_notif_sync', String(liveSyncEnabled));
   }, [liveSyncEnabled]);
 
   useEffect(() => {
-    localStorage.setItem('sarkari_notif_tone', alertTone);
+    safeSetItem('sarkari_notif_tone', alertTone);
   }, [alertTone]);
 
   useEffect(() => {
-    localStorage.setItem('sarkari_live_notifications', JSON.stringify(liveNotifications));
+    safeSetJSON('sarkari_live_notifications', liveNotifications);
   }, [liveNotifications]);
 
   const playNotificationSound = (toneType = 'melody') => {
@@ -2297,40 +2302,32 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
       reader.onload = (event) => {
         const dataUrl = event.target?.result as string;
         setModalNotebookPhoto(dataUrl);
-        localStorage.setItem('sarkari_notebook_photo_cached', dataUrl);
+        safeSetItem('sarkari_notebook_photo_cached', dataUrl);
         triggerToast('📸 Physical notebook snapped! Premium upgrade will solve this query instantly.');
       };
       reader.readAsDataURL(file);
     }
   };
 
-  // Synchronizers
+  // Synchronizers with safeStorage
   useEffect(() => {
-    localStorage.setItem('sarkari_jobs', JSON.stringify(jobs));
+    safeSetJSON('sarkari_jobs', jobs);
   }, [jobs]);
 
   useEffect(() => {
-    localStorage.setItem('sarkari_admit_cards', JSON.stringify(admitCards));
+    safeSetJSON('sarkari_admit_cards', admitCards);
   }, [admitCards]);
 
   useEffect(() => {
-    localStorage.setItem('sarkari_results', JSON.stringify(results));
+    safeSetJSON('sarkari_results', results);
   }, [results]);
 
   useEffect(() => {
-    localStorage.setItem('sarkari_mock_tests', JSON.stringify(mockTests));
-  }, [mockTests]);
-
-  useEffect(() => {
-    localStorage.setItem('sarkari_user_profile', JSON.stringify(user));
+    safeSetJSON('sarkari_user_profile', user);
   }, [user]);
 
   useEffect(() => {
-    localStorage.setItem('sarkari_pyqs', JSON.stringify(pyqsList));
-  }, [pyqsList]);
-
-  useEffect(() => {
-    localStorage.setItem('sarkari_premium_transactions', JSON.stringify(premiumTransactions));
+    safeSetJSON('sarkari_premium_transactions', premiumTransactions);
   }, [premiumTransactions]);
 
   useEffect(() => {
@@ -3205,15 +3202,22 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                   <div className="pt-2 flex flex-wrap gap-4 items-center">
                     <button 
                       onClick={() => setActiveTab('jobs')}
-                      className="rounded-xl bg-orange-500 px-6 py-3 text-sm font-extrabold text-white shadow-lg shadow-orange-500/30 hover:bg-orange-600 transition flex items-center gap-1"
+                      className="rounded-xl bg-orange-500 px-6 py-3 text-sm font-extrabold text-white shadow-lg shadow-orange-500/30 hover:bg-orange-600 transition flex items-center gap-1 cursor-pointer"
                     >
                       Browse Vacancies <ArrowUpRight className="h-4.5 w-4.5" />
                     </button>
                     <button 
-                      onClick={() => setActiveTab('mock-tests')}
-                      className="rounded-xl bg-white/10 px-6 py-3 text-sm font-extrabold text-white border border-white/20 hover:bg-white/15 transition"
+                      onClick={() => setActiveTab('ssc-ai-mock')}
+                      className="rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-5 py-3 text-sm font-extrabold text-slate-950 shadow-lg shadow-amber-500/20 hover:from-amber-400 hover:to-amber-500 transition flex items-center gap-1.5 cursor-pointer"
                     >
-                      Launch Mock Test
+                      <Sparkles className="h-4 w-4 fill-slate-950" />
+                      SSC 7-Day AI Mock (New Pattern)
+                    </button>
+                    <button 
+                      onClick={() => setActiveTab('mock-tests')}
+                      className="rounded-xl bg-white/10 px-6 py-3 text-sm font-extrabold text-white border border-white/20 hover:bg-white/15 transition cursor-pointer"
+                    >
+                      All Mocks
                     </button>
                   </div>
                 </div>
@@ -4466,6 +4470,34 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
               initialActiveTestId={selectedMockTestId}
               onClearInitialActiveTestId={() => setSelectedMockTestId(null)}
               onOpenAiDoubt={handleOpenAiDoubtWithQuestion}
+              onAddMockTest={(newTest) => {
+                setMockTests(prev => [newTest, ...prev]);
+                triggerToast(`SSC AI Mock Test Added: ${newTest.title}`);
+              }}
+            />
+          </div>
+        )}
+
+        {/* TAB 6.25: SSC NEW PATTERN 7-DAY AI MOCK TEST ENGINE */}
+        {activeTab === 'ssc-ai-mock' && (
+          <div className="space-y-6 animate-fadeIn">
+            <SarkariAds 
+              user={user} 
+              onGoPremium={() => setActiveTab('premium')} 
+              triggerToast={triggerToast} 
+              layout="banner" 
+            />
+            <SscAiMockGenerator
+              user={user}
+              onAddMockTest={(newTest) => {
+                setMockTests(prev => [newTest, ...prev]);
+                triggerToast(`SSC AI Mock Test Generated: ${newTest.title}`);
+              }}
+              onStartCbtTest={(testId) => {
+                setSelectedMockTestId(testId);
+                setActiveTab('mock-tests');
+              }}
+              onChangeTab={setActiveTab}
             />
           </div>
         )}

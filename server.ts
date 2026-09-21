@@ -46,6 +46,7 @@ import { hpscRecruitmentService } from "./server/hpscService";
 import { pgrkamRecruitmentService } from "./server/pgrkamService";
 import { uppbpbRecruitmentService } from "./server/uppbpbService";
 import { mpesbRecruitmentService } from "./server/mpesbService";
+import { generateSscAiMockTest, SSC_7_DAY_SCHEDULE } from "./server/sscAIMockService";
 
 dotenv.config();
 
@@ -923,6 +924,43 @@ Extract structured JSON strictly following this schema:
 
     addSscNotice(fallbackNotice);
     res.json({ success: true, notice: fallbackNotice });
+  });
+
+  // ==========================================
+  // 🤖 SSC NEW PATTERN 7-DAY AI MOCK TEST ENGINE
+  // ==========================================
+
+  // 1. Get 7-Day Rolling Schedule & Curricula
+  app.get("/api/ssc/7-day-mock-schedule", (req, res) => {
+    // Current Indian Standard day index (1 = Mon ... 7 = Sun)
+    const dayOfWeek = new Date().getDay(); // 0 is Sunday, 1 is Monday
+    const currentDayIndex = dayOfWeek === 0 ? 7 : dayOfWeek;
+
+    res.json({
+      success: true,
+      schedule: SSC_7_DAY_SCHEDULE,
+      currentDayIndex: currentDayIndex,
+      serverDate: new Date().toISOString().split("T")[0]
+    });
+  });
+
+  // 2. Generate on-demand AI Mock Test following SSC New Pattern
+  app.post("/api/ssc/generate-ai-mock", async (req, res) => {
+    try {
+      const { dayIndex = 1, examType, patternTier, focusArea, language, questionCount } = req.body;
+      const generatedTest = await generateSscAiMockTest({
+        dayIndex: Number(dayIndex) || 1,
+        examType,
+        patternTier,
+        focusArea,
+        language,
+        questionCount: questionCount ? Number(questionCount) : undefined
+      });
+      res.json({ success: true, test: generatedTest });
+    } catch (err: any) {
+      console.error("[SSC AI Mock Server Error]:", err);
+      res.status(500).json({ success: false, error: err.message || "Failed to generate SSC AI Mock Test" });
+    }
   });
 
   // ==========================================

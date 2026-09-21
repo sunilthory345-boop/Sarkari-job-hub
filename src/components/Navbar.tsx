@@ -65,6 +65,7 @@ export default function Navbar({
     { id: 'whatsapp-alerts', label: t.whatsappChannel, icon: MessageSquare, category: 'Main', highlight: true },
     
     { id: 'syllabus', label: t.syllabusAdmission, icon: GraduationCap, category: 'Prep Zone' },
+    { id: 'ssc-ai-mock', label: locale === 'hi' ? '🤖 SSC 7-Day AI मॉक (New Pattern)' : '🤖 SSC 7-Day AI Mock (2026)', icon: Sparkles, category: 'Prep Zone', highlight: true },
     { id: 'ai-doubt-solver', label: locale === 'hi' ? '⚡ AI Doubt Mitra (प्रश्न हलकर्ता)' : '⚡ AI Doubt Solver', icon: Sparkles, category: 'Prep Zone', highlight: true },
     { id: 'pyqs', label: t.pyqPapers, icon: FileDown, category: 'Prep Zone' },
     { id: 'mock-tests', label: t.mockTests, icon: Clock, category: 'Prep Zone' },

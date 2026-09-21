@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { MockTest, UserProfile, Question } from '../types';
 import CertificateModal from './CertificateModal';
+import SscAiMockGenerator from './SscAiMockGenerator';
 
 interface MockTestPortalProps {
   mockTests: MockTest[];
@@ -22,6 +23,7 @@ interface MockTestPortalProps {
   initialActiveTestId?: string | null;
   onClearInitialActiveTestId?: () => void;
   onOpenAiDoubt?: (questionText: string) => void;
+  onAddMockTest?: (newTest: MockTest) => void;
 }
 
 export default function MockTestPortal({ 
@@ -32,8 +34,10 @@ export default function MockTestPortal({
   onChangeTab,
   initialActiveTestId,
   onClearInitialActiveTestId,
-  onOpenAiDoubt
+  onOpenAiDoubt,
+  onAddMockTest
 }: MockTestPortalProps) {
+  const [activePortalView, setActivePortalView] = useState<'standard' | 'ssc-ai-generator'>('standard');
   const [activeTest, setActiveTest] = useState<MockTest | null>(null);
   const [isCertificateOpen, setIsCertificateOpen] = useState(false);
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
@@ -350,7 +354,52 @@ export default function MockTestPortal({
         <div className="grid gap-6 md:grid-cols-12 animate-fadeIn">
           
           <div className="md:col-span-8 space-y-6">
-            <div className="rounded-2xl border border-blue-50 bg-white p-5 shadow-xs">
+            {/* View Switcher Tabs: Standard vs SSC 7-Day AI Mock Generator */}
+            <div className="flex flex-col sm:flex-row items-stretch gap-2 p-1.5 bg-slate-100/90 rounded-2xl border border-slate-200 shadow-xs">
+              <button
+                id="portal-view-standard-btn"
+                onClick={() => setActivePortalView('standard')}
+                className={`flex-1 py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                  activePortalView === 'standard'
+                    ? 'bg-white text-slate-900 shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+                }`}
+              >
+                <BookOpen className="w-4 h-4 text-blue-600" />
+                <span>All Commission Mocks ({mockTests.length})</span>
+              </button>
+
+              <button
+                id="portal-view-ssc-ai-btn"
+                onClick={() => setActivePortalView('ssc-ai-generator')}
+                className={`flex-1 py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                  activePortalView === 'ssc-ai-generator'
+                    ? 'bg-gradient-to-r from-indigo-600 via-indigo-700 to-blue-700 text-white shadow-md'
+                    : 'text-indigo-700 hover:bg-indigo-50/80'
+                }`}
+              >
+                <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
+                <span>🤖 SSC 7-Day AI Mock (New Pattern 2026)</span>
+              </button>
+            </div>
+
+            {activePortalView === 'ssc-ai-generator' ? (
+              <SscAiMockGenerator
+                user={user}
+                onAddMockTest={(newTest) => {
+                  if (onAddMockTest) onAddMockTest(newTest);
+                }}
+                onStartCbtTest={(testId) => {
+                  const targetTest = mockTests.find(t => t.id === testId);
+                  if (targetTest) {
+                    handleStartTest(targetTest);
+                  }
+                }}
+                onChangeTab={onChangeTab}
+              />
+            ) : (
+              <>
+                <div className="rounded-2xl border border-blue-50 bg-white p-5 shadow-xs">
               <h3 className="font-sans text-base font-bold text-slate-900 mb-1">
                 ⚡ Interactive Exam Mock Hub
               </h3>
@@ -498,6 +547,8 @@ export default function MockTestPortal({
                 ))}
               </div>
             </div>
+            </>
+            )}
           </div>
 
           <div className="md:col-span-4 space-y-6">

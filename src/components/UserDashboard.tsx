@@ -9,6 +9,7 @@ import {
   ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend
 } from 'recharts';
 import { UserProfile, GovJob, SupportTicket } from '../types';
+import { safeGetJSON, safeSetJSON } from '../utils/safeStorage';
 import LoginPortal from './LoginPortal';
 import AspirantAnalytics from './AspirantAnalytics';
 
@@ -43,13 +44,9 @@ export default function UserDashboard({
 
   // Support Tickets State
   const [tickets, setTickets] = useState<SupportTicket[]>(() => {
-    const saved = localStorage.getItem('sarkari_support_tickets');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        console.error("Error parsing support tickets", e);
-      }
+    const savedTickets = safeGetJSON<SupportTicket[] | null>('sarkari_support_tickets', null);
+    if (savedTickets && Array.isArray(savedTickets) && savedTickets.length > 0) {
+      return savedTickets;
     }
     
     // Seed initial support tickets for visual fidelity
@@ -75,7 +72,7 @@ export default function UserDashboard({
         repliedDate: '2026-06-12 10:15 AM'
       }
     ];
-    localStorage.setItem('sarkari_support_tickets', JSON.stringify(initialTickets));
+    safeSetJSON('sarkari_support_tickets', initialTickets);
     return initialTickets;
   });
 
@@ -102,7 +99,7 @@ export default function UserDashboard({
 
     const updatedTickets = [ticketObj, ...tickets];
     setTickets(updatedTickets);
-    localStorage.setItem('sarkari_support_tickets', JSON.stringify(updatedTickets));
+    safeSetJSON('sarkari_support_tickets', updatedTickets);
     
     setNewTicket({
       subject: '',
@@ -136,7 +133,7 @@ export default function UserDashboard({
           adminReply: autoReply,
           repliedDate: new Date().toLocaleString('en-US', { hour12: true, dateStyle: 'medium', timeStyle: 'short' })
         };
-        localStorage.setItem('sarkari_support_tickets', JSON.stringify(updated));
+        safeSetJSON('sarkari_support_tickets', updated);
         return updated;
       });
       triggerToast(`🔔 Helpdesk answered your Ticket ${ticketId}! Check your Support Tickets section.`);
