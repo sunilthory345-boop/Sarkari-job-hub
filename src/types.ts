@@ -495,3 +495,244 @@ export interface NavySyncStatus {
   totalLiveNotices: number;
   newNoticesCount: number;
 }
+
+export interface BtscLiveNotice {
+  id: string;
+  advtNo: string; // e.g. 07/2026, 01/2026, 05/2025
+  category: 'vacancy' | 'admit-card' | 'result' | 'answer-key' | 'counseling' | 'update';
+  postType: 'anm-nurse' | 'junior-engineer' | 'pharmacist' | 'lab-tech' | 'ot-assistant' | 'xray-tech' | 'iti-instructor' | 'medical-officer' | 'other';
+  title: string;
+  titleHi: string;
+  org: string; // Bihar Technical Service Commission (बिहार तकनीकी सेवा आयोग - BTSC)
+  department?: string; // Health Dept / Road Construction / Water Resources / Building Construction / Labour Resources
+  portalUrl: string; // https://btsc.bihar.gov.in/hi/recruitment
+  publishedDate: string;
+  officialUrl: string;
+  pdfUrl?: string;
+  isNew?: boolean;
+  statusBadge: string;
+  details: {
+    posts?: number | string;
+    examDate?: string;
+    counselingDates?: string;
+    lastDate?: string;
+    ageLimit?: string;
+    qualification?: string;
+    salary?: string;
+    cutoff?: string;
+    objectionEnd?: string;
+    summary?: string;
+    stage?: string;
+    advtNoClean?: string;
+  };
+  jobData?: any;
+  admitCardData?: any;
+  resultData?: any;
+  answerKeyData?: any;
+}
+
+export interface BtscSyncStatus {
+  online: boolean;
+  portal: string;
+  status: string;
+  lastChecked: string;
+  latencyMs: number;
+  autoSyncIntervalSec: number;
+  totalLiveNotices: number;
+  newNoticesCount: number;
+}
+
+export interface HpscLiveNotice {
+  id: string;
+  advtNo: string; // e.g. Advt No. 05/2026, Advt No. 12/2026, Advt No. 58/2025
+  category: 'vacancy' | 'admit-card' | 'result' | 'answer-key' | 'interview' | 'announcement';
+  postType: 'hcs-allied' | 'hcs-judicial' | 'asst-professor' | 'pgt' | 'asst-engineer' | 'medical-officer' | 'vet-surgeon' | 'other';
+  title: string;
+  titleHi: string;
+  org: string; // Haryana Public Service Commission (हरियाणा लोक सेवा आयोग - HPSC)
+  department?: string; // Higher Education / School Education / Irrigation & Water Resources / Health / Revenue / Personnel
+  portalUrl: string; // https://hpsc.gov.in/
+  publishedDate: string;
+  officialUrl: string;
+  pdfUrl?: string;
+  isNew?: boolean;
+  statusBadge: string;
+  details: {
+    posts?: number | string;
+    examDate?: string;
+    interviewDates?: string;
+    lastDate?: string;
+    ageLimit?: string;
+    qualification?: string;
+    salary?: string;
+    cutoff?: string;
+    objectionEnd?: string;
+    summary?: string;
+    stage?: string;
+    advtNoClean?: string;
+  };
+  jobData?: any;
+  admitCardData?: any;
+  resultData?: any;
+  answerKeyData?: any;
+}
+
+export interface HpscSyncStatus {
+  online: boolean;
+  portal: string;
+  status: string;
+  lastChecked: string;
+  latencyMs: number;
+  autoSyncIntervalSec: number;
+  totalLiveNotices: number;
+  newNoticesCount: number;
+}
+
+// -------------------------------------------------------------------
+// PUNJAB GHAR GHAR ROZGAR & KAROBAR MISSION (PGRKAM) - https://www.pgrkam.com/
+// -------------------------------------------------------------------
+export interface PgrkamLiveNotice {
+  id: string;
+  advtNo: string;
+  category: 'vacancy' | 'admit-card' | 'result' | 'answer-key' | 'rozgar-mela' | 'counseling';
+  postType: 'police' | 'pspcl' | 'psssb' | 'patwari' | 'teacher-master-cadre' | 'health-dept' | 'civil-services' | 'mela' | 'other';
+  title: string;
+  titleHi: string;
+  titlePa?: string;
+  org: string; // Punjab Ghar Ghar Rozgar and Karobar Mission (PGRKAM / ਪੰਜਾਬ ਘਰ ਘਰ ਰੋਜ਼ਗਾਰ ਮਿਸ਼ਨ)
+  department?: string;
+  portalUrl: string; // https://www.pgrkam.com/
+  publishedDate: string;
+  officialUrl: string;
+  pdfUrl?: string;
+  isNew?: boolean;
+  statusBadge: string;
+  details: {
+    posts?: number | string;
+    examDate?: string;
+    counselingDates?: string;
+    lastDate?: string;
+    ageLimit?: string;
+    qualification?: string;
+    salary?: string;
+    cutoff?: string;
+    objectionEnd?: string;
+    district?: string;
+    venue?: string;
+    summary?: string;
+    stage?: string;
+  };
+  jobData?: any;
+  admitCardData?: any;
+  resultData?: any;
+  answerKeyData?: any;
+}
+
+export interface PgrkamSyncStatus {
+  online: boolean;
+  portal: string;
+  status: string;
+  lastChecked: string;
+  latencyMs: number;
+  autoSyncIntervalSec: number;
+  totalLiveNotices: number;
+  newNoticesCount: number;
+}
+
+// -------------------------------------------------------------------
+// UTTAR PRADESH POLICE RECRUITMENT & PROMOTION BOARD (UPPBPB) - https://uppbpb.gov.in/
+// -------------------------------------------------------------------
+export interface UppbpbLiveNotice {
+  id: string;
+  advtNo: string;
+  category: 'vacancy' | 'admit-card' | 'result' | 'answer-key' | 'physical-test' | 'scrutiny';
+  postType: 'constable' | 'sub-inspector' | 'radio-cadre' | 'computer-operator' | 'jail-warder' | 'fireman' | 'clerk-cadre' | 'other';
+  title: string;
+  titleHi: string;
+  org: string; // Uttar Pradesh Police Recruitment and Promotion Board (उत्तर प्रदेश पुलिस भर्ती एवं प्रोन्नति बोर्ड - UPPBPB, लखनऊ)
+  department?: string;
+  portalUrl: string; // https://uppbpb.gov.in/
+  publishedDate: string;
+  officialUrl: string;
+  pdfUrl?: string;
+  isNew?: boolean;
+  statusBadge: string;
+  details: {
+    posts?: number | string;
+    examDate?: string;
+    petPstDate?: string;
+    lastDate?: string;
+    ageLimit?: string;
+    qualification?: string;
+    salary?: string;
+    cutoff?: string;
+    objectionEnd?: string;
+    summary?: string;
+    stage?: string;
+  };
+  jobData?: any;
+  admitCardData?: any;
+  resultData?: any;
+  answerKeyData?: any;
+}
+
+export interface UppbpbSyncStatus {
+  online: boolean;
+  portal: string;
+  status: string;
+  lastChecked: string;
+  latencyMs: number;
+  autoSyncIntervalSec: number;
+  totalLiveNotices: number;
+  newNoticesCount: number;
+}
+
+// -------------------------------------------------------------------
+// MADHYA PRADESH EMPLOYEES SELECTION BOARD (MP ESB / VYAPAM) - https://esb.mponline.gov.in/
+// -------------------------------------------------------------------
+export interface MpesbLiveNotice {
+  id: string;
+  advtNo: string;
+  category: 'vacancy' | 'admit-card' | 'result' | 'answer-key' | 'counseling' | 'press-note';
+  postType: 'police-constable' | 'teacher-tet' | 'patwari-group2' | 'sub-engineer' | 'vanrakshak-jail' | 'group4' | 'nursing-pnst' | 'other';
+  title: string;
+  titleHi: string;
+  org: string; // Madhya Pradesh Employees Selection Board (मध्य प्रदेश कर्मचारी चयन मंडल - MP ESB / Vyapam, भोपाल)
+  department?: string;
+  portalUrl: string; // https://esb.mponline.gov.in/Portal/Examinations/Vyapam/examsList.aspx
+  publishedDate: string;
+  officialUrl: string;
+  pdfUrl?: string;
+  isNew?: boolean;
+  statusBadge: string;
+  details: {
+    posts?: number | string;
+    examDate?: string;
+    admitCardDate?: string;
+    lastDate?: string;
+    ageLimit?: string;
+    qualification?: string;
+    salary?: string;
+    cutoff?: string;
+    objectionEnd?: string;
+    summary?: string;
+    stage?: string;
+  };
+  jobData?: any;
+  admitCardData?: any;
+  resultData?: any;
+  answerKeyData?: any;
+}
+
+export interface MpesbSyncStatus {
+  online: boolean;
+  portal: string;
+  status: string;
+  lastChecked: string;
+  latencyMs: number;
+  autoSyncIntervalSec: number;
+  totalLiveNotices: number;
+  newNoticesCount: number;
+}
+
+

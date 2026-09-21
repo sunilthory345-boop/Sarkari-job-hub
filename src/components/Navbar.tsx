@@ -3,7 +3,7 @@ import {
   Briefcase, FileText, Award, BookOpen, Clock, 
   Sparkles, Mail, Bell, Menu, X, CheckSquare, 
   GraduationCap, MessageSquare, Download, LogIn,
-  Moon, Sun, HelpCircle, FileDown, Star, Calendar, FileUp, Globe, Newspaper, Zap, Train, Landmark, Swords
+  Moon, Sun, HelpCircle, FileDown, Star, Calendar, FileUp, Globe, Newspaper, Zap, Train, Landmark, Swords, Anchor
 } from 'lucide-react';
 import { UserProfile } from '../types';
 import { LANGUAGES, TRANSLATIONS, LocaleType } from '../utils/lang';
@@ -45,6 +45,12 @@ export default function Navbar({
   const menuItems = [
     { id: 'home', label: t.home, icon: BookOpen, category: 'Main' },
     { id: 'jobs', label: t.latestJobs, icon: Briefcase, category: 'Main' },
+    { id: 'pgrkam-sync', label: locale === 'hi' ? '🏛️ PGRKAM पंजाब लाइव (pgrkam.com)' : '🏛️ PGRKAM Punjab Live', icon: Landmark, category: 'Main', highlight: true },
+    { id: 'uppbpb-sync', label: locale === 'hi' ? '🚨 UPPBPB यूपी पुलिस लाइव (uppbpb.gov.in)' : '🚨 UPPBPB UP Police Live', icon: Landmark, category: 'Main', highlight: true },
+    { id: 'mpesb-sync', label: locale === 'hi' ? '🏛️ MPESB व्यापम लाइव (esb.mponline.gov.in)' : '🏛️ MPESB Vyapam Live', icon: Landmark, category: 'Main', highlight: true },
+    { id: 'hpsc-sync', label: locale === 'hi' ? '🏛️ HPSC हरियाणा लाइव (hpsc.gov.in)' : '🏛️ HPSC Haryana Live', icon: Landmark, category: 'Main', highlight: true },
+    { id: 'btsc-sync', label: locale === 'hi' ? '🏛️ BTSC बिहार लाइव (btsc.bihar.gov.in)' : '🏛️ BTSC Bihar Live', icon: Landmark, category: 'Main', highlight: true },
+    { id: 'navy-sync', label: locale === 'hi' ? '⚓ भारतीय नौसेना लाइव (joinindiannavy.gov.in)' : '⚓ Join Indian Navy Live', icon: Anchor, category: 'Main', highlight: true },
     { id: 'army-sync', label: locale === 'hi' ? '⚔️ भारतीय सेना लाइव (joinindianarmy.nic.in)' : '⚔️ Join Indian Army Live', icon: Swords, category: 'Main', highlight: true },
     { id: 'rajasthan-sync', label: locale === 'hi' ? '🏛️ राजस्थान भर्ती लाइव (recruitment.rajasthan.gov.in)' : '🏛️ Rajasthan Recruitment Live', icon: Landmark, category: 'Main', highlight: true },
     { id: 'sbi-sync', label: locale === 'hi' ? '🏛️ SBI करियर लाइव (sbi.bank.in)' : '🏛️ SBI Careers Live', icon: Landmark, category: 'Main', highlight: true },

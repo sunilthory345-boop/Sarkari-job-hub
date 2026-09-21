@@ -552,7 +552,7 @@ export default function WhatsAppChannelHub({ locale, triggerToast }: WhatsAppCha
                       selectedPlatform === 'whatsapp' ? 'text-[#075E54] border-emerald-100' : 'text-sky-700 border-sky-100'
                     }`}>
                       <span className="flex items-center gap-1">
-                        {activeMsgData?.isCustom && <Sparkles className="h-3 w-3 text-amber-500 animate-pulse" />}
+                        {(activeMsgData as any)?.isCustom && <Sparkles className="h-3 w-3 text-amber-500 animate-pulse" />}
                         {activeMsgData?.title}
                       </span>
                       <span className="text-[8px] text-slate-400 font-normal shrink-0">{activeMsgData?.time}</span>

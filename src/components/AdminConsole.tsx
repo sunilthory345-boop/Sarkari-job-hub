@@ -912,7 +912,8 @@ export default function AdminConsole({
         officialWebsite: jobDetails.officialWebsite || 'https://google.com',
         lastDate: jobDetails.lastDate || new Date().toISOString().split('T')[0],
         location: jobDetails.location || 'All India',
-        description: jobDetails.description || ''
+        description: jobDetails.description || '',
+        formStatus: ''
       });
       setActiveAdminTab('jobs');
       triggerMessage("📥 Vacancy data loaded into the manual form below. Scroll down to review and submit!");

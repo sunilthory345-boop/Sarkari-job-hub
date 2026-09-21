@@ -40,6 +40,12 @@ import {
 } from "./server/sbiService";
 import { rajasthanRecruitmentService } from "./server/rajasthanService";
 import { armyRecruitmentService } from "./server/armyService";
+import { navyRecruitmentService } from "./server/navyService";
+import { btscRecruitmentService } from "./server/btscService";
+import { hpscRecruitmentService } from "./server/hpscService";
+import { pgrkamRecruitmentService } from "./server/pgrkamService";
+import { uppbpbRecruitmentService } from "./server/uppbpbService";
+import { mpesbRecruitmentService } from "./server/mpesbService";
 
 dotenv.config();
 
@@ -2334,6 +2340,385 @@ Return JSON strictly.`;
       res.json({ success: true, notice });
     } catch (err: any) {
       res.status(500).json({ error: err.message || "Failed to parse Join Indian Army notice" });
+    }
+  });
+
+  // ==========================================
+  // INDIAN NAVY (joinindiannavy.gov.in) LIVE RECRUITMENT PORTAL API
+  // ==========================================
+
+  // 1. Live status & health check
+  app.get("/api/navy/status", (req, res) => {
+    const status = navyRecruitmentService.getStatus();
+    res.json(status);
+  });
+
+  // 2. Fetch live notice feed with optional category & search filters
+  app.get("/api/navy/live-feed", (req, res) => {
+    const { category, entryType, search } = req.query;
+    const notices = navyRecruitmentService.getLiveNotices({
+      category: category as string,
+      entryType: entryType as string,
+      search: search as string
+    });
+    res.json({
+      success: true,
+      count: notices.length,
+      portal: "https://www.joinindiannavy.gov.in/",
+      data: notices
+    });
+  });
+
+  // 3. Force live sync with joinindiannavy.gov.in
+  app.post("/api/navy/sync-now", async (req, res) => {
+    try {
+      const result = await navyRecruitmentService.syncWithPortal();
+      res.json({ success: true, ...result });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to sync with Indian Navy portal" });
+    }
+  });
+
+  // 4. Manually publish/update a verified Indian Navy notice
+  app.post("/api/navy/publish-notice", (req, res) => {
+    const newNotice = req.body;
+    if (!newNotice || !newNotice.title) {
+      return res.status(400).json({ error: "Invalid notice payload" });
+    }
+    const saved = navyRecruitmentService.addNotice(newNotice);
+    res.json({ success: true, notice: saved });
+  });
+
+  // 5. AI-Powered Indian Navy Notice / Press Release Analyzer (Gemini)
+  app.post("/api/navy/auto-parse", async (req, res) => {
+    const { rawNoticeText, sourceUrl } = req.body;
+    if (!rawNoticeText) {
+      return res.status(400).json({ error: "rawNoticeText is required" });
+    }
+    try {
+      const notice = await navyRecruitmentService.parseRawNoticeWithGemini(
+        rawNoticeText,
+        sourceUrl || "https://www.joinindiannavy.gov.in/"
+      );
+      res.json({ success: true, notice });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to parse Indian Navy notice" });
+    }
+  });
+
+  // ==========================================
+  // 🏛️ BIHAR TECHNICAL SERVICE COMMISSION (BTSC) LIVE INTEGRATION
+  // Official Portal: https://btsc.bihar.gov.in/hi/recruitment & https://btsc.bihar.gov.in/
+  // ==========================================
+
+  // 1. Health & Sync Status
+  app.get("/api/btsc/status", (req, res) => {
+    res.json(btscRecruitmentService.getStatus());
+  });
+
+  // 2. Fetch live notice feed with optional filters
+  app.get("/api/btsc/live-feed", (req, res) => {
+    const { category, postType, search } = req.query;
+    const notices = btscRecruitmentService.getLiveNotices({
+      category: category as string,
+      postType: postType as string,
+      search: search as string
+    });
+    res.json({
+      success: true,
+      count: notices.length,
+      portal: "https://btsc.bihar.gov.in/hi/recruitment",
+      data: notices,
+      notices
+    });
+  });
+
+  // 3. Force live sync with btsc.bihar.gov.in
+  app.post("/api/btsc/sync-now", async (req, res) => {
+    try {
+      const result = await btscRecruitmentService.syncWithPortal();
+      res.json({ success: true, ...result });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to sync with BTSC Bihar portal" });
+    }
+  });
+
+  // 4. Publish / add a verified BTSC notice
+  app.post("/api/btsc/publish-notice", (req, res) => {
+    const newNotice = req.body;
+    if (!newNotice || !newNotice.title) {
+      return res.status(400).json({ error: "Invalid notice payload" });
+    }
+    const saved = btscRecruitmentService.addNotice(newNotice);
+    res.json({ success: true, notice: saved });
+  });
+
+  // 5. AI-Powered BTSC Notice / Press Release Analyzer (Gemini)
+  app.post("/api/btsc/auto-parse", async (req, res) => {
+    const { rawNoticeText, sourceUrl } = req.body;
+    if (!rawNoticeText) {
+      return res.status(400).json({ error: "rawNoticeText is required" });
+    }
+    try {
+      const notice = await btscRecruitmentService.parseRawNoticeWithGemini(
+        rawNoticeText,
+        sourceUrl || "https://btsc.bihar.gov.in/hi/recruitment"
+      );
+      res.json({ success: true, notice });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to parse BTSC notice" });
+    }
+  });
+
+  // ----------------------------------------------------
+  // HARYANA PUBLIC SERVICE COMMISSION (HPSC) ENDPOINTS (https://hpsc.gov.in/)
+  // ----------------------------------------------------
+
+  // 1. Health & Sync Status
+  app.get("/api/hpsc/status", (req, res) => {
+    res.json(hpscRecruitmentService.getStatus());
+  });
+
+  // 2. Fetch live notice feed with optional filters
+  app.get("/api/hpsc/live-feed", (req, res) => {
+    const { category, postType, search } = req.query;
+    const notices = hpscRecruitmentService.getLiveNotices({
+      category: category as string,
+      postType: postType as string,
+      search: search as string
+    });
+    res.json({
+      success: true,
+      count: notices.length,
+      portal: "https://hpsc.gov.in/",
+      data: notices,
+      notices
+    });
+  });
+
+  // 3. Force live sync with hpsc.gov.in
+  app.post("/api/hpsc/sync-now", async (req, res) => {
+    try {
+      const result = await hpscRecruitmentService.syncWithPortal();
+      res.json({ success: true, ...result });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to sync with HPSC Haryana portal" });
+    }
+  });
+
+  // 4. Publish / add a verified HPSC notice
+  app.post("/api/hpsc/publish-notice", (req, res) => {
+    const newNotice = req.body;
+    if (!newNotice || !newNotice.title) {
+      return res.status(400).json({ error: "Invalid notice payload" });
+    }
+    const saved = hpscRecruitmentService.addNotice(newNotice);
+    res.json({ success: true, notice: saved });
+  });
+
+  // 5. AI-Powered HPSC Notice / Press Release Analyzer (Gemini)
+  app.post("/api/hpsc/auto-parse", async (req, res) => {
+    const { rawNoticeText, sourceUrl } = req.body;
+    if (!rawNoticeText) {
+      return res.status(400).json({ error: "rawNoticeText is required" });
+    }
+    try {
+      const notice = await hpscRecruitmentService.parseRawNoticeWithGemini(
+        rawNoticeText,
+        sourceUrl || "https://hpsc.gov.in/"
+      );
+      res.json({ success: true, notice });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to parse HPSC notice" });
+    }
+  });
+
+  // ----------------------------------------------------
+  // PUNJAB GHAR GHAR ROZGAR & KAROBAR MISSION (PGRKAM) (https://www.pgrkam.com/)
+  // ----------------------------------------------------
+
+  // 1. Health & Sync Status
+  app.get("/api/pgrkam/status", (req, res) => {
+    res.json(pgrkamRecruitmentService.getStatus());
+  });
+
+  // 2. Fetch live notice feed with optional filters
+  app.get("/api/pgrkam/live-feed", (req, res) => {
+    const { category, postType, search } = req.query;
+    const notices = pgrkamRecruitmentService.getLiveNotices({
+      category: category as string,
+      postType: postType as string,
+      search: search as string
+    });
+    res.json({
+      success: true,
+      count: notices.length,
+      portal: "https://www.pgrkam.com/",
+      data: notices,
+      notices
+    });
+  });
+
+  // 3. Force live sync with pgrkam.com
+  app.post("/api/pgrkam/sync-now", async (req, res) => {
+    try {
+      const result = await pgrkamRecruitmentService.syncWithPortal();
+      res.json({ success: true, ...result });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to sync with PGRKAM Punjab portal" });
+    }
+  });
+
+  // 4. Publish / add a verified PGRKAM notice
+  app.post("/api/pgrkam/publish-notice", (req, res) => {
+    const newNotice = req.body;
+    if (!newNotice || !newNotice.title) {
+      return res.status(400).json({ error: "Invalid notice payload" });
+    }
+    const saved = pgrkamRecruitmentService.addNotice(newNotice);
+    res.json({ success: true, notice: saved });
+  });
+
+  // 5. AI-Powered PGRKAM Notice / Press Release Analyzer (Gemini)
+  app.post("/api/pgrkam/auto-parse", async (req, res) => {
+    const { rawNoticeText, sourceUrl } = req.body;
+    if (!rawNoticeText) {
+      return res.status(400).json({ error: "rawNoticeText is required" });
+    }
+    try {
+      const notice = await pgrkamRecruitmentService.parseRawNoticeWithGemini(
+        rawNoticeText,
+        sourceUrl || "https://www.pgrkam.com/"
+      );
+      res.json({ success: true, notice });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to parse PGRKAM notice" });
+    }
+  });
+
+  // ----------------------------------------------------
+  // UTTAR PRADESH POLICE RECRUITMENT & PROMOTION BOARD (UPPBPB) (https://uppbpb.gov.in/)
+  // ----------------------------------------------------
+
+  // 1. Health & Sync Status
+  app.get("/api/uppbpb/status", (req, res) => {
+    res.json(uppbpbRecruitmentService.getStatus());
+  });
+
+  // 2. Fetch live notice feed with optional filters
+  app.get("/api/uppbpb/live-feed", (req, res) => {
+    const { category, postType, search } = req.query;
+    const notices = uppbpbRecruitmentService.getLiveNotices({
+      category: category as string,
+      postType: postType as string,
+      search: search as string
+    });
+    res.json({
+      success: true,
+      count: notices.length,
+      portal: "https://uppbpb.gov.in/",
+      data: notices,
+      notices
+    });
+  });
+
+  // 3. Force live sync with uppbpb.gov.in
+  app.post("/api/uppbpb/sync-now", async (req, res) => {
+    try {
+      const result = await uppbpbRecruitmentService.syncWithPortal();
+      res.json({ success: true, ...result });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to sync with UPPBPB Lucknow portal" });
+    }
+  });
+
+  // 4. Publish / add a verified UPPBPB notice
+  app.post("/api/uppbpb/publish-notice", (req, res) => {
+    const newNotice = req.body;
+    if (!newNotice || !newNotice.title) {
+      return res.status(400).json({ error: "Invalid notice payload" });
+    }
+    const saved = uppbpbRecruitmentService.addNotice(newNotice);
+    res.json({ success: true, notice: saved });
+  });
+
+  // 5. AI-Powered UPPBPB Notice / Press Release Analyzer (Gemini)
+  app.post("/api/uppbpb/auto-parse", async (req, res) => {
+    const { rawNoticeText, sourceUrl } = req.body;
+    if (!rawNoticeText) {
+      return res.status(400).json({ error: "rawNoticeText is required" });
+    }
+    try {
+      const notice = await uppbpbRecruitmentService.parseRawNoticeWithGemini(
+        rawNoticeText,
+        sourceUrl || "https://uppbpb.gov.in/"
+      );
+      res.json({ success: true, notice });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to parse UPPBPB notice" });
+    }
+  });
+
+  // ----------------------------------------------------
+  // MADHYA PRADESH EMPLOYEES SELECTION BOARD (MP ESB / VYAPAM) (https://esb.mponline.gov.in/)
+  // ----------------------------------------------------
+
+  // 1. Health & Sync Status
+  app.get("/api/mpesb/status", (req, res) => {
+    res.json(mpesbRecruitmentService.getStatus());
+  });
+
+  // 2. Fetch live notice feed with optional filters
+  app.get("/api/mpesb/live-feed", (req, res) => {
+    const { category, postType, search } = req.query;
+    const notices = mpesbRecruitmentService.getLiveNotices({
+      category: category as string,
+      postType: postType as string,
+      search: search as string
+    });
+    res.json({
+      success: true,
+      count: notices.length,
+      portal: "https://esb.mponline.gov.in/Portal/Examinations/Vyapam/examsList.aspx",
+      data: notices,
+      notices
+    });
+  });
+
+  // 3. Force live sync with esb.mponline.gov.in
+  app.post("/api/mpesb/sync-now", async (req, res) => {
+    try {
+      const result = await mpesbRecruitmentService.syncWithPortal();
+      res.json({ success: true, ...result });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to sync with MP ESB Vyapam portal" });
+    }
+  });
+
+  // 4. Publish / add a verified MP ESB notice
+  app.post("/api/mpesb/publish-notice", (req, res) => {
+    const newNotice = req.body;
+    if (!newNotice || !newNotice.title) {
+      return res.status(400).json({ error: "Invalid notice payload" });
+    }
+    const saved = mpesbRecruitmentService.addNotice(newNotice);
+    res.json({ success: true, notice: saved });
+  });
+
+  // 5. AI-Powered MP ESB Notice / Press Release Analyzer (Gemini)
+  app.post("/api/mpesb/auto-parse", async (req, res) => {
+    const { rawNoticeText, sourceUrl } = req.body;
+    if (!rawNoticeText) {
+      return res.status(400).json({ error: "rawNoticeText is required" });
+    }
+    try {
+      const notice = await mpesbRecruitmentService.parseRawNoticeWithGemini(
+        rawNoticeText,
+        sourceUrl || "https://esb.mponline.gov.in/Portal/Examinations/Vyapam/examsList.aspx"
+      );
+      res.json({ success: true, notice });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || "Failed to parse MP ESB notice" });
     }
   });
 

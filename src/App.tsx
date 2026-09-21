@@ -43,8 +43,14 @@ import IbpsLiveSyncHub from './components/IbpsLiveSyncHub';
 import SbiLiveSyncHub from './components/SbiLiveSyncHub';
 import RajasthanLiveSyncHub from './components/RajasthanLiveSyncHub';
 import ArmyLiveSyncHub from './components/ArmyLiveSyncHub';
+import NavyLiveSyncHub from './components/NavyLiveSyncHub';
+import BtscLiveSyncHub from './components/BtscLiveSyncHub';
+import HpscLiveSyncHub from './components/HpscLiveSyncHub';
+import PgrkamLiveSyncHub from './components/PgrkamLiveSyncHub';
+import UppbpbLiveSyncHub from './components/UppbpbLiveSyncHub';
+import MpesbLiveSyncHub from './components/MpesbLiveSyncHub';
 import GovPortalsSyncBar from './components/GovPortalsSyncBar';
-import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice, IbpsLiveNotice, SbiLiveNotice, RajLiveNotice, ArmyLiveNotice } from './types';
+import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice, IbpsLiveNotice, SbiLiveNotice, RajLiveNotice, ArmyLiveNotice, NavyLiveNotice, BtscLiveNotice, HpscLiveNotice, PgrkamLiveNotice, UppbpbLiveNotice, MpesbLiveNotice } from './types';
 import { initializeGA, trackPageView } from './utils/analytics';
 import { updateSEOMetadata } from './utils/seoHelper';
 import { fetchWithRetry } from './utils/fetchHelper';
@@ -633,42 +639,52 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
   });
 
   const [activeTab, setActiveTab] = useState<string>(() => {
-    // Determine initial activeTab based on pathname first
-    const path = window.location.pathname.replace(/^\//, '');
-    const validTabs = [
-      'jobs', 'admit-cards', 'results', 'mock-tests', 'syllabus', 
-      'calendar', 'current-affairs', 'blog', 'premium', 'contact', 'dashboard', 'admin', 'whatsapp-alerts', 'ai-doubt-solver'
-    ];
-    if (validTabs.includes(path)) {
-      return path;
+    try {
+      // Determine initial activeTab based on pathname first
+      const path = window.location.pathname.replace(/^\//, '');
+      const validTabs = [
+        'jobs', 'admit-cards', 'results', 'mock-tests', 'syllabus', 
+        'calendar', 'current-affairs', 'blog', 'premium', 'contact', 'dashboard', 'admin', 'whatsapp-alerts', 'ai-doubt-solver',
+        'pgrkam-sync', 'uppbpb-sync', 'mpesb-sync', 'hpsc-sync', 'btsc-sync', 'navy-sync', 'army-sync', 'rajasthan-sync', 'sbi-sync', 'ibps-sync', 'rrb-sync', 'upsc-sync', 'ssc-sync'
+      ];
+      if (validTabs.includes(path)) {
+        return path;
+      }
+      // Fall back to search query string tab (e.g. ?tab=jobs)
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get('tab');
+      if (tabParam && validTabs.includes(tabParam)) {
+        return tabParam;
+      }
+      return 'home';
+    } catch {
+      return 'home';
     }
-    // Fall back to search query string tab (e.g. ?tab=jobs)
-    const params = new URLSearchParams(window.location.search);
-    const tabParam = params.get('tab');
-    if (tabParam && validTabs.includes(tabParam)) {
-      return tabParam;
-    }
-    return 'home';
   });
 
   // Track popstate events for backward/forward navigation
   useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {
-      const path = window.location.pathname.replace(/^\//, '');
-      const validTabs = [
-        'jobs', 'admit-cards', 'results', 'mock-tests', 'syllabus', 
-        'calendar', 'current-affairs', 'blog', 'premium', 'contact', 'dashboard', 'admin', 'whatsapp-alerts'
-      ];
-      if (validTabs.includes(path)) {
-        setActiveTab(path);
-      } else {
-        const params = new URLSearchParams(window.location.search);
-        const tabParam = params.get('tab');
-        if (tabParam && validTabs.includes(tabParam)) {
-          setActiveTab(tabParam);
+      try {
+        const path = window.location.pathname.replace(/^\//, '');
+        const validTabs = [
+          'jobs', 'admit-cards', 'results', 'mock-tests', 'syllabus', 
+          'calendar', 'current-affairs', 'blog', 'premium', 'contact', 'dashboard', 'admin', 'whatsapp-alerts', 'ai-doubt-solver',
+          'pgrkam-sync', 'uppbpb-sync', 'mpesb-sync', 'hpsc-sync', 'btsc-sync', 'navy-sync', 'army-sync', 'rajasthan-sync', 'sbi-sync', 'ibps-sync', 'rrb-sync', 'upsc-sync', 'ssc-sync'
+        ];
+        if (validTabs.includes(path)) {
+          setActiveTab(path);
         } else {
-          setActiveTab('home');
+          const params = new URLSearchParams(window.location.search);
+          const tabParam = params.get('tab');
+          if (tabParam && validTabs.includes(tabParam)) {
+            setActiveTab(tabParam);
+          } else {
+            setActiveTab('home');
+          }
         }
+      } catch (err) {
+        console.warn('popstate event handling error:', err);
       }
     };
     window.addEventListener('popstate', handlePopState);
@@ -677,10 +693,15 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
 
   // Update HTML history state on activeTab change to preserve SEO path mapping
   useEffect(() => {
-    const currentPath = window.location.pathname;
-    const targetPath = activeTab === 'home' ? '/' : `/${activeTab}`;
-    if (currentPath !== targetPath) {
-      window.history.pushState({ tab: activeTab }, '', targetPath);
+    try {
+      const currentPath = window.location.pathname;
+      const targetPath = activeTab === 'home' ? '/' : `/${activeTab}`;
+      if (currentPath !== targetPath) {
+        window.history.pushState({ tab: activeTab }, '', targetPath);
+      }
+    } catch (err) {
+      // In sandboxed iframes or cross-origin contexts, pushState is blocked and throws SecurityError
+      console.warn('pushState unavailable in current environment:', err);
     }
   }, [activeTab]);
   const [locale, setLocale] = useState<LocaleType>(() => {
@@ -1587,6 +1608,539 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
     return () => clearInterval(armyInterval);
   }, []);
 
+  // JOIN INDIAN NAVY REAL-TIME AUTO-MONITOR & SYNCHRONIZER (https://www.joinindiannavy.gov.in/)
+  const [navySyncing, setNavySyncing] = useState(false);
+  const [latestNavyNotice, setLatestNavyNotice] = useState<NavyLiveNotice | null>(null);
+
+  const runNavyAutoSync = async (notifyIfNoNew = false) => {
+    setNavySyncing(true);
+    try {
+      const res = await fetch('/api/navy/live-feed');
+      if (res.ok) {
+        const data = await res.json();
+        const notices: NavyLiveNotice[] = data.notices || [];
+        if (notices.length > 0) {
+          setLatestNavyNotice(notices[0]);
+        }
+
+        // Check against existing IDs
+        const existingJIds = new Set(jobs.map(j => j.id));
+        const existingAIds = new Set(admitCards.map(a => a.id));
+        const existingRIds = new Set(results.map(r => r.id));
+        const existingKIds = new Set(answerKeys.map(k => k.id));
+
+        // Read already auto-imported notice IDs
+        const autoImported: string[] = JSON.parse(localStorage.getItem('sarkari_auto_imported_navy_ids') || '[]');
+        const importedSet = new Set(autoImported);
+
+        let newItemsAdded = 0;
+
+        for (const notice of notices) {
+          if (importedSet.has(notice.id)) continue;
+
+          if (notice.category === 'vacancy' && notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'admit-card' && notice.admitCardData && !existingAIds.has(notice.admitCardData.id)) {
+            handleNewLaunch('Admit Card', notice.title, notice.org, 'admitCards', notice.admitCardData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'result' && notice.resultData && !existingRIds.has(notice.resultData.id)) {
+            const sanitizedResult: JobResult = {
+              ...notice.resultData,
+              cutOff: {
+                UR: notice.resultData.cutOff?.UR || notice.details?.cutoff || 'Declared on Portal',
+                OBC: notice.resultData.cutOff?.OBC || 'Declared on Portal',
+                SC: notice.resultData.cutOff?.SC || 'Declared on Portal',
+                ST: notice.resultData.cutOff?.ST || 'Declared on Portal'
+              }
+            };
+            handleNewLaunch('Result', notice.title, notice.org, 'results', sanitizedResult);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'answer-key' && notice.answerKeyData && !existingKIds.has(notice.answerKeyData.id)) {
+            handleNewLaunch('Answer Key', notice.title, notice.org, 'answerKeys', notice.answerKeyData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'training-schedule' && notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          }
+        }
+
+        if (newItemsAdded > 0) {
+          localStorage.setItem('sarkari_auto_imported_navy_ids', JSON.stringify(Array.from(importedSet)));
+          triggerToast(`⚓ [JOIN INDIAN NAVY] ${newItemsAdded} Indian Navy recruitment release(s) auto-synced to your website!`);
+        } else if (notifyIfNoNew) {
+          triggerToast('🟢 Join Indian Navy Portal (https://www.joinindiannavy.gov.in/) is checked. All notices are up to date.');
+        }
+      }
+    } catch (e) {
+      console.warn('Indian Navy Auto-Sync error:', e);
+    } finally {
+      setNavySyncing(false);
+    }
+  };
+
+  useEffect(() => {
+    runNavyAutoSync(false);
+
+    // Auto-poll joinindiannavy.gov.in every 45 seconds
+    const navyInterval = setInterval(() => {
+      runNavyAutoSync(false);
+    }, 45000);
+
+    return () => clearInterval(navyInterval);
+  }, []);
+
+  // BIHAR TECHNICAL SERVICE COMMISSION (BTSC) REAL-TIME AUTO-MONITOR & SYNCHRONIZER (https://btsc.bihar.gov.in/hi/recruitment)
+  const [btscSyncing, setBtscSyncing] = useState(false);
+  const [latestBtscNotice, setLatestBtscNotice] = useState<BtscLiveNotice | null>(null);
+
+  const runBtscAutoSync = async (notifyIfNoNew = false) => {
+    setBtscSyncing(true);
+    try {
+      const res = await fetch('/api/btsc/live-feed');
+      if (res.ok) {
+        const data = await res.json();
+        const notices: BtscLiveNotice[] = data.notices || data.data || [];
+        if (notices.length > 0) {
+          setLatestBtscNotice(notices[0]);
+        }
+
+        // Check against existing IDs
+        const existingJIds = new Set(jobs.map(j => j.id));
+        const existingAIds = new Set(admitCards.map(a => a.id));
+        const existingRIds = new Set(results.map(r => r.id));
+        const existingKIds = new Set(answerKeys.map(k => k.id));
+
+        // Read already auto-imported notice IDs
+        const autoImported: string[] = JSON.parse(localStorage.getItem('sarkari_auto_imported_btsc_ids') || '[]');
+        const importedSet = new Set(autoImported);
+
+        let newItemsAdded = 0;
+
+        for (const notice of notices) {
+          if (importedSet.has(notice.id)) continue;
+
+          if (notice.category === 'vacancy' && notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'admit-card' && notice.admitCardData && !existingAIds.has(notice.admitCardData.id)) {
+            handleNewLaunch('Admit Card', notice.title, notice.org, 'admitCards', notice.admitCardData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'result' && notice.resultData && !existingRIds.has(notice.resultData.id)) {
+            const sanitizedResult: JobResult = {
+              ...notice.resultData,
+              cutOff: {
+                UR: notice.resultData.cutOff?.UR || notice.details?.cutoff || 'Declared on Portal',
+                OBC: notice.resultData.cutOff?.OBC || 'Declared on Portal',
+                SC: notice.resultData.cutOff?.SC || 'Declared on Portal',
+                ST: notice.resultData.cutOff?.ST || 'Declared on Portal'
+              }
+            };
+            handleNewLaunch('Result', notice.title, notice.org, 'results', sanitizedResult);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'answer-key' && notice.answerKeyData && !existingKIds.has(notice.answerKeyData.id)) {
+            handleNewLaunch('Answer Key', notice.title, notice.org, 'answerKeys', notice.answerKeyData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'counseling' && notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          }
+        }
+
+        if (newItemsAdded > 0) {
+          localStorage.setItem('sarkari_auto_imported_btsc_ids', JSON.stringify(Array.from(importedSet)));
+          triggerToast(`🏛️ [BTSC बिहार भर्ती] ${newItemsAdded} ताजा सूचना(एं) आपकी वेबसाइट पर तुरंत अपडेट हो गई हैं!`);
+        } else if (notifyIfNoNew) {
+          triggerToast('🟢 Bihar Technical Service Commission Portal (https://btsc.bihar.gov.in/hi/recruitment) is checked. All notices are up to date.');
+        }
+      }
+    } catch (e) {
+      console.warn('BTSC Auto-Sync error:', e);
+    } finally {
+      setBtscSyncing(false);
+    }
+  };
+
+  useEffect(() => {
+    runBtscAutoSync(false);
+
+    // Auto-poll btsc.bihar.gov.in every 45 seconds
+    const btscInterval = setInterval(() => {
+      runBtscAutoSync(false);
+    }, 45000);
+
+    return () => clearInterval(btscInterval);
+  }, []);
+
+  // HARYANA PUBLIC SERVICE COMMISSION (HPSC) REAL-TIME AUTO-MONITOR & SYNCHRONIZER (https://hpsc.gov.in/)
+  const [hpscSyncing, setHpscSyncing] = useState(false);
+  const [latestHpscNotice, setLatestHpscNotice] = useState<HpscLiveNotice | null>(null);
+
+  const runHpscAutoSync = async (notifyIfNoNew = false) => {
+    setHpscSyncing(true);
+    try {
+      const res = await fetch('/api/hpsc/live-feed');
+      if (res.ok) {
+        const data = await res.json();
+        const notices: HpscLiveNotice[] = data.notices || data.data || [];
+        if (notices.length > 0) {
+          setLatestHpscNotice(notices[0]);
+        }
+
+        // Check against existing IDs
+        const existingJIds = new Set(jobs.map(j => j.id));
+        const existingAIds = new Set(admitCards.map(a => a.id));
+        const existingRIds = new Set(results.map(r => r.id));
+        const existingKIds = new Set(answerKeys.map(k => k.id));
+
+        // Read already auto-imported notice IDs
+        const autoImported: string[] = JSON.parse(localStorage.getItem('sarkari_auto_imported_hpsc_ids') || '[]');
+        const importedSet = new Set(autoImported);
+
+        let newItemsAdded = 0;
+
+        for (const notice of notices) {
+          if (importedSet.has(notice.id)) continue;
+
+          if (notice.category === 'vacancy' && notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'admit-card' && notice.admitCardData && !existingAIds.has(notice.admitCardData.id)) {
+            handleNewLaunch('Admit Card', notice.title, notice.org, 'admitCards', notice.admitCardData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'result' && notice.resultData && !existingRIds.has(notice.resultData.id)) {
+            const sanitizedResult: JobResult = {
+              ...notice.resultData,
+              cutOff: {
+                UR: notice.resultData.cutOff?.UR || notice.details?.cutoff || 'Declared on Portal',
+                OBC: notice.resultData.cutOff?.OBC || 'Declared on Portal',
+                SC: notice.resultData.cutOff?.SC || 'Declared on Portal',
+                ST: notice.resultData.cutOff?.ST || 'Declared on Portal'
+              }
+            };
+            handleNewLaunch('Result', notice.title, notice.org, 'results', sanitizedResult);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'answer-key' && notice.answerKeyData && !existingKIds.has(notice.answerKeyData.id)) {
+            handleNewLaunch('Answer Key', notice.title, notice.org, 'answerKeys', notice.answerKeyData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if ((notice.category === 'interview' || notice.category === 'announcement') && notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          }
+        }
+
+        if (newItemsAdded > 0) {
+          localStorage.setItem('sarkari_auto_imported_hpsc_ids', JSON.stringify(Array.from(importedSet)));
+          triggerToast(`🏛️ [HPSC हरियाणा भर्ती] ${newItemsAdded} ताजा भर्ती सूचना(एं) आपकी वेबसाइट पर तुरंत लाइव अपडेट हो गई हैं!`);
+        } else if (notifyIfNoNew) {
+          triggerToast('🟢 Haryana Public Service Commission Portal (https://hpsc.gov.in/) is checked. All notices are up to date.');
+        }
+      }
+    } catch (e) {
+      console.warn('HPSC Auto-Sync error:', e);
+    } finally {
+      setHpscSyncing(false);
+    }
+  };
+
+  useEffect(() => {
+    runHpscAutoSync(false);
+
+    // Auto-poll hpsc.gov.in every 45 seconds
+    const hpscInterval = setInterval(() => {
+      runHpscAutoSync(false);
+    }, 45000);
+
+    return () => clearInterval(hpscInterval);
+  }, []);
+
+  // PUNJAB GHAR GHAR ROZGAR & KAROBAR MISSION (PGRKAM) REAL-TIME AUTO-MONITOR & SYNCHRONIZER (https://www.pgrkam.com/)
+  const [pgrkamSyncing, setPgrkamSyncing] = useState(false);
+  const [latestPgrkamNotice, setLatestPgrkamNotice] = useState<PgrkamLiveNotice | null>(null);
+
+  const runPgrkamAutoSync = async (notifyIfNoNew = false) => {
+    setPgrkamSyncing(true);
+    try {
+      const res = await fetch('/api/pgrkam/live-feed');
+      if (res.ok) {
+        const data = await res.json();
+        const notices: PgrkamLiveNotice[] = data.notices || data.data || [];
+        if (notices.length > 0) {
+          setLatestPgrkamNotice(notices[0]);
+        }
+
+        const existingJIds = new Set(jobs.map(j => j.id));
+        const existingAIds = new Set(admitCards.map(a => a.id));
+        const existingRIds = new Set(results.map(r => r.id));
+        const existingKIds = new Set(answerKeys.map(k => k.id));
+
+        const autoImported: string[] = JSON.parse(localStorage.getItem('sarkari_auto_imported_pgrkam_ids') || '[]');
+        const importedSet = new Set(autoImported);
+
+        let newItemsAdded = 0;
+
+        for (const notice of notices) {
+          if (importedSet.has(notice.id)) continue;
+
+          if ((notice.category === 'vacancy' || notice.category === 'rozgar-mela' || notice.category === 'counseling') && notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'admit-card' && notice.admitCardData && !existingAIds.has(notice.admitCardData.id)) {
+            handleNewLaunch('Admit Card', notice.title, notice.org, 'admitCards', notice.admitCardData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'result' && notice.resultData && !existingRIds.has(notice.resultData.id)) {
+            const sanitizedResult: JobResult = {
+              ...notice.resultData,
+              cutOff: {
+                UR: notice.resultData.cutOff?.UR || notice.details?.cutoff || 'Declared on Portal',
+                OBC: notice.resultData.cutOff?.OBC || 'Declared on Portal',
+                SC: notice.resultData.cutOff?.SC || 'Declared on Portal',
+                ST: notice.resultData.cutOff?.ST || 'Declared on Portal'
+              }
+            };
+            handleNewLaunch('Result', notice.title, notice.org, 'results', sanitizedResult);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'answer-key' && notice.answerKeyData && !existingKIds.has(notice.answerKeyData.id)) {
+            handleNewLaunch('Answer Key', notice.title, notice.org, 'answerKeys', notice.answerKeyData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          }
+        }
+
+        if (newItemsAdded > 0) {
+          localStorage.setItem('sarkari_auto_imported_pgrkam_ids', JSON.stringify(Array.from(importedSet)));
+          triggerToast(`🏛️ [PGRKAM पंजाब घर-घर रोज़गार] ${newItemsAdded} ताजा भर्ती व रोजगार मेला सूचना(एं) आपकी वेबसाइट पर तुरंत लाइव अपडेट हो गई हैं!`);
+        } else if (notifyIfNoNew) {
+          triggerToast('🟢 Punjab Ghar Ghar Rozgar Portal (https://www.pgrkam.com/) is checked. All notices are up to date.');
+        }
+      }
+    } catch (e) {
+      console.warn('PGRKAM Auto-Sync error:', e);
+    } finally {
+      setPgrkamSyncing(false);
+    }
+  };
+
+  useEffect(() => {
+    runPgrkamAutoSync(false);
+
+    const pgrkamInterval = setInterval(() => {
+      runPgrkamAutoSync(false);
+    }, 45000);
+
+    return () => clearInterval(pgrkamInterval);
+  }, []);
+
+  // UTTAR PRADESH POLICE RECRUITMENT & PROMOTION BOARD (UPPBPB) REAL-TIME AUTO-MONITOR & SYNCHRONIZER (https://uppbpb.gov.in/)
+  const [uppbpbSyncing, setUppbpbSyncing] = useState(false);
+  const [latestUppbpbNotice, setLatestUppbpbNotice] = useState<UppbpbLiveNotice | null>(null);
+
+  const runUppbpbAutoSync = async (notifyIfNoNew = false) => {
+    setUppbpbSyncing(true);
+    try {
+      const res = await fetch('/api/uppbpb/live-feed');
+      if (res.ok) {
+        const data = await res.json();
+        const notices: UppbpbLiveNotice[] = data.notices || data.data || [];
+        if (notices.length > 0) {
+          setLatestUppbpbNotice(notices[0]);
+        }
+
+        const existingJIds = new Set(jobs.map(j => j.id));
+        const existingAIds = new Set(admitCards.map(a => a.id));
+        const existingRIds = new Set(results.map(r => r.id));
+        const existingKIds = new Set(answerKeys.map(k => k.id));
+
+        const autoImported: string[] = JSON.parse(localStorage.getItem('sarkari_auto_imported_uppbpb_ids') || '[]');
+        const importedSet = new Set(autoImported);
+
+        let newItemsAdded = 0;
+
+        for (const notice of notices) {
+          if (importedSet.has(notice.id)) continue;
+
+          if (notice.category === 'vacancy' && notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'admit-card' && notice.admitCardData && !existingAIds.has(notice.admitCardData.id)) {
+            handleNewLaunch('Admit Card', notice.title, notice.org, 'admitCards', notice.admitCardData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'result' && notice.resultData && !existingRIds.has(notice.resultData.id)) {
+            const sanitizedResult: JobResult = {
+              ...notice.resultData,
+              cutOff: {
+                UR: notice.resultData.cutOff?.UR || notice.details?.cutoff || 'Declared on Portal',
+                OBC: notice.resultData.cutOff?.OBC || 'Declared on Portal',
+                SC: notice.resultData.cutOff?.SC || 'Declared on Portal',
+                ST: notice.resultData.cutOff?.ST || 'Declared on Portal'
+              }
+            };
+            handleNewLaunch('Result', notice.title, notice.org, 'results', sanitizedResult);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'answer-key' && notice.answerKeyData && !existingKIds.has(notice.answerKeyData.id)) {
+            handleNewLaunch('Answer Key', notice.title, notice.org, 'answerKeys', notice.answerKeyData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if ((notice.category === 'physical-test' || notice.category === 'scrutiny') && notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          }
+        }
+
+        if (newItemsAdded > 0) {
+          localStorage.setItem('sarkari_auto_imported_uppbpb_ids', JSON.stringify(Array.from(importedSet)));
+          triggerToast(`🚨 [UPPBPB उत्तर प्रदेश पुलिस भर्ती] ${newItemsAdded} ताजा आरक्षी/दरोगा भर्ती सूचना(एं) आपकी वेबसाइट पर तुरंत लाइव अपडेट हो गई हैं!`);
+        } else if (notifyIfNoNew) {
+          triggerToast('🟢 UP Police Recruitment Board Portal (https://uppbpb.gov.in/) is checked. All notices are up to date.');
+        }
+      }
+    } catch (e) {
+      console.warn('UPPBPB Auto-Sync error:', e);
+    } finally {
+      setUppbpbSyncing(false);
+    }
+  };
+
+  useEffect(() => {
+    runUppbpbAutoSync(false);
+
+    const uppbpbInterval = setInterval(() => {
+      runUppbpbAutoSync(false);
+    }, 45000);
+
+    return () => clearInterval(uppbpbInterval);
+  }, []);
+
+  // MADHYA PRADESH EMPLOYEES SELECTION BOARD (MPESB / VYAPAM) REAL-TIME AUTO-MONITOR & SYNCHRONIZER (https://esb.mponline.gov.in/)
+  const [mpesbSyncing, setMpesbSyncing] = useState(false);
+  const [latestMpesbNotice, setLatestMpesbNotice] = useState<MpesbLiveNotice | null>(null);
+
+  const runMpesbAutoSync = async (notifyIfNoNew = false) => {
+    setMpesbSyncing(true);
+    try {
+      const res = await fetch('/api/mpesb/live-feed');
+      if (res.ok) {
+        const data = await res.json();
+        const notices: MpesbLiveNotice[] = data.notices || data.data || [];
+        if (notices.length > 0) {
+          setLatestMpesbNotice(notices[0]);
+        }
+
+        const existingJIds = new Set(jobs.map(j => j.id));
+        const existingAIds = new Set(admitCards.map(a => a.id));
+        const existingRIds = new Set(results.map(r => r.id));
+        const existingKIds = new Set(answerKeys.map(k => k.id));
+
+        const autoImported: string[] = JSON.parse(localStorage.getItem('sarkari_auto_imported_mpesb_ids') || '[]');
+        const importedSet = new Set(autoImported);
+
+        let newItemsAdded = 0;
+
+        for (const notice of notices) {
+          if (importedSet.has(notice.id)) continue;
+
+          if (notice.category === 'vacancy' && notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'admit-card' && notice.admitCardData && !existingAIds.has(notice.admitCardData.id)) {
+            handleNewLaunch('Admit Card', notice.title, notice.org, 'admitCards', notice.admitCardData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'result' && notice.resultData && !existingRIds.has(notice.resultData.id)) {
+            const sanitizedResult: JobResult = {
+              ...notice.resultData,
+              cutOff: {
+                UR: notice.resultData.cutOff?.UR || notice.details?.cutoff || 'Declared on Portal',
+                OBC: notice.resultData.cutOff?.OBC || 'Declared on Portal',
+                SC: notice.resultData.cutOff?.SC || 'Declared on Portal',
+                ST: notice.resultData.cutOff?.ST || 'Declared on Portal'
+              }
+            };
+            handleNewLaunch('Result', notice.title, notice.org, 'results', sanitizedResult);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.category === 'answer-key' && notice.answerKeyData && !existingKIds.has(notice.answerKeyData.id)) {
+            handleNewLaunch('Answer Key', notice.title, notice.org, 'answerKeys', notice.answerKeyData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if ((notice.category === 'counseling' || notice.category === 'press-note') && notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          } else if (notice.jobData && !existingJIds.has(notice.jobData.id)) {
+            handleNewLaunch('Vacancy', notice.title, notice.org, 'jobs', notice.jobData);
+            importedSet.add(notice.id);
+            newItemsAdded++;
+          }
+        }
+
+        if (newItemsAdded > 0) {
+          localStorage.setItem('sarkari_auto_imported_mpesb_ids', JSON.stringify(Array.from(importedSet)));
+          triggerToast(`🏛️ [MPESB मध्य प्रदेश व्यापम] ${newItemsAdded} ताजा परीक्षा व प्रवेश पत्र सूचना(एं) आपकी वेबसाइट पर तुरंत लाइव अपडेट हो गई हैं!`);
+        } else if (notifyIfNoNew) {
+          triggerToast('🟢 Madhya Pradesh Employees Selection Board Portal (https://esb.mponline.gov.in/) is checked. All notices are up to date.');
+        }
+      }
+    } catch (e) {
+      console.warn('MPESB Auto-Sync error:', e);
+    } finally {
+      setMpesbSyncing(false);
+    }
+  };
+
+  useEffect(() => {
+    runMpesbAutoSync(false);
+
+    const mpesbInterval = setInterval(() => {
+      runMpesbAutoSync(false);
+    }, 45000);
+
+    return () => clearInterval(mpesbInterval);
+  }, []);
+
   const [premiumModalOpen, setPremiumModalOpen] = useState(false);
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
   const [showWhyPremium, setShowWhyPremium] = useState(false);
@@ -1996,9 +2550,15 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
         liveNotifications={liveNotifications}
       />
 
-      {/* ⚡ JOIN INDIAN ARMY, RAJASTHAN SSO, SBI, IBPS, RRB, UPSC & SSC REAL-TIME LIVE UPDATE BAR */}
+      {/* ⚡ PGRKAM, UPPBPB, MPESB, HPSC, BTSC, JOIN INDIAN NAVY, ARMY, RAJASTHAN SSO, SBI, IBPS, RRB, UPSC & SSC REAL-TIME LIVE UPDATE BAR */}
       <GovPortalsSyncBar
         locale={locale}
+        onOpenPgrkamHub={() => setActiveTab('pgrkam-sync')}
+        onOpenUppbpbHub={() => setActiveTab('uppbpb-sync')}
+        onOpenMpesbHub={() => setActiveTab('mpesb-sync')}
+        onOpenHpscHub={() => setActiveTab('hpsc-sync')}
+        onOpenBtscHub={() => setActiveTab('btsc-sync')}
+        onOpenNavyHub={() => setActiveTab('navy-sync')}
         onOpenArmyHub={() => setActiveTab('army-sync')}
         onOpenRajHub={() => setActiveTab('rajasthan-sync')}
         onOpenSbiHub={() => setActiveTab('sbi-sync')}
@@ -2006,6 +2566,12 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
         onOpenSscHub={() => setActiveTab('ssc-sync')}
         onOpenUpscHub={() => setActiveTab('upsc-sync')}
         onOpenRrbHub={() => setActiveTab('rrb-sync')}
+        onQuickPgrkamSync={() => runPgrkamAutoSync(true)}
+        onQuickUppbpbSync={() => runUppbpbAutoSync(true)}
+        onQuickMpesbSync={() => runMpesbAutoSync(true)}
+        onQuickHpscSync={() => runHpscAutoSync(true)}
+        onQuickBtscSync={() => runBtscAutoSync(true)}
+        onQuickNavySync={() => runNavyAutoSync(true)}
         onQuickArmySync={() => runArmyAutoSync(true)}
         onQuickRajSync={() => runRajAutoSync(true)}
         onQuickSbiSync={() => runSbiAutoSync(true)}
@@ -2013,6 +2579,12 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
         onQuickSscSync={() => runSscAutoSync(true)}
         onQuickUpscSync={() => runUpscAutoSync(true)}
         onQuickRrbSync={() => runRrbAutoSync(true)}
+        isPgrkamSyncing={pgrkamSyncing}
+        isUppbpbSyncing={uppbpbSyncing}
+        isMpesbSyncing={mpesbSyncing}
+        isHpscSyncing={hpscSyncing}
+        isBtscSyncing={btscSyncing}
+        isNavySyncing={navySyncing}
         isArmySyncing={armySyncing}
         isRajSyncing={rajSyncing}
         isSbiSyncing={sbiSyncing}
@@ -2020,6 +2592,12 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
         isSscSyncing={sscSyncing}
         isUpscSyncing={upscSyncing}
         isRrbSyncing={rrbSyncing}
+        latestPgrkamNotice={latestPgrkamNotice}
+        latestUppbpbNotice={latestUppbpbNotice}
+        latestMpesbNotice={latestMpesbNotice}
+        latestHpscNotice={latestHpscNotice}
+        latestBtscNotice={latestBtscNotice}
+        latestNavyNotice={latestNavyNotice}
         latestArmyNotice={latestArmyNotice}
         latestRajNotice={latestRajNotice}
         latestSbiNotice={latestSbiNotice}
@@ -2032,6 +2610,114 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
       {/* Main Body wrap */}
       <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 flex-1">
         
+        {/* TAB: PUNJAB GHAR GHAR ROZGAR & KAROBAR MISSION (PGRKAM) REAL-TIME MONITOR HUB */}
+        {activeTab === 'pgrkam-sync' && (
+          <div className="space-y-6">
+            <PgrkamLiveSyncHub
+              locale={locale}
+              onAddJob={(newJob) => handleNewLaunch('Vacancy', newJob.title, newJob.org, 'jobs', newJob)}
+              onAddAdmitCard={(newCard) => handleNewLaunch('Admit Card', newCard.title, newCard.org, 'admitCards', newCard)}
+              onAddResult={(newRes) => handleNewLaunch('Result', newRes.title, newRes.org, 'results', newRes)}
+              onAddAnswerKey={(newKey) => handleNewLaunch('Answer Key', newKey.title, newKey.org, 'answerKeys', newKey)}
+              triggerToast={triggerToast}
+              existingJobIds={jobs.map(j => j.id)}
+              existingAdmitCardIds={admitCards.map(c => c.id)}
+              existingResultIds={results.map(r => r.id)}
+              existingAnswerKeyIds={answerKeys.map(k => k.id)}
+            />
+          </div>
+        )}
+
+        {/* TAB: UTTAR PRADESH POLICE RECRUITMENT & PROMOTION BOARD (UPPBPB) REAL-TIME MONITOR HUB */}
+        {activeTab === 'uppbpb-sync' && (
+          <div className="space-y-6">
+            <UppbpbLiveSyncHub
+              locale={locale}
+              onAddJob={(newJob) => handleNewLaunch('Vacancy', newJob.title, newJob.org, 'jobs', newJob)}
+              onAddAdmitCard={(newCard) => handleNewLaunch('Admit Card', newCard.title, newCard.org, 'admitCards', newCard)}
+              onAddResult={(newRes) => handleNewLaunch('Result', newRes.title, newRes.org, 'results', newRes)}
+              onAddAnswerKey={(newKey) => handleNewLaunch('Answer Key', newKey.title, newKey.org, 'answerKeys', newKey)}
+              triggerToast={triggerToast}
+              existingJobIds={jobs.map(j => j.id)}
+              existingAdmitCardIds={admitCards.map(c => c.id)}
+              existingResultIds={results.map(r => r.id)}
+              existingAnswerKeyIds={answerKeys.map(k => k.id)}
+            />
+          </div>
+        )}
+
+        {/* TAB: MADHYA PRADESH EMPLOYEES SELECTION BOARD (MPESB / VYAPAM) REAL-TIME MONITOR HUB */}
+        {activeTab === 'mpesb-sync' && (
+          <div className="space-y-6">
+            <MpesbLiveSyncHub
+              locale={locale}
+              onAddJob={(newJob) => handleNewLaunch('Vacancy', newJob.title, newJob.org, 'jobs', newJob)}
+              onAddAdmitCard={(newCard) => handleNewLaunch('Admit Card', newCard.title, newCard.org, 'admitCards', newCard)}
+              onAddResult={(newRes) => handleNewLaunch('Result', newRes.title, newRes.org, 'results', newRes)}
+              onAddAnswerKey={(newKey) => handleNewLaunch('Answer Key', newKey.title, newKey.org, 'answerKeys', newKey)}
+              triggerToast={triggerToast}
+              existingJobIds={jobs.map(j => j.id)}
+              existingAdmitCardIds={admitCards.map(c => c.id)}
+              existingResultIds={results.map(r => r.id)}
+              existingAnswerKeyIds={answerKeys.map(k => k.id)}
+            />
+          </div>
+        )}
+
+        {/* TAB: HARYANA PUBLIC SERVICE COMMISSION (HPSC) REAL-TIME MONITOR HUB */}
+        {activeTab === 'hpsc-sync' && (
+          <div className="space-y-6">
+            <HpscLiveSyncHub
+              locale={locale}
+              onAddJob={(newJob) => handleNewLaunch('Vacancy', newJob.title, newJob.org, 'jobs', newJob)}
+              onAddAdmitCard={(newCard) => handleNewLaunch('Admit Card', newCard.title, newCard.org, 'admitCards', newCard)}
+              onAddResult={(newRes) => handleNewLaunch('Result', newRes.title, newRes.org, 'results', newRes)}
+              onAddAnswerKey={(newKey) => handleNewLaunch('Answer Key', newKey.title, newKey.org, 'answerKeys', newKey)}
+              triggerToast={triggerToast}
+              existingJobIds={jobs.map(j => j.id)}
+              existingAdmitCardIds={admitCards.map(c => c.id)}
+              existingResultIds={results.map(r => r.id)}
+              existingAnswerKeyIds={answerKeys.map(k => k.id)}
+            />
+          </div>
+        )}
+
+        {/* TAB: BIHAR TECHNICAL SERVICE COMMISSION (BTSC) REAL-TIME MONITOR HUB */}
+        {activeTab === 'btsc-sync' && (
+          <div className="space-y-6">
+            <BtscLiveSyncHub
+              locale={locale}
+              onAddJob={(newJob) => handleNewLaunch('Vacancy', newJob.title, newJob.org, 'jobs', newJob)}
+              onAddAdmitCard={(newCard) => handleNewLaunch('Admit Card', newCard.title, newCard.org, 'admitCards', newCard)}
+              onAddResult={(newRes) => handleNewLaunch('Result', newRes.title, newRes.org, 'results', newRes)}
+              onAddAnswerKey={(newKey) => handleNewLaunch('Answer Key', newKey.title, newKey.org, 'answerKeys', newKey)}
+              triggerToast={triggerToast}
+              existingJobIds={jobs.map(j => j.id)}
+              existingAdmitCardIds={admitCards.map(c => c.id)}
+              existingResultIds={results.map(r => r.id)}
+              existingAnswerKeyIds={answerKeys.map(k => k.id)}
+            />
+          </div>
+        )}
+
+        {/* TAB: JOIN INDIAN NAVY REAL-TIME MONITOR HUB */}
+        {activeTab === 'navy-sync' && (
+          <div className="space-y-6">
+            <NavyLiveSyncHub
+              locale={locale}
+              onAddJob={(newJob) => handleNewLaunch('Vacancy', newJob.title, newJob.org, 'jobs', newJob)}
+              onAddAdmitCard={(newCard) => handleNewLaunch('Admit Card', newCard.title, newCard.org, 'admitCards', newCard)}
+              onAddResult={(newRes) => handleNewLaunch('Result', newRes.title, newRes.org, 'results', newRes)}
+              onAddAnswerKey={(newKey) => handleNewLaunch('Answer Key', newKey.title, newKey.org, 'answerKeys', newKey)}
+              triggerToast={triggerToast}
+              existingJobIds={jobs.map(j => j.id)}
+              existingAdmitCardIds={admitCards.map(c => c.id)}
+              existingResultIds={results.map(r => r.id)}
+              existingAnswerKeyIds={answerKeys.map(k => k.id)}
+            />
+          </div>
+        )}
+
         {/* TAB: JOIN INDIAN ARMY REAL-TIME MONITOR HUB */}
         {activeTab === 'army-sync' && (
           <div className="space-y-6">

@@ -1,6 +1,6 @@
 {
   "name": "Job Sarkari Hub",
-  "description": "Comprehensive Indian Government Job Portal with real-time automatic synchronization for Rajasthan State Recruitment Portal (https://www.recruitment.rajasthan.gov.in/), SBI Careers (https://sbi.bank.in/web/careers/current-openings), IBPS (https://www.ibps.in/), RRB (https://www.rrbapply.gov.in/), UPSC (https://www.upsc.gov.in/), and SSC (https://ssc.gov.in/) notifications, vacancies, admit cards, results, answer keys, and mock tests.",
+  "description": "Comprehensive Indian Government Job Portal with real-time automatic synchronization for PGRKAM Punjab (https://www.pgrkam.com/), UPPBPB UP Police (https://uppbpb.gov.in/), MPESB MP Vyapam (https://esb.mponline.gov.in/), HPSC Haryana (https://hpsc.gov.in/), BTSC Bihar (https://btsc.bihar.gov.in/hi/recruitment), Join Indian Navy (https://www.joinindiannavy.gov.in/), Join Indian Army (https://joinindianarmy.nic.in/), Rajasthan SSO Recruitment (https://www.recruitment.rajasthan.gov.in/), SBI Careers, IBPS, RRB, UPSC, and SSC notifications, vacancies, admit cards, results, and mock tests.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

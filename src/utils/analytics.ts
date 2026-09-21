@@ -31,6 +31,9 @@ export function initializeGA() {
     const scriptTag = document.createElement("script");
     scriptTag.async = true;
     scriptTag.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+    scriptTag.onerror = () => {
+      // Gracefully ignore blocked external analytics scripts in local/sandboxed environments
+    };
     document.head.appendChild(scriptTag);
 
     // 2. Create and inject the inline config script

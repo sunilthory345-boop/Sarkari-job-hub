@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { RefreshCw, Zap, ExternalLink, ShieldCheck, ChevronRight, CheckCircle, Award, Sparkles, Train, Landmark, Swords, Shield } from 'lucide-react';
-import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice, IbpsLiveNotice, SbiLiveNotice, RajLiveNotice, ArmyLiveNotice } from '../types';
+import { RefreshCw, Zap, ExternalLink, ShieldCheck, ChevronRight, CheckCircle, Award, Sparkles, Train, Landmark, Swords, Shield, Anchor, Siren } from 'lucide-react';
+import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice, IbpsLiveNotice, SbiLiveNotice, RajLiveNotice, ArmyLiveNotice, NavyLiveNotice, BtscLiveNotice, HpscLiveNotice, PgrkamLiveNotice, UppbpbLiveNotice, MpesbLiveNotice } from '../types';
 
 interface GovPortalsSyncBarProps {
   locale?: string;
@@ -11,6 +11,12 @@ interface GovPortalsSyncBarProps {
   onOpenSbiHub: () => void;
   onOpenRajHub: () => void;
   onOpenArmyHub: () => void;
+  onOpenNavyHub?: () => void;
+  onOpenBtscHub?: () => void;
+  onOpenHpscHub?: () => void;
+  onOpenPgrkamHub?: () => void;
+  onOpenUppbpbHub?: () => void;
+  onOpenMpesbHub?: () => void;
   onQuickSscSync: () => void;
   onQuickUpscSync: () => void;
   onQuickRrbSync: () => void;
@@ -18,6 +24,12 @@ interface GovPortalsSyncBarProps {
   onQuickSbiSync: () => void;
   onQuickRajSync: () => void;
   onQuickArmySync: () => void;
+  onQuickNavySync?: () => void;
+  onQuickBtscSync?: () => void;
+  onQuickHpscSync?: () => void;
+  onQuickPgrkamSync?: () => void;
+  onQuickUppbpbSync?: () => void;
+  onQuickMpesbSync?: () => void;
   onQuickSyncAll?: () => void;
   isSscSyncing?: boolean;
   isUpscSyncing?: boolean;
@@ -26,6 +38,12 @@ interface GovPortalsSyncBarProps {
   isSbiSyncing?: boolean;
   isRajSyncing?: boolean;
   isArmySyncing?: boolean;
+  isNavySyncing?: boolean;
+  isBtscSyncing?: boolean;
+  isHpscSyncing?: boolean;
+  isPgrkamSyncing?: boolean;
+  isUppbpbSyncing?: boolean;
+  isMpesbSyncing?: boolean;
   latestSscNotice?: SscLiveNotice | null;
   latestUpscNotice?: UpscLiveNotice | null;
   latestRrbNotice?: RrbLiveNotice | null;
@@ -33,6 +51,12 @@ interface GovPortalsSyncBarProps {
   latestSbiNotice?: SbiLiveNotice | null;
   latestRajNotice?: RajLiveNotice | null;
   latestArmyNotice?: ArmyLiveNotice | null;
+  latestNavyNotice?: NavyLiveNotice | null;
+  latestBtscNotice?: BtscLiveNotice | null;
+  latestHpscNotice?: HpscLiveNotice | null;
+  latestPgrkamNotice?: PgrkamLiveNotice | null;
+  latestUppbpbNotice?: UppbpbLiveNotice | null;
+  latestMpesbNotice?: MpesbLiveNotice | null;
 }
 
 export default function GovPortalsSyncBar({
@@ -44,6 +68,12 @@ export default function GovPortalsSyncBar({
   onOpenSbiHub,
   onOpenRajHub,
   onOpenArmyHub,
+  onOpenNavyHub,
+  onOpenBtscHub,
+  onOpenHpscHub,
+  onOpenPgrkamHub,
+  onOpenUppbpbHub,
+  onOpenMpesbHub,
   onQuickSscSync,
   onQuickUpscSync,
   onQuickRrbSync,
@@ -51,6 +81,12 @@ export default function GovPortalsSyncBar({
   onQuickSbiSync,
   onQuickRajSync,
   onQuickArmySync,
+  onQuickNavySync,
+  onQuickBtscSync,
+  onQuickHpscSync,
+  onQuickPgrkamSync,
+  onQuickUppbpbSync,
+  onQuickMpesbSync,
   onQuickSyncAll,
   isSscSyncing = false,
   isUpscSyncing = false,
@@ -59,25 +95,37 @@ export default function GovPortalsSyncBar({
   isSbiSyncing = false,
   isRajSyncing = false,
   isArmySyncing = false,
+  isNavySyncing = false,
+  isBtscSyncing = false,
+  isHpscSyncing = false,
+  isPgrkamSyncing = false,
+  isUppbpbSyncing = false,
+  isMpesbSyncing = false,
   latestSscNotice,
   latestUpscNotice,
   latestRrbNotice,
   latestIbpsNotice,
   latestSbiNotice,
   latestRajNotice,
-  latestArmyNotice
+  latestArmyNotice,
+  latestNavyNotice,
+  latestBtscNotice,
+  latestHpscNotice,
+  latestPgrkamNotice,
+  latestUppbpbNotice,
+  latestMpesbNotice
 }: GovPortalsSyncBarProps) {
-  const [secondsRemaining, setSecondsRemaining] = useState(45);
-  const [activePortalTab, setActivePortalTab] = useState<'army' | 'raj' | 'sbi' | 'ibps' | 'rrb' | 'upsc' | 'ssc'>('army');
+  const [secondsRemaining, setSecondsRemaining] = useState(40);
+  const [activePortalTab, setActivePortalTab] = useState<'uppbpb' | 'mpesb' | 'pgrkam' | 'hpsc' | 'btsc' | 'navy' | 'army' | 'raj' | 'sbi' | 'ibps' | 'rrb' | 'upsc' | 'ssc'>('uppbpb');
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setSecondsRemaining((prev) => (prev <= 1 ? 45 : prev - 1));
+      setSecondsRemaining((prev) => (prev <= 1 ? 40 : prev - 1));
     }, 1000);
     return () => clearInterval(timer);
   }, []);
 
-  const isSyncingAny = isSscSyncing || isUpscSyncing || isRrbSyncing || isIbpsSyncing || isSbiSyncing || isRajSyncing || isArmySyncing;
+  const isSyncingAny = isSscSyncing || isUpscSyncing || isRrbSyncing || isIbpsSyncing || isSbiSyncing || isRajSyncing || isArmySyncing || isNavySyncing || isBtscSyncing || isHpscSyncing || isPgrkamSyncing || isUppbpbSyncing || isMpesbSyncing;
 
   return (
     <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 text-white border-b border-slate-800 shadow-md py-2 px-3 sm:px-4">
@@ -86,6 +134,114 @@ export default function GovPortalsSyncBar({
         {/* Left: Portals Switcher & Live Indicator */}
         <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           
+          {/* UPPBPB UP POLICE Pill Tab */}
+          <button
+            onClick={() => {
+              setActivePortalTab('uppbpb');
+              if (onOpenUppbpbHub) onOpenUppbpbHub();
+            }}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold transition border cursor-pointer ${
+              activePortalTab === 'uppbpb'
+                ? 'bg-blue-900 text-blue-100 border-blue-400 shadow-xs ring-1 ring-blue-400/50'
+                : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:text-white'
+            }`}
+          >
+            <span className="h-2 w-2 rounded-full bg-blue-400 animate-ping"></span>
+            <span className="h-2 w-2 rounded-full bg-blue-400 -ml-3.5"></span>
+            <Siren className="h-3 w-3 text-blue-300" />
+            <span>UP POLICE LIVE</span>
+          </button>
+
+          {/* MP ESB VYAPAM Pill Tab */}
+          <button
+            onClick={() => {
+              setActivePortalTab('mpesb');
+              if (onOpenMpesbHub) onOpenMpesbHub();
+            }}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold transition border cursor-pointer ${
+              activePortalTab === 'mpesb'
+                ? 'bg-teal-900 text-teal-100 border-teal-400 shadow-xs ring-1 ring-teal-400/50'
+                : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:text-white'
+            }`}
+          >
+            <span className="h-2 w-2 rounded-full bg-teal-400 animate-ping"></span>
+            <span className="h-2 w-2 rounded-full bg-teal-400 -ml-3.5"></span>
+            <Landmark className="h-3 w-3 text-teal-300" />
+            <span>MP ESB (व्यापम)</span>
+          </button>
+
+          {/* PGRKAM PUNJAB Pill Tab */}
+          <button
+            onClick={() => {
+              setActivePortalTab('pgrkam');
+              if (onOpenPgrkamHub) onOpenPgrkamHub();
+            }}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold transition border cursor-pointer ${
+              activePortalTab === 'pgrkam'
+                ? 'bg-amber-900 text-amber-100 border-amber-400 shadow-xs ring-1 ring-amber-400/50'
+                : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:text-white'
+            }`}
+          >
+            <span className="h-2 w-2 rounded-full bg-amber-400 animate-ping"></span>
+            <span className="h-2 w-2 rounded-full bg-amber-400 -ml-3.5"></span>
+            <Landmark className="h-3 w-3 text-amber-300" />
+            <span>PGRKAM PUNJAB</span>
+          </button>
+
+          {/* HPSC HARYANA Pill Tab */}
+          <button
+            onClick={() => {
+              setActivePortalTab('hpsc');
+              if (onOpenHpscHub) onOpenHpscHub();
+            }}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold transition border cursor-pointer ${
+              activePortalTab === 'hpsc'
+                ? 'bg-blue-800/90 text-blue-200 border-blue-400 shadow-xs ring-1 ring-blue-400/50'
+                : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:text-white'
+            }`}
+          >
+            <span className="h-2 w-2 rounded-full bg-blue-400 animate-ping"></span>
+            <span className="h-2 w-2 rounded-full bg-blue-400 -ml-3.5"></span>
+            <Landmark className="h-3 w-3 text-blue-300" />
+            <span>HPSC HARYANA</span>
+          </button>
+
+          {/* BTSC BIHAR Pill Tab */}
+          <button
+            onClick={() => {
+              setActivePortalTab('btsc');
+              if (onOpenBtscHub) onOpenBtscHub();
+            }}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold transition border cursor-pointer ${
+              activePortalTab === 'btsc'
+                ? 'bg-emerald-800/90 text-emerald-200 border-emerald-400 shadow-xs'
+                : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:text-white'
+            }`}
+          >
+            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span className="h-2 w-2 rounded-full bg-emerald-400 -ml-3.5"></span>
+            <Landmark className="h-3 w-3 text-emerald-300" />
+            <span>BTSC BIHAR</span>
+          </button>
+
+          {/* JOIN INDIAN NAVY Pill Tab */}
+          <button
+            onClick={() => {
+              setActivePortalTab('navy');
+              if (onOpenNavyHub) onOpenNavyHub();
+            }}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold transition border cursor-pointer ${
+              activePortalTab === 'navy'
+                ? 'bg-blue-800/80 text-cyan-200 border-cyan-400/80 shadow-xs'
+                : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:text-white'
+            }`}
+          >
+            <span className="h-2 w-2 rounded-full bg-cyan-400 animate-ping"></span>
+            <span className="h-2 w-2 rounded-full bg-cyan-400 -ml-3.5"></span>
+            <Anchor className="h-3 w-3 text-cyan-300" />
+            <span>NAVY</span>
+          </button>
+
           {/* JOIN INDIAN ARMY Pill Tab */}
           <button
             onClick={() => {
@@ -101,7 +257,7 @@ export default function GovPortalsSyncBar({
             <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span>
             <span className="h-2 w-2 rounded-full bg-emerald-400 -ml-3.5"></span>
             <Swords className="h-3 w-3 text-amber-400" />
-            <span>ARMY LIVE</span>
+            <span>ARMY</span>
           </button>
 
           {/* RAJASTHAN SSO RECRUITMENT Pill Tab */}
@@ -119,7 +275,7 @@ export default function GovPortalsSyncBar({
             <span className="h-2 w-2 rounded-full bg-amber-400 animate-ping"></span>
             <span className="h-2 w-2 rounded-full bg-amber-400 -ml-3.5"></span>
             <Landmark className="h-3 w-3 text-amber-400" />
-            <span>RAJASTHAN SSO LIVE</span>
+            <span>RAJASTHAN</span>
           </button>
 
           {/* SBI.BANK.IN Pill Tab */}
@@ -136,7 +292,7 @@ export default function GovPortalsSyncBar({
           >
             <span className="h-2 w-2 rounded-full bg-sky-400 animate-pulse"></span>
             <Landmark className="h-3 w-3 text-sky-400" />
-            <span>SBI.BANK.IN</span>
+            <span>SBI</span>
           </button>
 
           {/* IBPS Pill Tab */}
@@ -153,7 +309,7 @@ export default function GovPortalsSyncBar({
           >
             <span className="h-2 w-2 rounded-full bg-blue-400 animate-pulse"></span>
             <Landmark className="h-3 w-3 text-blue-400" />
-            <span>IBPS.IN</span>
+            <span>IBPS</span>
           </button>
 
           {/* RRB Pill Tab */}
@@ -207,7 +363,85 @@ export default function GovPortalsSyncBar({
 
           {/* Active Ticker */}
           <div className="hidden xl:flex items-center gap-1.5 text-[11px] border-l border-slate-700 pl-2.5 max-w-sm 2xl:max-w-md truncate">
-            {activePortalTab === 'army' ? (
+            {activePortalTab === 'uppbpb' ? (
+              latestUppbpbNotice ? (
+                <div className="flex items-center gap-1.5 truncate text-blue-200">
+                  <span className="bg-blue-500/20 text-blue-300 px-1.5 py-0.2 rounded font-mono font-bold text-[9px] uppercase shrink-0">
+                    UPPBPB {latestUppbpbNotice.advtNo || latestUppbpbNotice.postType || latestUppbpbNotice.category}
+                  </span>
+                  <span className="truncate">{latestUppbpbNotice.title}</span>
+                </div>
+              ) : (
+                <span className="text-blue-200/90 truncate">
+                  {locale === 'hi' ? '🚨 उत्तर प्रदेश पुलिस भर्ती बोर्ड (uppbpb.gov.in) लाइव मॉनिटर सक्रिय' : '🚨 UP Police Board (uppbpb.gov.in) live monitor active'}
+                </span>
+              )
+            ) : activePortalTab === 'mpesb' ? (
+              latestMpesbNotice ? (
+                <div className="flex items-center gap-1.5 truncate text-teal-200">
+                  <span className="bg-teal-500/20 text-teal-300 px-1.5 py-0.2 rounded font-mono font-bold text-[9px] uppercase shrink-0">
+                    MP ESB {latestMpesbNotice.advtNo || latestMpesbNotice.postType || latestMpesbNotice.category}
+                  </span>
+                  <span className="truncate">{latestMpesbNotice.title}</span>
+                </div>
+              ) : (
+                <span className="text-teal-200/90 truncate">
+                  {locale === 'hi' ? '🏛️ मध्य प्रदेश कर्मचारी चयन मंडल (esb.mponline.gov.in) लाइव' : '🏛️ MP ESB Vyapam (esb.mponline.gov.in) live monitor'}
+                </span>
+              )
+            ) : activePortalTab === 'pgrkam' ? (
+              latestPgrkamNotice ? (
+                <div className="flex items-center gap-1.5 truncate text-amber-200">
+                  <span className="bg-amber-500/20 text-amber-300 px-1.5 py-0.2 rounded font-mono font-bold text-[9px] uppercase shrink-0">
+                    PGRKAM {latestPgrkamNotice.advtNo || latestPgrkamNotice.postType || latestPgrkamNotice.category}
+                  </span>
+                  <span className="truncate">{latestPgrkamNotice.title}</span>
+                </div>
+              ) : (
+                <span className="text-amber-200/90 truncate">
+                  {locale === 'hi' ? '🏛️ पंजाब घर-घर रोज़गार मिशन (pgrkam.com) लाइव मॉनिटर' : '🏛️ Punjab Rozgar Mission (pgrkam.com) live monitor'}
+                </span>
+              )
+            ) : activePortalTab === 'hpsc' ? (
+              latestHpscNotice ? (
+                <div className="flex items-center gap-1.5 truncate text-blue-200">
+                  <span className="bg-blue-500/20 text-blue-300 px-1.5 py-0.2 rounded font-mono font-bold text-[9px] uppercase shrink-0">
+                    HPSC {latestHpscNotice.advtNo || latestHpscNotice.postType || latestHpscNotice.category}
+                  </span>
+                  <span className="truncate">{latestHpscNotice.title}</span>
+                </div>
+              ) : (
+                <span className="text-blue-200/90 truncate">
+                  {locale === 'hi' ? '🏛️ हरियाणा लोक सेवा आयोग (hpsc.gov.in) लाइव मॉनिटर सक्रिय' : '🏛️ HPSC Haryana (hpsc.gov.in) live monitor active'}
+                </span>
+              )
+            ) : activePortalTab === 'btsc' ? (
+              latestBtscNotice ? (
+                <div className="flex items-center gap-1.5 truncate text-emerald-200">
+                  <span className="bg-emerald-500/20 text-emerald-300 px-1.5 py-0.2 rounded font-mono font-bold text-[9px] uppercase shrink-0">
+                    BTSC {latestBtscNotice.advtNo || latestBtscNotice.postType || latestBtscNotice.category}
+                  </span>
+                  <span className="truncate">{latestBtscNotice.title}</span>
+                </div>
+              ) : (
+                <span className="text-emerald-200/90 truncate">
+                  {locale === 'hi' ? '🏛️ बिहार तकनीकी सेवा आयोग (btsc.bihar.gov.in) लाइव मॉनिटर सक्रिय' : '🏛️ BTSC Bihar (btsc.bihar.gov.in) live monitor active'}
+                </span>
+              )
+            ) : activePortalTab === 'navy' ? (
+              latestNavyNotice ? (
+                <div className="flex items-center gap-1.5 truncate text-cyan-200">
+                  <span className="bg-cyan-500/20 text-cyan-300 px-1.5 py-0.2 rounded font-mono font-bold text-[9px] uppercase shrink-0">
+                    NAVY {latestNavyNotice.batch || latestNavyNotice.entryType || latestNavyNotice.category}
+                  </span>
+                  <span className="truncate">{latestNavyNotice.title}</span>
+                </div>
+              ) : (
+                <span className="text-cyan-200/90 truncate">
+                  {locale === 'hi' ? '⚓ भारतीय नौसेना (joinindiannavy.gov.in) लाइव मॉनिटर सक्रिय' : '⚓ Join Indian Navy (joinindiannavy.gov.in) live monitor active'}
+                </span>
+              )
+            ) : activePortalTab === 'army' ? (
               latestArmyNotice ? (
                 <div className="flex items-center gap-1.5 truncate text-emerald-200">
                   <span className="bg-emerald-500/20 text-emerald-300 px-1.5 py-0.2 rounded font-mono font-bold text-[9px] uppercase shrink-0">
@@ -305,106 +539,121 @@ export default function GovPortalsSyncBar({
         {/* Right: Quick Action Controls */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           <span className="text-[10px] font-mono text-slate-400 hidden lg:inline">
-            Auto-Sync: <strong className="text-amber-400">{secondsRemaining}s</strong>
+            Auto-Sync: <strong className="text-emerald-400">{secondsRemaining}s</strong>
           </span>
 
-          {/* Quick Sync Army Button */}
-          <button
-            onClick={onQuickArmySync}
-            disabled={isArmySyncing}
-            className="flex items-center gap-1 bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-2.5 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75"
-            title="Sync latest Join Indian Army releases from https://joinindianarmy.nic.in/"
-          >
-            <RefreshCw className={`h-3 w-3 ${isArmySyncing ? 'animate-spin' : ''}`} />
-            <span>{locale === 'hi' ? '⚔️ सेना' : '⚔️ ARMY'}</span>
-          </button>
+          {/* Quick Sync UP Police Button */}
+          {onQuickUppbpbSync && (
+            <button
+              onClick={onQuickUppbpbSync}
+              disabled={isUppbpbSyncing}
+              className="flex items-center gap-1 bg-blue-800 hover:bg-blue-700 text-white font-bold px-2.5 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75 border border-blue-400/40"
+              title="Sync latest UP Police releases from https://uppbpb.gov.in/"
+            >
+              <RefreshCw className={`h-3 w-3 ${isUppbpbSyncing ? 'animate-spin' : ''}`} />
+              <span>{locale === 'hi' ? '🚨 UP पुलिस' : '🚨 UP POLICE'}</span>
+            </button>
+          )}
 
-          {/* Quick Sync Rajasthan SSO Button */}
-          <button
-            onClick={onQuickRajSync}
-            disabled={isRajSyncing}
-            className="flex items-center gap-1 bg-amber-600 hover:bg-amber-500 text-white font-bold px-2.5 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75"
-            title="Sync latest Rajasthan notices from https://www.recruitment.rajasthan.gov.in/"
-          >
-            <RefreshCw className={`h-3 w-3 ${isRajSyncing ? 'animate-spin' : ''}`} />
-            <span>{locale === 'hi' ? '🏛️ राजस्थान' : '🏛️ RAJ SSO'}</span>
-          </button>
+          {/* Quick Sync MP ESB Button */}
+          {onQuickMpesbSync && (
+            <button
+              onClick={onQuickMpesbSync}
+              disabled={isMpesbSyncing}
+              className="flex items-center gap-1 bg-teal-800 hover:bg-teal-700 text-teal-100 font-bold px-2.5 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75 border border-teal-400/40"
+              title="Sync latest MP ESB Vyapam releases from https://esb.mponline.gov.in/"
+            >
+              <RefreshCw className={`h-3 w-3 ${isMpesbSyncing ? 'animate-spin' : ''}`} />
+              <span>{locale === 'hi' ? '🏛️ MP ESB' : '🏛️ MP ESB'}</span>
+            </button>
+          )}
 
-          {/* Quick Sync SBI Button */}
-          <button
-            onClick={onQuickSbiSync}
-            disabled={isSbiSyncing}
-            className="flex items-center gap-1 bg-sky-600 hover:bg-sky-500 text-white font-bold px-2 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75"
-            title="Sync latest SBI career notices from https://sbi.bank.in/web/careers/current-openings"
-          >
-            <RefreshCw className={`h-3 w-3 ${isSbiSyncing ? 'animate-spin' : ''}`} />
-            <span>SBI</span>
-          </button>
+          {/* Quick Sync PGRKAM Punjab Button */}
+          {onQuickPgrkamSync && (
+            <button
+              onClick={onQuickPgrkamSync}
+              disabled={isPgrkamSyncing}
+              className="flex items-center gap-1 bg-amber-800 hover:bg-amber-700 text-amber-100 font-bold px-2.5 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75 border border-amber-400/40"
+              title="Sync latest Punjab Rozgar releases from https://www.pgrkam.com/"
+            >
+              <RefreshCw className={`h-3 w-3 ${isPgrkamSyncing ? 'animate-spin' : ''}`} />
+              <span>{locale === 'hi' ? '🏛️ पंजाब PGRKAM' : '🏛️ PGRKAM'}</span>
+            </button>
+          )}
 
-          {/* Quick Sync IBPS Button */}
-          <button
-            onClick={onQuickIbpsSync}
-            disabled={isIbpsSyncing}
-            className="flex items-center gap-1 bg-blue-600 hover:bg-blue-500 text-white font-bold px-2 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75"
-            title="Sync latest banking notices from https://www.ibps.in/"
-          >
-            <RefreshCw className={`h-3 w-3 ${isIbpsSyncing ? 'animate-spin' : ''}`} />
-            <span>IBPS</span>
-          </button>
+          {/* Quick Sync HPSC Haryana Button */}
+          {onQuickHpscSync && (
+            <button
+              onClick={onQuickHpscSync}
+              disabled={isHpscSyncing}
+              className="flex items-center gap-1 bg-blue-700 hover:bg-blue-600 text-white font-bold px-2.5 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75 border border-blue-400/40"
+              title="Sync latest Haryana HPSC releases from https://hpsc.gov.in/"
+            >
+              <RefreshCw className={`h-3 w-3 ${isHpscSyncing ? 'animate-spin' : ''}`} />
+              <span>{locale === 'hi' ? '🏛️ HPSC' : '🏛️ HPSC'}</span>
+            </button>
+          )}
 
-          {/* Quick Sync RRB Button */}
-          <button
-            onClick={onQuickRrbSync}
-            disabled={isRrbSyncing}
-            className="flex items-center gap-1 bg-red-600 hover:bg-red-500 text-white font-bold px-2 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75"
-            title="Sync latest from https://www.rrbapply.gov.in/#/auth/landing"
-          >
-            <RefreshCw className={`h-3 w-3 ${isRrbSyncing ? 'animate-spin' : ''}`} />
-            <span>RRB</span>
-          </button>
+          {/* Quick Sync BTSC Bihar Button */}
+          {onQuickBtscSync && (
+            <button
+              onClick={onQuickBtscSync}
+              disabled={isBtscSyncing}
+              className="flex items-center gap-1 bg-emerald-800 hover:bg-emerald-700 text-emerald-100 font-bold px-2.5 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75 border border-emerald-500/40"
+              title="Sync latest Bihar BTSC releases from https://btsc.bihar.gov.in/hi/recruitment"
+            >
+              <RefreshCw className={`h-3 w-3 ${isBtscSyncing ? 'animate-spin' : ''}`} />
+              <span>{locale === 'hi' ? '🏛️ BTSC' : '🏛️ BTSC'}</span>
+            </button>
+          )}
 
-          {/* Quick Sync UPSC Button */}
-          <button
-            onClick={onQuickUpscSync}
-            disabled={isUpscSyncing}
-            className="flex items-center gap-1 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black px-2 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75"
-            title="Sync latest from https://www.upsc.gov.in/"
-          >
-            <RefreshCw className={`h-3 w-3 ${isUpscSyncing ? 'animate-spin' : ''}`} />
-            <span>UPSC</span>
-          </button>
+          {/* Direct Link to UPPBPB Hub */}
+          {onOpenUppbpbHub && (
+            <button
+              onClick={onOpenUppbpbHub}
+              className="flex items-center gap-1 bg-blue-900/60 hover:bg-blue-800/80 text-blue-200 font-bold px-2.5 py-1 rounded-lg text-[11px] transition border border-blue-400/50 cursor-pointer"
+            >
+              <span>{locale === 'hi' ? 'UP पुलिस हब' : 'UP Police'}</span>
+              <ChevronRight className="h-3 w-3" />
+            </button>
+          )}
 
-          {/* Quick Sync SSC Button */}
-          <button
-            onClick={onQuickSscSync}
-            disabled={isSscSyncing}
-            className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-2 py-1 rounded-lg text-[11px] transition shadow-xs cursor-pointer active:scale-95 disabled:opacity-75"
-            title="Sync latest from https://ssc.gov.in/"
-          >
-            <RefreshCw className={`h-3 w-3 ${isSscSyncing ? 'animate-spin' : ''}`} />
-            <span>SSC</span>
-          </button>
+          {/* Direct Link to MP ESB Hub */}
+          {onOpenMpesbHub && (
+            <button
+              onClick={onOpenMpesbHub}
+              className="flex items-center gap-1 bg-teal-900/60 hover:bg-teal-800/80 text-teal-200 font-bold px-2.5 py-1 rounded-lg text-[11px] transition border border-teal-400/50 cursor-pointer"
+            >
+              <span>{locale === 'hi' ? 'MP व्यापम हब' : 'MP ESB'}</span>
+              <ChevronRight className="h-3 w-3" />
+            </button>
+          )}
 
-          {/* Direct Link to Army Hub */}
-          <button
-            onClick={onOpenArmyHub}
-            className="flex items-center gap-1 bg-emerald-700/30 hover:bg-emerald-700/50 text-emerald-200 font-bold px-2.5 py-1 rounded-lg text-[11px] transition border border-emerald-400/40 cursor-pointer"
-          >
-            <span>{locale === 'hi' ? 'भारतीय सेना हब' : 'Army Hub'}</span>
-            <ChevronRight className="h-3 w-3" />
-          </button>
+          {/* Direct Link to PGRKAM Hub */}
+          {onOpenPgrkamHub && (
+            <button
+              onClick={onOpenPgrkamHub}
+              className="flex items-center gap-1 bg-amber-900/60 hover:bg-amber-800/80 text-amber-200 font-bold px-2.5 py-1 rounded-lg text-[11px] transition border border-amber-400/50 cursor-pointer"
+            >
+              <span>{locale === 'hi' ? 'पंजाब हब' : 'PGRKAM'}</span>
+              <ChevronRight className="h-3 w-3" />
+            </button>
+          )}
 
-          {/* Direct Link to Rajasthan Hub */}
-          <button
-            onClick={onOpenRajHub}
-            className="flex items-center gap-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 font-bold px-2.5 py-1 rounded-lg text-[11px] transition border border-amber-400/40 cursor-pointer"
-          >
-            <span>{locale === 'hi' ? 'राजस्थान पोर्टल' : 'Rajasthan SSO Hub'}</span>
-            <ChevronRight className="h-3 w-3" />
-          </button>
+          {/* Direct Link to HPSC Hub */}
+          {onOpenHpscHub && (
+            <button
+              onClick={onOpenHpscHub}
+              className="flex items-center gap-1 bg-blue-900/60 hover:bg-blue-800/80 text-blue-200 font-bold px-2.5 py-1 rounded-lg text-[11px] transition border border-blue-400/50 cursor-pointer"
+            >
+              <span>{locale === 'hi' ? 'HPSC' : 'HPSC'}</span>
+              <ChevronRight className="h-3 w-3" />
+            </button>
+          )}
         </div>
 
       </div>
     </div>
   );
 }
+

@@ -4,10 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="google-site-verification" content="googlea4fd13bfa005370e" />
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3632365628717784"
-     crossorigin="anonymous"></script>
-    <script async custom-element="amp-auto-ads"
-        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    <!-- Google AdSense Safely Guarded for Production -->
+    <script>
+      (function() {
+        try {
+          if (window.location.hostname !== 'localhost' && !window.location.hostname.includes('run.app')) {
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3632365628717784';
+            s.crossOrigin = 'anonymous';
+            s.onerror = function() {};
+            document.head.appendChild(s);
+          }
+        } catch(e) {}
+      })();
     </script>
     
     <!-- Core Primary SEO Tags -->
@@ -164,9 +174,6 @@
     </script>
   </head>
   <body>
-    <amp-auto-ads type="adsense"
-        data-ad-client="ca-pub-3632365628717784">
-    </amp-auto-ads>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
