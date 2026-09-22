@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { 
   Award, Clock, CheckCircle2, AlertTriangle, 
   HelpCircle, RefreshCw, FileText, ChevronRight, 
-  ChevronLeft, BookOpen, Star, Sparkles, Download, Lock, Check, Minimize2, Video, Terminal
+  ChevronLeft, BookOpen, Star, Sparkles, Download, Lock, Check, Minimize2, Video, Terminal,
+  Zap, ArrowRight
 } from 'lucide-react';
 import { MockTest, UserProfile, Question } from '../types';
 import CertificateModal from './CertificateModal';
 import SscAiMockGenerator from './SscAiMockGenerator';
+import AutoMockTestCreator from './AutoMockTestCreator';
 
 interface MockTestPortalProps {
   mockTests: MockTest[];
@@ -24,6 +26,8 @@ interface MockTestPortalProps {
   onClearInitialActiveTestId?: () => void;
   onOpenAiDoubt?: (questionText: string) => void;
   onAddMockTest?: (newTest: MockTest) => void;
+  triggerToast?: (title: string, message: string, type?: 'success' | 'info' | 'warning' | 'error') => void;
+  defaultView?: 'standard' | 'ssc-ai-generator' | 'auto-creator';
 }
 
 export default function MockTestPortal({ 
@@ -35,9 +39,11 @@ export default function MockTestPortal({
   initialActiveTestId,
   onClearInitialActiveTestId,
   onOpenAiDoubt,
-  onAddMockTest
+  onAddMockTest,
+  triggerToast,
+  defaultView
 }: MockTestPortalProps) {
-  const [activePortalView, setActivePortalView] = useState<'standard' | 'ssc-ai-generator'>('standard');
+  const [activePortalView, setActivePortalView] = useState<'standard' | 'ssc-ai-generator' | 'auto-creator'>(defaultView || 'auto-creator');
   const [activeTest, setActiveTest] = useState<MockTest | null>(null);
   const [isCertificateOpen, setIsCertificateOpen] = useState(false);
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
@@ -59,38 +65,104 @@ export default function MockTestPortal({
   const [cbtTermsAccepted, setCbtTermsAccepted] = useState(false);
   const [cbtViewLanguage, setCbtViewLanguage] = useState<'English' | 'Hindi'>('English');
   const [questionCBTStates, setQuestionCBTStates] = useState<Record<string, 'not_visited' | 'not_answered' | 'answered' | 'marked_for_review' | 'answered_marked_for_review'>>({});
+  const [selectedDomainStream, setSelectedDomainStream] = useState<string>('All');
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState<string>('All');
+  const [examSearchQuery, setExamSearchQuery] = useState<string>('');
 
   // Active question filter by section
   const getExamSections = (testCategory: string = '') => {
     const cat = testCategory.toLowerCase();
-    if (cat.includes('upsc')) {
+    
+    // Haryana Exams
+    if (cat.includes('hssc') || (cat.includes('haryana') && cat.includes('cet'))) {
       return [
-        { id: 'sec-1', label: 'History, Art & Culture', start: 0, end: 24 },
-        { id: 'sec-2', label: 'Geography & Environment', start: 25, end: 49 },
-        { id: 'sec-3', label: 'Indian Polity & Constitution', start: 50, end: 74 },
-        { id: 'sec-4', label: 'Economy & IR', start: 75, end: 99 }
+        { id: 'sec-1', label: 'हरियाणा सामान्य ज्ञान व संस्कृति (25% Weightage)', start: 0, end: 24 },
+        { id: 'sec-2', label: 'सामान्य अध्ययन व विज्ञान (GS & Science)', start: 25, end: 49 },
+        { id: 'sec-3', label: 'गणित व तार्किक क्षमता (Quant & Reasoning)', start: 50, end: 74 },
+        { id: 'sec-4', label: 'सामान्य हिंदी, अंग्रेज़ी व कंप्यूटर (Languages & IT)', start: 75, end: 99 }
       ];
     }
-    if (cat.includes('sbi') && cat.includes('po')) {
+    if (cat.includes('haryana') && cat.includes('police')) {
+      return [
+        { id: 'sec-1', label: 'हरियाणा ज्ञान व पुलिस अभिरुचि (Haryana GK & Aptitude)', start: 0, end: 24 },
+        { id: 'sec-2', label: 'सामान्य ज्ञान व समसामयिकी (GS & Current Affairs)', start: 25, end: 49 },
+        { id: 'sec-3', label: 'कृषि व पशुपालन विज्ञान (Agriculture & Animal Husbandry)', start: 50, end: 74 },
+        { id: 'sec-4', label: 'संख्यात्मक योग्यता व तर्कशक्ति (Math & Reasoning)', start: 75, end: 99 }
+      ];
+    }
+    if (cat.includes('hpsc') || cat.includes('hcs')) {
+      return [
+        { id: 'sec-1', label: 'General Studies & Indian Polity', start: 0, end: 34 },
+        { id: 'sec-2', label: 'Haryana History, Economy & Heritage', start: 35, end: 69 },
+        { id: 'sec-3', label: 'CSAT & Analytical Aptitude', start: 70, end: 99 }
+      ];
+    }
+
+    // Bank Exams
+    if (cat.includes('clerk')) {
       return [
         { id: 'sec-1', label: 'English Language', start: 0, end: 29 },
-        { id: 'sec-2', label: 'Quantitative Aptitude', start: 30, end: 64 },
+        { id: 'sec-2', label: 'Numerical Ability', start: 30, end: 64 },
         { id: 'sec-3', label: 'Reasoning Ability', start: 65, end: 99 }
       ];
     }
-    if (cat.includes('bank') || cat.includes('ibps')) {
+    if (cat.includes('rrb bank') || cat.includes('ibps rrb') || (cat.includes('rrb') && cat.includes('officer'))) {
       return [
-        { id: 'sec-1', label: 'Quantitative Aptitude', start: 0, end: 34 },
-        { id: 'sec-2', label: 'Reasoning Ability', start: 35, end: 69 },
-        { id: 'sec-3', label: 'English Language', start: 70, end: 99 }
+        { id: 'sec-1', label: 'Reasoning Ability (तर्कशक्ति)', start: 0, end: 39 },
+        { id: 'sec-2', label: 'Quantitative Aptitude (संख्यात्मक अभियोग्यता)', start: 40, end: 79 }
       ];
     }
-    if (cat.includes('rpf') && cat.includes('si')) {
+    if (cat.includes('nabard')) {
       return [
-        { id: 'sec-1', label: 'General Awareness', start: 0, end: 49 },
-        { id: 'sec-2', label: 'Arithmetic', start: 50, end: 84 },
-        { id: 'sec-3', label: 'General Intelligence & Reasoning', start: 85, end: 119 }
+        { id: 'sec-1', label: 'Economic & Social Issues (ESI) & Rural Dev (ARD)', start: 0, end: 34 },
+        { id: 'sec-2', label: 'Quantitative Aptitude & Decision Making', start: 35, end: 64 },
+        { id: 'sec-3', label: 'Reasoning Ability & Computer Awareness', start: 65, end: 99 }
+      ];
+    }
+    if (cat.includes('bob') || cat.includes('baroda') || cat.includes('pnb') || cat.includes('punjab national') || cat.includes('union bank') || cat.includes('ubi') || cat.includes('canara') || cat.includes('specialist')) {
+      return [
+        { id: 'sec-1', label: 'Professional Knowledge & Banking Awareness', start: 0, end: 39 },
+        { id: 'sec-2', label: 'Reasoning & Computer Aptitude', start: 40, end: 69 },
+        { id: 'sec-3', label: 'Quantitative Aptitude & English Language', start: 70, end: 99 }
+      ];
+    }
+    if (cat.includes('rbi')) {
+      return [
+        { id: 'sec-1', label: 'English Language', start: 0, end: 29 },
+        { id: 'sec-2', label: 'Numerical Ability & DI', start: 30, end: 64 },
+        { id: 'sec-3', label: 'Reasoning Ability & RBI Banking GK', start: 65, end: 99 }
+      ];
+    }
+    if (cat.includes('sbi') || cat.includes('ibps') || cat.includes('bank') || cat.includes('clerk') || cat.includes('po')) {
+      return [
+        { id: 'sec-1', label: 'English Language (अंग्रेजी भाषा)', start: 0, end: 29 },
+        { id: 'sec-2', label: 'Quantitative Aptitude & DI (गणित व डीआई)', start: 30, end: 64 },
+        { id: 'sec-3', label: 'Reasoning Ability & Puzzles (तर्कशक्ति व पहेली)', start: 65, end: 99 }
+      ];
+    }
+
+    // Railway Exams
+    if (cat.includes('je') || cat.includes('junior engineer')) {
+      return [
+        { id: 'sec-1', label: 'Mathematics', start: 0, end: 29 },
+        { id: 'sec-2', label: 'General Intelligence & Reasoning', start: 30, end: 54 },
+        { id: 'sec-3', label: 'General Science (Physics/Chemistry)', start: 55, end: 84 },
+        { id: 'sec-4', label: 'General Awareness', start: 85, end: 99 }
+      ];
+    }
+    if (cat.includes('alp')) {
+      return [
+        { id: 'sec-1', label: 'Mathematics', start: 0, end: 19 },
+        { id: 'sec-2', label: 'General Intelligence & Reasoning', start: 20, end: 44 },
+        { id: 'sec-3', label: 'Basic Science & Engineering', start: 45, end: 64 },
+        { id: 'sec-4', label: 'General Awareness', start: 65, end: 74 }
+      ];
+    }
+    if (cat.includes('rpf') && (cat.includes('constable') || cat.includes('si'))) {
+      return [
+        { id: 'sec-1', label: 'General Awareness (सामान्य ज्ञान)', start: 0, end: 49 },
+        { id: 'sec-2', label: 'Arithmetic (अंकगणित)', start: 50, end: 84 },
+        { id: 'sec-3', label: 'General Intelligence & Reasoning (तर्कशक्ति)', start: 85, end: 119 }
       ];
     }
     if (cat.includes('group-d') || cat.includes('group d')) {
@@ -108,6 +180,74 @@ export default function MockTestPortal({
         { id: 'sec-3', label: 'General Intelligence & Reasoning', start: 70, end: 99 }
       ];
     }
+
+    // Online & Teaching Exams
+    if (cat.includes('dsssb')) {
+      return [
+        { id: 'sec-1', label: 'General Awareness', start: 0, end: 19 },
+        { id: 'sec-2', label: 'General Intelligence & Reasoning', start: 20, end: 39 },
+        { id: 'sec-3', label: 'Arithmetical & Numerical Ability', start: 40, end: 59 },
+        { id: 'sec-4', label: 'General Hindi (सामान्य हिंदी)', start: 60, end: 79 },
+        { id: 'sec-5', label: 'General English', start: 80, end: 99 }
+      ];
+    }
+    if (cat.includes('ctet') || cat.includes('tet')) {
+      return [
+        { id: 'sec-1', label: 'Child Development & Pedagogy (बाल विकास)', start: 0, end: 29 },
+        { id: 'sec-2', label: 'Mathematics & Environmental Studies (गणित व EVS)', start: 30, end: 59 },
+        { id: 'sec-3', label: 'Language I (हिंदी शिक्षण)', start: 60, end: 79 },
+        { id: 'sec-4', label: 'Language II (English Comprehension & Pedagogy)', start: 80, end: 99 }
+      ];
+    }
+    if (cat.includes('police')) {
+      return [
+        { id: 'sec-1', label: 'General Hindi (सामान्य हिंदी)', start: 0, end: 24 },
+        { id: 'sec-2', label: 'General Knowledge & Law (सामान्य ज्ञान व संविधान)', start: 25, end: 49 },
+        { id: 'sec-3', label: 'Numerical & Mental Ability (संख्यात्मक योग्यता)', start: 50, end: 74 },
+        { id: 'sec-4', label: 'Mental Aptitude & Reasoning (मानसिक अभिरुचि व तार्किक)', start: 75, end: 99 }
+      ];
+    }
+    if (cat.includes('defense') || cat.includes('nda')) {
+      return [
+        { id: 'sec-1', label: 'English Comprehension', start: 0, end: 29 },
+        { id: 'sec-2', label: 'General Science & Physics', start: 30, end: 59 },
+        { id: 'sec-3', label: 'Mathematics & General Knowledge', start: 60, end: 99 }
+      ];
+    }
+    if (cat.includes('upsc')) {
+      return [
+        { id: 'sec-1', label: 'History, Art & Culture', start: 0, end: 24 },
+        { id: 'sec-2', label: 'Geography & Environment', start: 25, end: 49 },
+        { id: 'sec-3', label: 'Indian Polity & Constitution', start: 50, end: 74 },
+        { id: 'sec-4', label: 'Economy & IR', start: 75, end: 99 }
+      ];
+    }
+
+    // SSC Exams
+    if (cat.includes('steno')) {
+      return [
+        { id: 'sec-1', label: 'General Intelligence & Reasoning', start: 0, end: 24 },
+        { id: 'sec-2', label: 'General Awareness', start: 25, end: 49 },
+        { id: 'sec-3', label: 'English Language & Comprehension', start: 50, end: 99 }
+      ];
+    }
+    if (cat.includes('mts')) {
+      return [
+        { id: 'sec-1', label: 'Session 1: Numerical Ability', start: 0, end: 24 },
+        { id: 'sec-2', label: 'Session 1: Reasoning Ability', start: 25, end: 49 },
+        { id: 'sec-3', label: 'Session 2: General Awareness', start: 50, end: 74 },
+        { id: 'sec-4', label: 'Session 2: English Language', start: 75, end: 99 }
+      ];
+    }
+    if (cat.includes('gd')) {
+      return [
+        { id: 'sec-1', label: 'General Intelligence & Reasoning', start: 0, end: 24 },
+        { id: 'sec-2', label: 'General Knowledge & Awareness', start: 25, end: 49 },
+        { id: 'sec-3', label: 'Elementary Mathematics', start: 50, end: 74 },
+        { id: 'sec-4', label: 'Hindi / English Comprehension', start: 75, end: 99 }
+      ];
+    }
+    // Default 4-section SSC CGL / CHSL / CPO pattern
     return [
       { id: 'Reasoning', label: 'General Intelligence & Reasoning', start: 0, end: 24 },
       { id: 'General Awareness', label: 'General Awareness', start: 25, end: 49 },
@@ -117,7 +257,6 @@ export default function MockTestPortal({
   };
 
   const getQuestionSection = (idx: number, totalQuestions: number, category: string = ''): string => {
-    if (totalQuestions < 100) return 'General Practice';
     const sections = getExamSections(category);
     const matched = sections.find(sec => idx >= sec.start && idx <= sec.end);
     return matched ? matched.label : 'General Practice';
@@ -354,12 +493,25 @@ export default function MockTestPortal({
         <div className="grid gap-6 md:grid-cols-12 animate-fadeIn">
           
           <div className="md:col-span-8 space-y-6">
-            {/* View Switcher Tabs: Standard vs SSC 7-Day AI Mock Generator */}
+            {/* View Switcher Tabs: Auto Creator vs Standard vs SSC 7-Day AI Mock Generator */}
             <div className="flex flex-col sm:flex-row items-stretch gap-2 p-1.5 bg-slate-100/90 rounded-2xl border border-slate-200 shadow-xs">
+              <button
+                id="portal-view-auto-creator-btn"
+                onClick={() => setActivePortalView('auto-creator')}
+                className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                  activePortalView === 'auto-creator'
+                    ? 'bg-gradient-to-r from-indigo-600 via-blue-600 to-indigo-700 text-white shadow-md'
+                    : 'text-indigo-700 hover:bg-indigo-50/80 font-bold'
+                }`}
+              >
+                <Zap className="w-4 h-4 text-amber-300 fill-amber-300" />
+                <span>🎯 Auto Mock Creator (All Exams)</span>
+              </button>
+
               <button
                 id="portal-view-standard-btn"
                 onClick={() => setActivePortalView('standard')}
-                className={`flex-1 py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                   activePortalView === 'standard'
                     ? 'bg-white text-slate-900 shadow-sm'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
@@ -372,18 +524,32 @@ export default function MockTestPortal({
               <button
                 id="portal-view-ssc-ai-btn"
                 onClick={() => setActivePortalView('ssc-ai-generator')}
-                className={`flex-1 py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                   activePortalView === 'ssc-ai-generator'
-                    ? 'bg-gradient-to-r from-indigo-600 via-indigo-700 to-blue-700 text-white shadow-md'
-                    : 'text-indigo-700 hover:bg-indigo-50/80'
+                    ? 'bg-gradient-to-r from-slate-800 to-indigo-950 text-white shadow-md'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
                 }`}
               >
                 <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
-                <span>🤖 SSC 7-Day AI Mock (New Pattern 2026)</span>
+                <span>🤖 SSC 7-Day AI Schedule</span>
               </button>
             </div>
 
-            {activePortalView === 'ssc-ai-generator' ? (
+            {activePortalView === 'auto-creator' ? (
+              <AutoMockTestCreator
+                user={user}
+                onAddMockTest={(newTest) => {
+                  if (onAddMockTest) onAddMockTest(newTest);
+                }}
+                onStartCbtTest={(testId) => {
+                  const targetTest = mockTests.find(t => t.id === testId);
+                  if (targetTest) {
+                    handleStartTest(targetTest);
+                  }
+                }}
+                triggerToast={triggerToast}
+              />
+            ) : activePortalView === 'ssc-ai-generator' ? (
               <SscAiMockGenerator
                 user={user}
                 onAddMockTest={(newTest) => {
@@ -399,6 +565,26 @@ export default function MockTestPortal({
               />
             ) : (
               <>
+                {/* Quick Auto-Creator Callout Banner */}
+                <div className="bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-200 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-sans shadow-xs">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+                      <Zap className="w-5 h-5 text-amber-300 fill-amber-300" />
+                    </div>
+                    <div>
+                      <span className="font-bold text-slate-900 text-sm block">⚡ Need an Auto-Created Mock Test for Your Exam?</span>
+                      <span className="text-slate-600 block text-xs mt-0.5">Generate bilingual tests for SSC CGL/CHSL, Banking IBPS/SBI, Railway NTPC/ALP, Army Agniveer GD, UP Police according to official 2026 syllabus.</span>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setActivePortalView('auto-creator')}
+                    className="shrink-0 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <span>Auto-Create Mock Test</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
                 <div className="rounded-2xl border border-blue-50 bg-white p-5 shadow-xs">
               <h3 className="font-sans text-base font-bold text-slate-900 mb-1">
                 ⚡ Interactive Exam Mock Hub
@@ -422,42 +608,332 @@ export default function MockTestPortal({
                 </div>
               )}
 
-              {/* Category Filter Pills (परीक्षा संवर्ग फिल्टर) */}
-              <div className="mb-6 flex flex-wrap gap-1.5 border-b border-slate-100 pb-4">
-                {[
-                  { id: 'All', label: 'All Exams (सभी)' },
-                  { id: 'UPSC Civil Services Prep', label: 'UPSC CSE (IAS)' },
-                  { id: 'SSC CGL Exam Prep', label: 'SSC CGL' },
-                  { id: 'IBPS PO Exam Prep', label: 'IBPS PO' },
-                  { id: 'RRB NTPC Exam Prep', label: 'RRB NTPC' },
-                  { id: 'SSC CHSL Exam Prep', label: 'SSC CHSL' },
-                  { id: 'SBI PO Exam Prep', label: 'SBI PO' },
-                  { id: 'Railway Group-D Exam Prep', label: 'Railway Group D' },
-                  { id: 'Railway RPF SI Exam Prep', label: 'RPF SI' }
-                ].map((catBtn) => {
-                  const isSel = selectedCategoryFilter === catBtn.id;
-                  return (
+              {/* Domain Streams & Category Filters (परीक्षा संवर्ग व ऑनलाइन CBT फिल्टर) */}
+              <div className="mb-6 space-y-3.5 border-b border-slate-100 pb-5">
+                {/* Search Bar */}
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={examSearchQuery}
+                    onChange={(e) => setExamSearchQuery(e.target.value)}
+                    placeholder="🔍 Search mock tests (e.g., 'Haryana', 'HSSC', 'Clerk', 'JE', 'Bank', 'NTPC', 'CGL', 'Police')..."
+                    className="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl py-2.5 pl-3.5 pr-8 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition"
+                  />
+                  {examSearchQuery && (
                     <button
-                      key={catBtn.id}
-                      onClick={() => setSelectedCategoryFilter(catBtn.id)}
-                      className={`text-xs px-3.5 py-2 rounded-xl font-bold transition duration-150 border ${
-                        isSel
-                          ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
-                          : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                      onClick={() => setExamSearchQuery('')}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-600 font-bold"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+
+                {/* Stream Tabs */}
+                <div>
+                  <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 flex items-center justify-between">
+                    <span>Select Exam Domain (परीक्षा वर्ग चुनें):</span>
+                    <span className="text-blue-600 font-semibold lowercase">
+                      {mockTests.length}+ CBT Mocks Loaded
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {[
+                      { id: 'All', label: 'All Exams (सभी परीक्षाएं)', icon: '📚' },
+                      { id: 'SSC', label: 'SSC New Pattern 2026', icon: '🏛️' },
+                      { id: 'Railway', label: 'Railway Exams', icon: '🚆' },
+                      { id: 'Bank', label: 'Bank Exams', icon: '🏦' },
+                      { id: 'Haryana', label: 'Haryana Exams', icon: '🌾' },
+                      { id: 'OnlineCBT', label: 'Online Central/State CBT', icon: '🌐' }
+                    ].map((dom) => {
+                      const isSel = selectedDomainStream === dom.id;
+                      return (
+                        <button
+                          key={dom.id}
+                          onClick={() => {
+                            setSelectedDomainStream(dom.id);
+                            setSelectedCategoryFilter('All');
+                          }}
+                          className={`text-xs px-3 py-1.5 rounded-xl font-bold transition duration-150 border flex items-center gap-1.5 ${
+                            isSel
+                              ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                              : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                          }`}
+                        >
+                          <span>{dom.icon}</span>
+                          <span>{dom.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Sub-Pills for Specific Exam in Active Domain */}
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  <button
+                    onClick={() => setSelectedCategoryFilter('All')}
+                    className={`text-[11px] px-2.5 py-1 rounded-lg font-semibold transition border ${
+                      selectedCategoryFilter === 'All'
+                        ? 'bg-slate-800 text-white border-slate-800'
+                        : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
+                    }`}
+                  >
+                    All in {selectedDomainStream === 'All' ? 'Every Category' : selectedDomainStream}
+                  </button>
+
+                  {/* Dynamic sub-pills depending on selectedDomainStream */}
+                  {selectedDomainStream === 'Haryana' && [
+                    { id: 'HSSC CET Group C & D Exam Prep', label: 'HSSC CET (25% Haryana GK)' },
+                    { id: 'Haryana Police Constable Exam Prep', label: 'Haryana Police Constable' },
+                    { id: 'HPSC HCS Haryana Civil Services Prep', label: 'HPSC HCS (Haryana Civil Services)' }
+                  ].map((sub) => (
+                    <button
+                      key={sub.id}
+                      onClick={() => setSelectedCategoryFilter(sub.id)}
+                      className={`text-[11px] px-2.5 py-1 rounded-lg font-semibold transition border ${
+                        selectedCategoryFilter === sub.id
+                          ? 'bg-emerald-600 text-white border-emerald-600'
+                          : 'bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100'
                       }`}
                     >
-                      {catBtn.label}
+                      {sub.label}
                     </button>
-                  );
-                })}
+                  ))}
+
+                  {selectedDomainStream === 'Bank' && [
+                    { id: 'IBPS PO Exam Prep', label: 'IBPS PO (3,955 Posts)' },
+                    { id: 'IBPS Clerk Exam Prep', label: 'IBPS Clerk' },
+                    { id: 'SBI PO Exam Prep', label: 'SBI PO' },
+                    { id: 'SBI Clerk Exam Prep', label: 'SBI Clerk (8,773 Posts)' },
+                    { id: 'Bank of Baroda (BOB) Exam Prep', label: 'Bank of Baroda (BOB)' },
+                    { id: 'Punjab National Bank (PNB) Exam Prep', label: 'Punjab National Bank (PNB)' },
+                    { id: 'Union Bank of India (UBI) Exam Prep', label: 'Union Bank of India (UBI)' },
+                    { id: 'Canara Bank Exam Prep', label: 'Canara Bank' },
+                    { id: 'Central Bank of India (CBI) Exam Prep', label: 'Central Bank (CBI)' },
+                    { id: 'IBPS RRB Officer & Assistant Prep', label: 'IBPS RRB Gramin Bank (9,923 Posts)' },
+                    { id: 'RBI Assistant & Grade B Prep', label: 'RBI Assistant & Grade B' },
+                    { id: 'NABARD Grade A Officer Prep', label: 'NABARD Grade A' }
+                  ].map((sub) => (
+                    <button
+                      key={sub.id}
+                      onClick={() => setSelectedCategoryFilter(sub.id)}
+                      className={`text-[11px] px-2.5 py-1 rounded-lg font-semibold transition border ${
+                        selectedCategoryFilter === sub.id
+                          ? 'bg-indigo-600 text-white border-indigo-600'
+                          : 'bg-indigo-50 text-indigo-800 border-indigo-200 hover:bg-indigo-100'
+                      }`}
+                    >
+                      {sub.label}
+                    </button>
+                  ))}
+
+                  {selectedDomainStream === 'Railway' && [
+                    { id: 'RRB NTPC Exam Prep', label: 'RRB NTPC' },
+                    { id: 'RRB ALP Exam Prep', label: 'RRB ALP & Tech' },
+                    { id: 'Railway Group-D Exam Prep', label: 'Group D (Level-1)' },
+                    { id: 'RRB JE Railway Exam Prep', label: 'RRB JE (Junior Eng.)' },
+                    { id: 'Railway RPF SI Exam Prep', label: 'RPF SI' },
+                    { id: 'Railway RPF Constable Exam Prep', label: 'RPF Constable' }
+                  ].map((sub) => (
+                    <button
+                      key={sub.id}
+                      onClick={() => setSelectedCategoryFilter(sub.id)}
+                      className={`text-[11px] px-2.5 py-1 rounded-lg font-semibold transition border ${
+                        selectedCategoryFilter === sub.id
+                          ? 'bg-amber-600 text-white border-amber-600'
+                          : 'bg-amber-50 text-amber-900 border-amber-200 hover:bg-amber-100'
+                      }`}
+                    >
+                      {sub.label}
+                    </button>
+                  ))}
+
+                  {selectedDomainStream === 'SSC' && [
+                    { id: 'SSC CGL Exam Prep', label: 'SSC CGL Tier-1' },
+                    { id: 'SSC CHSL Exam Prep', label: 'SSC CHSL (10+2)' },
+                    { id: 'SSC MTS Exam Prep', label: 'SSC MTS & Havaldar' },
+                    { id: 'SSC GD Exam Prep', label: 'SSC GD Constable' },
+                    { id: 'SSC CPO SI Exam Prep', label: 'SSC CPO (Delhi Police)' },
+                    { id: 'SSC Stenographer Exam Prep', label: 'SSC Stenographer' }
+                  ].map((sub) => (
+                    <button
+                      key={sub.id}
+                      onClick={() => setSelectedCategoryFilter(sub.id)}
+                      className={`text-[11px] px-2.5 py-1 rounded-lg font-semibold transition border ${
+                        selectedCategoryFilter === sub.id
+                          ? 'bg-blue-600 text-white border-blue-600'
+                          : 'bg-blue-50 text-blue-800 border-blue-200 hover:bg-blue-100'
+                      }`}
+                    >
+                      {sub.label}
+                    </button>
+                  ))}
+
+                  {selectedDomainStream === 'OnlineCBT' && [
+                    { id: 'DSSSB General & Teaching CBT Mock', label: 'DSSSB Teaching & Non-Teaching' },
+                    { id: 'CTET & State TET Online CBT Mock', label: 'CTET & State TET' },
+                    { id: 'UP Police Exam Prep', label: 'UP Police Constable & SI' },
+                    { id: 'Defense NDA Exam Prep', label: 'Defense NDA / CDS' },
+                    { id: 'UPSC Civil Services Prep', label: 'UPSC CSE (IAS)' }
+                  ].map((sub) => (
+                    <button
+                      key={sub.id}
+                      onClick={() => setSelectedCategoryFilter(sub.id)}
+                      className={`text-[11px] px-2.5 py-1 rounded-lg font-semibold transition border ${
+                        selectedCategoryFilter === sub.id
+                          ? 'bg-purple-600 text-white border-purple-600'
+                          : 'bg-purple-50 text-purple-800 border-purple-200 hover:bg-purple-100'
+                      }`}
+                    >
+                      {sub.label}
+                    </button>
+                  ))}
+
+                  {selectedDomainStream === 'All' && [
+                    { id: 'SSC CGL Exam Prep', label: 'SSC CGL' },
+                    { id: 'HSSC CET Group C & D Exam Prep', label: 'HSSC CET (Haryana)' },
+                    { id: 'Haryana Police Constable Exam Prep', label: 'Haryana Police' },
+                    { id: 'IBPS PO Exam Prep', label: 'IBPS PO' },
+                    { id: 'IBPS Clerk Exam Prep', label: 'Bank Clerk' },
+                    { id: 'RRB NTPC Exam Prep', label: 'RRB NTPC' },
+                    { id: 'RRB JE Railway Exam Prep', label: 'RRB JE' },
+                    { id: 'DSSSB General & Teaching CBT Mock', label: 'DSSSB CBT' },
+                    { id: 'CTET & State TET Online CBT Mock', label: 'CTET' }
+                  ].map((sub) => (
+                    <button
+                      key={sub.id}
+                      onClick={() => setSelectedCategoryFilter(sub.id)}
+                      className={`text-[11px] px-2.5 py-1 rounded-lg font-semibold transition border ${
+                        selectedCategoryFilter === sub.id
+                          ? 'bg-blue-600 text-white border-blue-600'
+                          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                      }`}
+                    >
+                      {sub.label}
+                    </button>
+                  ))}
+                </div>
               </div>
+
+              {/* BANKING SYLLABUS & EXAM PATTERN BANNER */}
+              {(selectedDomainStream === 'Bank' || 
+                selectedCategoryFilter.toLowerCase().includes('bank') || 
+                selectedCategoryFilter.toLowerCase().includes('ibps') || 
+                selectedCategoryFilter.toLowerCase().includes('sbi') || 
+                selectedCategoryFilter.toLowerCase().includes('rbi') || 
+                selectedCategoryFilter.toLowerCase().includes('bob') || 
+                selectedCategoryFilter.toLowerCase().includes('pnb')) && (
+                <div className="bg-gradient-to-br from-indigo-900 via-blue-900 to-slate-900 text-white rounded-2xl p-5 border border-indigo-500/30 shadow-lg relative overflow-hidden">
+                  <div className="absolute right-0 top-0 translate-x-8 -translate-y-8 w-60 h-60 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+                  
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-indigo-700/50 pb-4 mb-4">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="bg-amber-400 text-slate-950 font-black text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider">
+                          Official IBPS / SBI / PSB Pattern
+                        </span>
+                        <span className="text-xs text-indigo-200 font-medium">
+                          Banking Recruitment 2026
+                        </span>
+                      </div>
+                      <h4 className="text-lg font-bold text-white tracking-tight">
+                        🏦 Banking Syllabus & CBT Mock Test System (बैंकिंग पाठ्यक्रम व परीक्षा पैटर्न)
+                      </h4>
+                      <p className="text-xs text-indigo-200 mt-0.5">
+                        Aligned with latest notifications: Bank of Baroda (BOB), Punjab National Bank (PNB), IBPS PO/Clerk, SBI, RBI, and RRB.
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => setSelectedDomainStream('Bank')}
+                        className="text-xs font-semibold px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-white transition shadow-sm"
+                      >
+                        All Bank Mocks
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                    <div className="bg-indigo-950/60 border border-indigo-700/40 rounded-xl p-3">
+                      <div className="flex items-center justify-between font-bold text-indigo-300 mb-1">
+                        <span>1. English Language</span>
+                        <span className="bg-indigo-500/20 text-indigo-200 px-1.5 py-0.5 rounded text-[10px]">30 Qs • 20 Min</span>
+                      </div>
+                      <p className="text-indigo-100/80 text-[11px] leading-relaxed">
+                        Reading Comprehension (Financial/ESG), Cloze Test, Double Fillers, Error Detection (Grammar concord), Phrase Replacement.
+                      </p>
+                    </div>
+
+                    <div className="bg-indigo-950/60 border border-indigo-700/40 rounded-xl p-3">
+                      <div className="flex items-center justify-between font-bold text-emerald-300 mb-1">
+                        <span>2. Quantitative Aptitude & DI</span>
+                        <span className="bg-emerald-500/20 text-emerald-200 px-1.5 py-0.5 rounded text-[10px]">35 Qs • 20 Min</span>
+                      </div>
+                      <p className="text-emerald-100/80 text-[11px] leading-relaxed">
+                        Bar/Pie/Caselet DI, Quadratic Equations (x vs y), Missing/Wrong Number Series, CI/SI Difference, Time & Work, Speed.
+                      </p>
+                    </div>
+
+                    <div className="bg-indigo-950/60 border border-indigo-700/40 rounded-xl p-3">
+                      <div className="flex items-center justify-between font-bold text-amber-300 mb-1">
+                        <span>3. Reasoning Ability & Puzzles</span>
+                        <span className="bg-amber-500/20 text-amber-200 px-1.5 py-0.5 rounded text-[10px]">35 Qs • 20 Min</span>
+                      </div>
+                      <p className="text-amber-100/80 text-[11px] leading-relaxed">
+                        Circular/Linear Seating, Floor/Box Puzzles, "Only a few" Syllogisms, Coded Inequalities, Direction Sense & Blood Relations.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-3.5 pt-3 border-t border-indigo-800/40 flex flex-wrap items-center justify-between gap-2 text-[11px] text-indigo-200">
+                    <div className="flex items-center gap-3">
+                      <span>⚖️ <strong>Negative Marking:</strong> 0.25 (1/4th) per wrong MCQ</span>
+                      <span>⏱️ <strong>Sectional Timing:</strong> 20 Mins strictly per section in Prelims</span>
+                    </div>
+                    <div className="font-semibold text-amber-300">
+                      🎯 Specialist Officers (BOB/PNB): Includes 40 Qs Professional Knowledge + Banking Awareness
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <div className="space-y-4">
                 {mockTests
-                  .filter((t) => selectedCategoryFilter === 'All' || t.category === selectedCategoryFilter)
-                  .map((test) => (
+                  .filter((t, index, self) => {
+                    // Deduplicate
+                    if (index !== self.findIndex(o => o.id === t.id)) return false;
+
+                    // Domain stream filtering
+                    if (selectedDomainStream === 'SSC' && !t.category.toLowerCase().includes('ssc')) return false;
+                    if (selectedDomainStream === 'Railway' && !(t.category.toLowerCase().includes('railway') || t.category.toLowerCase().includes('rrb') || t.category.toLowerCase().includes('rpf'))) return false;
+                    if (selectedDomainStream === 'Bank' && !(t.category.toLowerCase().includes('bank') || t.category.toLowerCase().includes('ibps') || t.category.toLowerCase().includes('sbi') || t.category.toLowerCase().includes('rbi') || t.category.toLowerCase().includes('bob') || t.category.toLowerCase().includes('pnb') || t.category.toLowerCase().includes('baroda') || t.category.toLowerCase().includes('union') || t.category.toLowerCase().includes('canara') || t.category.toLowerCase().includes('nabard') || t.category.toLowerCase().includes('cbi'))) return false;
+                    if (selectedDomainStream === 'Haryana' && !(t.category.toLowerCase().includes('haryana') || t.category.toLowerCase().includes('hssc') || t.category.toLowerCase().includes('hpsc') || t.category.toLowerCase().includes('hcs'))) return false;
+                    if (selectedDomainStream === 'OnlineCBT' && !(t.category.toLowerCase().includes('dsssb') || t.category.toLowerCase().includes('ctet') || t.category.toLowerCase().includes('police') || t.category.toLowerCase().includes('defense') || t.category.toLowerCase().includes('nda') || t.category.toLowerCase().includes('upsc'))) return false;
+
+                    // Category filter
+                    if (selectedCategoryFilter !== 'All') {
+                      const filterKey = selectedCategoryFilter.toLowerCase().replace('exam prep', '').replace('prep', '').trim();
+                      const catKey = t.category.toLowerCase();
+                      const titleKey = t.title.toLowerCase();
+                      if (t.category !== selectedCategoryFilter && !catKey.includes(filterKey) && !titleKey.includes(filterKey)) {
+                        return false;
+                      }
+                    }
+
+                    // Search query filtering
+                    if (examSearchQuery.trim()) {
+                      const q = examSearchQuery.toLowerCase();
+                      const matchTitle = t.title.toLowerCase().includes(q);
+                      const matchCat = t.category.toLowerCase().includes(q);
+                      if (!matchTitle && !matchCat) return false;
+                    }
+
+                    return true;
+                  })
+                  .map((test, idx) => (
                   <div 
-                    key={test.id}
+                    key={`${test.id}-${idx}`}
                     className="group border border-slate-100 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-blue-200 hover:bg-slate-50/50 transition duration-200"
                   >
                     <div className="space-y-1">
@@ -497,6 +973,36 @@ export default function MockTestPortal({
                     </button>
                   </div>
                 ))}
+
+                {mockTests.filter((t, index, self) => {
+                  if (index !== self.findIndex(o => o.id === t.id)) return false;
+                  if (selectedDomainStream === 'SSC' && !t.category.toLowerCase().includes('ssc')) return false;
+                  if (selectedDomainStream === 'Railway' && !(t.category.toLowerCase().includes('railway') || t.category.toLowerCase().includes('rrb') || t.category.toLowerCase().includes('rpf'))) return false;
+                  if (selectedDomainStream === 'Bank' && !(t.category.toLowerCase().includes('bank') || t.category.toLowerCase().includes('ibps') || t.category.toLowerCase().includes('sbi') || t.category.toLowerCase().includes('rbi') || t.category.toLowerCase().includes('bob') || t.category.toLowerCase().includes('pnb') || t.category.toLowerCase().includes('baroda'))) return false;
+                  if (selectedDomainStream === 'Haryana' && !(t.category.toLowerCase().includes('haryana') || t.category.toLowerCase().includes('hssc') || t.category.toLowerCase().includes('hpsc') || t.category.toLowerCase().includes('hcs'))) return false;
+                  if (selectedDomainStream === 'OnlineCBT' && !(t.category.toLowerCase().includes('dsssb') || t.category.toLowerCase().includes('ctet') || t.category.toLowerCase().includes('police') || t.category.toLowerCase().includes('defense') || t.category.toLowerCase().includes('nda') || t.category.toLowerCase().includes('upsc'))) return false;
+                  if (selectedCategoryFilter !== 'All' && t.category !== selectedCategoryFilter) return false;
+                  if (examSearchQuery.trim()) {
+                    const q = examSearchQuery.toLowerCase();
+                    if (!t.title.toLowerCase().includes(q) && !t.category.toLowerCase().includes(q)) return false;
+                  }
+                  return true;
+                }).length === 0 && (
+                  <div className="text-center py-12 px-4 border border-dashed border-slate-200 rounded-2xl bg-slate-50/50">
+                    <p className="text-sm font-bold text-slate-700">No mock tests found matching your criteria</p>
+                    <p className="text-xs text-slate-400 mt-1">Try resetting the domain filter or search query</p>
+                    <button
+                      onClick={() => {
+                        setSelectedDomainStream('All');
+                        setSelectedCategoryFilter('All');
+                        setExamSearchQuery('');
+                      }}
+                      className="mt-3 px-3.5 py-1.5 bg-blue-600 text-white rounded-lg text-xs font-semibold hover:bg-blue-700 transition"
+                    >
+                      Reset All Filters
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
 

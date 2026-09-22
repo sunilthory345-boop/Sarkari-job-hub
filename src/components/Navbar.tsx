@@ -65,10 +65,11 @@ export default function Navbar({
     { id: 'whatsapp-alerts', label: t.whatsappChannel, icon: MessageSquare, category: 'Main', highlight: true },
     
     { id: 'syllabus', label: t.syllabusAdmission, icon: GraduationCap, category: 'Prep Zone' },
-    { id: 'ssc-ai-mock', label: locale === 'hi' ? '🤖 SSC 7-Day AI मॉक (New Pattern)' : '🤖 SSC 7-Day AI Mock (2026)', icon: Sparkles, category: 'Prep Zone', highlight: true },
-    { id: 'ai-doubt-solver', label: locale === 'hi' ? '⚡ AI Doubt Mitra (प्रश्न हलकर्ता)' : '⚡ AI Doubt Solver', icon: Sparkles, category: 'Prep Zone', highlight: true },
-    { id: 'pyqs', label: t.pyqPapers, icon: FileDown, category: 'Prep Zone' },
+    { id: 'auto-mock-creator', label: locale === 'hi' ? '🎯 ऑटो मॉक टेस्ट (All Exams)' : '🎯 Auto Mock Test (All Exams)', icon: Zap, category: 'Prep Zone', highlight: true },
     { id: 'mock-tests', label: t.mockTests, icon: Clock, category: 'Prep Zone' },
+    { id: 'ssc-ai-mock', label: locale === 'hi' ? '🤖 SSC 7-Day AI मॉक (New Pattern)' : '🤖 SSC 7-Day AI Mock (2026)', icon: Sparkles, category: 'Prep Zone' },
+    { id: 'ai-doubt-solver', label: locale === 'hi' ? '⚡ AI Doubt Mitra (प्रश्न हलकर्ता)' : '⚡ AI Doubt Solver', icon: Sparkles, category: 'Prep Zone' },
+    { id: 'pyqs', label: t.pyqPapers, icon: FileDown, category: 'Prep Zone' },
     { id: 'newspapers', label: locale === 'hi' ? '📰 दैनिक समाचार पत्र' : '📰 Daily Newspaper ePaper', icon: Newspaper, category: 'Prep Zone' },
     { id: 'uploads', label: t.uploads, icon: FileUp, category: 'Prep Zone' },
     { id: 'current-affairs', label: t.currentAffairs, icon: Clock, category: 'Prep Zone' },
@@ -120,7 +121,7 @@ export default function Navbar({
 
           {/* Desktop Horizontal Navigation Links (High Density Layout) */}
           <div className="hidden md:flex items-center gap-4 text-xs font-semibold">
-            {menuItems.filter(item => ['home', 'jobs', 'ssc-sync', 'ai-doubt-solver', 'newspapers', 'calendar', 'admit-cards', 'results', 'current-affairs', 'whatsapp-alerts', 'premium'].includes(item.id)).map((item) => {
+            {menuItems.filter(item => ['home', 'jobs', 'blog', 'ssc-sync', 'ai-doubt-solver', 'newspapers', 'calendar', 'admit-cards', 'results', 'current-affairs', 'whatsapp-alerts', 'premium'].includes(item.id)).map((item) => {
               const isSelected = activeTab === item.id;
               return (
                 <button
@@ -129,17 +130,19 @@ export default function Navbar({
                   className={`hover:text-blue-200 transition-all cursor-pointer pb-0.5 border-b-2 ${
                     isSelected 
                       ? 'border-white text-white font-extrabold' 
-                      : item.id === 'ssc-sync'
-                        ? 'border-transparent text-amber-300 hover:text-amber-200 font-extrabold uppercase animate-pulse flex items-center gap-1 bg-amber-400/10 px-2 py-0.5 rounded-full border border-amber-400/30'
-                        : item.id === 'ai-doubt-solver'
-                          ? 'border-transparent text-amber-300 hover:text-amber-200 font-extrabold uppercase animate-pulse flex items-center gap-1'
-                          : item.id === 'current-affairs'
-                            ? 'border-transparent text-amber-300 hover:text-amber-200 font-extrabold uppercase animate-pulse'
-                            : item.id === 'whatsapp-alerts' 
-                              ? 'border-transparent text-emerald-400 hover:text-emerald-300 font-bold uppercase animate-pulse'
-                              : item.highlight 
-                                ? 'border-transparent text-yellow-300 hover:text-yellow-400 font-bold uppercase' 
-                                : 'border-transparent text-blue-100'
+                      : item.id === 'blog'
+                        ? 'border-transparent text-yellow-300 hover:text-yellow-200 font-bold'
+                        : item.id === 'ssc-sync'
+                          ? 'border-transparent text-amber-300 hover:text-amber-200 font-extrabold uppercase animate-pulse flex items-center gap-1 bg-amber-400/10 px-2 py-0.5 rounded-full border border-amber-400/30'
+                          : item.id === 'ai-doubt-solver'
+                            ? 'border-transparent text-amber-300 hover:text-amber-200 font-extrabold uppercase animate-pulse flex items-center gap-1'
+                            : item.id === 'current-affairs'
+                              ? 'border-transparent text-amber-300 hover:text-amber-200 font-extrabold uppercase animate-pulse'
+                              : item.id === 'whatsapp-alerts' 
+                                ? 'border-transparent text-emerald-400 hover:text-emerald-300 font-bold uppercase animate-pulse'
+                                : item.highlight 
+                                  ? 'border-transparent text-yellow-300 hover:text-yellow-400 font-bold uppercase' 
+                                  : 'border-transparent text-blue-100'
                   }`}
                 >
                   {item.label}

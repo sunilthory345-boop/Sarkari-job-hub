@@ -487,8 +487,8 @@ export default function PremiumPortal({
             </div>
 
             <div className="space-y-3 font-sans">
-              {mockTests.map((test) => (
-                <div key={test.id} className="p-4 border border-slate-150 rounded-xl bg-slate-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+              {mockTests.map((test, idx) => (
+                <div key={`${test.id}-${idx}`} className="p-4 border border-slate-150 rounded-xl bg-slate-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
                   <div className="space-y-1">
                     <div className="flex items-center gap-1.5">
                       <span className="bg-[#1E3A8A] text-white text-[8px] font-extrabold px-1.5 py-0.5 rounded uppercase">

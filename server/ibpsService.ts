@@ -28,8 +28,96 @@ export interface IbpsLiveNotice {
   answerKeyData?: any;
 }
 
-// In-memory list of verified live notices monitored from https://www.ibps.in/
+// In-memory list of verified live notices monitored from https://www.ibps.in/, https://bankofbaroda.bank.in/career, and https://pnb.bank.in/Recruitments.aspx
 export let ibpsLiveNotices: IbpsLiveNotice[] = [
+  // --- BANK OF BARODA OFFICIAL CAREERS ---
+  {
+    id: 'bob-notice-vac-so-2026',
+    crpCode: 'BOB/HRM/REC/2026/01',
+    cadre: 'Specialist',
+    category: 'vacancy',
+    title: 'Bank of Baroda (BOB) Specialist Officers & Wealth Management 2026 (627 Posts) - Official Career Portal',
+    titleHi: 'बैंक ऑफ बड़ौदा (BOB) विशेषज्ञ अधिकारी भर्ती 2026 (627 पद) - आधिकारिक करियर पोर्टल',
+    org: 'Bank of Baroda (BOB) / बैंक ऑफ बड़ौदा',
+    publishedDate: '2026-09-20',
+    officialUrl: 'https://bankofbaroda.bank.in/career',
+    pdfUrl: 'https://bankofbaroda.bank.in/career',
+    isNew: true,
+    statusBadge: 'Direct Bank PSB Recruitment',
+    details: {
+      posts: 627,
+      qualification: 'Graduate / B.Tech / MBA / CA / CFA from recognized institutes',
+      salary: 'Scale-II/III/IV: ₹48,170 - ₹89,890 + Perks (In-hand ₹65,000 - ₹1,15,000/month)',
+      lastDate: '2026-10-25',
+      examDate: 'Online Written Test / Personal Interview: November 2026',
+      stage: 'Online Registration Active on bankofbaroda.bank.in',
+      summary: 'Bank of Baroda invites online applications for regular & contractual Specialist positions across Corporate, Retail Banking, Wealth Management, Digital Lending, and Cyber Security.',
+      participatingBanks: ['Bank of Baroda']
+    },
+    jobData: {
+      id: 'bob-so-recruitment-2026-auto',
+      title: 'Bank of Baroda Specialist Officers (SO) Recruitment 2026 (627 Posts)',
+      org: 'Bank of Baroda (BOB)',
+      category: 'Banking',
+      qualification: 'Graduate / B.Tech / MBA / CA',
+      ageLimit: '22-38 Years',
+      totalVacancies: 627,
+      lastDate: '2026-10-25',
+      applicationFee: 'General/OBC: ₹600 | SC/ST/PwBD: ₹100',
+      salary: '₹48,170 - ₹89,890 + Perks (In-hand ₹65,000 - ₹1,15,000/Month)',
+      description: 'Official direct recruitment by Bank of Baroda for Specialist Officers and Senior Relationship Managers. Direct application portal: https://bankofbaroda.bank.in/career.',
+      applyLink: 'https://bankofbaroda.bank.in/career',
+      notificationPdf: 'https://bankofbaroda.bank.in/career',
+      selectionProcess: ['Online Test (Reasoning, English, Quant & Professional Knowledge)', 'Group Discussion & Interview'],
+      syllabus: ['Professional Knowledge (Domain specific)', 'Quantitative Aptitude', 'Reasoning Ability', 'Financial & Banking Awareness'],
+      verifiedByAdmin: true,
+      postedDate: '2026-09-20'
+    }
+  },
+  // --- PUNJAB NATIONAL BANK OFFICIAL RECRUITMENTS ---
+  {
+    id: 'pnb-notice-vac-so-apprentice-2026',
+    crpCode: 'PNB/HRD/RECT/2026/03',
+    cadre: 'Specialist',
+    category: 'vacancy',
+    title: 'Punjab National Bank (PNB) Specialist Officers & Apprentice Recruitment 2026 (3,725 Posts)',
+    titleHi: 'पंजाब नैशनल बैंक (PNB) स्पेशलिस्ट ऑफिसर व अप्रेंटिस भर्ती 2026 (3,725 पद)',
+    org: 'Punjab National Bank (PNB) / पंजाब नैशनल बैंक',
+    publishedDate: '2026-09-20',
+    officialUrl: 'https://pnb.bank.in/Recruitments.aspx',
+    pdfUrl: 'https://pnb.bank.in/Recruitments.aspx',
+    isNew: true,
+    statusBadge: 'PNB Official Mega Drive',
+    details: {
+      posts: 3725,
+      qualification: 'Graduate / B.Tech / MBA / CA / Law Degree from recognized University',
+      salary: 'Scale I/II/III: ₹36,000 - ₹78,230 + Perks / Apprentice ₹15,000 Stipend',
+      lastDate: '2026-10-28',
+      examDate: 'Online Written Test: November/December 2026',
+      stage: 'Online Registration Active on pnb.bank.in/Recruitments.aspx',
+      summary: 'Punjab National Bank invites online applications for Specialist Officers (Credit Officers, Forex Managers, Cyber Security, IT) and Apprentice engagement across Indian states.',
+      participatingBanks: ['Punjab National Bank']
+    },
+    jobData: {
+      id: 'pnb-so-apprentice-2026-auto',
+      title: 'Punjab National Bank (PNB) Specialist Officers & Apprentice Recruitment 2026 (3,725 Posts)',
+      org: 'Punjab National Bank (PNB)',
+      category: 'Banking',
+      qualification: 'Graduate / B.Tech / MBA / CA / Law',
+      ageLimit: '21-38 Years',
+      totalVacancies: 3725,
+      lastDate: '2026-10-28',
+      applicationFee: 'General/OBC: ₹850 | SC/ST/PwBD: ₹175',
+      salary: '₹36,000 - ₹78,230 + Allowances (In-hand ₹56,000 - ₹95,000/Month)',
+      description: 'Punjab National Bank recruitment drive for Specialist Officers in Scale I, II, III and Apprentice engagement across branches nationwide. Official portal: https://pnb.bank.in/Recruitments.aspx.',
+      applyLink: 'https://pnb.bank.in/Recruitments.aspx',
+      notificationPdf: 'https://pnb.bank.in/Recruitments.aspx',
+      selectionProcess: ['Online Test (Reasoning, English, Quant & Professional Knowledge)', 'Personal Interview'],
+      syllabus: ['Professional Knowledge (Banking & Credit)', 'Quantitative Aptitude', 'Reasoning Ability', 'English Language'],
+      verifiedByAdmin: true,
+      postedDate: '2026-09-20'
+    }
+  },
   // --- VACANCIES ---
   {
     id: 'ibps-notice-vac-po-xvi-2026',

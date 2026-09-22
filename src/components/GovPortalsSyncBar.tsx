@@ -312,6 +312,32 @@ export default function GovPortalsSyncBar({
             <span>IBPS</span>
           </button>
 
+          {/* Bank of Baroda Career Pill Link */}
+          <a
+            href="https://bankofbaroda.bank.in/career"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Bank of Baroda Careers (bankofbaroda.bank.in/career)"
+            className="hidden md:flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-400/50 hover:bg-amber-500/30 transition"
+          >
+            <Landmark className="h-3 w-3 text-amber-400" />
+            <span>BOB CAREER</span>
+            <ExternalLink className="h-2.5 w-2.5 opacity-70" />
+          </a>
+
+          {/* Punjab National Bank Recruitment Pill Link */}
+          <a
+            href="https://pnb.bank.in/Recruitments.aspx"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Punjab National Bank Recruitments (pnb.bank.in/Recruitments.aspx)"
+            className="hidden md:flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-500/20 text-rose-300 border border-rose-400/50 hover:bg-rose-500/30 transition"
+          >
+            <Landmark className="h-3 w-3 text-rose-400" />
+            <span>PNB RECRUIT</span>
+            <ExternalLink className="h-2.5 w-2.5 opacity-70" />
+          </a>
+
           {/* RRB Pill Tab */}
           <button
             onClick={() => {
@@ -484,13 +510,13 @@ export default function GovPortalsSyncBar({
               latestIbpsNotice ? (
                 <div className="flex items-center gap-1.5 truncate text-blue-200">
                   <span className="bg-blue-500/20 text-blue-300 px-1.5 py-0.2 rounded font-mono font-bold text-[9px] uppercase shrink-0">
-                    IBPS {latestIbpsNotice.crpCode || latestIbpsNotice.cadre || latestIbpsNotice.category}
+                    {latestIbpsNotice.org?.includes('Baroda') ? 'BOB CAREER' : latestIbpsNotice.org?.includes('Punjab') ? 'PNB RECRUIT' : `IBPS ${latestIbpsNotice.crpCode || latestIbpsNotice.cadre || latestIbpsNotice.category}`}
                   </span>
                   <span className="truncate">{latestIbpsNotice.title}</span>
                 </div>
               ) : (
                 <span className="text-slate-400 truncate">
-                  {locale === 'hi' ? '🏦 बैंकिंग कार्मिक चयन संस्थान (IBPS) लाइव मॉनिटर सक्रिय' : '🏦 Banking Personnel Selection (ibps.in) live auto-monitor active'}
+                  {locale === 'hi' ? '🏦 IBPS, Bank of Baroda (BOB) व PNB लाइव मॉनिटर सक्रिय' : '🏦 IBPS, Bank of Baroda & PNB live auto-monitor active'}
                 </span>
               )
             ) : activePortalTab === 'rrb' ? (

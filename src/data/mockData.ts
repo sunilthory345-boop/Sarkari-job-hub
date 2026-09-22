@@ -928,6 +928,41 @@ export const INITIAL_JOBS: GovJob[] = [
     whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
   },
   {
+    id: 'bob-so-recruitment-2026',
+    title: 'Bank of Baroda (BOB) Specialist Officers (SO) & Acquisition Officers Recruitment 2026',
+    org: 'Bank of Baroda',
+    category: 'Bank',
+    qualification: 'Graduate',
+    ageLimit: '22 - 38 Years',
+    salary: '₹48,170 - ₹89,890 + DA, HRA, Medical (In-hand ₹65,000 - ₹1,15,000/Month)',
+    fees: {
+      General: '₹600',
+      OBC: '₹600',
+      SC_ST_Female: '₹100'
+    },
+    totalPosts: 627,
+    applyUrl: 'https://bankofbaroda.bank.in/career',
+    pdfUrl: 'https://bankofbaroda.bank.in/career',
+    officialWebsite: 'https://bankofbaroda.bank.in/career',
+    postedDate: '2026-09-20',
+    lastDate: '2026-10-25',
+    importantDates: {
+      applyStart: '2026-09-20',
+      applyEnd: '2026-10-25',
+      examDate: 'November 2026',
+      admitCardRelease: 'October 2026'
+    },
+    selectionProcess: [
+      'Online Screening / Written Exam',
+      'Personal Interview & Group Discussion',
+      'Document Verification & Medical Fitness'
+    ],
+    location: 'All India (Mumbai / Major Cities)',
+    description: '🏦 BANK OF BARODA CAREERS 2026: Official recruitment notification for Specialist Officers (Credit Analysts, IT Security, Forex & Wealth Management). Apply online directly at https://bankofbaroda.bank.in/career.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
     id: 'bob-apprentice-recruitment-2026',
     title: 'Bank of Baroda (BOB) Apprentice Recruitment 2026',
     org: 'Bank of Baroda',
@@ -941,15 +976,15 @@ export const INITIAL_JOBS: GovJob[] = [
       SC_ST_Female: '₹100'
     },
     totalPosts: 5000,
-    applyUrl: 'https://www.bankofbaroda.in/careers',
-    pdfUrl: 'https://www.bankofbaroda.in/details-advertisement-apprentice-2026.pdf',
-    officialWebsite: 'https://www.bankofbaroda.in',
-    postedDate: '2026-06-15',
-    lastDate: '2026-06-15',
+    applyUrl: 'https://bankofbaroda.bank.in/career',
+    pdfUrl: 'https://bankofbaroda.bank.in/career',
+    officialWebsite: 'https://bankofbaroda.bank.in/career',
+    postedDate: '2026-09-15',
+    lastDate: '2026-10-30',
     importantDates: {
-      applyStart: '2026-06-01',
-      applyEnd: '2026-06-15',
-      examDate: 'June 2026',
+      applyStart: '2026-09-15',
+      applyEnd: '2026-10-30',
+      examDate: 'November 2026',
       admitCardRelease: 'Released'
     },
     selectionProcess: [
@@ -958,7 +993,391 @@ export const INITIAL_JOBS: GovJob[] = [
       'Document Verification & Medical Check'
     ],
     location: 'All India',
-    description: '🚨 BANK OF BARODA APPRENTICE 2026 🚨 Stipend: ₹15,000/month, Posts: 5000, Qualification: Graduate. Last Date: 15 June 2026 (Contact immediately as time is short/limited).',
+    description: '🚨 BANK OF BARODA APPRENTICE 2026 🚨 Stipend: ₹15,000/month, Posts: 5000, Qualification: Graduate. Apply online via official career portal https://bankofbaroda.bank.in/career.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'pnb-so-apprentice-recruitment-2026',
+    title: 'Punjab National Bank (PNB) Specialist Officers (SO) & Apprentice Recruitment 2026',
+    org: 'Punjab National Bank (PNB)',
+    category: 'Bank',
+    qualification: 'Graduate',
+    ageLimit: '21 - 38 Years',
+    salary: '₹36,000 - ₹78,230 (Officer Scale I, II, III) / Apprentice ₹15,000 Stipend',
+    fees: {
+      General: '₹850',
+      OBC: '₹850',
+      SC_ST_Female: '₹175'
+    },
+    totalPosts: 3725,
+    applyUrl: 'https://pnb.bank.in/Recruitments.aspx',
+    pdfUrl: 'https://pnb.bank.in/Recruitments.aspx',
+    officialWebsite: 'https://pnb.bank.in/Recruitments.aspx',
+    postedDate: '2026-09-20',
+    lastDate: '2026-10-28',
+    importantDates: {
+      applyStart: '2026-09-20',
+      applyEnd: '2026-10-28',
+      examDate: 'November/December 2026',
+      admitCardRelease: 'November 2026'
+    },
+    selectionProcess: [
+      'Online Written Test (Reasoning, English, Quant & Professional Knowledge)',
+      'Personal Interview',
+      'Document Verification & Medical Check'
+    ],
+    location: 'All India',
+    description: '🏦 PUNJAB NATIONAL BANK (PNB) RECRUITMENT 2026: Official notification for Specialist Officers (Credit Officers, Forex, Cyber Security, IT) and Apprentice engagement across PNB circles. Direct apply at https://pnb.bank.in/Recruitments.aspx.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'ibps-po-xvi-recruitment-2026',
+    title: 'IBPS CRP PO/MT-XVI Recruitment 2026 Online Application Form (3,955 Posts) / आईबीपीएस पीओ भर्ती 2026',
+    org: 'Institute of Banking Personnel Selection (IBPS)',
+    category: 'Bank',
+    qualification: 'Graduate',
+    ageLimit: '20 - 30 Years',
+    salary: '₹52,000 — ₹63,000 / Month + DA, Special Allowance, HRA, Medical',
+    fees: {
+      General: '₹850',
+      OBC: '₹850',
+      SC_ST_Female: '₹175'
+    },
+    totalPosts: 3955,
+    applyUrl: 'https://ibps.in',
+    pdfUrl: 'https://ibps.in',
+    officialWebsite: 'https://ibps.in',
+    postedDate: '2026-09-18',
+    lastDate: '2026-10-22',
+    importantDates: {
+      applyStart: '2026-09-18',
+      applyEnd: '2026-10-22',
+      examDate: 'November 2026 (Prelims) / January 2027 (Mains)',
+      admitCardRelease: 'October 2026'
+    },
+    selectionProcess: [
+      'Phase-I: Preliminary Exam (English 30, Quant 35, Reasoning 35)',
+      'Phase-II: Main Exam (Objective 200 Marks + Descriptive 25 Marks)',
+      'Phase-III: Common Interview (100 Marks)'
+    ],
+    location: 'All India Participating Public Sector Banks',
+    description: '🏦 IBPS PO CRP-XVI RECRUITMENT 2026: Official notification for 3,955 Probationary Officers / Management Trainees across participating nationalized banks (BOB, PNB, Canara, UBI, etc.). Apply online at https://ibps.in.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'sbi-clerk-ja-recruitment-2026',
+    title: 'State Bank of India (SBI) Junior Associates (Clerk) Customer Support & Sales Recruitment 2026 (8,773 Posts)',
+    org: 'State Bank of India (SBI)',
+    category: 'Bank',
+    qualification: 'Graduate',
+    ageLimit: '20 - 28 Years',
+    salary: '₹29,000 — ₹34,000 / Month + Emoluments & Medical Benefits',
+    fees: {
+      General: '₹750',
+      OBC: '₹750',
+      SC_ST_Female: 'Nil'
+    },
+    totalPosts: 8773,
+    applyUrl: 'https://sbi.co.in/careers',
+    pdfUrl: 'https://sbi.co.in',
+    officialWebsite: 'https://sbi.co.in',
+    postedDate: '2026-09-15',
+    lastDate: '2026-10-20',
+    importantDates: {
+      applyStart: '2026-09-15',
+      applyEnd: '2026-10-20',
+      examDate: 'November 2026 (Prelims) / December 2026 (Mains)',
+      admitCardRelease: 'October 2026'
+    },
+    selectionProcess: [
+      'Phase-I: Preliminary Online Examination (100 Marks, 60 Mins)',
+      'Phase-II: Main Online Examination (200 Marks, 2 Hours 40 Mins)',
+      'Specified Opted Local Language Test'
+    ],
+    location: 'All India SBI Circles & Branches',
+    description: '🏦 SBI CLERK 2026: Mega recruitment for 8,773 Junior Associates (Customer Support & Sales). Sectional timing of 20 minutes each in Prelims. Direct apply at https://sbi.co.in/careers.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'ibps-rrb-officer-assistant-xiii',
+    title: 'IBPS RRB-XIII Recruitment 2026: Officer Scale-I, II, III & Office Assistant (9,923 Posts) / ग्रामीण बैंक भर्ती',
+    org: 'Institute of Banking Personnel Selection (IBPS)',
+    category: 'Bank',
+    qualification: 'Graduate',
+    ageLimit: '18 - 30 Years (Scale-I) / 18 - 28 Years (Assistant)',
+    salary: '₹35,000 — ₹75,000 / Month depending on cadre/scale',
+    fees: {
+      General: '₹850',
+      OBC: '₹850',
+      SC_ST_Female: '₹175'
+    },
+    totalPosts: 9923,
+    applyUrl: 'https://ibps.in',
+    pdfUrl: 'https://ibps.in',
+    officialWebsite: 'https://ibps.in',
+    postedDate: '2026-09-10',
+    lastDate: '2026-10-15',
+    importantDates: {
+      applyStart: '2026-09-10',
+      applyEnd: '2026-10-15',
+      examDate: 'October/November 2026',
+      admitCardRelease: 'October 2026'
+    },
+    selectionProcess: [
+      'Preliminary Examination (Reasoning 40 + Numerical 40, Composite 45 Mins)',
+      'Main Examination (200 Marks, 2 Hours)',
+      'Interview (For Officer Scale I, II, III)'
+    ],
+    location: '43 Regional Rural Banks (RRBs) Across India',
+    description: '🌾 IBPS RRB XIII VACANCY: 9,923 vacancies across 43 Regional Rural Banks (Gramin Banks) for Officers and Office Assistants. No English in Prelims! Apply at https://ibps.in.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'rbi-assistant-recruitment-2026',
+    title: 'Reserve Bank of India (RBI) Assistant Recruitment 2026 (450 Posts) / आरबीआई असिस्टेंट भर्ती',
+    org: 'Reserve Bank of India (RBI)',
+    category: 'Bank',
+    qualification: 'Graduate',
+    ageLimit: '20 - 28 Years',
+    salary: '₹47,841 / Month initial gross pay with banking perks & quarters',
+    fees: {
+      General: '₹450',
+      OBC: '₹450',
+      SC_ST_Female: '₹50'
+    },
+    totalPosts: 450,
+    applyUrl: 'https://opportunities.rbi.org.in',
+    pdfUrl: 'https://opportunities.rbi.org.in',
+    officialWebsite: 'https://opportunities.rbi.org.in',
+    postedDate: '2026-09-12',
+    lastDate: '2026-10-18',
+    importantDates: {
+      applyStart: '2026-09-12',
+      applyEnd: '2026-10-18',
+      examDate: 'November 2026',
+      admitCardRelease: 'October 2026'
+    },
+    selectionProcess: [
+      'Preliminary Examination (100 Marks, 60 Mins)',
+      'Main Online Examination (200 Marks, 135 Mins)',
+      'Language Proficiency Test (LPT)'
+    ],
+    location: 'RBI Regional Offices Across India',
+    description: '🏛️ RBI ASSISTANT RECRUITMENT 2026: Official notification by India\'s central bank for 450 Assistant vacancies. Prestigious central banking career. Direct application at https://opportunities.rbi.org.in.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'rbi-grade-b-officers-recruitment-2026',
+    title: 'RBI Grade B Officers (General / DEPR / DSIM) Recruitment 2026 (130 Posts) / आरबीआई ग्रेड बी अधिकारी',
+    org: 'Reserve Bank of India (RBI)',
+    category: 'Bank',
+    qualification: 'Graduate',
+    ageLimit: '21 - 30 Years',
+    salary: '₹1,16,684 / Month gross starting pay (Basic ₹55,200 + Dearness, Special & House Allowances)',
+    fees: {
+      General: '₹850',
+      OBC: '₹850',
+      SC_ST_Female: '₹100'
+    },
+    totalPosts: 130,
+    applyUrl: 'https://opportunities.rbi.org.in',
+    pdfUrl: 'https://opportunities.rbi.org.in',
+    officialWebsite: 'https://opportunities.rbi.org.in',
+    postedDate: '2026-09-08',
+    lastDate: '2026-10-12',
+    importantDates: {
+      applyStart: '2026-09-08',
+      applyEnd: '2026-10-12',
+      examDate: 'November 2026 (Phase-1) / December 2026 (Phase-2)',
+      admitCardRelease: 'October 2026'
+    },
+    selectionProcess: [
+      'Phase-I: Online Examination (200 Marks, 120 Mins - GA 80, Reasoning 60, English 30, Quant 30)',
+      'Phase-II: Economic & Social Issues (ESI) + English Descriptive + Finance & Management (FM)',
+      'Phase-III: Interview (75 Marks)'
+    ],
+    location: 'RBI Central & Regional Offices',
+    description: '🏛️ RBI GRADE B OFFICERS 2026: Elite central banking policy & regulatory officers. High financial perks and leadership posting. Apply at https://opportunities.rbi.org.in.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'union-bank-lbo-so-recruitment-2026',
+    title: 'Union Bank of India (UBI) Local Bank Officers (LBO) & Specialist Officers Recruitment 2026 (1,500 Posts)',
+    org: 'Union Bank of India (UBI)',
+    category: 'Bank',
+    qualification: 'Graduate',
+    ageLimit: '20 - 30 Years',
+    salary: '₹48,480 - ₹85,920 + DA, HRA, City Compensatory & Medical',
+    fees: {
+      General: '₹850',
+      OBC: '₹850',
+      SC_ST_Female: '₹175'
+    },
+    totalPosts: 1500,
+    applyUrl: 'https://www.unionbankofindia.co.in/english/careers.aspx',
+    pdfUrl: 'https://www.unionbankofindia.co.in',
+    officialWebsite: 'https://www.unionbankofindia.co.in',
+    postedDate: '2026-09-14',
+    lastDate: '2026-10-24',
+    importantDates: {
+      applyStart: '2026-09-14',
+      applyEnd: '2026-10-24',
+      examDate: 'November/December 2026',
+      admitCardRelease: 'November 2026'
+    },
+    selectionProcess: [
+      'Online CBT Test (Reasoning, Computer, GA, English, Quant)',
+      'Language Proficiency Test (LPT)',
+      'Personal Interview'
+    ],
+    location: 'All India UBI Branches',
+    description: '🏦 UNION BANK OF INDIA LBO RECRUITMENT 2026: 1,500 vacancies for Local Bank Officers (equivalent to Scale-I Probationary Officers) across states. Apply at https://www.unionbankofindia.co.in/english/careers.aspx.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'canara-bank-apprentice-so-2026',
+    title: 'Canara Bank Graduate Apprentice & Specialist Officers (SO) Recruitment 2026 (3,000 Posts)',
+    org: 'Canara Bank',
+    category: 'Bank',
+    qualification: 'Graduate',
+    ageLimit: '20 - 28 Years',
+    salary: 'Stipend ₹15,000/Month (Apprentice) / Scale-I ₹48,000+ (SO)',
+    fees: {
+      General: '₹500',
+      OBC: '₹500',
+      SC_ST_Female: 'Nil'
+    },
+    totalPosts: 3000,
+    applyUrl: 'https://canarabank.com/careers',
+    pdfUrl: 'https://canarabank.com',
+    officialWebsite: 'https://canarabank.com',
+    postedDate: '2026-09-11',
+    lastDate: '2026-10-16',
+    importantDates: {
+      applyStart: '2026-09-11',
+      applyEnd: '2026-10-16',
+      examDate: 'November 2026',
+      admitCardRelease: 'October 2026'
+    },
+    selectionProcess: [
+      'Online Screening Assessment / Merit Evaluation',
+      'Local Language Test',
+      'Document Verification'
+    ],
+    location: 'Canara Bank Circles Across India',
+    description: '🏦 CANARA BANK 2026: Official notification for 3,000 Graduate Apprentices and Specialist Officers across states. Apply directly at https://canarabank.com/careers.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'central-bank-of-india-substaff-2026',
+    title: 'Central Bank of India (CBI) Sub-Staff & Apprentice Recruitment 2026 (3,000 Posts) / सेंट्रल बैंक भर्ती',
+    org: 'Central Bank of India (CBI)',
+    category: 'Bank',
+    qualification: '10th Pass',
+    ageLimit: '18 - 26 Years',
+    salary: '₹19,500 - ₹37,815 / Month with allowances / ₹15,000 Stipend',
+    fees: {
+      General: '₹850',
+      OBC: '₹850',
+      SC_ST_Female: '₹175'
+    },
+    totalPosts: 3000,
+    applyUrl: 'https://www.centralbankofindia.co.in/en/recruitments',
+    pdfUrl: 'https://www.centralbankofindia.co.in',
+    officialWebsite: 'https://www.centralbankofindia.co.in',
+    postedDate: '2026-09-09',
+    lastDate: '2026-10-14',
+    importantDates: {
+      applyStart: '2026-09-09',
+      applyEnd: '2026-10-14',
+      examDate: 'November 2026',
+      admitCardRelease: 'October 2026'
+    },
+    selectionProcess: [
+      'Online Written Test (English, General Awareness, Elementary Math, Reasoning)',
+      'Local Language Test',
+      'Document Verification'
+    ],
+    location: 'All India Branches',
+    description: '🏦 CENTRAL BANK OF INDIA 2026: 3,000 Sub-Staff & Apprentice posts for 10th Pass / Matriculate candidates with steady banking benefits. Direct apply at https://www.centralbankofindia.co.in/en/recruitments.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'bank-of-india-boi-officers-2026',
+    title: 'Bank of India (BOI) Credit Officers & IT Officers Recruitment 2026 (600 Posts) / बैंक ऑफ इंडिया भर्ती',
+    org: 'Bank of India (BOI)',
+    category: 'Bank',
+    qualification: 'Graduate',
+    ageLimit: '21 - 32 Years',
+    salary: '₹48,170 - ₹89,890 / Month (Scale-I & Scale-II Officer Pay)',
+    fees: {
+      General: '₹850',
+      OBC: '₹850',
+      SC_ST_Female: '₹175'
+    },
+    totalPosts: 600,
+    applyUrl: 'https://bankofindia.co.in/career',
+    pdfUrl: 'https://bankofindia.co.in',
+    officialWebsite: 'https://bankofindia.co.in',
+    postedDate: '2026-09-07',
+    lastDate: '2026-10-10',
+    importantDates: {
+      applyStart: '2026-09-07',
+      applyEnd: '2026-10-10',
+      examDate: 'November 2026',
+      admitCardRelease: 'October 2026'
+    },
+    selectionProcess: [
+      'Online Written Test (Professional Knowledge, English, GA with Special Reference to Banking)',
+      'Personal Interview & GD'
+    ],
+    location: 'Head Office Mumbai & Pan India Branches',
+    description: '🏦 BANK OF INDIA (BOI) OFFICERS 2026: Recruitment for Credit Analysts and IT Specialist Officers across Scale-I & Scale-II. Apply at https://bankofindia.co.in/career.',
+    isWhatsAppAlert: true,
+    whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
+  },
+  {
+    id: 'nabard-grade-a-recruitment-2026',
+    title: 'NABARD Grade A (Assistant Manager - Rural Development Banking) 2026 (150 Posts) / नाबार्ड भर्ती',
+    org: 'National Bank for Agriculture and Rural Development (NABARD)',
+    category: 'Bank',
+    qualification: 'Graduate',
+    ageLimit: '21 - 30 Years',
+    salary: '₹1,00,000 / Month initial gross emoluments + Housing Accommodation',
+    fees: {
+      General: '₹800',
+      OBC: '₹800',
+      SC_ST_Female: '₹150'
+    },
+    totalPosts: 150,
+    applyUrl: 'https://www.nabard.org/careers',
+    pdfUrl: 'https://www.nabard.org',
+    officialWebsite: 'https://www.nabard.org',
+    postedDate: '2026-09-05',
+    lastDate: '2026-10-08',
+    importantDates: {
+      applyStart: '2026-09-05',
+      applyEnd: '2026-10-08',
+      examDate: 'November 2026 (Phase-1) / December 2026 (Phase-2)',
+      admitCardRelease: 'October 2026'
+    },
+    selectionProcess: [
+      'Phase-I: Preliminary Exam (200 Marks, 120 Mins - Reasoning, English, Computer, Quant, Decision Making, GA, Eco & Social, Agri & Rural Dev)',
+      'Phase-II: Main Exam (General English + Economic & Social Issues / ARD)',
+      'Phase-III: Personal Interview'
+    ],
+    location: 'NABARD Head Office Mumbai & Regional Offices',
+    description: '🌾 NABARD GRADE A 2026: Apex development bank for agriculture and rural development. Prestigious managerial career with top-tier allowances. Apply at https://www.nabard.org/careers.',
     isWhatsAppAlert: true,
     whatsAppUrl: 'https://whatsapp.com/channel/0029Vb8fRUIDeONDJBfyeq0U'
   },
@@ -2440,6 +2859,26 @@ export const INITIAL_JOBS: GovJob[] = [
 
 export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
   {
+    id: 'bob-so-apprentice-admit-card-2026',
+    title: 'Bank of Baroda (BOB) Specialist Officers & Apprentice Exam 2026 Call Letter / Admit Card Link / बैंक ऑफ बड़ौदा एडमिट कार्ड',
+    org: 'Bank of Baroda (BOB)',
+    examDate: '2026-11-05 to 2026-11-15',
+    examCity: 'All India Online CBT Centers',
+    downloadUrl: 'https://bankofbaroda.bank.in/career',
+    officialLink: 'https://bankofbaroda.bank.in/career',
+    addedDate: '2026-09-20'
+  },
+  {
+    id: 'pnb-so-apprentice-admit-card-2026',
+    title: 'Punjab National Bank (PNB) Specialist Officers (SO) & Apprentice Online Exam Call Letter 2026 / पीएनबी एडमिट कार्ड जारी',
+    org: 'Punjab National Bank (PNB)',
+    examDate: '2026-11-10 to 2026-11-20',
+    examCity: 'All Major Banking Test Centers',
+    downloadUrl: 'https://pnb.bank.in/Recruitments.aspx',
+    officialLink: 'https://pnb.bank.in/Recruitments.aspx',
+    addedDate: '2026-09-20'
+  },
+  {
     id: 'ssc-chsl-tier1-2026-admit-card-live-29jul',
     title: 'SSC CHSL (10+2) Tier-1 Exam 2026 Official Region-Wise e-Admit Card & City Intimation Slip Link Active (Released Today 29 July 2026) / एसएससी सीएचएसएल Tier-1 एडमिट कार्ड जारी',
     org: 'Staff Selection Commission (SSC)',
@@ -2812,6 +3251,36 @@ export const INITIAL_ADMIT_CARDS: AdmitCard[] = [
 ];
 
 export const INITIAL_RESULTS: JobResult[] = [
+  {
+    id: 'bob-so-merit-list-result-2026',
+    title: 'Bank of Baroda (BOB) Specialist Officer 2026 Online Screening Result & Shortlisted Candidates Merit List / बैंक ऑफ बड़ौदा परिणाम',
+    org: 'Bank of Baroda (BOB)',
+    meritListUrl: 'https://bankofbaroda.bank.in/career',
+    scoreCardUrl: 'https://bankofbaroda.bank.in/career',
+    cutOff: {
+      UR: '68.5% (Scale II/III)',
+      OBC: '64.0%',
+      SC: '58.5%',
+      ST: '55.0%'
+    },
+    downloadUrl: 'https://bankofbaroda.bank.in/career',
+    releaseDate: '2026-09-20'
+  },
+  {
+    id: 'pnb-so-apprentice-result-2026',
+    title: 'Punjab National Bank (PNB) SO & Apprentice 2026 Written Exam Scorecard & Provisional Allotment List / पीएनबी परीक्षा परिणाम घोषित',
+    org: 'Punjab National Bank (PNB)',
+    meritListUrl: 'https://pnb.bank.in/Recruitments.aspx',
+    scoreCardUrl: 'https://pnb.bank.in/Recruitments.aspx',
+    cutOff: {
+      UR: '71.2 Marks',
+      OBC: '67.0 Marks',
+      SC: '61.5 Marks',
+      ST: '57.0 Marks'
+    },
+    downloadUrl: 'https://pnb.bank.in/Recruitments.aspx',
+    releaseDate: '2026-09-20'
+  },
   {
     id: 'ssc-cpo-si-delhi-police-2026-result-29jul',
     title: 'SSC CPO Sub-Inspector in Delhi Police & CAPFs Paper-1 Exam 2026 Official Result, Qualified Merit List PDF & Category-Wise Cut-Off Out (Declared Today 29 July 2026) / एसएससी सीपीओ पेपर-1 परिणाम जारी',

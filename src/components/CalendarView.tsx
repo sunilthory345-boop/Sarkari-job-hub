@@ -10,6 +10,7 @@ interface CalendarViewProps {
   jobs: GovJob[];
   admitCards: AdmitCard[];
   onSelectJob?: (job: GovJob) => void;
+  onOpenPdf?: (job: GovJob) => void;
   triggerToast?: (msg: string) => void;
 }
 
@@ -35,6 +36,7 @@ export default function CalendarView({
   jobs, 
   admitCards, 
   onSelectJob,
+  onOpenPdf,
   triggerToast = () => {} 
 }: CalendarViewProps) {
   // Focus on 2026 June (as specified by server time 2026-06-12)
@@ -520,15 +522,22 @@ export default function CalendarView({
                             </button>
                           )}
                           {'pdfUrl' in evt.rawItem && (
-                            <a 
-                              href={evt.rawItem.pdfUrl} 
-                              target="_blank" 
-                              rel="noreferrer"
-                              className="text-[9px] border border-slate-300 text-slate-600 px-2 py-1 rounded font-bold hover:bg-slate-100 flex items-center gap-0.5"
+                            <button 
+                              type="button"
+                              onClick={() => {
+                                const jobItem = evt.rawItem as GovJob;
+                                if (onOpenPdf && 'category' in jobItem) {
+                                  onOpenPdf(jobItem);
+                                } else if (jobItem.pdfUrl) {
+                                  window.open(jobItem.pdfUrl, '_blank', 'noopener,noreferrer');
+                                }
+                              }}
+                              className="text-[9px] border border-red-200 bg-red-50 text-red-700 px-2 py-1 rounded font-bold hover:bg-red-100 flex items-center gap-1 cursor-pointer"
+                              title="Open Official Notification PDF"
                             >
-                              Syllabus PDF
-                              <ExternalLink className="h-2.5 w-2.5" />
-                            </a>
+                              <FileText className="h-2.5 w-2.5 text-red-600" />
+                              Notice PDF
+                            </button>
                           )}
                         </div>
                       </div>

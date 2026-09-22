@@ -21,358 +21,31 @@ import {
   ThumbsUp,
   Check,
   Award,
-  HelpCircle
+  HelpCircle,
+  Bookmark,
+  BookmarkCheck,
+  ExternalLink,
+  Eye,
+  Heart,
+  Globe,
+  FileText,
+  Zap,
+  CheckCheck
 } from 'lucide-react';
 import { Blog } from '../types';
+import { 
+  SEO_DEFAULT_BLOGS, 
+  BLOG_TRANSLATIONS, 
+  BLOG_QUIZZES, 
+  BLOG_CATEGORIES 
+} from '../data/blogData';
 
 interface SarkariBlogPortalProps {
   blogs: Blog[];
   onAddBlog: (newBlog: Blog) => void;
   triggerToast: (msg: string) => void;
+  onNavigateTab?: (tab: string) => void;
 }
-
-// Highly detailed SEO pre-populated blogs bilingually mapped
-const SEO_DEFAULT_BLOGS: Blog[] = [
-  {
-    id: 'seo-blog-job-sarkari-hub-guide',
-    title: 'Job Sarkari Hub 2026: Official Guide for Sarkari Result, Latest Jobs, Admit Card & Free CBT Mock Tests',
-    category: 'Career Guidance',
-    author: 'Sunil Kumar (Founder & Chief Editor, Job Sarkari Hub)',
-    summary: 'Discover how Job Sarkari Hub provides real-time Sarkari Results, e-Admit Cards, Answer Keys, Official Syllabus PDFs, Daily Current Affairs, and instant WhatsApp & Telegram vacancy alerts.',
-    content: `Welcome to **Job Sarkari Hub (job-sarkari-hub)**, India's most trusted and fastest-growing bilingual government job preparation portal. Whether you are aiming for SSC, UPSC, Railway (RRB), Banking (IBPS/SBI), Defense, Police, or State PSC examinations, Job Sarkari Hub offers an all-in-one digital ecosystem to keep you ahead of millions of candidates.
-
-### 🚀 Key Features Available on Job Sarkari Hub:
-1. **Instant Sarkari Result & Admit Card Updates:** Direct verified links for result scorecards, answer key objection links, and official e-admit cards download for all central and state recruitment boards.
-2. **Daily 100 Bilingual Current Affairs:** Up-to-date daily news capsules and interactive practice quizzes presented bilingually in Hindi and English.
-3. **Free Online CBT Mock Test Room:** Attempt full-length timed mock tests with instant scorecards, nationwide percentile ranks, and detailed answer explanations.
-4. **Official Syllabus & PYQ PDF Vault:** Download official notification PDFs, topic-wise syllabus planners, and past 10-year question papers completely free of cost.
-5. **Instant WhatsApp Channel & Telegram Alerts:** Get instant notifications directly on your mobile device as soon as a new recruitment notification, admit card, or answer key is released.
-
-### 🔍 Top Keywords Indexed on Job Sarkari Hub:
-To help aspirants find authentic information instantly on search engines, our portal indexes verified updates for keywords including:
-* *Sarkari Result 2026, Sarkari Exam, Latest Government Jobs*
-* *SSC CGL / CHSL Syllabus PDF & Mock Test*
-* *Railway Group D, RRB NTPC, RPF SI Admit Card*
-* *UP Police Constable, Bihar Police, MP Police Vacancy*
-* *Daily Current Affairs PDF in Hindi and English*
-
-### 💡 How to Maximize Your Exam Preparation on Job Sarkari Hub:
-* **Step 1:** Check the **Latest Jobs** tab daily for active application deadlines.
-* **Step 2:** Download the official **Syllabus PDF** and create a structured study timeline.
-* **Step 3:** Practice daily 100 Current Affairs questions to master the General Awareness section.
-* **Step 4:** Take 2 full-length **CBT Mock Tests** weekly in our simulated exam portal to build speed and accuracy.
-* **Step 5:** Subscribe to our **WhatsApp & Telegram Broadcast Channels** for zero-delay notifications!`,
-    readTime: '5 min read',
-    date: '2026-07-28'
-  },
-  {
-    id: 'seo-blog-up-police',
-    title: 'UP Police Constable Recruitment 2026: Official Syllabus & Safe Scoring Target',
-    category: 'Government Jobs',
-    author: 'Sunil Kumar (Sarkari Hub SEO Analyst)',
-    summary: 'Direct updates on UPPRPB UP Police Constable vacancies. Detailed 150 MCQ breakdown, subject-weightage, and free offline-printable mock syllabus guides.',
-    content: `UP Police Constable Recruitment Board (UPPRPB) has officially accelerated notifications for 2026. If you are aiming for high-ranking positions, understanding the structured subject density is vital for optimizing your study hours.
-
-### 📈 Exam Pattern & Marks Distribution:
-The examination will have 150 Multiple Choice Questions (MCQs) for a total of 300 marks. The crucial catch is the negative scoring penalty of -0.50 marks for each incorrect attempt.
-
-* **General Knowledge (सामान्य ज्ञान):** 38 Questions (76 Marks)
-* **General Hindi (सामान्य हिन्दी):** 37 Questions (74 Marks)
-* **Numerical & Mental Ability (मैथ्स):** 38 Questions (76 Marks)
-* **Mental Aptitude/IQ (रीजनिंग):** 37 Questions (74 Marks)
-
-### 💡 High-Yield preparation keywords to target for SEO:
-To rank candidate advice blogs higher in northern regions like Uttar Pradesh and Bihar, optimize search density for keywords like 'Sarkari Result UP Police', 'UP Police Syllabus PDF', and 'Free online mock tests'. 
-
-### 🌟 Key Areas to Focus:
-1. **General Hindi:** Command over standard Hindi Grammar (संधि, समास, पर्यायवाची, विलोम शब्द) guarantees simple speed scoring.
-2. **Mental Aptitude:** Practice coded relations and non-verbal spatial reasoning.
-3. **Daily Revision:** Set a daily timer for 60 minutes solving previous year papers (2019-2025). Keep a dedicated diary to log incorrect attempts for weekly review.`,
-    readTime: '6 min read',
-    date: '2026-06-13'
-  },
-  {
-    id: 'seo-blog-ssc-cgl',
-    title: 'How to Crack SSC CGL 2026 Maths with 95%+ Accuracy: Time Management Secrets',
-    category: 'Preparation Strategy',
-    author: 'Alok Pandey (Quant Ranker 2023)',
-    summary: 'Dominate Stafford Selection Commission Tier-1 & Tier-2 Quantitative Aptitude. Advanced shortcuts for Successive percentages, Ratio Compound, and Algebra.',
-    content: `Staff Selection Commission (SSC) exams are speed-tests of intelligence. In CGL, you only get 60 minutes in Tier-1 to solve 100 questions. Quantitative section carries 25 questions where time spent can make or break your qualifying score.
-
-### ⚡ Secret Math Formula Blueprints:
-* **Successive Percentages:** Instant net gain formula for price markups and sequential discounts is $x - y - \frac{xy}{100}\%$.
-* **Ratio Compounding:** For quick variable normalization, when $A:B=2:3$ and $B:C=4:5$, make the middle coefficient common ($A:B:C = 8:12:15$).
-* **Algebraic Shortcuts:** Memorize standard Pythagorean triplets (3-4-5, 5-12-13, 8-15-17) to bypass lengthy trigonometry expansions.
-
-### ⏳ Time Allotment Guidelines:
-Do not spend more than 40 seconds on any single mathematics equation. If a puzzle appears lengthy, utilize the 'Mark for Review' button to protect your confidence pool. Review other high-yield GK and English elements before returning.`,
-    readTime: '8 min read',
-    date: '2026-06-11'
-  },
-  {
-    id: 'seo-blog-sbi-po',
-    title: 'SBI PO 2026 Selection Blueprint: Master Prelims Quant & Mains Strategy',
-    category: 'Preparation Strategy',
-    author: 'Siddharth Sharma (Ex-SBI PO Trainer)',
-    summary: 'Expert roadmap to secure Probationary Officer postings in State Bank of India. In-depth analysis of 3-tier selection pattern, previous cutoffs, and mock shortcuts.',
-    content: `State Bank of India (SBI) is the premier public sector bank in the nation, and its Probationary Officer (PO) exam is highly competitive. To crack SBI PO 2026, aspirants must strategize separately for Prelims (Speed Focus) and Mains (Depth Focus).
-
-### 📊 Exam Structure and Key Cutoffs:
-1. **Prelims CBT (100 Marks):** 1 Hour duration. English (30 Qs), Quantitative Aptitude (35 Qs), Reasoning Ability (35 Qs).
-2. **Mains Examination (250 Marks):** Features advanced Data Analysis, Deep Reasoning, General Economy/Banking Awareness, and a descriptive writing test (30 minutes, 50 marks).
-
-### 💡 High-Yield prep strategy:
-* **State Bank of India Shortcuts:** Focus heavily on Simplifications, Quadratic equations, and Data Interpretation (DI) tables.
-* **Bilingual Vocabulary Building:** Practice writing sample letters and essays bilingually in Hindi and English. Reading daily business newspapers like 'The Economic Times' or editorials boosts both GA and English sections.`,
-    readTime: '7 min read',
-    date: '2026-06-12'
-  },
-  {
-    id: 'seo-blog-railway-group-d',
-    title: 'Railway Group D 2026: Official Physical Efficiency Criteria & High Score Blueprint',
-    category: 'Government Jobs',
-    author: 'Ravi Ranjan (Railway Coaching Mentor)',
-    summary: 'Complete step-by-step physical eligibility standards, medical exams, and CBT marks weightage. Master General Science and Maths to clear high cutoffs.',
-    content: `Railway Recruitment Cell (RRC) Group D examination requires comprehensive physical endurance alongside intellectual knowledge. Over 1 lakh vacancies test candidates across rigorous stages.
-
-### 🏃 Physical Efficiency Test (PET) Benchmarks:
-* **Male Candidates:** Must lift and carry 35 kg weight for a distance of 100 meters in 2 minutes in one attempt; and run 1000 meters in 4 minutes and 15 seconds.
-* **Female Candidates:** Must lift and carry 20 kg weight for a distance of 100 meters in 2 minutes; and run 1000 meters in 5 minutes and 40 seconds.
-
-### 📝 Computer-Based Test (CBT) Weights:
-* **General Science:** 25 Questions (tenth standard NCERT physics, chemistry, and biology)
-* **Mathematics:** 25 Questions
-* **General Intelligence & Reasoning:** 30 Questions
-* **General Awareness & Current Affairs:** 20 Questions
-Total duration is 90 minutes. Target securing 75+ correct hits for safe qualification in key zones.`,
-    readTime: '6 min read',
-    date: '2026-06-14'
-  },
-  {
-    id: 'seo-blog-railway-rpf-si',
-    title: 'Railway RPF SI 2026: Police Sub-Inspector Physical Standard (PST) & Ground Norms',
-    category: 'Exam Tips',
-    author: 'Commander Vikram Singh (Retd.)',
-    summary: 'Aspirant checklist for Railway Protection Force (RPF) Sub Inspector notification. Detailed high-jump, long-jump, running limits, and syllabus coverage.',
-    content: `Railway Protection Force (RPF) conducts recruitment for Sub Inspector positions offering excellent national careers. The selection rests on a rigorous written test followed by stringent Physical Measurement Tests (PMT).
-
-### 🚔 Complete Written CBT Syllabus (120 Questions in 90 Mins):
-* **General Awareness:** 50 Questions (focus on Constitution, History, Geography, and current sports results)
-* **Arithmetic:** 35 Questions (focus on percentages, averages, interest, and tables)
-* **General Intelligence & Reasoning:** 35 Questions
-
-### 🏁 Physical Standards requirements:
-* Males: 1600 meters running in 6m 30s. Long Jump: 12 feet, High Jump: 3 feet 9 inches.
-* Females: 800 meters running in 4 minutes. Long Jump: 9 feet, High Jump: 3 feet.`,
-    readTime: '6 min read',
-    date: '2026-06-15'
-  },
-  {
-    id: 'seo-blog-nhm-coldchain',
-    title: 'NHM ANM Auxiliary Nurse Guidance: National Healthcare Cold Chain Exam Questions',
-    category: 'Exam Tips',
-    author: 'Dr. Reeta Verma (Senior Medical Officer)',
-    summary: 'Comprehensive review syllabus for NHM auxiliary vaccinations, cold chain storage limits, and child immunization tables.',
-    content: `For aspirants preparing for State auxiliary nursing and clinical health vaccines recruitment, the Technical Domain topic holds high weight. 
-
-### 💉 Essential Immunization Notes:
-The cold-chain storage infrastructure keeps vaccines potent through strict temperature bounds:
-* **Safe Storage Bounds:** Non-freezer vaccinations (like BCG, HepB, and Measles-Rubella) must strictly reside within **$+2^{\circ}\text{C}$ to $+8^{\circ}\text{C}$**. OPV (Oral Polio Vaccine) is stored at $-20^{\\circ}\text{C}$ inside deep freezers.
-* **BCG Vaccine Dosage:** Administered right at birth intradermally on the left upper arm at a micro-dosage of $0.05$ ml.
-* **Anterolateral Thigh:** Ideal path for modern infant muscular injections.
-
-### 📝 Preparation Advice:
-Attempt 10 localized clinical mock papers bilingually on Job Sarkari Hub. Analyze previous year papers systematically to identify repeating technical terminologies.`,
-    readTime: '5 min read',
-    date: '2026-06-08'
-  }
-];
-
-// Bilingual translations dictionary mapping for instant language toggling
-const BLOG_TRANSLATIONS: Record<string, { title: string; summary: string; content: string }> = {
-  'seo-blog-job-sarkari-hub-guide': {
-    title: 'जॉब सरकारी हब 2026: सरकारी रिजल्ट, नई भर्तियां, एडमिट कार्ड और मुफ्त मॉक टेस्ट की आधिकारिक गाइड',
-    summary: 'जानिए कैसे जॉब सरकारी हब आपको रियल-टाइम सरकारी रिजल्ट, ई-एडमिट कार्ड, आंसर की, आधिकारिक सिलेबस पीडीएफ, दैनिक करेंट अफेयर्स और वाट्सएप/टेलीग्राम जॉब अलर्ट प्रदान करता है।',
-    content: `**जॉब सरकारी हब (Job Sarkari Hub)** में आपका स्वागत है - यह भारत का सबसे विश्वसनीय और तेजी से बढ़ता हुआ द्विभाषी सरकारी नौकरी तैयारी पोर्टल है। चाहे आप एसएससी (SSC), यूपीएससी (UPSC), रेलवे (RRB), बैंकिंग (IBPS/SBI), रक्षा, पुलिस या राज्य लोक सेवा आयोग (State PSC) परीक्षाओं की तैयारी कर रहे हों, जॉब सरकारी हब आपको लाखों प्रतिस्पर्धियों से आगे रखने के लिए ऑल-इन-वन डिजिटल प्लेटफॉर्म प्रदान करता है।
-
-### 🚀 जॉब सरकारी हब पर उपलब्ध मुख्य विशेषताएं:
-1. **त्वरित सरकारी रिजल्ट और एडमिट कार्ड अपडेट:** सभी केंद्रीय और राज्य भर्ती बोर्डों के लिए रिजल्ट स्कोरकार्ड, आंसर की आपत्ति लिंक और आधिकारिक ई-एडमिट कार्ड डाउनलोड के सीधे सत्यापित लिंक।
-2. **दैनिक 100 द्विभाषी करेंट अफेयर्स:** हिंदी और अंग्रेजी में प्रस्तुत नवीनतम दैनिक समाचार कैप्सूल और इंटरैक्टिव अभ्यास प्रश्न।
-3. **मुफ्त ऑनलाइन सीबीटी मॉक टेस्ट रूम:** त्वरित स्कोरकार्ड, राष्ट्रव्यापी प्रतिशत रैंक और विस्तृत व्याख्याओं के साथ पूर्ण-लंबाई वाले समयबद्ध मॉक टेस्ट हल करें।
-4. **आधिकारिक पाठ्यक्रम और PYQ पीडीएफ वॉल्ट:** आधिकारिक अधिसूचना पीडीएफ, विषय-वार पाठ्यक्रम गाइड और पिछले 10 वर्षों के प्रश्न पत्र पूरी तरह से निःशुल्क डाउनलोड करें।
-5. **त्वरित व्हाट्सएप चैनल और टेलीग्राम अलर्ट:** नई भर्ती अधिसूचना, प्रवेश पत्र या उत्तर कुंजी जारी होते ही सीधे अपने मोबाइल पर तुरंत सूचनाएं प्राप्त करें।
-
-### 💡 अपनी परीक्षा तैयारी को कैसे बेहतर बनाएं:
-* **चरण 1:** आवेदन की अंतिम तिथि देखने के लिए प्रतिदिन **Latest Jobs** टैब देखें।
-* **चरण 2:** आधिकारिक **Syllabus PDF** डाउनलोड करें और एक अध्ययन योजना बनाएं।
-* **चरण 3:** सामान्य ज्ञान अनुभाग में महारत हासिल करने के लिए रोजाना 100 करेंट अफेयर्स प्रश्नों का अभ्यास करें।
-* **चरण 4:** स्पीड और सटीकता बढ़ाने के लिए हमारे परीक्षा पोर्टल पर साप्ताहिक 2 **CBT Mock Tests** दें।
-* **चरण 5:** शून्य-विलंब सूचनाओं के लिए हमारे **WhatsApp और Telegram Broadcast Channels** की सदस्यता लें!`
-  },
-  'seo-blog-up-police': {
-    title: 'यूपी पुलिस कांस्टेबल भर्ती 2026: आधिकारिक नया पाठ्यक्रम और सुरक्षित स्कोर का लक्ष्य',
-    summary: 'UPPRPB यूपी पुलिस कांस्टेबल रिक्तियों पर सीधी अपडेट। विस्तृत 150 एमसीक्यू विश्लेषण, विषय-वार वेटेज, और प्रिंट करने योग्य मॉक गाइड।',
-    content: `उत्तर प्रदेश पुलिस भर्ती एवं प्रोन्नति बोर्ड (UPPRPB) ने 2026 के लिए आधिकारिक तैयारियां तेज कर दी हैं। यदि आप इस भर्ती में उच्च रैंक हासिल करना चाहते हैं, तो व्यवस्थित विषय-वार वेटेज को समझना आपके अध्ययन के घंटों को अनुकूलित करने के लिए सबसे महत्वपूर्ण है।
-
-### 📈 परीक्षा पैटर्न और अंक विभाजन:
-इस परीक्षा में कुल 300 अंकों के लिए 150 बहुविषयक वस्तुनिष्ठ प्रश्न (MCQ) पूछे जाएंगे। प्रत्येक गलत उत्तर के लिए -0.50 अंकों का नकारात्मक अंकन (Negative Marking) किया जाएगा।
-
-* **सामान्य ज्ञान (General Knowledge):** 38 प्रश्न (76 अंक)
-* **सामान्य हिन्दी (General Hindi):** 37 प्रश्न (74 अंक)
-* **संख्यात्मक और मानसिक क्षमता (Maths):** 38 प्रश्न (76 अंक)
-* **मानसिक अभिरुचि/तार्किक क्षमता (Reasoning):** 37 प्रश्न (74 अंक)
-
-### 💡 एसईओ (SEO) और तैयारी युक्तियाँ:
-उत्तर भारत के क्षेत्रों में अपनी तैयारी को आगे बढ़ाने के लिए 'Sarkari Result UP Police', 'UP Police Syllabus PDF' और 'निःशुल्क मॉक टेस्ट' पर ध्यान केंद्रित करें।
-
-### 🌟 तैयारी के मुख्य रणनीतिक बिंदु:
-1. **सामान्य हिन्दी:** व्याकरण खंड (संधि, समास, पर्यायवाची, विलोम) पर अच्छी पकड़ आपको बहुत कम समय में 100% सही स्कोर और बढ़त दिला सकती है।
-2. **तार्किक क्षमता:** कोडेड ब्लड रिलेशन और नॉन-वर्बल इमेज रीजनिंग का अधिक अभ्यास करें।
-3. **दैनिक अभ्यास:** पुराने प्रश्नपत्रों (2019-2025) को हल करने के लिए रोजाना 60 मिनट का समय निर्धारित करें और एक डायरी में अपनी गलतियों को लिखें।`
-  },
-  'seo-blog-ssc-cgl': {
-    title: 'एसएससी सीजीएल 25+ गणित में 95%+ सटीकता कैसे लाएं: गति प्रबंधन रणनीति',
-    summary: 'एसएससी सीजीएल टियर-1 और टियर-2 क्वांटिटेटिव एप्टीट्यूड पर विजय प्राप्त करें। लगातार प्रतिशत, अनुपात और बीजगणित के सुपरफास्ट शॉर्टकट।',
-    content: `कर्मचारी चयन आयोग (SSC) की परीक्षा केवल ज्ञान की नहीं बल्कि अत्यधिक गति की परीक्षा है। सीजीएल टियर-1 में 100 प्रश्नों को हल करने के लिए कुल 60 मिनट मिलते हैं।
-
-### ⚡ गुप्त गणित सूत्र और शॉर्टकट:
-* **लगातार प्रतिशत परिवर्तन (Successive Percentages):** क्रमिक छूट या मूल्य वृद्धि के लिए नेट फॉर्मूला: $x - y - \frac{xy}{100}\%$ है।
-* **अनुपात सरलीकरण:** जब $A:B=2:3$ और $B:C=4:5$ हो, तो मध्य पद को बराबर बनाकर अनुपात $A:B:C = 8:12:15$ निर्धारित करें।
-* **त्रिकोणमिति तथा ज्यामिति:** समकोण त्रिभुज के बुनियादी ट्रिपलेट्स (3-4-5, 5-12-13, 8-15-17, 7-24-25) को याद रखें ताकि पाइथागोरस लगाने में बहुमूल्य समय बच सके।
-
-### ⏳ परीक्षा हॉल समय प्रबंधन नियम:
-किसी भी गणित के प्रश्न पर 40 सेकंड से अधिक समय व्यतीत न करें। यदि प्रश्न लंबा लगे, तो तुरंत 'Mark for Review' करें और जीके तथा अंग्रेजी को पहले समाप्त करके अंत में गणित पर वापस आएं।`
-  },
-  'seo-blog-nhm-coldchain': {
-    title: 'एनएचएम एएनएम स्वास्थ्य गाइड: राष्ट्रीय कोल्ड चेन और टीकाकरण से जुड़े महत्वपूर्ण प्रश्न',
-    summary: 'सहायक नर्स मिडवाइफ परीक्षाओं के लिए तकनीकी चिकित्सा पाठ्यक्रम, वैक्सीन भंडारण सीमाएं और बाल रोग प्रतिरक्षण चार्ट।',
-    content: `नर्सिंग एवं जन स्वास्थ्य विभाग की भर्ती परीक्षाओं की तैयारी करने वाले अभ्यर्थियों के लिए तकनीकी विषय का अंक भार अत्यधिक होता है।
-
-### 💉 महत्वपूर्ण टीकाकरण और कोल्ड-चेन नोट्स:
-टीके की प्रभावशीलता सुरक्षित रखने के लिए कोल्ड-चेन का तापमान जानना अत्यंत आवश्यक है:
-* **सुरक्षित तापमान सीमा:** गैर-फ्रीजर वैक्सीन (जैसे BCG, HepB, खसरा-रूबेला) अनिवार्य रूप से **$+2^{\circ}\text{C}$ से $+8^{\circ}\text{C}$** तापमान के बीच संचित की जाती हैं। पोलियो वैक्सीन (OPV) को डीप फ्रीजर में $-20^{\circ}\text{C}$ पर रखा जाता है।
-* **बीसीजी वैक्सीन खुराक:** जन्म के समय बाईं ऊपरी बांह पर त्वचा के भीतर (Intradermal) $0.05$ ml की सूक्ष्म खुराक दी जाती है।
-
-### 📝 तैयारी की अनूठी सलाह:
-Job Sarkari Hub पर दिए गए नर्सिंग विशिष्ट द्विभाषी मॉक टेस्ट अवश्य दें और दोहराएं।`
-  },
-  'seo-blog-sbi-po': {
-    title: 'एसबीआई पीओ 2026 तैयारी रोडमैप: प्रीलिम्स और मेन्स में सफलता की संपूर्ण रणनीति',
-    summary: 'स्टेट बैंक ऑफ इंडिया में प्रोबेशनरी ऑफिसर (PO) बनने का पूरा ब्लूप्रिंट। 3-चरणीय चयन प्रक्रिया, पिछले वर्ष के कट-ऑफ और शॉर्टकट ट्रिक्स।',
-    content: `भारतीय स्टेट बैंक (SBI) देश का सबसे प्रतिष्ठित राष्ट्रीयकृत बैंक है, और इसका पीओ परीक्षा बैंकिंग जगत की सबसे कठिन परीक्षा मानी जाती है। एसबीआई पीओ 25-26 के चयन के लिए प्रीलिम्स (गति आधारित) और मेन्स (गहन विश्लेषण आधारित) परीक्षाओं की रणनीति अलग होनी चाहिए।
-
-### 📊 परीक्षा प्रारूप और मुख्य कट-ऑफ:
-1. **प्रीलिम्स परीक्षा (100 अंक):** 1 घंटा समय। अंग्रेजी भाषा (30 प्रश्न), संख्यात्मक योग्यता (35 प्रश्न), तार्किक क्षमता (35 प्रश्न)।
-2. **मुख्य परीक्षा (250 अंक):** उच्च स्तरीय डेटा इंटरप्रिटेशन, तार्किक क्षमता और कंप्यूटर योग्यता, सामान्य/बैंकिंग जागरूकता। साथ ही निबंध और पत्र लेखन (50 अंक, 30 मिनट)।
-
-### 💡 महत्वपूर्ण स्कोरिंग युक्तियाँ:
-* **फ्रीक्वेंट सिंपलीफिकेशन अभ्यास:** संख्या श्रृंखला (Number Series), सरलीकरण और द्विघात समीकरण के प्रश्नों को उंगलियों पर हल करना सीखें।
-* **व्यावसायिक संपादकीय पठन:** 'The Economic Times' या 'The Hindu' के संपादकीय खंड को नियमित रूप से पढ़ना सामान्य ज्ञान के साथ-साथ कठिन आरसी (Reading Comprehension) हल करने में मदद करता है।`
-  },
-  'seo-blog-railway-group-d': {
-    title: 'रेलवे ग्रुप डी परीक्षा 2026: शारीरिक पात्रता परीक्षा मानक और सीबीटी स्कोरिंग गाइड',
-    summary: 'आरआरसी ग्रुप डी रिक्तियों के लिए चरण-वार शारीरिक दक्षता परीक्षा (PET), वजन उठाने के नियम, मेडिकल जांच और महत्वपूर्ण विषय।',
-    content: `रेलवे भर्ती सेल (RRC) ग्रुप डी परीक्षा देश की सबसे बड़ी परीक्षाओं में से एक है। इसमें उच्च बौद्धिक ज्ञान के साथ-साथ उत्कृष्ट शारीरिक सहनशक्ति का भी परीक्षण किया जाता है।
-
-### 🏃 शारीरिक दक्षता परीक्षा (PET) मानक नियम:
-* **पुरुष अभ्यर्थी:** 35 किलोग्राम वजन को 2 मिनट में बिना नीचे गिराए निरंतर 100 मीटर की दूरी तक ले जाना; और 4 मिनट 15 सेकंड में 1000 मीटर की दौड़ पूरी करना।
-* **महिला अभ्यर्थी:** 20 किलोग्राम वजन को 2 मिनट में बिना नीचे गिराए 100 मीटर की दूरी तक ले जाना; और 5 मिनट 40 सेकंड में 1000 मीटर दौड़ पूरी करना।
-
-### 📝 लिखित कंप्यूटर टेस्ट (CBT) का अंक विभाजन:
-* **सामान्य विज्ञान (NCERT 10th):** 25 प्रश्न
-* **गणित (Quantitative Aptitude):** 25 प्रश्न
-* **सामान्य बुद्धि और तर्कशक्ति:** 30 प्रश्न
-* **सामान्य जागरूकता और सामयिकी:** 20 प्रश्न
-कुल 100 अंकों की इस परीक्षा में सुरक्षित दौड़ के लिए कम से कम 75+ का लक्ष्य निर्धारित करें।`
-  },
-  'seo-blog-railway-rpf-si': {
-    title: 'आरपीएफ सब-इंस्पेक्टर भर्ती 2026: शारीरिक मानक (PST), लिखित पाठ्यक्रम और नियम',
-    summary: 'रेलवे सुरक्षा बल (RPF) दरोगा भर्ती परीक्षा का पूर्ण विवरण। लिखित परीक्षा सिलेबस, लंबी कूद, ऊंची कूद और ग्राउंड ट्रेनिंग मानक।',
-    content: `रेलवे सुरक्षा बल (RPF) में सब-इंस्पेक्टर (Sub-Inspector) पद पर चयन के लिए लिखित परीक्षा (CBT) के साथ-साथ अत्यंत कठिन फिजिकल टेस्ट को पास करना अनिवार्य होता है।
-
-### 🚔 लिखित सामान्य परीक्षा का विवरण (120 प्रश्न, 90 मिनट):
-* **सामान्य ज्ञान व जागरूकता:** 50 प्रश्न (संविधान, इतिहास, खेल, करंट अफेयर्स)
-* **अंकगणित:** 35 प्रश्न (औसत, प्रतिशत, लाभ-हानि, अनुपात)
-* **सामान्य बुद्धि व तार्किक विचार:** 35 प्रश्न
-
-### 🏁 शारीरिक दक्षता परीक्षा (PET) मानक:
-* **पुरुष:** 6 मिनट 30 सेकंड में 1600 मीटर दौड़। ऊंची कूद: 3 फीट 9 इंच, लंबी कूद: 12 फीट।
-* **महिला:** 4 मिनट में 800 मीटर दौड़। ऊंची कूद: 3 फीट, लंबी कूद: 9 फीट।
-सभी शारीरिक परीक्षणों में केवल क्वालीफाई करना होता है, परंतु इनमें उत्तीर्ण होना अनिवार्य है।`
-  }
-};
-
-// MCQ Assessment Quizzes for default blogs
-const BLOG_QUIZZES: Record<string, { question: string; options: string[]; correctIndex: number; explanation: string }[]> = {
-  'seo-blog-job-sarkari-hub-guide': [
-    {
-      question: 'Which instant messaging channels does Job Sarkari Hub use for broadcasting instant vacancy & result notifications?',
-      options: ['Slack & Discord', 'WhatsApp Channel & Telegram Channel', 'Signal & Skype', 'Viber & WeChat'],
-      correctIndex: 1,
-      explanation: 'Job Sarkari Hub dispatches instant automated alerts directly through its official WhatsApp Channel and Telegram Channel.'
-    },
-    {
-      question: 'What language formats are available for Mock Tests and Daily Current Affairs on Job Sarkari Hub?',
-      options: ['English Only', 'Hindi Only', 'Bilingual (Hindi & English)', 'Regional Dialects Only'],
-      correctIndex: 2,
-      explanation: 'Job Sarkari Hub provides all daily current affairs capsules and mock test series bilingually in Hindi and English.'
-    }
-  ],
-  'seo-blog-up-police': [
-    {
-      question: 'What is the negative marking penalty for an incorrect option in UP Police Constable Exam?',
-      options: ['-0.25 marks', '-0.50 marks', '-1.00 marks', 'No negative marking'],
-      correctIndex: 1,
-      explanation: 'UP Police Constable written exams deduct 0.50 marks for every wrong answer while awarding 2 marks for a correct one.'
-    },
-    {
-      question: 'How many total questions are asked during the official constable written test?',
-      options: ['100 Questions', '120 Questions', '150 Questions', '200 Questions'],
-      correctIndex: 2,
-      explanation: 'The paper comprises 150 multiple choice questions with a maximum credit of 300 marks.'
-    }
-  ],
-  'seo-blog-ssc-cgl': [
-    {
-      question: 'Which trigonometric Pythagorean triplet below is extremely helpful to bypass long geometry calculations?',
-      options: ['3 - 5 - 8', '5 - 12 - 13', '4 - 8 - 12', '6 - 9 - 15'],
-      correctIndex: 1,
-      explanation: '5-12-13 is a standard Pythagorean triplet where 5² + 12² = 13² (25 + 144 = 169).'
-    }
-  ],
-  'seo-blog-nhm-coldchain': [
-    {
-      question: 'Which temperature range must non-freezer vaccinations (like BCG, HepB) strictly be stored in?',
-      options: ['-20°C to -10°C', '0°C to +4°C', '+2°C to +8°C', '+10°C to +15°C'],
-      correctIndex: 2,
-      explanation: 'Cold-chain standards require non-freezer immunizations to remain within safe margins of $+2°C$ to $+8°C$.'
-    }
-  ],
-  'seo-blog-sbi-po': [
-    {
-      question: 'How many subjects compose the SBI PO Prelims online entrance test?',
-      options: ['2 Sub-sections', '3 Sub-sections (English, Quant, Reasoning)', '4 Sub-sections', '5 Sub-sections'],
-      correctIndex: 1,
-      explanation: 'SBI PO Prelims features exactly 3 sections: English Language (30 marks), Quantitative Aptitude (35 marks), and Reasoning Ability (35 marks).'
-    }
-  ],
-  'seo-blog-railway-group-d': [
-    {
-      question: 'What weight must a male candidate lift and carry during the Group D Physical Efficiency Test (PET)?',
-      options: ['20 kg weight for 100m', '35 kg weight for 100m', '50 kg weight for 50m', '15 kg weight for 100m'],
-      correctIndex: 1,
-      explanation: 'Male aspirants are required to lift and carry 35 kg weight for 100 meters in 2 minutes without dropping it.'
-    }
-  ],
-  'seo-blog-railway-rpf-si': [
-    {
-      question: 'What is the runtime requirement for male candidates in the RPF SI 1600m athletic trial?',
-      options: ['5 minutes flat', '6 minutes 30 seconds', '7 minutes 15 seconds', '6 minutes flat'],
-      correctIndex: 1,
-      explanation: 'Male candidates must run the 1600 meters distance in 6 minutes and 30 seconds to qualify.'
-    }
-  ]
-};
 
 interface Comment {
   id: string;
@@ -382,7 +55,7 @@ interface Comment {
   isAi?: boolean;
 }
 
-export default function SarkariBlogPortal({ blogs, onAddBlog, triggerToast }: SarkariBlogPortalProps) {
+export default function SarkariBlogPortal({ blogs, onAddBlog, triggerToast, onNavigateTab }: SarkariBlogPortalProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedPost, setSelectedPost] = useState<Blog | null>(null);
@@ -540,7 +213,7 @@ export default function SarkariBlogPortal({ blogs, onAddBlog, triggerToast }: Sa
     });
   }, [allBlogsList, searchQuery, selectedCategory]);
 
-  const blogCategories = ['All', 'Exam Tips', 'Government Jobs', 'Career Guidance', 'Preparation Strategy', 'Interview Tips'];
+  const blogCategories = BLOG_CATEGORIES;
 
   // Real-time On-page SEO metrics calculator helper
   const onPageSeoScore = (title: string, summary: string, content: string, keywordsStr: string) => {
@@ -1079,6 +752,48 @@ export default function SarkariBlogPortal({ blogs, onAddBlog, triggerToast }: Sa
                 </div>
               </div>
 
+              {/* Interactive Preparation & Mock Test Action Banner */}
+              {onNavigateTab && (
+                <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 rounded-3xl p-5 text-white shadow-md flex flex-col sm:flex-row items-center justify-between gap-4 border border-blue-800/50">
+                  <div className="space-y-1 text-left">
+                    <div className="flex items-center gap-1.5 text-amber-400 font-mono text-[10px] font-bold uppercase tracking-wider">
+                      <Zap className="h-3.5 w-3.5 fill-amber-400" />
+                      Instant Preparation Boost
+                    </div>
+                    <h4 className="text-sm font-extrabold text-white">
+                      Practice Mock Tests & Master the Syllabus
+                    </h4>
+                    <p className="text-[11px] text-slate-300">
+                      Put these preparation strategies into action with free full-length CBT Mock Tests and official syllabus guides.
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onNavigateTab('mock-tests');
+                        triggerToast("🚀 Opening Live CBT Mock Test Portal...");
+                      }}
+                      className="px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs rounded-xl transition cursor-pointer flex items-center gap-1.5 shadow-md shadow-amber-500/20"
+                    >
+                      <Zap className="h-3.5 w-3.5 fill-current" />
+                      Take Mock Test
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onNavigateTab('syllabus');
+                        triggerToast("📚 Opening Syllabus & Exam Pattern Repository...");
+                      }}
+                      className="px-3.5 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl border border-white/20 transition cursor-pointer flex items-center gap-1"
+                    >
+                      <BookOpen className="h-3.5 w-3.5" />
+                      Syllabus
+                    </button>
+                  </div>
+                </div>
+              )}
+
               {/* Interactive Self-Assessment Micro-Quiz */}
               {activePostQuiz && (
                 <div className="bg-linear-to-b from-blue-50/50 to-white rounded-3xl border border-blue-100 p-5 space-y-4">
@@ -1436,11 +1151,9 @@ export default function SarkariBlogPortal({ blogs, onAddBlog, triggerToast }: Sa
                       onChange={(e) => setNewCategory(e.target.value as any)}
                       className="w-full bg-slate-50 border border-slate-250 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-hidden focus:border-blue-500 cursor-pointer"
                     >
-                      <option value="Exam Tips">📁 Exam Tips</option>
-                      <option value="Government Jobs">💼 Government Jobs</option>
-                      <option value="Career Guidance">🎓 Career Guidance</option>
-                      <option value="Preparation Strategy">🎯 Preparation Strategy</option>
-                      <option value="Interview Tips">🗣️ Interview Tips</option>
+                      {BLOG_CATEGORIES.filter(c => c !== 'All').map(cat => (
+                        <option key={cat} value={cat}>📁 {cat}</option>
+                      ))}
                     </select>
                   </div>
 

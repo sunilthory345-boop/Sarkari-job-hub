@@ -29,6 +29,10 @@ import SyllabusPlanner from './components/SyllabusPlanner';
 import ObjectionPortal from './components/ObjectionPortal';
 import SarkariUploadVault from './components/SarkariUploadVault';
 import SarkariAds from './components/SarkariAds';
+import GoogleAdSense from './components/GoogleAdSense';
+import StickyBottomAd from './components/StickyBottomAd';
+import LeaderboardAd from './components/LeaderboardAd';
+import AdvertiseModal from './components/AdvertiseModal';
 import AuthModal from './components/AuthModal';
 import PrivacyPolicyModal from './components/PrivacyPolicyModal';
 import AboutUsModal from './components/AboutUsModal';
@@ -51,6 +55,8 @@ import UppbpbLiveSyncHub from './components/UppbpbLiveSyncHub';
 import MpesbLiveSyncHub from './components/MpesbLiveSyncHub';
 import GovPortalsSyncBar from './components/GovPortalsSyncBar';
 import SscAiMockGenerator from './components/SscAiMockGenerator';
+import AutoMockTestCreator from './components/AutoMockTestCreator';
+import { SarkariPdfModal } from './components/SarkariPdfModal';
 import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice, IbpsLiveNotice, SbiLiveNotice, RajLiveNotice, ArmyLiveNotice, NavyLiveNotice, BtscLiveNotice, HpscLiveNotice, PgrkamLiveNotice, UppbpbLiveNotice, MpesbLiveNotice } from './types';
 import { initializeGA, trackPageView } from './utils/analytics';
 import { updateSEOMetadata } from './utils/seoHelper';
@@ -320,19 +326,42 @@ export default function App() {
 
     // Retrieve custom/user-added mock tests first to avoid large storage payload
     const customSaved = safeGetItem('sarkari_custom_mock_tests') || safeGetItem('sarkari_mock_tests');
+    let combinedMocks = initialNonDeleted;
     if (customSaved) {
       try {
         const parsed = JSON.parse(customSaved) as MockTest[];
         const filteredParsed = parsed.filter(t => !deletedSet.has(t.id));
         // Only keep custom ones from storage that aren't duplicates of initial mocks
         const customOnly = filteredParsed.filter(t => !initialIds.has(t.id));
-        return [...customOnly, ...initialNonDeleted];
+        combinedMocks = [...customOnly, ...initialNonDeleted];
       } catch (e) {
-        return initialNonDeleted;
+        combinedMocks = initialNonDeleted;
       }
     }
-    return initialNonDeleted;
+
+    // Deduplicate by ID to guarantee unique React keys across state
+    const seenIds = new Set<string>();
+    const deduplicatedMocks: MockTest[] = [];
+    for (const test of combinedMocks) {
+      if (test && test.id && !seenIds.has(test.id)) {
+        seenIds.add(test.id);
+        deduplicatedMocks.push(test);
+      }
+    }
+    return deduplicatedMocks;
   });
+
+  // Centralized deduplicating mock test adder to guarantee unique keys
+  const handleAddMockTest = (newTest: MockTest, showToast = true) => {
+    if (!newTest || !newTest.id) return;
+    setMockTests(prev => {
+      const remaining = prev.filter(t => t.id !== newTest.id);
+      return [newTest, ...remaining];
+    });
+    if (showToast) {
+      triggerToast(`SSC AI Mock Test Ready: ${newTest.title}`);
+    }
+  };
 
   useEffect(() => {
     // Only store custom/generated tests in localStorage to prevent 5MB storage quota exhaustion
@@ -390,13 +419,31 @@ export default function App() {
     safeSetJSON('sarkari_quiz_questions', quizQuestions);
   }, [quizQuestions]);
 
+  // Dynamic today's date in Indian Standard Time (IST)
+  const getSystemTodayDate = () => {
+    try {
+      return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(new Date());
+    } catch {
+      return new Date().toISOString().split('T')[0];
+    }
+  };
+
   const [currentQuizIdx, setCurrentQuizIdx] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<{[key: number]: number}>({}); // maps question Index (0-49) to selected option index (0-3)
   const [todayQuizIdx, setTodayQuizIdx] = useState(0);
   const [todayAnswers, setTodayAnswers] = useState<{[key: string]: number}>({}); // maps question ID to selected option index
   const [todayActiveSubTab, setTodayActiveSubTab] = useState<'questions' | 'capsules'>('questions');
-  const [caQuizDate, setCaQuizDate] = useState<string>('2026-07-29');
-  const [homeQuizDate, setHomeQuizDate] = useState<string>('2026-07-29');
+  const [caQuizDate, setCaQuizDate] = useState<string>(() => getSystemTodayDate());
+  const [homeQuizDate, setHomeQuizDate] = useState<string>(() => getSystemTodayDate());
+  const [isSyncingDailyCA, setIsSyncingDailyCA] = useState<boolean>(false);
+  const [homeCaCategory, setHomeCaCategory] = useState<string>('All');
+  const [dailySyncMetadata, setDailySyncMetadata] = useState<{
+    lastSynced: string;
+    source: string;
+    date: string;
+    totalCapsules: number;
+    totalQuestions: number;
+  } | null>(null);
   const [caSearchQuery, setCaSearchQuery] = useState('');
   const [caSelectedCategory, setCaSelectedCategory] = useState<string>('All');
   const [caVisibleCount, setCaVisibleCount] = useState(6);
@@ -406,6 +453,7 @@ export default function App() {
   
   // Newspaper filter, reader, and AI summary states
   const [selectedPaperForReader, setSelectedPaperForReader] = useState<Newspaper | null>(null);
+  const [globalPdfJob, setGlobalPdfJob] = useState<GovJob | null>(null);
   const [paperSearchQuery, setPaperSearchQuery] = useState('');
   const [paperSelectedLanguage, setPaperSelectedLanguage] = useState<string>('All');
   const [paperSelectedCategory, setPaperSelectedCategory] = useState<string>('All');
@@ -451,9 +499,69 @@ export default function App() {
     safeSetJSON('sarkari_pyqs', pyqsList);
   }, [pyqsList]);
 
+  // Automated Daily Current Affairs synchronization from backend
+  const fetchDailyCurrentAffairs = async (force: boolean = false) => {
+    setIsSyncingDailyCA(true);
+    try {
+      const res = await fetch(`/api/current-affairs/today${force ? '?force=true' : ''}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && Array.isArray(data.capsules) && data.capsules.length > 0) {
+          setCurrentAffairs(prev => {
+            const existingIds = new Set(prev.map(c => c.id));
+            const newItems = data.capsules.filter((c: any) => !existingIds.has(c.id));
+            if (newItems.length === 0) return prev;
+            const updated = [...newItems, ...prev];
+            safeSetJSON('sarkari_current_affairs', updated);
+            return updated;
+          });
+
+          if (Array.isArray(data.questions) && data.questions.length > 0) {
+            setQuizQuestions(prev => {
+              const existingIds = new Set(prev.map(q => q.id));
+              const newQuestions = data.questions.filter((q: any) => !existingIds.has(q.id));
+              if (newQuestions.length === 0) return prev;
+              const updated = [...newQuestions, ...prev];
+              safeSetJSON('sarkari_quiz_questions', updated);
+              return updated;
+            });
+          }
+
+          if (data.date) {
+            setHomeQuizDate(data.date);
+            setCaQuizDate(data.date);
+          }
+
+          setDailySyncMetadata({
+            lastSynced: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            source: data.source || 'ai',
+            date: data.date,
+            totalCapsules: data.totalCapsules || data.capsules.length,
+            totalQuestions: data.totalQuestions || data.questions.length
+          });
+
+          if (force) {
+            triggerToast(`⚡ ${locale === 'hi' ? 'दैनिक करंट अफेयर्स और क्विज़ लाइव अपडेट हो चुके हैं!' : "Today's current affairs and quiz refreshed!"} (${data.capsules.length} News, ${data.questions.length} MCQs)`);
+          }
+        }
+      }
+    } catch (err) {
+      console.warn("Failed to auto-sync daily current affairs:", err);
+    } finally {
+      setIsSyncingDailyCA(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDailyCurrentAffairs(false);
+  }, []);
+
   const getAvailableDates = () => {
     const datesSet = new Set<string>();
-    // Default key dates
+    const todayStr = getSystemTodayDate();
+    datesSet.add(todayStr);
+
+    // Default key historical dates for practice
     datesSet.add('2026-07-29');
     datesSet.add('2026-07-28');
     datesSet.add('2026-07-27');
@@ -489,32 +597,9 @@ export default function App() {
   };
 
   const formatCADate = (dateStr: string, isHindi: boolean) => {
-    if (dateStr === '2026-07-29') return isHindi ? 'बुधवार, 29 जुलाई 2026 (आज के विशेष Live)' : 'Wednesday, 29 July 2026 (Today Live)';
-    if (dateStr === '2026-07-28') return isHindi ? 'मंगलवार, 28 जुलाई 2026 (कल के विशेष)' : 'Tuesday, 28 July 2026 (Yesterday)';
-    if (dateStr === '2026-07-27') return isHindi ? 'सोमवार, 27 जुलाई 2026' : 'Monday, 27 July 2026';
-    if (dateStr === '2026-07-26') return isHindi ? 'रविवार, 26 जुलाई 2026' : 'Sunday, 26 July 2026';
-    if (dateStr === '2026-07-25') return isHindi ? 'शनिवार, 25 जुलाई 2026' : 'Saturday, 25 July 2026';
-    if (dateStr === '2026-07-24') return isHindi ? 'शुक्रवार, 24 जुलाई 2026' : 'Friday, 24 July 2026';
-    if (dateStr === '2026-07-23') return isHindi ? 'गुरुवार, 23 जुलाई 2026' : 'Thursday, 23 July 2026';
-    if (dateStr === '2026-07-22') return isHindi ? 'बुधवार, 22 जुलाई 2026' : 'Wednesday, 22 July 2026';
-    if (dateStr === '2026-07-21') return isHindi ? 'मंगलवार, 21 जुलाई 2026' : 'Tuesday, 21 July 2026';
-    if (dateStr === '2026-07-20') return isHindi ? 'सोमवार, 20 जुलाई 2026' : 'Monday, 20 July 2026';
-    if (dateStr === '2026-07-19') return isHindi ? 'रविवार, 19 जुलाई 2026' : 'Sunday, 19 July 2026';
-    if (dateStr === '2026-07-18') return isHindi ? 'शनिवार, 18 जुलाई 2026' : 'Saturday, 18 July 2026';
-    if (dateStr === '2026-07-17') return isHindi ? 'शुक्रवार, 17 जुलाई 2026' : 'Friday, 17 July 2026';
-    if (dateStr === '2026-07-16') return isHindi ? 'गुरुवार, 16 जुलाई 2026' : 'Thursday, 16 July 2026';
-    if (dateStr === '2026-07-15') return isHindi ? 'बुधवार, 15 जुलाई 2026' : 'Wednesday, 15 July 2026';
-    if (dateStr === '2026-07-14') return isHindi ? 'मंगलवार, 14 जुलाई 2026' : 'Tuesday, 14 July 2026';
-    if (dateStr === '2026-07-13') return isHindi ? 'सोमवार, 13 जुलाई 2026' : 'Monday, 13 July 2026';
-    if (dateStr === '2026-07-07') return isHindi ? 'मंगलवार, 7 जुलाई 2026' : 'Tuesday, 7 July 2026';
-    if (dateStr === '2026-07-06') return isHindi ? 'सोमवार, 6 जुलाई 2026' : 'Monday, 6 July 2026';
-    if (dateStr === '2026-07-02') return isHindi ? 'गुरुवार, 2 जुलाई 2026' : 'Thursday, 2 July 2026';
-    if (dateStr === '2026-07-01') return isHindi ? 'बुधवार, 1 जुलाई 2026' : 'Wednesday, 1 July 2026';
-    if (dateStr === '2026-06-30' || dateStr === 'june_30') return isHindi ? 'मंगलवार, 30 जून 2026' : 'Tuesday, 30 June 2026';
-    if (dateStr === '2026-06-29' || dateStr === 'june_29') return isHindi ? 'सोमवार, 29 जून 2026' : 'Monday, 29 June 2026';
-    if (dateStr === '2026-06-28' || dateStr === 'june_28') return isHindi ? 'रविवार, 28 जून 2026' : 'Sunday, 28 June 2026';
-    if (dateStr === '2026-06-27' || dateStr === 'june_27') return isHindi ? 'शनिवार, 27 जून 2026' : 'Saturday, 27 June 2026';
-    
+    const todayStr = getSystemTodayDate();
+    const isToday = dateStr === todayStr;
+
     try {
       const parts = dateStr.split('-');
       if (parts.length === 3) {
@@ -524,13 +609,25 @@ export default function App() {
         
         const monthsEng = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         const monthsHin = ['जनवरी', 'फरवरी', 'मार्च', 'अप्रैल', 'मई', 'जून', 'जुलाई', 'अगस्त', 'सितंबर', 'अक्टूबर', 'नवंबर', 'दिसंबर'];
-        
+        const daysEng = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const daysHin = ['रविवार', 'सोमवार', 'मंगलवार', 'बुधवार', 'गुरुवार', 'शुक्रवार', 'शनिवार'];
+
+        const dateObj = new Date(parseInt(year, 10), monthNum - 1, day);
+        const dayOfWeek = isNaN(dateObj.getTime()) ? '' : daysEng[dateObj.getDay()];
+        const dayOfWeekHin = isNaN(dateObj.getTime()) ? '' : daysHin[dateObj.getDay()];
+
         const monthEng = monthsEng[monthNum - 1] || parts[1];
         const monthHin = monthsHin[monthNum - 1] || parts[1];
         
+        if (isToday) {
+          return isHindi 
+            ? `${dayOfWeekHin ? `${dayOfWeekHin}, ` : ''}${day} ${monthHin} ${year} (आज का लाइव अपडेट 🔴)` 
+            : `${dayOfWeek ? `${dayOfWeek}, ` : ''}${day} ${monthEng} ${year} (Today's Live 🔴)`;
+        }
+
         return isHindi 
-          ? `${day} ${monthHin} ${year}` 
-          : `${day} ${monthEng} ${year}`;
+          ? `${dayOfWeekHin ? `${dayOfWeekHin}, ` : ''}${day} ${monthHin} ${year}` 
+          : `${dayOfWeek ? `${dayOfWeek}, ` : ''}${day} ${monthEng} ${year}`;
       }
     } catch (e) {
       // fallback
@@ -2154,6 +2251,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
   const [privacyOpen, setPrivacyOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [trafficOpen, setTrafficOpen] = useState(false);
+  const [advertiseOpen, setAdvertiseOpen] = useState(false);
 
   // Filter properties passed down to JobCard
   const [qualificationFilter, setQualificationFilter] = useState('All');
@@ -2607,6 +2705,9 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
       {/* Main Body wrap */}
       <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 flex-1">
         
+        {/* Top Responsive Leaderboard Ad Unit (Google AdSense / Verified EdTech Partners) */}
+        <LeaderboardAd user={user} triggerToast={triggerToast} />
+        
         {/* TAB: PUNJAB GHAR GHAR ROZGAR & KAROBAR MISSION (PGRKAM) REAL-TIME MONITOR HUB */}
         {activeTab === 'pgrkam-sync' && (
           <div className="space-y-6">
@@ -2853,112 +2954,210 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
 
               {/* Header block */}
               <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-amber-400 text-slate-950 rounded-2xl animate-pulse">
+                <div className="flex items-start sm:items-center gap-3">
+                  <div className="p-2.5 bg-amber-400 text-slate-950 rounded-2xl animate-pulse shrink-0">
                     <Flame className="h-6 w-6 fill-slate-950" />
                   </div>
                   <div>
-                    <span className="text-[10px] bg-amber-500/20 text-amber-300 font-extrabold px-2.5 py-0.5 rounded-full border border-amber-500/30 uppercase tracking-widest">
-                      Live Update • {locale === 'hi' ? 'आज के विशेष' : 'Today\'s Special'}
-                    </span>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="inline-flex items-center gap-1.5 text-[10px] bg-emerald-500/20 text-emerald-300 font-extrabold px-2.5 py-0.5 rounded-full border border-emerald-500/30 uppercase tracking-wider">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                        {locale === 'hi' ? 'दैनिक ऑटो-अपडेट सक्रिय' : 'Live Daily Auto-Update'}
+                      </span>
+                      {dailySyncMetadata && (
+                        <span className="text-[10px] text-slate-400 font-mono hidden sm:inline-block">
+                          Synced: {dailySyncMetadata.lastSynced} • {dailySyncMetadata.totalCapsules} News • {dailySyncMetadata.totalQuestions} Qs
+                        </span>
+                      )}
+                    </div>
                     <h3 className="font-sans text-lg sm:text-xl font-black text-white mt-1">
                       {locale === 'hi' ? '🔥 दैनिक करंट अफेयर्स और लाइव प्रश्नोत्तरी (2026)' : '🔥 Today\'s Current Affairs & Interactive Daily Quiz (2026)'}
                     </h3>
+                    <p className="text-xs text-blue-200/80 font-medium">
+                      {locale === 'hi'
+                        ? 'SSC CGL/CHSL, Banking IBPS/SBI, Railway NTPC, Army एवं State Exams के लिए प्रतिदिन ऑटो-अपडेटेड'
+                        : 'Auto-updated daily for SSC, Banking, Railway NTPC, Army & All Competitive Exams'}
+                    </p>
                   </div>
                 </div>
 
-                {/* Live Calendar Date Tag with Option Dropdown */}
-                <div className="flex items-center gap-2 bg-slate-950 border border-blue-900/60 rounded-xl px-2 py-1 self-start md:self-auto shadow-inner">
-                  <Calendar className="h-4 w-4 text-blue-300 ml-1 shrink-0" />
-                  <select
-                    value={homeQuizDate}
-                    onChange={(e) => {
-                      setHomeQuizDate(e.target.value);
-                      setTodayQuizIdx(0);
-                    }}
-                    className="bg-transparent text-slate-200 font-sans text-xs font-bold focus:outline-none cursor-pointer border-none pr-6 py-1 select-none font-sans"
+                {/* Right controls: Refresh button & Calendar Date Tag */}
+                <div className="flex items-center gap-2 self-start md:self-auto shrink-0 flex-wrap">
+                  <button
+                    onClick={() => fetchDailyCurrentAffairs(true)}
+                    disabled={isSyncingDailyCA}
+                    title={locale === 'hi' ? 'आज के नए करंट अफेयर्स तुरंत अपडेट करें' : 'Refresh today\'s latest current affairs'}
+                    className="flex items-center gap-1.5 bg-blue-600/30 hover:bg-blue-600/50 text-blue-200 border border-blue-500/40 rounded-xl px-3 py-1.5 text-xs font-bold transition disabled:opacity-50 cursor-pointer shadow-xs"
                   >
-                    {getAvailableDates().map(d => (
-                      <option key={d} value={d} className="bg-slate-900 text-white">
-                        {formatCADate(d, locale === 'hi')}
-                      </option>
-                    ))}
-                  </select>
+                    <RefreshCw className={`h-3.5 w-3.5 ${isSyncingDailyCA ? 'animate-spin text-amber-300' : ''}`} />
+                    <span>{isSyncingDailyCA ? (locale === 'hi' ? 'अपडेट हो रहा...' : 'Syncing...') : (locale === 'hi' ? 'ताज़ा करें' : 'Refresh')}</span>
+                  </button>
+
+                  <div className="flex items-center gap-1.5 bg-slate-950 border border-blue-900/60 rounded-xl px-2.5 py-1 shadow-inner">
+                    <Calendar className="h-4 w-4 text-blue-300 shrink-0" />
+                    <select
+                      value={homeQuizDate}
+                      onChange={(e) => {
+                        setHomeQuizDate(e.target.value);
+                        setTodayQuizIdx(0);
+                      }}
+                      className="bg-transparent text-slate-200 font-sans text-xs font-bold focus:outline-none cursor-pointer border-none py-1 select-none font-sans"
+                    >
+                      {getAvailableDates().map(d => (
+                        <option key={d} value={d} className="bg-slate-900 text-white">
+                          {formatCADate(d, locale === 'hi')}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               </div>
 
               {/* Sub-Tabs Selector */}
-              <div className="relative z-10 flex gap-2 mt-4 border-b border-white/5 pb-3">
-                <button
-                  onClick={() => setTodayActiveSubTab('questions')}
-                  className={`flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold transition-all cursor-pointer ${
-                    todayActiveSubTab === 'questions'
-                      ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20'
-                      : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'
-                  }`}
-                >
-                  <HelpCircle className="h-4 w-4" />
-                  <span>{locale === 'hi' ? '📝 आज के प्रश्न (Interactive Quiz)' : '📝 Today\'s Questions (Interactive Quiz)'}</span>
-                </button>
-                <button
-                  onClick={() => setTodayActiveSubTab('capsules')}
-                  className={`flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold transition-all cursor-pointer ${
-                    todayActiveSubTab === 'capsules'
-                      ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20'
-                      : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'
-                  }`}
-                >
-                  <BookOpen className="h-4 w-4" />
-                  <span>{locale === 'hi' ? '📰 आज के समाचार कैप्सूल' : '📰 Today\'s News Capsules'}</span>
-                </button>
+              <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 mt-4 border-b border-white/5 pb-3">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setTodayActiveSubTab('questions')}
+                    className={`flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold transition-all cursor-pointer ${
+                      todayActiveSubTab === 'questions'
+                        ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20'
+                        : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'
+                    }`}
+                  >
+                    <HelpCircle className="h-4 w-4" />
+                    <span>{locale === 'hi' ? '📝 आज के अभ्यास प्रश्न' : '📝 Today\'s Questions (Interactive Quiz)'}</span>
+                  </button>
+                  <button
+                    onClick={() => setTodayActiveSubTab('capsules')}
+                    className={`flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold transition-all cursor-pointer ${
+                      todayActiveSubTab === 'capsules'
+                        ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20'
+                        : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'
+                    }`}
+                  >
+                    <BookOpen className="h-4 w-4" />
+                    <span>{locale === 'hi' ? '📰 आज के समाचार कैप्सूल' : '📰 Today\'s News Capsules'}</span>
+                  </button>
+                </div>
+
+                {todayActiveSubTab === 'capsules' && (
+                  <div className="flex items-center gap-1 overflow-x-auto py-1 text-[11px] no-scrollbar">
+                    {['All', 'National', 'Economy', 'Science & Tech', 'Defence', 'Sports', 'Schemes'].map(cat => (
+                      <button
+                        key={cat}
+                        onClick={() => setHomeCaCategory(cat)}
+                        className={`px-2.5 py-1 rounded-lg font-bold transition cursor-pointer whitespace-nowrap ${
+                          homeCaCategory === cat
+                            ? 'bg-amber-400 text-slate-950 shadow-xs'
+                            : 'bg-white/5 text-slate-300 hover:bg-white/10 border border-white/10'
+                        }`}
+                      >
+                        {cat}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Content Panel */}
               <div className="relative z-10 mt-5">
                 {todayActiveSubTab === 'questions' ? (
                   (() => {
-                    const todayQs = quizQuestions.filter(q => {
-                      if (q.date) {
-                        const targetDateStr = homeQuizDate === 'june_30' ? '2026-06-30' :
-                                              homeQuizDate === 'june_29' ? '2026-06-29' :
-                                              homeQuizDate === 'june_28' ? '2026-06-28' :
-                                              homeQuizDate === 'june_27' ? '2026-06-27' :
-                                              homeQuizDate;
-                        if (q.date === targetDateStr || q.date === homeQuizDate) return true;
-                      }
+                    const targetDateStr = homeQuizDate === 'june_30' ? '2026-06-30' :
+                                          homeQuizDate === 'june_29' ? '2026-06-29' :
+                                          homeQuizDate === 'june_28' ? '2026-06-28' :
+                                          homeQuizDate === 'june_27' ? '2026-06-27' :
+                                          homeQuizDate;
+                    let todayQs = quizQuestions.filter(q => {
+                      if (q.date && (q.date === targetDateStr || q.date === homeQuizDate)) return true;
                       const idNum = parseInt(q.id.replace('ca-q-today-', ''));
-                      if (isNaN(idNum)) return false;
-                      if (homeQuizDate === 'june_30') {
-                        return idNum >= 151 && idNum <= 200;
-                      } else if (homeQuizDate === 'june_29') {
-                        return idNum >= 101 && idNum <= 150;
-                      } else if (homeQuizDate === 'june_28') {
-                        return idNum >= 51 && idNum <= 100;
-                      } else if (homeQuizDate === 'june_27') {
-                        return idNum >= 1 && idNum <= 50;
+                      if (!isNaN(idNum)) {
+                        if (homeQuizDate === 'june_30') return idNum >= 151 && idNum <= 200;
+                        if (homeQuizDate === 'june_29') return idNum >= 101 && idNum <= 150;
+                        if (homeQuizDate === 'june_28') return idNum >= 51 && idNum <= 100;
+                        if (homeQuizDate === 'june_27') return idNum >= 1 && idNum <= 50;
                       }
                       return false;
                     });
-                    const q = todayQs[todayQuizIdx];
-                    if (!q) return <p className="text-slate-400 text-xs text-center py-6">No questions found for today.</p>;
+
+                    // Fallback to high-yield questions if no date-specific questions found
+                    if (todayQs.length === 0) {
+                      todayQs = quizQuestions.filter(q => q.id.startsWith('ca-q-')).slice(0, 10);
+                    }
+
+                    const q = todayQs[todayQuizIdx] || todayQs[0];
+                    if (!q) {
+                      return (
+                        <div className="text-center py-8 space-y-3 bg-slate-900/50 rounded-2xl border border-white/5">
+                          <Clock className="h-8 w-8 text-amber-400 mx-auto animate-bounce" />
+                          <p className="text-slate-300 text-xs font-bold">
+                            {locale === 'hi' ? 'इस तिथि के लिए दैनिक प्रश्न लोड हो रहे हैं...' : 'Loading daily questions for this date...'}
+                          </p>
+                          <button
+                            onClick={() => fetchDailyCurrentAffairs(true)}
+                            className="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-4 py-2 rounded-xl transition cursor-pointer"
+                          >
+                            {locale === 'hi' ? '🔄 तुरंत प्रश्नोत्तरी लोड करें' : '🔄 Load Questions Now'}
+                          </button>
+                        </div>
+                      );
+                    }
 
                     const answeredIdx = todayAnswers[q.id];
                     const isAnswered = answeredIdx !== undefined;
                     const isCorrect = isAnswered && answeredIdx === q.correctOptionIndex;
 
                     return (
-                      <div className="bg-slate-900/60 rounded-2xl border border-white/5 p-4 sm:p-6 space-y-4">
+                      <div className="bg-slate-900/70 rounded-2xl border border-white/10 p-4 sm:p-6 space-y-4">
+                        {/* Question Jump Palette */}
+                        {todayQs.length > 1 && (
+                          <div className="flex flex-wrap items-center gap-1.5 pb-2 border-b border-white/5">
+                            <span className="text-[10px] text-slate-400 font-bold mr-1">
+                              {locale === 'hi' ? 'प्रश्न सूची:' : 'Jump to Q:'}
+                            </span>
+                            {todayQs.map((item, idx) => {
+                              const isAns = todayAnswers[item.id] !== undefined;
+                              const isRight = isAns && todayAnswers[item.id] === item.correctOptionIndex;
+                              const isCur = idx === todayQuizIdx;
+                              return (
+                                <button
+                                  key={item.id}
+                                  onClick={() => setTodayQuizIdx(idx)}
+                                  className={`h-6 w-6 rounded-lg text-[10px] font-bold transition flex items-center justify-center cursor-pointer ${
+                                    isCur
+                                      ? 'ring-2 ring-amber-400 bg-blue-600 text-white font-black'
+                                      : isAns
+                                      ? isRight
+                                        ? 'bg-emerald-600 text-white'
+                                        : 'bg-rose-600 text-white'
+                                      : 'bg-white/10 hover:bg-white/20 text-slate-300'
+                                  }`}
+                                >
+                                  {idx + 1}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        )}
+
                         {/* Q Info & Navigation */}
                         <div className="flex items-center justify-between gap-2 border-b border-white/5 pb-3">
-                          <span className="text-[10px] font-mono text-slate-400 font-bold uppercase tracking-wider">
-                            {locale === 'hi' ? `प्रश्न ${todayQuizIdx + 1} / ${todayQs.length}` : `Question ${todayQuizIdx + 1} of ${todayQs.length}`}
-                          </span>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-mono text-slate-300 font-bold uppercase tracking-wider bg-white/10 px-2 py-0.5 rounded-md">
+                              {locale === 'hi' ? `प्रश्न ${todayQuizIdx + 1} / ${todayQs.length}` : `Question ${todayQuizIdx + 1} of ${todayQs.length}`}
+                            </span>
+                            {q.category && (
+                              <span className="text-[10px] bg-blue-500/20 text-blue-300 font-bold px-2 py-0.5 rounded-md border border-blue-500/30">
+                                {q.category}
+                              </span>
+                            )}
+                          </div>
                           
                           <div className="flex gap-1.5 items-center">
                             <button
                               disabled={todayQuizIdx === 0}
                               onClick={() => setTodayQuizIdx(prev => prev - 1)}
-                              className="p-1 rounded bg-white/5 hover:bg-white/10 text-slate-300 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+                              className="p-1 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
                               title="Previous Question"
                             >
                               <ChevronLeft className="h-4 w-4" />
@@ -2966,7 +3165,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                             <button
                               disabled={todayQuizIdx === todayQs.length - 1}
                               onClick={() => setTodayQuizIdx(prev => prev + 1)}
-                              className="p-1 rounded bg-white/5 hover:bg-white/10 text-slate-300 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+                              className="p-1 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
                               title="Next Question"
                             >
                               <ChevronRight className="h-4 w-4" />
@@ -3015,15 +3214,15 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
 
                         {/* Explanation block */}
                         {isAnswered && (
-                          <div className="bg-blue-950/40 border border-blue-900/40 rounded-xl p-4 text-xs text-blue-200 space-y-2 animate-fade-in mt-4 leading-relaxed">
-                            <p className="font-extrabold text-blue-300 flex items-center gap-1">
+                          <div className="bg-blue-950/50 border border-blue-900/60 rounded-xl p-4 text-xs text-blue-200 space-y-2 animate-fade-in mt-4 leading-relaxed">
+                            <p className="font-extrabold text-blue-300 flex items-center gap-1.5">
                               <Sparkles className="h-4 w-4 text-amber-400" />
                               <span>{locale === 'hi' ? 'विस्तृत विवरण (Bilingual Explanation):' : 'Bilingual Explanation:'}</span>
                             </p>
-                            <p className="font-sans text-slate-300">{q.explanation}</p>
+                            <p className="font-sans text-slate-200">{q.explanation}</p>
                             <div className="text-[10px] text-blue-400 font-mono font-bold pt-1.5 border-t border-white/5 flex justify-between">
                               <span>Correct Key: ({String.fromCharCode(65 + q.correctOptionIndex)})</span>
-                              <span className="text-emerald-400 font-bold">Solved bilingually for Sarkari Hub Aspirants</span>
+                              <span className="text-emerald-400 font-bold">Solved bilingually for SSC, Banking, Railway Aspirants</span>
                             </div>
                           </div>
                         )}
@@ -3031,7 +3230,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                         {/* Score and Reset Bar */}
                         <div className="flex items-center justify-between gap-4 pt-3 border-t border-white/5 text-[10px] text-slate-400">
                           <div>
-                            <span className="font-bold text-slate-300">
+                            <span className="font-bold text-slate-200">
                               Today's Attempted: {Object.keys(todayAnswers).length} / {todayQs.length}
                             </span>
                             <span className="mx-2">•</span>
@@ -3054,54 +3253,75 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                     );
                   })()
                 ) : (
-                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {(() => {
-                      const filteredCapsules = currentAffairs.filter(ca => {
+                  <div className="space-y-4">
+                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      {(() => {
                         const targetDateStr = homeQuizDate === 'june_30' ? '2026-06-30' :
                                               homeQuizDate === 'june_29' ? '2026-06-29' :
                                               homeQuizDate === 'june_28' ? '2026-06-28' :
                                               homeQuizDate === 'june_27' ? '2026-06-27' :
                                               homeQuizDate;
-                        return ca.date === targetDateStr || ca.date === homeQuizDate;
-                      });
-                      if (filteredCapsules.length === 0) {
-                        return (
-                          <div className="col-span-full py-10 text-center bg-slate-900/40 rounded-2xl border border-white/5">
-                            <p className="text-slate-400 text-xs font-semibold">
-                              {locale === 'hi' ? 'इस तिथि के लिए कोई समाचार कैप्सूल उपलब्ध नहीं है।' : 'No news capsules found for this date.'}
-                            </p>
-                          </div>
-                        );
-                      }
-                      return filteredCapsules.slice(0, 3).map((ca) => (
-                        <div key={ca.id} className="bg-slate-900/60 rounded-2xl border border-white/5 p-4 flex flex-col justify-between hover:border-blue-500/40 transition duration-200">
-                          <div className="space-y-2">
-                            <div className="flex items-center justify-between gap-2 text-[10px]">
-                              <span className="bg-blue-500/20 text-blue-300 font-bold px-2 py-0.5 rounded-full border border-blue-500/30">
-                                {ca.category}
-                              </span>
-                              <span className="text-slate-400 font-semibold">{ca.date}</span>
-                            </div>
-                            <h4 className="text-xs sm:text-sm font-extrabold text-white line-clamp-2 leading-snug">
-                              {ca.title}
-                            </h4>
-                            <p className="text-slate-300 text-[11px] line-clamp-3 leading-relaxed">
-                              {ca.content}
-                            </p>
-                          </div>
+                        let filteredCapsules = currentAffairs.filter(ca => {
+                          return ca.date === targetDateStr || ca.date === homeQuizDate;
+                        });
 
-                          <div className="border-t border-white/5 pt-3 mt-3 flex items-center justify-between">
-                            <button
-                              onClick={() => triggerToast(`📥 Downloading PDF for capsule: ${ca.title}`)}
-                              className="text-[10px] text-blue-400 font-bold hover:underline flex items-center gap-1 cursor-pointer"
-                            >
-                              <Download className="h-3 w-3" /> Download PDF
-                            </button>
-                            <span className="text-[9px] text-slate-500 italic">Bilingual GK</span>
+                        if (filteredCapsules.length === 0) {
+                          filteredCapsules = currentAffairs.slice(0, 8);
+                        }
+
+                        if (homeCaCategory !== 'All') {
+                          filteredCapsules = filteredCapsules.filter(ca => ca.category.toLowerCase().includes(homeCaCategory.toLowerCase()));
+                        }
+
+                        if (filteredCapsules.length === 0) {
+                          return (
+                            <div className="col-span-full py-10 text-center bg-slate-900/40 rounded-2xl border border-white/5">
+                              <p className="text-slate-400 text-xs font-semibold">
+                                {locale === 'hi' ? 'इस श्रेणी के लिए कोई समाचार कैप्सूल उपलब्ध नहीं है।' : 'No news capsules found in this category.'}
+                              </p>
+                            </div>
+                          );
+                        }
+
+                        return filteredCapsules.map((ca) => (
+                          <div key={ca.id} className="bg-slate-900/70 rounded-2xl border border-white/10 p-4 sm:p-5 flex flex-col justify-between hover:border-blue-500/50 hover:bg-slate-900/90 transition duration-200 group">
+                            <div className="space-y-2.5">
+                              <div className="flex items-center justify-between gap-2 text-[10px]">
+                                <span className="bg-blue-500/20 text-blue-300 font-extrabold px-2.5 py-0.5 rounded-full border border-blue-500/30">
+                                  {ca.category}
+                                </span>
+                                <span className="text-slate-400 font-mono font-semibold">{ca.date}</span>
+                              </div>
+                              <h4 className="text-xs sm:text-sm font-extrabold text-white leading-snug group-hover:text-blue-300 transition">
+                                {ca.title}
+                              </h4>
+                              <p className="text-slate-300 text-[11px] leading-relaxed line-clamp-4">
+                                {ca.content}
+                              </p>
+                            </div>
+
+                            <div className="border-t border-white/10 pt-3 mt-3 flex items-center justify-between gap-2">
+                              <button
+                                onClick={() => triggerToast(`📥 Downloading PDF for capsule: ${ca.title}`)}
+                                className="text-[10px] text-blue-400 hover:text-blue-300 font-bold hover:underline flex items-center gap-1 cursor-pointer"
+                              >
+                                <Download className="h-3 w-3" /> Download PDF
+                              </button>
+                              <button
+                                onClick={() => {
+                                  setTodayActiveSubTab('questions');
+                                  setTodayQuizIdx(0);
+                                }}
+                                className="text-[10px] text-amber-300 hover:text-amber-200 font-bold flex items-center gap-1 cursor-pointer hover:underline"
+                              >
+                                <span>MCQ Quiz</span>
+                                <ArrowUpRight className="h-3 w-3" />
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                      ));
-                    })()}
+                        ));
+                      })()}
+                    </div>
                   </div>
                 )}
               </div>
@@ -3109,7 +3329,9 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
               {/* Redirection CTA */}
               <div className="relative z-10 mt-5 pt-3 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
                 <span className="text-slate-400 text-[11px]">
-                  {locale === 'hi' ? '🎯 कुल 50 दैनिक समाचार कैप्सूल और 50 अभ्यास प्रश्न उपलब्ध हैं।' : '🎯 Access full bilingual 50 news capsules & 50 interactive exam questions.'}
+                  {locale === 'hi' 
+                    ? '🎯 दैनिक समसामयिकी के साथ विस्तृत अभ्यास, मासिक पत्रिकाएं और पीडीएफ नोट्स उपलब्ध हैं।' 
+                    : '🎯 Comprehensive daily affairs with monthly magazines and PDF revision notes.'}
                 </span>
                 <button
                   onClick={() => {
@@ -3207,15 +3429,22 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                       Browse Vacancies <ArrowUpRight className="h-4.5 w-4.5" />
                     </button>
                     <button 
+                      onClick={() => setActiveTab('auto-mock-creator')}
+                      className="rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-5 py-3 text-sm font-extrabold text-white shadow-lg shadow-emerald-500/20 hover:from-emerald-400 hover:to-teal-500 transition flex items-center gap-1.5 cursor-pointer"
+                    >
+                      <Zap className="h-4 w-4 fill-amber-300 text-amber-300" />
+                      🎯 Auto Mock Creator (SSC, Bank, Rly, Army)
+                    </button>
+                    <button 
                       onClick={() => setActiveTab('ssc-ai-mock')}
-                      className="rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-5 py-3 text-sm font-extrabold text-slate-950 shadow-lg shadow-amber-500/20 hover:from-amber-400 hover:to-amber-500 transition flex items-center gap-1.5 cursor-pointer"
+                      className="rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-4 py-3 text-sm font-extrabold text-slate-950 shadow-lg shadow-amber-500/20 hover:from-amber-400 hover:to-amber-500 transition flex items-center gap-1.5 cursor-pointer"
                     >
                       <Sparkles className="h-4 w-4 fill-slate-950" />
-                      SSC 7-Day AI Mock (New Pattern)
+                      SSC 7-Day AI
                     </button>
                     <button 
                       onClick={() => setActiveTab('mock-tests')}
-                      className="rounded-xl bg-white/10 px-6 py-3 text-sm font-extrabold text-white border border-white/20 hover:bg-white/15 transition cursor-pointer"
+                      className="rounded-xl bg-white/10 px-5 py-3 text-sm font-extrabold text-white border border-white/20 hover:bg-white/15 transition cursor-pointer"
                     >
                       All Mocks
                     </button>
@@ -3963,9 +4192,26 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                         </div>
                       </div>
 
-                      <button className="rounded-xl border border-blue-100 font-bold px-4 py-2 text-xs text-blue-600 hover:bg-blue-50/50 transition">
-                        View Notice
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button 
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setGlobalPdfJob(job);
+                          }}
+                          className="rounded-xl border border-red-200 bg-red-50 font-black px-3 py-2 text-xs text-red-700 hover:bg-red-100 transition flex items-center gap-1 cursor-pointer shadow-xs"
+                          title="View & Download Official PDF Notification"
+                        >
+                          <FileText className="h-3.5 w-3.5 text-red-600" />
+                          <span>PDF</span>
+                        </button>
+                        <button 
+                          onClick={() => setActiveTab('jobs')}
+                          className="rounded-xl border border-blue-100 font-bold px-4 py-2 text-xs text-blue-600 hover:bg-blue-50/50 transition cursor-pointer"
+                        >
+                          View Notice
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -4278,6 +4524,9 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}
               pyqsList={pyqsList}
+              onOpenPdf={(job) => setGlobalPdfJob(job)}
+              triggerToast={triggerToast}
+              onGoPremium={() => setActiveTab('premium')}
             />
           </div>
         )}
@@ -4290,6 +4539,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
             onSelectJob={(job) => {
               setActiveTab('jobs');
             }}
+            onOpenPdf={(job) => setGlobalPdfJob(job)}
             triggerToast={triggerToast}
           />
         )}
@@ -4470,10 +4720,29 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
               initialActiveTestId={selectedMockTestId}
               onClearInitialActiveTestId={() => setSelectedMockTestId(null)}
               onOpenAiDoubt={handleOpenAiDoubtWithQuestion}
-              onAddMockTest={(newTest) => {
-                setMockTests(prev => [newTest, ...prev]);
-                triggerToast(`SSC AI Mock Test Added: ${newTest.title}`);
+              onAddMockTest={(newTest) => handleAddMockTest(newTest, true)}
+              triggerToast={triggerToast}
+            />
+          </div>
+        )}
+
+        {/* TAB 6.1: AUTOMATIC MOCK TEST CREATOR (ALL EXAMS: SSC, BANKING, RAILWAY, ARMY, POLICE) */}
+        {activeTab === 'auto-mock-creator' && (
+          <div className="space-y-6 animate-fadeIn">
+            <SarkariAds 
+              user={user} 
+              onGoPremium={() => setActiveTab('premium')} 
+              triggerToast={triggerToast} 
+              layout="banner" 
+            />
+            <AutoMockTestCreator
+              user={user}
+              onAddMockTest={(newTest) => handleAddMockTest(newTest, true)}
+              onStartCbtTest={(testId) => {
+                setSelectedMockTestId(testId);
+                setActiveTab('mock-tests');
               }}
+              triggerToast={triggerToast}
             />
           </div>
         )}
@@ -4489,10 +4758,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
             />
             <SscAiMockGenerator
               user={user}
-              onAddMockTest={(newTest) => {
-                setMockTests(prev => [newTest, ...prev]);
-                triggerToast(`SSC AI Mock Test Generated: ${newTest.title}`);
-              }}
+              onAddMockTest={(newTest) => handleAddMockTest(newTest, true)}
               onStartCbtTest={(testId) => {
                 setSelectedMockTestId(testId);
                 setActiveTab('mock-tests');
@@ -4562,7 +4828,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
             onDeleteJob={(jobId) => setJobs(jobs.filter(j => j.id !== jobId))}
             onAddAdmitCard={(newCard) => handleNewLaunch('Admit Card', newCard.title, newCard.org, 'admitCards', newCard)}
             onAddResult={(newRes) => handleNewLaunch('Result', newRes.title, newRes.org, 'results', newRes)}
-            onAddMockTest={(newTest) => setMockTests([newTest, ...mockTests])}
+            onAddMockTest={(newTest) => handleAddMockTest(newTest, false)}
             onAddAnswerKey={(newKey) => handleNewLaunch('Answer Key', newKey.title, newKey.org, 'answerKeys', newKey)}
             onAddCurrentAffair={(newItem) => setCurrentAffairs(prev => [newItem, ...prev])}
             onAddCurrentAffairsQuestion={(newQ) => setQuizQuestions(prev => [newQ, ...prev])}
@@ -5114,7 +5380,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
             user={user}
             setUser={setUser}
             onAddAdmitCard={(newCard) => setAdmitCards([newCard, ...admitCards])}
-            onAddMockTest={(newTest) => setMockTests([newTest, ...mockTests])}
+            onAddMockTest={(newTest) => handleAddMockTest(newTest, true)}
             onAddPYQ={(newPYQ) => setPyqsList(prev => [
               { title: newPYQ.title, type: 'Solved PDF Booklet', size: newPYQ.size, year: newPYQ.year, exam: newPYQ.exam, premium: newPYQ.premium },
               ...prev
@@ -5822,6 +6088,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
             blogs={blogs} 
             onAddBlog={(newBlog) => setBlogs(prev => [newBlog, ...prev])} 
             triggerToast={triggerToast} 
+            onNavigateTab={(tab) => setActiveTab(tab as any)}
           />
         )}
 
@@ -6858,6 +7125,14 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                   📊 Live Traffic (ट्रैफिक डेशबोर्ड)
                   <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
                 </button>
+                <span className="text-slate-600 font-bold">|</span>
+                <button 
+                  onClick={() => setAdvertiseOpen(true)}
+                  className="text-orange-400 hover:text-orange-300 font-bold hover:underline cursor-pointer transition-colors flex items-center gap-1 shrink-0"
+                >
+                  📢 Advertise With Us (विज्ञापन लगवाएं)
+                  <span className="bg-orange-500/20 text-orange-300 text-[9px] px-1.5 py-0.5 rounded font-black border border-orange-400/40">PARTNER</span>
+                </button>
               </p>
             </div>
             <p className="flex items-center gap-1 mt-2 sm:mt-0">
@@ -7314,6 +7589,29 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
           initialQuestion={aiDoubtInitialQuestion} 
         />
       )}
+
+      {/* Global Sarkari Official PDF Notification Viewer & Downloader Modal */}
+      {globalPdfJob && (
+        <SarkariPdfModal 
+          job={globalPdfJob} 
+          onClose={() => setGlobalPdfJob(null)} 
+          triggerToast={triggerToast} 
+        />
+      )}
+
+      {/* Interactive Advertise With Us Modal */}
+      <AdvertiseModal
+        isOpen={advertiseOpen}
+        onClose={() => setAdvertiseOpen(false)}
+        triggerToast={triggerToast}
+      />
+
+      {/* Sticky Bottom Sponsored Bar */}
+      <StickyBottomAd
+        user={user}
+        onGoPremium={() => setActiveTab('premium')}
+        triggerToast={triggerToast}
+      />
 
     </div>
   );

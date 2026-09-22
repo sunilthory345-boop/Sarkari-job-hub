@@ -1,6 +1,6 @@
 {
   "name": "Job Sarkari Hub",
-  "description": "Comprehensive Indian Government Job Portal featuring an advanced 7-Day SSC New Pattern AI Mock Test Generator (CGL/CHSL/MTS/CPO/GD Tier 1 & 2 CBT simulator) with real-time automatic synchronization for PGRKAM Punjab, UPPBPB UP Police, MPESB MP Vyapam, HPSC, BTSC Bihar, Indian Navy, Indian Army, Rajasthan SSO, SBI, IBPS, RRB, UPSC, and SSC portals.",
+  "description": "Comprehensive Indian Government Job Portal featuring real-time recruitment updates and an authentic Online CBT Mock Test Engine covering SSC New Pattern 2026, Railway (RRB NTPC, ALP, Group D, JE, RPF), Banking (Bank of Baroda, PNB, IBPS PO/Clerk, SBI, RRB, RBI), Haryana (HSSC CET, Haryana Police, HPSC HCS), and Central/State Online Exams (DSSSB, CTET, UP Police, NDA).",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

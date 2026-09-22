@@ -67,6 +67,7 @@ export interface Question {
   explanation: string;
   date?: string;
   section?: string;
+  category?: string;
   marks?: number;
 }
 
@@ -89,10 +90,25 @@ export interface CurrentAffair {
   pdfUrl: string;
 }
 
+export type BlogCategory = 
+  | 'Exam Tips' 
+  | 'Government Jobs' 
+  | 'Career Guidance' 
+  | 'Preparation Strategy' 
+  | 'Interview Tips' 
+  | 'Banking' 
+  | 'Banking & Finance' 
+  | 'Admit Card & Results' 
+  | 'Current Affairs' 
+  | 'Railway' 
+  | 'SSC' 
+  | 'Police & Defence'
+  | (string & {});
+
 export interface Blog {
   id: string;
   title: string;
-  category: 'Exam Tips' | 'Government Jobs' | 'Career Guidance' | 'Preparation Strategy' | 'Interview Tips';
+  category: BlogCategory;
   author: string;
   summary: string;
   content: string;

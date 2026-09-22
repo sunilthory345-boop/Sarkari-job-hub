@@ -265,20 +265,41 @@ export default function IbpsLiveSyncHub({
                 : 'Direct, real-time synchronization with official portal https://www.ibps.in/. Live tracking for CRP PO/MT, CRP Clerk, CRP RRBs, and CRP Specialist Officers (vacancies, prelims/mains call letters, scorecards, cutoff marks, and provisional allotment).'}
             </p>
 
-            <div className="flex flex-wrap items-center gap-3 pt-2 text-xs text-blue-200">
+            <div className="flex flex-wrap items-center gap-2 pt-2 text-xs text-blue-200">
               <a
                 href="https://www.ibps.in/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-800/60 hover:bg-blue-700/80 text-white font-semibold transition border border-blue-400/30"
               >
-                <span>Visit Official IBPS Portal</span>
+                <span>IBPS Portal (ibps.in)</span>
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
+
+              <a
+                href="https://bankofbaroda.bank.in/career"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-600/70 hover:bg-amber-500/80 text-white font-semibold transition border border-amber-400/40"
+              >
+                <span>🏦 Bank of Baroda Careers (bankofbaroda.bank.in/career)</span>
+                <ExternalLink className="h-3.5 w-3.5" />
+              </a>
+
+              <a
+                href="https://pnb.bank.in/Recruitments.aspx"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-800/70 hover:bg-red-700/80 text-white font-semibold transition border border-red-400/40"
+              >
+                <span>🏛️ PNB Recruitments (pnb.bank.in)</span>
+                <ExternalLink className="h-3.5 w-3.5" />
+              </a>
+
               <span className="text-blue-300/60">•</span>
               <span>Last checked: <strong className="text-white font-mono">{status.lastChecked}</strong></span>
               <span className="text-blue-300/60">•</span>
-              <span>Monitored: <strong className="text-white">PO, Clerk, RRB, SO</strong></span>
+              <span>Monitored: <strong className="text-white">PO, Clerk, RRB, SO, BOB, PNB</strong></span>
             </div>
           </div>
 

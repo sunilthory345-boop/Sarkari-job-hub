@@ -5,6 +5,8 @@ import {
   Filter, Bookmark, BookmarkCheck, Share2, Info, Clock, AlertCircle, GraduationCap
 } from 'lucide-react';
 import { GovJob, UserProfile } from '../types';
+import { SarkariPdfModal } from './SarkariPdfModal';
+import SarkariAds from './SarkariAds';
 
 interface JobCardProps {
   jobs: GovJob[];
@@ -15,6 +17,9 @@ interface JobCardProps {
   selectedCategory?: string;
   setSelectedCategory?: (c: string) => void;
   pyqsList?: { title: string; type: string; size: string; year: number; exam: string; premium: boolean; downloadUrl?: string }[];
+  onOpenPdf?: (job: GovJob) => void;
+  triggerToast?: (msg: string) => void;
+  onGoPremium?: () => void;
 }
 
 const getCategoryStyles = (cat: string) => {
@@ -75,14 +80,26 @@ export default function JobCard({
   setQualificationFilter,
   selectedCategory: propCategory,
   setSelectedCategory: propSetCategory,
-  pyqsList
+  pyqsList,
+  onOpenPdf,
+  triggerToast,
+  onGoPremium
 }: JobCardProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [localCategory, setLocalCategory] = useState('All');
   const selectedCategory = propCategory !== undefined ? propCategory : localCategory;
   const setSelectedCategory = propSetCategory !== undefined ? propSetCategory : setLocalCategory;
   const [selectedJob, setSelectedJob] = useState<GovJob | null>(null);
+  const [pdfViewerJob, setPdfViewerJob] = useState<GovJob | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const handleOpenPdf = (job: GovJob) => {
+    if (onOpenPdf) {
+      onOpenPdf(job);
+    } else {
+      setPdfViewerJob(job);
+    }
+  };
 
   const getRelevantPyqsForJob = (job: GovJob) => {
     let list = pyqsList;
@@ -344,19 +361,29 @@ export default function JobCard({
       {/* Jobs Catalog Listing Grid */}
       <div id="jobs-cards-grid" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {filteredJobs.length > 0 ? (
-          filteredJobs.map((job) => {
+          filteredJobs.map((job, idx) => {
             const isSaved = user.savedJobs.includes(job.id);
             const daysRemaining = getDaysRemaining(job.lastDate);
             const isExpired = daysRemaining < 0;
             const cStyles = getCategoryStyles(job.category);
 
             return (
-              <div 
-                key={job.id} 
-                id={`job-idx-${job.id}`}
-                className={`group relative flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-3.5 shadow-xs transition-all duration-200 hover:shadow-md ${cStyles.border}`}
-              >
-                {/* Save bookmark and Commission banner */}
+              <React.Fragment key={job.id}>
+                {/* In-feed native sponsored ad slot after 2nd and 6th card */}
+                {(idx === 2 || idx === 6) && !user.premiumUser && (
+                  <SarkariAds 
+                    user={user} 
+                    onGoPremium={onGoPremium || (() => {})} 
+                    triggerToast={triggerToast || (() => {})} 
+                    layout="infeed" 
+                  />
+                )}
+
+                <div 
+                  id={`job-idx-${job.id}`}
+                  className={`group relative flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-3.5 shadow-xs transition-all duration-200 hover:shadow-md ${cStyles.border}`}
+                >
+                  {/* Save bookmark and Commission banner */}
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex flex-wrap gap-1.5 items-center">
                     <span className={`inline-block rounded px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wide ${cStyles.text}`}>
@@ -463,17 +490,29 @@ export default function JobCard({
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleOpenPdf(job);
+                      }}
+                      className="flex items-center gap-1 rounded-md px-2 py-1 text-[10px] font-extrabold bg-red-50 text-red-700 hover:bg-red-100 border border-red-200 transition cursor-pointer shadow-xs"
+                      title="View & Download Official PDF Notification / आधिकारिक अधिसूचना पीडीएफ"
+                    >
+                      <FileText className="h-3 w-3 text-red-600" />
+                      <span>PDF</span>
+                    </button>
                     <button
                       onClick={() => handleCopyShare(job)}
-                      className="rounded-md p-1.5 text-slate-400 hover:bg-slate-50 hover:text-slate-650 transition"
+                      className="rounded-md p-1.5 text-slate-400 hover:bg-slate-50 hover:text-slate-650 transition cursor-pointer"
                       title="Share Job Notification"
                     >
                       <Share2 className="h-3.5 w-3.5" />
                     </button>
                     <button
                       onClick={() => setSelectedJob(job)}
-                      className={`flex items-center gap-1 rounded px-2.5 py-1 text-[10px] font-bold transition ${cStyles.btn}`}
+                      className={`flex items-center gap-1 rounded px-2.5 py-1 text-[10px] font-bold transition cursor-pointer ${cStyles.btn}`}
                     >
                       Details & Apply
                     </button>
@@ -486,8 +525,9 @@ export default function JobCard({
                   </div>
                 )}
               </div>
-            );
-          })
+            </React.Fragment>
+          );
+        })
         ) : (
           <div className="col-span-full py-16 text-center">
             <ShieldAlert className="mx-auto h-12 w-12 text-slate-300" />
@@ -705,12 +745,17 @@ export default function JobCard({
                               <button
                                 onClick={() => {
                                   if (isPremiumLocked) {
-                                    alert("🔒 This Solved PYQ is a Premium resource. Please upgrade to Premium in the 'Premium Club' tab to unlock all PDF papers instantly!");
-                                  } else {
-                                    if (pyq.downloadUrl) {
-                                      window.open(pyq.downloadUrl, '_blank', 'noopener,noreferrer');
+                                    if (triggerToast) {
+                                      triggerToast("🔒 This Solved PYQ is a Premium resource. Please upgrade to Premium in the 'Premium Club' tab to unlock all PDF papers instantly!");
                                     } else {
-                                      alert(`📥 Starting download for file "${pyq.title}".`);
+                                      alert("🔒 This Solved PYQ is a Premium resource. Please upgrade to Premium in the 'Premium Club' tab to unlock all PDF papers instantly!");
+                                    }
+                                  } else {
+                                    if (triggerToast) {
+                                      triggerToast(`📥 Downloading solved paper: "${pyq.title}"`);
+                                    }
+                                    if (pyq.downloadUrl && !pyq.downloadUrl.includes('placeholder')) {
+                                      window.open(pyq.downloadUrl, '_blank', 'noopener,noreferrer');
                                     }
                                   }
                                 }}
@@ -742,25 +787,30 @@ export default function JobCard({
             <div className="mt-6 border-t border-slate-100 pt-4 flex flex-col sm:flex-row items-center justify-between gap-3 bg-slate-50/50 -mx-6 -mb-6 p-6 rounded-b-3xl">
               <div>
                 <p className="font-mono text-[9px] text-slate-400 font-bold uppercase">Official Links Verified</p>
-                <a href={selectedJob.officialWebsite} target="_blank" rel="noreferrer" className="text-xs text-blue-600 hover:underline font-semibold flex items-center gap-1.5 mt-1">
+                <a 
+                  href={selectedJob.officialWebsite} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-xs text-blue-600 hover:underline font-semibold flex items-center gap-1.5 mt-1"
+                >
                   Commission Website <ArrowUpRight className="h-3.5 w-3.5" />
                 </a>
               </div>
 
               <div className="flex flex-wrap items-center gap-2">
-                <a 
-                  href={selectedJob.pdfUrl} 
-                  target="_blank" 
-                  rel="noreferrer"
-                  className="flex items-center gap-1.5 rounded-xl border border-blue-200 bg-white px-4 py-2.5 text-xs font-bold text-blue-800 shadow-xs hover:bg-slate-50 transition"
+                <button 
+                  type="button"
+                  onClick={() => handleOpenPdf(selectedJob)}
+                  className="flex items-center gap-1.5 rounded-xl border border-red-200 bg-red-50 hover:bg-red-100 px-4 py-2.5 text-xs font-black text-red-800 shadow-xs transition cursor-pointer"
+                  title="Open Official Notification PDF Document"
                 >
-                  <FileText className="h-4 w-4" /> Download PDF Notification
-                </a>
+                  <FileText className="h-4 w-4 text-red-600" /> View & Download PDF Notification
+                </button>
                 
                 <a
                   href={selectedJob.applyUrl}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-1.5 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white shadow-md shadow-blue-100 hover:bg-blue-700 transition"
                 >
                   Apply Online <ArrowUpRight className="h-4 w-4" />
@@ -770,6 +820,15 @@ export default function JobCard({
 
           </div>
         </div>
+      )}
+
+      {/* Global Sarkari PDF Viewer Modal */}
+      {pdfViewerJob && (
+        <SarkariPdfModal
+          job={pdfViewerJob}
+          onClose={() => setPdfViewerJob(null)}
+          triggerToast={triggerToast}
+        />
       )}
 
     </div>

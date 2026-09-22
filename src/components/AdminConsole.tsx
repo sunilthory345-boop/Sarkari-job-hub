@@ -2293,8 +2293,8 @@ What is the standard pH level of pure distilled water at normal room temperature
             </p>
 
             <div className="space-y-3 overflow-y-auto max-h-[400px]">
-              {mockTests.map((test) => (
-                <div key={test.id} className="p-4 border border-slate-100 rounded-2xl flex items-center justify-between gap-4 bg-slate-50/50 hover:bg-slate-50 transition text-xs">
+              {mockTests.map((test, idx) => (
+                <div key={`${test.id}-${idx}`} className="p-4 border border-slate-100 rounded-2xl flex items-center justify-between gap-4 bg-slate-50/50 hover:bg-slate-50 transition text-xs">
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
                       <span className="p-1 px-1.5 rounded-md bg-orange-100 text-orange-850 font-sans font-bold text-[9px]/none uppercase">

@@ -25,10 +25,36 @@ interface SarkariAdsProps {
   user: UserProfile;
   onGoPremium: () => void;
   triggerToast: (msg: string) => void;
-  layout?: 'banner' | 'sidebar' | 'inline';
+  layout?: 'banner' | 'sidebar' | 'inline' | 'infeed' | 'leaderboard';
 }
 
 const ASPIRANT_ADS: AdItem[] = [
+  {
+    id: 'ad-testbook-super',
+    title: "Testbook Pass Pro: 70,000+ Mock Tests & All PYQs",
+    sponsor: "Testbook SuperCoaching",
+    description: "Unlimited test series for SSC CGL, RRB NTPC, Bank PO, and State PSC. Detailed bilingual solutions and AI rank analyzer.",
+    discountBadge: "Flat 60% OFF",
+    category: 'Test Series',
+    ctaText: "Unlock Pass Pro",
+    imageColor: "from-blue-600 to-indigo-800",
+    avatarText: "TB",
+    destUrl: "https://testbook.com",
+    rating: 4.9
+  },
+  {
+    id: 'ad-pw-ssc',
+    title: "PhysicsWallah SSC CGL & CHSL 2026 Mahapack",
+    sponsor: "Govt Exam Wallah (PW)",
+    description: "Daily live lectures by top faculty, DPPs, handwritten formula cheat sheets, and doubt clearing sessions. Affordable prep for everyone.",
+    discountBadge: "Special ₹999 Deal",
+    category: 'Coaching',
+    ctaText: "Enroll at ₹999",
+    imageColor: "from-amber-600 via-rose-600 to-red-700",
+    avatarText: "PW",
+    destUrl: "https://www.pw.live",
+    rating: 4.8
+  },
   {
     id: 'ad-ras-upsc',
     title: "IAS & RAS 2026 Complete GS Prelims Crash Course",
@@ -40,6 +66,19 @@ const ASPIRANT_ADS: AdItem[] = [
     imageColor: "from-blue-600 via-indigo-700 to-indigo-900",
     avatarText: "डी",
     destUrl: "https://www.drishtiias.com",
+    rating: 4.8
+  },
+  {
+    id: 'ad-adda-bank',
+    title: "Adda247 Banking MahaPack: IBPS, SBI PO & Clerk",
+    sponsor: "Adda247 Live Prep",
+    description: "Complete live batches with sectional speed drills, full length test series, and previous year memory-based question solutions.",
+    discountBadge: "Flat 77% OFF",
+    category: 'Coaching',
+    ctaText: "Claim 77% Off",
+    imageColor: "from-purple-600 via-purple-700 to-indigo-800",
+    avatarText: "AD",
+    destUrl: "https://www.adda247.com",
     rating: 4.8
   },
   {
@@ -67,6 +106,19 @@ const ASPIRANT_ADS: AdItem[] = [
     avatarText: "कि",
     destUrl: "http://kiranpublications.com",
     rating: 4.7
+  },
+  {
+    id: 'ad-utkarsh',
+    title: "Rajasthan CET & Patwari Special Master Course",
+    sponsor: "Utkarsh Classes Jodhpur",
+    description: "Complete Rajasthan history, geography, Hindi grammar and computer science syllabus covered with daily live quizzes and e-notes.",
+    discountBadge: "Flat 50% OFF",
+    category: 'Coaching',
+    ctaText: "Start Learning",
+    imageColor: "from-rose-600 to-orange-600",
+    avatarText: "UK",
+    destUrl: "https://utkarsh.com",
+    rating: 4.8
   },
   {
     id: 'ad-smart-calculator',
@@ -197,6 +249,142 @@ export default function SarkariAds({
   };
 
   // RENDER CORRESPONDING LAYOUT
+  if (layout === 'infeed') {
+    return (
+      <div className="relative flex flex-col justify-between rounded-xl border border-amber-200 bg-linear-to-b from-amber-50/40 via-white to-orange-50/30 p-3.5 shadow-xs transition-all duration-200 hover:shadow-md text-left font-sans text-xs">
+        {/* Top Header */}
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex flex-wrap gap-1.5 items-center">
+            <span className="inline-block rounded bg-amber-100 text-amber-900 border border-amber-300 px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wide">
+              Sponsored • विज्ञापन
+            </span>
+            <span className="text-[9px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.2 rounded">
+              ★ {currentAd.rating} Verified
+            </span>
+          </div>
+
+          <div className="flex items-center gap-1">
+            <button
+              onClick={handleNextAd}
+              className="text-[9.5px] font-bold text-blue-700 hover:underline cursor-pointer"
+              title="Next sponsor"
+            >
+              Next →
+            </button>
+            <button
+              onClick={() => handleDismissAd(currentAd.id)}
+              className="rounded-full p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition cursor-pointer"
+              title="Hide Ad"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Content Body */}
+        <div className="mt-2.5 flex-1 space-y-1.5">
+          <div className="flex items-center gap-2">
+            <div className={`h-8 w-8 rounded-lg bg-linear-to-br ${currentAd.imageColor} text-white font-black flex items-center justify-center shrink-0 shadow-xs text-xs`}>
+              {currentAd.avatarText}
+            </div>
+            <div>
+              <span className="text-[10px] font-bold text-slate-700 block truncate max-w-[170px]">
+                {currentAd.sponsor}
+              </span>
+              <span className="text-[9px] text-amber-700 font-extrabold block">
+                {currentAd.discountBadge || 'Verified Partner'}
+              </span>
+            </div>
+          </div>
+
+          <h3 
+            onClick={() => handleClaimOffer(currentAd)}
+            className="font-sans text-xs font-black text-slate-900 line-clamp-2 leading-snug hover:text-blue-700 cursor-pointer pt-1"
+          >
+            {currentAd.title}
+          </h3>
+
+          <p className="text-[10.5px] text-slate-500 line-clamp-2 leading-relaxed">
+            {currentAd.description}
+          </p>
+
+          <div className="rounded-lg bg-amber-50/80 border border-dashed border-amber-300 p-1.5 text-center mt-2">
+            <span className="text-[9.5px] text-amber-900 font-black tracking-wide block">
+              🎟️ CODE: SARKARIVIP25 • Flat 25% Off
+            </span>
+          </div>
+        </div>
+
+        {/* Footer CTAs */}
+        <div className="mt-3 grid grid-cols-2 gap-2 border-t border-slate-100 pt-2.5">
+          <button
+            onClick={() => handleClaimOffer(currentAd)}
+            className="w-full rounded-lg bg-[#1E3A8A] hover:bg-blue-800 text-white font-black py-1.5 text-center text-[10.5px] transition flex items-center justify-center gap-1 shadow-xs cursor-pointer"
+          >
+            <span>{currentAd.ctaText}</span>
+            <ArrowRight className="h-3 w-3" />
+          </button>
+
+          <a
+            href={currentAd.destUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold py-1.5 text-center text-[10.5px] transition flex items-center justify-center gap-1 cursor-pointer"
+          >
+            <span>Official Link</span>
+            <ExternalLink className="h-3 w-3" />
+          </a>
+        </div>
+
+        {/* Claim Popup Modal if active */}
+        {showOfferModal && (
+          <div className="fixed inset-0 bg-slate-900/50 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl p-6 max-w-sm w-full space-y-4 shadow-xl border border-slate-100">
+              <div className="flex justify-between items-start">
+                <div className="p-2.5 bg-blue-50 text-blue-800 rounded-xl">
+                  <Megaphone className="h-5 w-5 animate-bounce" />
+                </div>
+                <button onClick={() => setShowOfferModal(null)} className="p-1.5 hover:bg-slate-100 rounded-full cursor-pointer">
+                  <X className="h-4 w-4 text-slate-400" />
+                </button>
+              </div>
+
+              <div className="space-y-1.5 text-left">
+                <span className="text-[9px] bg-indigo-100 text-indigo-800 font-extrabold px-2 py-0.5 rounded uppercase">Verified Sponsor Package</span>
+                <h3 className="font-extrabold text-slate-900 text-base leading-snug">{showOfferModal.title}</h3>
+                <p className="text-slate-400 text-[10.5px] font-mono">By {showOfferModal.sponsor}</p>
+                <p className="text-slate-600 text-[11.5px] leading-relaxed mt-1.5">{showOfferModal.description}</p>
+              </div>
+
+              <div className="bg-amber-500/10 border border-dashed border-amber-400/40 rounded-xl p-3 text-center space-y-1">
+                <span className="text-[10px] text-slate-500 font-bold block uppercase tracking-wider">Your Exclusive coupon code:</span>
+                <strong className="text-orange-700 font-mono text-base tracking-widest block font-extrabold">SARKARIVIP25</strong>
+                <span className="text-[9px] text-slate-400 block font-semibold">Copy and paste during checkout for Flat 25% discount + Free PYQs</span>
+              </div>
+
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowOfferModal(null)}
+                  className="w-full rounded-xl border border-slate-200 py-2 font-bold text-slate-500 text-[11px] hover:bg-slate-50 transition cursor-pointer"
+                >
+                  Close Window
+                </button>
+                <a
+                  href={showOfferModal.destUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full rounded-xl bg-[#1E3A8A] hover:bg-blue-800 text-white font-extrabold py-2 text-center text-[11px] transition flex items-center justify-center gap-1"
+                >
+                  Visit Sponsor <ExternalLink className="h-3 w-3" />
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
   if (layout === 'sidebar') {
     return (
       <div className="bg-white rounded-2xl border border-slate-200 p-4.5 space-y-4 shadow-xs text-left text-xs font-sans relative">
