@@ -459,7 +459,7 @@ export default function SbiLiveSyncHub({
                       {notice.details.posts && (
                         <div className="flex justify-between">
                           <span className="font-medium text-slate-500">Total Vacancies:</span>
-                          <span className="font-bold text-slate-800">{notice.details.posts.toLocaleString()} Posts</span>
+                          <span className="font-bold text-slate-800">{Number(notice.details.posts).toLocaleString()} Posts</span>
                         </div>
                       )}
                       {notice.details.qualification && (

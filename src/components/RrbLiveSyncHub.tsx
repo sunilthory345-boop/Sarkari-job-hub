@@ -539,10 +539,10 @@ export default function RrbLiveSyncHub({
 
                     {/* Meta Badges */}
                     <div className="flex flex-wrap items-center gap-3 pt-1 text-xs text-slate-600">
-                      {notice.details.posts && (
+                      {notice.details?.posts && (
                         <span className="inline-flex items-center gap-1 bg-slate-100 px-2.5 py-1 rounded-md">
                           <Briefcase className="w-3.5 h-3.5 text-blue-600" />
-                          <span>Total Posts: <strong>{notice.details.posts.toLocaleString()}</strong></span>
+                          <span>Total Posts: <strong>{Number(notice.details.posts).toLocaleString()}</strong></span>
                         </span>
                       )}
 

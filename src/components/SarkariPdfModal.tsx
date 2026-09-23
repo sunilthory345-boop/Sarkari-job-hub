@@ -178,7 +178,7 @@ export const SarkariPdfModal: React.FC<SarkariPdfModalProps> = ({ job, onClose, 
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(9);
       doc.setTextColor(darkSlate[0], darkSlate[1], darkSlate[2]);
-      doc.text(`Total Posts Announced: ${job.totalPosts.toLocaleString()} Vacancies`, 16, y + 6);
+      doc.text(`Total Posts Announced: ${total.toLocaleString()} Vacancies`, 16, y + 6);
       doc.text(`Pay Scale / Salary: ${job.salary}`, 16, y + 12);
       doc.text(`Location / Posting Zone: ${job.location}`, 16, y + 18);
       doc.text(`Category of Examination: ${job.category} Competitive Recruitment`, 16, y + 24);
@@ -220,7 +220,7 @@ export const SarkariPdfModal: React.FC<SarkariPdfModalProps> = ({ job, onClose, 
       doc.text(`${obcPosts.toLocaleString()}`, 102, y + 5);
       doc.text(`${scPosts.toLocaleString()}`, 138, y + 5);
       doc.text(`${stPosts.toLocaleString()}`, 166, y + 5);
-      doc.text(`${job.totalPosts.toLocaleString()}`, 184, y + 5);
+      doc.text(`${total.toLocaleString()}`, 184, y + 5);
 
       // Section 3: Important Dates
       y += 15;
@@ -672,7 +672,7 @@ export const SarkariPdfModal: React.FC<SarkariPdfModalProps> = ({ job, onClose, 
                         </tr>
                         <tr className="border-b border-slate-300">
                           <td className="p-2 font-bold bg-slate-100 border-r border-slate-300">Total Number of Posts</td>
-                          <td className="p-2 font-bold text-emerald-800">{job.totalPosts.toLocaleString()} Vacancies</td>
+                          <td className="p-2 font-bold text-emerald-800">{total.toLocaleString()} Vacancies</td>
                         </tr>
                         <tr className="border-b border-slate-300">
                           <td className="p-2 font-bold bg-slate-100 border-r border-slate-300">Scale of Pay / Remuneration</td>
@@ -717,7 +717,7 @@ export const SarkariPdfModal: React.FC<SarkariPdfModalProps> = ({ job, onClose, 
                           <td className="p-2.5 border border-slate-400">{obcPosts.toLocaleString()}</td>
                           <td className="p-2.5 border border-slate-400">{scPosts.toLocaleString()}</td>
                           <td className="p-2.5 border border-slate-400">{stPosts.toLocaleString()}</td>
-                          <td className="p-2.5 border border-slate-400 text-blue-900 bg-blue-50 font-black">{job.totalPosts.toLocaleString()}</td>
+                          <td className="p-2.5 border border-slate-400 text-blue-900 bg-blue-50 font-black">{total.toLocaleString()}</td>
                         </tr>
                       </tbody>
                     </table>

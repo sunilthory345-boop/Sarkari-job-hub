@@ -342,6 +342,152 @@ Total duration is 90 minutes. Target securing 75+ correct hits for safe qualific
     date: '2026-06-15'
   },
   {
+    id: 'seo-blog-typing-test-mastery-2026',
+    title: 'Govt Typing Speed Test (SSC CHSL, Steno Grade C/D, RRB NTPC): 35+ WPM & 80/100 WPM Dictation Roadmap 2026',
+    category: 'Exam Tips',
+    author: 'Sunil Kumar (Chief Editor) & SSC Skill Cell',
+    summary: 'Master government typing skill tests for SSC CHSL (35 WPM / 10,500 KDPH), SSC Stenographer (80 & 100 WPM audio dictation), and RRB NTPC. Official mistake rules, Mangal Inscript shortcuts & 15-day practice plan.',
+    content: `Clearing the Computer-Based Written Exam is only half the battle in competitive recruitments like **SSC CHSL**, **SSC Stenographer Grade C & D**, **RRB NTPC (Junior Accounts / Senior Clerk)**, and **High Court Assistant** examinations. Every year, thousands of high-scoring candidates are disqualified in the Skill/Typing test due to excessive error rates or poor key stroke consistency.
+
+### ⌨️ Official Typing Speed & Depression Standards:
+1. **SSC CHSL (LDC / JSA):**
+   * **English Typing:** 35 Words Per Minute (WPM) $\\rightarrow$ equivalent to **10,500 Key Depressions Per Hour (KDPH)** or ~1,750 key strokes in 10 minutes.
+   * **Hindi Typing:** 30 Words Per Minute (WPM) $\\rightarrow$ equivalent to **9,000 KDPH** or ~1,500 key strokes in 10 minutes (Mangal Inscript / Remington Gail).
+2. **SSC CHSL (Data Entry Operator - DEO):**
+   * **DEO Grade A:** 8,000 KDPH (approx 2,000 key depressions in 15 minutes).
+   * **DEO in CAG / Ministry Offices:** 15,000 KDPH (approx 3,750 key depressions in 15 minutes).
+3. **SSC Stenographer (Grade C & D):**
+   * **Grade C:** 100 WPM shorthand dictation (10 minutes audio) followed by 40 minutes English / 55 minutes Hindi transcription on computer.
+   * **Grade D:** 80 WPM shorthand dictation (10 minutes audio) followed by 50 minutes English / 65 minutes Hindi transcription on computer.
+4. **RRB NTPC (Typing Skill Test - TST):**
+   * 30 WPM in English or 25 WPM in Hindi. Strict TCS iON interface where backspace is disabled or penalizes keystroke rhythm.
+
+### 🎯 Official SSC Error & Mistake Evaluation Formula:
+The Staff Selection Commission categorizes mistakes into **Full Mistakes** and **Half Mistakes**:
+* **Full Mistakes (100% Penalty):**
+  * Omission of every word or figure.
+  * Substitution of a wrong word or figure in place of the original text.
+  * Addition of every word or figure not found in the original passage.
+* **Half Mistakes (50% Penalty):**
+  * Spacing errors (no space between two words or extra space inside a word).
+  * Capitalization errors (typing a lowercase letter instead of uppercase or vice-versa).
+  * Punctuation errors (missing full stops, commas, or apostrophes).
+* **Maximum Permissible Error Limit:**
+  * **General (UR):** Maximum **7% errors** allowed.
+  * **OBC / SC / ST / EWS / PwD:** Maximum **10% errors** allowed.
+
+### 🚀 15-Day Guaranteed Speed Improvement Blueprint:
+* **Day 1 to 5:** Focus 100% on **accuracy over speed**. Do not rush. Target 98%+ accuracy with standard home row key placement ($ASDF - JKL;$).
+* **Day 6 to 10:** Practice on TCS iON simulation software (available directly in the **Job Sarkari Hub Typing Test** tab) with realistic 10-minute timers and blind typing (eyes strictly on screen or source passage, never on your keyboard).
+* **Day 11 to 15:** Practice with official previous year exam passages containing numerals, mixed capitalization, and punctuation marks.
+
+👉 *Pro-Tip: Practice right now with our simulated TCS iON exam engine under the **"Typing Test"** tab in Job Sarkari Hub!*`,
+    readTime: '7 min read',
+    date: '2026-08-01'
+  },
+  {
+    id: 'seo-blog-rrb-ntpc-group-d-mega-2026',
+    title: 'Railway Mega Recruitment 2026: RRB NTPC & Group D 1.5 Lakh Posts, Selection Process & Subject Cutoffs',
+    category: 'Railway',
+    author: 'Ravi Ranjan (Railway Coaching Mentor)',
+    summary: 'Everything you need to know about the 1,50,000+ Railway vacancies in 2026. Zone-wise vacancy matrix, CBT 1 & CBT 2 weightage, NCERT Science syllabus, and normalization formulas.',
+    content: `The Indian Railways is conducting one of the largest mass employment drives in the nation's history, recruiting across Level 1 (Group D), Level 2, Level 3, Level 5, and Level 6 (NTPC Graduate & Undergraduate) cadres.
+
+### 🚂 Key Posts & Pay Scale Cadres:
+* **NTPC Graduate Posts:** Station Master (Pay Level 6), Goods Train Manager / Guard (Level 5), Senior Commercial cum Ticket Clerk (Level 5).
+* **NTPC Undergraduate Posts:** Commercial cum Ticket Clerk (Level 3), Accounts Clerk cum Typist (Level 2), Junior Clerk cum Typist (Level 2).
+* **RRC Group D (Level 1):** Track Maintainer Grade IV, Helper/Assistant in Electrical/Mechanical/Signal, Pointsman.
+
+### 📝 Comprehensive CBT 1 & 2 Syllabus:
+* **Mathematics (30 Qs in CBT 1, 35 Qs in CBT 2):** Number Systems, BODMAS, Decimals, Fractions, LCM & HCF, Ratio & Proportion, Percentages, Mensuration, Time & Work, Time & Distance, Simple & Compound Interest, Profit & Loss, Algebra, Geometry & Trigonometry.
+* **General Intelligence & Reasoning (30 Qs in CBT 1, 35 Qs in CBT 2):** Analogies, Alphabetical & Number Series, Coding-Decoding, Mathematical Operations, Blood Relations, Syllogisms, Jumbling, Venn Diagrams, Data Interpretation, Statement & Assumptions.
+* **General Awareness & Science (40 Qs in CBT 1, 50 Qs in CBT 2):**
+  * Current Events of National & International Importance (Last 8 months).
+  * General Science (Physics, Chemistry, Biology up to 10th Standard CBSE/NCERT).
+  * Indian History, Freedom Struggle, Indian Polity & Governance, Geography of India & World.
+
+### 💡 High-Scoring Tips for RRB 2026:
+1. **Solve Daily 100 MCQs:** Practice daily speed tests on Job Sarkari Hub's Railway CBT Room.
+2. **Master NCERT Class 9 & 10 Science:** Over 60% of science questions in Railway exams are directly based on NCERT conceptual questions.
+3. **Negative Marking Caution:** Railways has strict $-1/3$ negative marking. Never guess answers blindly!`,
+    readTime: '8 min read',
+    date: '2026-08-02'
+  },
+  {
+    id: 'seo-blog-top-10-high-paying-sarkari-jobs',
+    title: 'Top 10 Highest Paying Government Jobs in India 2026: Eligibility, Perks, Direct Merit & Salary Breakdown',
+    category: 'Government Jobs',
+    author: 'Sunil Kumar (Founder & Chief Editor, Job Sarkari Hub)',
+    summary: 'Discover the most prestigious and lucrative Sarkari jobs in India for 10th, 12th pass and Graduates. Salary in hand, 7th Pay Commission pay bands, DA/HRA allowances, and career progression.',
+    content: `Government jobs in India are celebrated not only for career security and societal respect, but also for extraordinary allowances, residential quarters, medical coverage for family, and handsome pension/provident benefits under the 7th Pay Commission.
+
+### 🏆 Top 10 High-Paying Government Careers in 2026:
+1. **Indian Administrative Service (IAS) & Indian Foreign Service (IFS):**
+   * *Pay Band:* Level 10 (Starting Basic ₹56,100, grossing ₹1,00,000+ with DA, HRA, vehicle, and official residence). IFS officers posted abroad receive substantial foreign allowances.
+2. **RBI Grade B Officer (Reserve Bank of India):**
+   * *Gross Monthly Emoluments:* Approx ₹1,16,000+ per month plus leased accommodation (up to ₹50,000/month in Mumbai), fuel allowances, and children education allowances.
+3. **Assistant Section Officer (ASO) in Ministry of External Affairs (MEA):**
+   * *Selection via:* SSC CGL. Level 7 pay scale. When posted to Indian embassies abroad (USA, UK, France, Japan), officers receive diplomatic passports and monthly foreign allowances ranging from ₹2.5 Lakhs to ₹4.5 Lakhs tax-free!
+4. **ISRO / DRDO Scientist 'SC' (Class A Gazetted):**
+   * *Selection via:* GATE or ICRB Direct Written Exam. Level 10 basic pay with specialized research incentives, free township housing, and health facilities.
+5. **State Bank of India Probationary Officer (SBI PO):**
+   * *Gross Pay:* ₹65,000 - ₹72,000+ starting gross salary, plus leased housing of ₹15,000 - ₹35,000, 4 advance increments, and accelerated overseas branch postings.
+6. **Income Tax Inspector & GST Inspector (CBIC / CBDT):**
+   * *Selection via:* SSC CGL. Level 7 (Basic ₹44,900, starting in-hand approx ₹78,000 in X-cities like Delhi, Mumbai, Kolkata). High authority and rapid promotion avenues.
+7. **Assistant Commandant in CAPF (BSF, CRPF, CISF, ITBP, SSB):**
+   * *Selection via:* UPSC CAPF (AC). Level 10 pay matrix with risk and hardship allowances, commanding an entire company of armed personnel.
+8. **SEBI Grade A Assistant Manager:**
+   * *Salary:* Gross pay exceeding ₹1,15,000 per month regulating financial and capital markets in India.
+9. **Railway Station Master & Train Manager (Goods Guard):**
+   * *Selection via:* RRB NTPC. Level 6 & Level 5 pay scale, boosted substantially by running allowance (approx ₹45,000 to ₹70,000 additional running mileage allowances monthly).
+10. **UP Police & State Police Sub-Inspector (SI):**
+    * *Pay Scale:* Level 6 (4200 Grade Pay). Prestigious law enforcement executive career with government vehicle, housing, and uniform allowances.
+
+### 🌟 How to Target and Crack These Positions:
+Check our **Job Vacancies** and **Mock Tests** tabs on Job Sarkari Hub every morning to stay notified of official exam announcements!`,
+    readTime: '9 min read',
+    date: '2026-08-03'
+  },
+  {
+    id: 'seo-blog-ssc-gd-constable-physical-syllabus',
+    title: 'SSC GD Constable 2026: PET/PST Physical Standards, Running Time, Height/Chest & Written Exam Strategy',
+    category: 'Police & Defence',
+    author: 'Commander Vikram Singh (Retd.) & Defence Faculty',
+    summary: 'Complete guide for SSC GD Constable recruitment across BSF, CISF, CRPF, SSB, ITBP, AR, and SSF. Detailed Physical Efficiency Test (PET), Physical Standard Test (PST) parameters, and syllabus breakdown.',
+    content: `The Staff Selection Commission conducts the General Duty (GD) Constable examination to recruit patriotic youth into the Central Armed Police Forces (CAPFs). Over 40,000+ vacancies are notified annually, attracting millions of 10th pass candidates.
+
+### 🏃 Physical Efficiency Test (PET) Benchmarks:
+* **Male Candidates (General Areas):**
+  * **5 Kilometers Race** to be completed in strictly **24 Minutes**.
+* **Female Candidates (General Areas):**
+  * **1.6 Kilometers (1600m) Race** to be completed in **8 Minutes 30 Seconds**.
+* **For Ladakh Region Candidates:**
+  * Male: 1.6 Kms in 7 minutes | Female: 800 meters in 5 minutes.
+
+### 📏 Physical Standard Test (PST) - Height & Chest Criteria:
+* **Height Requirements:**
+  * Male (General, SC, OBC): **170 cm** minimum.
+  * Female (General, SC, OBC): **157 cm** minimum.
+  * Male (ST): **162.5 cm** | Female (ST): **150 cm**.
+* **Chest Measurement (Male Candidates Only):**
+  * Unexpanded: **80 cm** minimum.
+  * Minimum Expansion: **5 cm** (Must expand to at least 85 cm).
+  * ST Male Candidates: 76 cm unexpanded with 5 cm expansion.
+
+### 📝 Computer-Based Written Examination (CBE):
+* Total Questions: **80 Questions** | Total Marks: **160 Marks** | Duration: **60 Minutes**.
+* 4 Sections (20 Questions / 40 Marks each):
+  1. Part A: General Intelligence & Reasoning
+  2. Part B: General Knowledge & General Awareness
+  3. Part C: Elementary Mathematics
+  4. Part D: English or Hindi (Candidate choice)
+* Negative Marking: $-0.25$ marks for each wrong attempt.
+
+👉 *Start your preparation today with Job Sarkari Hub's Free SSC GD Mock Test Series!*`,
+    readTime: '6 min read',
+    date: '2026-08-04'
+  },
+  {
     id: 'seo-blog-nhm-coldchain',
     title: 'NHM ANM Auxiliary Nurse Guidance: National Healthcare Cold Chain Exam Questions',
     category: 'Exam Tips',
@@ -604,6 +750,95 @@ export const BLOG_TRANSLATIONS: Record<string, { title: string; summary: string;
 टीके की प्रभावशीलता सुरक्षित रखने के लिए कोल्ड-चेन का तापमान जानना अत्यंत आवश्यक है:
 * **सुरक्षित तापमान सीमा:** गैर-फ्रीजर वैक्सीन (जैसे BCG, HepB, खसरा-रूबेला) अनिवार्य रूप से **$+2^{\\circ}\\text{C}$ से $+8^{\\circ}\\text{C}$** तापमान के बीच संचित की जाती हैं। पोलियो वैक्सीन (OPV) को डीप फ्रीजर में $-20^{\\circ}\\text{C}$ पर रखा जाता है।
 * **बीसीजी वैक्सीन खुराक:** जन्म के समय बाईं ऊपरी बांह पर त्वचा के भीतर (Intradermal) $0.05$ ml की सूक्ष्म खुराक दी जाती है।`
+  },
+  'seo-blog-typing-test-mastery-2026': {
+    title: 'सरकारी टाइपिंग व आशुलिपि टेस्ट 2026: SSC CHSL, स्टेनो ग्रेड C/D और रेलवे NTPC में 35+ WPM व 80/100 डिक्टेशन रणनीति',
+    summary: 'एसएससी सीएचएसएल 35 WPM (10,500 KDPH), स्टेनोग्राफर 80 व 100 WPM ऑडियो डिक्टेशन, और आरआरबी एनटीपीसी टाइपिंग टेस्ट क्रैक करने की आधिकारिक गाइड। फुल व हाफ मिस्टेक नियम और मंगल इनस्क्रिप्ट लेआउट।',
+    content: `सरकारी नौकरियों (जैसे **SSC CHSL**, **SSC स्टेनोग्राफर ग्रेड C व D**, **रेलवे NTPC**, तथा **हाई कोर्ट क्लर्क**) में लिखित परीक्षा पास करना केवल पहला पड़ाव है। प्रतिवर्ष हजारों मेधावी छात्र स्किल/टाइपिंग टेस्ट में गलतियों की सीमा पार हो जाने के कारण बाहर हो जाते हैं।
+
+### ⌨️ आधिकारिक टाइपिंग गति व की-डिप्रेशन मानक:
+1. **SSC CHSL (LDC / JSA):**
+   * **अंग्रेजी टाइपिंग:** 35 शब्द प्रति मिनट (WPM) $\\rightarrow$ यानी **10,500 की-डिप्रेशन प्रति घंटा (KDPH)** अथवा 10 मिनट में लगभग 1,750 की-स्ट्रोक।
+   * **हिंदी टाइपिंग:** 30 शब्द प्रति मिनट (WPM) $\\rightarrow$ यानी **9,000 KDPH** अथवा 10 मिनट में लगभग 1,500 की-स्ट्रोक (मंगल इनस्क्रिप्ट या रेमिंगटन गेल)।
+2. **SSC CHSL (डाटा एंट्री ऑपरेटर - DEO):**
+   * **DEO ग्रेड A:** 8,000 KDPH (15 मिनट में लगभग 2,000 की-स्ट्रोक)।
+   * **DEO कैग/मंत्रालय:** 15,000 KDPH (15 मिनट में लगभग 3,750 की-स्ट्रोक)।
+3. **SSC आशुलिपिक (Stenographer ग्रेड C व D):**
+   * **ग्रेड C:** 100 शब्द/मिनट शॉर्टहैंड डिक्टेशन (10 मिनट ऑडियो) तथा 40 मिनट अंग्रेजी / 55 मिनट हिंदी कंप्यूटर ट्रांसक्रिप्शन।
+   * **ग्रेड D:** 80 शब्द/मिनट शॉर्टहैंड डिक्टेशन (10 मिनट ऑडियो) तथा 50 मिनट अंग्रेजी / 65 मिनट हिंदी कंप्यूटर ट्रांसक्रिप्शन।
+4. **RRB NTPC (टाइपिंग स्किल टेस्ट - TST):**
+   * 30 WPM अंग्रेजी अथवा 25 WPM हिंदी। टीसीएस आयन इंटरफेस जहां बैकस्पेस पूरी तरह प्रतिबंधित रहता है।
+
+### 🎯 आधिकारिक एसएससी त्रुटि मूल्यांकन नियम:
+* **पूर्ण गलती (Full Mistake - 100% कटौती):**
+  * किसी शब्द या संख्या को छोड़ना (Omission)।
+  * मूल शब्द के स्थान पर गलत शब्द लिखना (Substitution)।
+  * मूल गद्यांश में न होने वाले अतिरिक्त शब्द जोड़ना (Addition)।
+* **अर्ध गलती (Half Mistake - 50% कटौती):**
+  * स्पेस की गलती (दो शब्दों के बीच स्पेस न देना या शब्द के बीच अतिरिक्त स्पेस)।
+  * कैपिटल/स्मॉल लेटर की गलती।
+  * विराम चिह्नों (पूर्ण विराम, कॉमा आदि) की त्रुटि।
+* **अधिकतम स्वीकार्य गलती सीमा:**
+  * **अनारक्षित (General/UR):** अधिकतम **7% गलतियां**।
+  * **आरक्षित वर्ग (OBC / SC / ST / EWS):** अधिकतम **10% गलतियां**।
+
+👉 *नोट: आप अभी जॉब सरकारी हब के **"Typing Test"** टैब में जाकर वास्तविक TCS iON परीक्षा सॉफ्टवेयर पर अभ्यास शुरू कर सकते हैं!*`
+  },
+  'seo-blog-rrb-ntpc-group-d-mega-2026': {
+    title: 'रेलवे महाभर्ती 2026: RRB NTPC और ग्रुप डी 1.5 लाख पदों की चयन प्रक्रिया, सिलेबस व कटऑफ',
+    summary: 'भारतीय रेलवे 2026 की 1.5 लाख से अधिक रिक्तियों का पूरा विवरण। जोन-वार सीटें, सीबीटी 1 व 2 परीक्षा प्रारूप, एनसीईआरटी विज्ञान और नॉर्मलाइजेशन सूत्र।',
+    content: `भारतीय रेलवे द्वारा वर्ष 2026 में ग्रुप डी (लेवल 1) और एनटीपीसी (लेवल 2 से 6) के लिए अब तक की सबसे बड़ी भर्ती प्रक्रिया संचालित की जा रही है।
+
+### 🚂 मुख्य पद और वेतन स्तर:
+* **एनटीपीसी ग्रेजुएट:** स्टेशन मास्टर (लेवल 6), ट्रेन मैनेजर/गार्ड (लेवल 5), सीनियर क्लर्क कम टाइपिस्ट।
+* **एनटीपीसी अंडरग्रेजुएट:** जूनियर क्लर्क कम टाइपिस्ट (लेवल 2), कमर्शियल कम टिकट क्लर्क (लेवल 3)।
+* **ग्रुप डी (लेवल 1):** ट्रैक मेंटेनर ग्रेड IV, पॉइंट्समैन, हेल्पर/असिस्टेंट।
+
+### 📝 सीबीटी 1 और 2 का पाठ्यक्रम:
+* **गणित (30/35 प्रश्न):** संख्या पद्धति, बोडमास, दशमलव, प्रतिशत, लाभ-हानि, साधारण व चक्रवृद्धि ब्याज, समय व कार्य, बीजगणित, त्रिकोणमिति।
+* **रीजनिंग (30/35 प्रश्न):** कोडिंग-डिकोडिंग, रक्त संबंध, दिशा परीक्षण, वेन आरेख, कथन व निष्कर्ष।
+* **सामान्य ज्ञान व विज्ञान (40/50 प्रश्न):** 10वीं कक्षा तक का एनसीईआरटी भौतिकी, रसायन, जीवविज्ञान तथा पिछले 8 महीनों का करेंट अफेयर्स।
+
+👉 *रेलवे सीबीटी की तैयारी के लिए जॉब सरकारी हब का फ्री मॉक टेस्ट रूम आज ही जॉइन करें!*`
+  },
+  'seo-blog-top-10-high-paying-sarkari-jobs': {
+    title: 'भारत की टॉप 10 सबसे अधिक वेतन वाली सरकारी नौकरियां 2026: योग्यता, भत्ते, सीधी भर्ती व इन-हैंड सैलरी',
+    summary: '10वीं, 12वीं और स्नातकों के लिए भारत की सर्वोच्च और सम्मानजनक सरकारी नौकरियां। 7वें वेतन आयोग के अनुसार इन-हैंड सैलरी, डीए, एचआरए और बंगले की सुविधाएं।',
+    content: `सरकारी नौकरियों में स्थायित्व के साथ-साथ सम्मान और 7वें वेतन आयोग के अंतर्गत आकर्षक वेतन और भत्ते मिलते हैं।
+
+### 🏆 2026 की टॉप 10 सबसे अधिक सैलरी वाली सरकारी नौकरियां:
+1. **आईएएस (IAS) और आईएफएस (IFS):** लेवल 10 पे मैट्रिक्स। प्रारंभिक बेसिक पे ₹56,100, कुल ग्रॉस वेतन ₹1 लाख से अधिक + बंगला, गाड़ी और गार्ड। विदेशों में पोस्टिंग पर आईएफएस अधिकारियों को लाखों रुपये का कर-मुक्त विदेशी भत्ता मिलता है।
+2. **आरबीआई ग्रेड बी अधिकारी (RBI Grade B):** प्रतिमाह ₹1,16,000+ का ग्रॉस वेतन और मुंबई जैसे शहरों में ₹50,000 तक का लीज्ड आवास।
+3. **विदेश मंत्रालय में सहायक अनुभाग अधिकारी (ASO in MEA via SSC CGL):** लेवल 7 पे स्केल। विदेश में भारतीय दूतावास में तैनाती पर ₹2.5 लाख से ₹4.5 लाख तक मासिक विदेशी भत्ता और डिप्लोमैटिक पासपोर्ट।
+4. **इसरो एवं डीआरडीओ वैज्ञानिक (Scientist 'SC'):** क्लास A राजपत्रित पद। अनुसंधान भत्ते, आवासीय टाउनशिप और परिवार के लिए पूर्ण चिकित्सा सुविधा।
+5. **एसबीआई प्रोबेशनरी ऑफिसर (SBI PO):** ₹65,000-₹72,000+ ग्रॉस वेतन, 4 अग्रिम वेतन वृद्धि और बैंक लीज्ड क्वार्टर।
+6. **आयकर निरीक्षक व जीएसटी इंस्पेक्टर (Income Tax & GST Inspector via SSC CGL):** लेवल 7। दिल्ली, मुंबई आदि शहरों में इन-हैंड लगभग ₹78,000।
+7. **सीएपीएफ में असिस्टेंट कमांडेंट (UPSC CAPF AC):** लेवल 10 पे मैट्रिक्स, सशस्त्र बलों की पूरी कंपनी का कमान नेतृत्व।
+8. **सेबी ग्रेड ए सहायक प्रबंधक (SEBI Grade A):** प्रतिमाह ₹1,15,000 से अधिक ग्रॉस वेतन।
+9. **रेलवे स्टेशन मास्टर व ट्रेन मैनेजर:** लेवल 6 व 5 वेतन, रनिंग अलाउंस के साथ प्रतिमाह ₹45,000 से ₹70,000 अतिरिक्त आय।
+10. **दरोगा/सब-इंस्पेक्टर (UP & State Police SI):** 4200 ग्रेड पे, सरकारी वाहन, आवास और प्रतिष्ठित कार्यक्षेत्र।`
+  },
+  'seo-blog-ssc-gd-constable-physical-syllabus': {
+    title: 'एसएससी जीडी कांस्टेबल 2026: फिजिकल टेस्ट (PET/PST), दौड़ समय, ऊंचाई/सीना और लिखित परीक्षा गाइड',
+    summary: 'बीएसएफ, सीआईएसएफ, सीआरपीएफ, एसएसबी, आईटीबीपी, असम राइफल्स और एसएसएफ में 40,000+ पदों हेतु संपूर्ण भर्ती गाइड। शारीरिक दक्षता, दौड़ के नियम और अंक विभाजन।',
+    content: `कर्मचारी चयन आयोग (SSC) द्वारा अर्धसैनिक बलों (CAPFs) में जीडी कांस्टेबल पदों पर देश के लाखों 10वीं पास युवाओं की भर्ती की जाती है।
+
+### 🏃 शारीरिक दक्षता परीक्षा (PET) दौड़ के मानक:
+* **पुरुष अभ्यर्थी:** 24 मिनट में 5 किलोमीटर की दौड़ अनिवार्य।
+* **महिला अभ्यर्थी:** 8 मिनट 30 सेकंड में 1.6 किलोमीटर (1600 मीटर) की दौड़।
+
+### 📏 शारीरिक मानक परीक्षण (PST) - ऊंचाई और सीना:
+* **न्यूनतम ऊंचाई:**
+  * पुरुष (सामान्य, ओबीसी, एससी): **170 सेमी**
+  * महिला (सामान्य, ओबीसी, एससी): **157 सेमी**
+  * एसटी वर्ग: पुरुष 162.5 सेमी | महिला 150 सेमी
+* **सीना (केवल पुरुषों के लिए):**
+  * बिना फुलाए: 80 सेमी | न्यूनतम फुलाव: 5 सेमी (फुलाकर 85 सेमी अनिवार्य)।
+
+### 📝 कंप्यूटर आधारित लिखित परीक्षा (CBE):
+* कुल प्रश्न: **80 प्रश्न** | कुल अंक: **160 अंक** | समय: **60 मिनट**
+* 4 भाग (प्रत्येक 20 प्रश्न / 40 अंक): रीजनिंग, सामान्य ज्ञान, प्रारंभिक गणित, और हिंदी या अंग्रेजी।
+* नकारात्मक अंकन: प्रत्येक गलत उत्तर पर $-0.25$ अंक काटा जाएगा।`
   }
 };
 
@@ -778,6 +1013,62 @@ export const BLOG_QUIZZES: Record<string, { question: string; options: string[];
       options: ['5 minutes flat', '6 minutes 30 seconds', '7 minutes 15 seconds', '6 minutes flat'],
       correctIndex: 1,
       explanation: 'Male candidates must run the 1600 meters distance in 6 minutes and 30 seconds to qualify.'
+    }
+  ],
+  'seo-blog-typing-test-mastery-2026': [
+    {
+      question: 'What is the required English typing speed standard in SSC CHSL LDC/JSA exams?',
+      options: ['25 WPM (7500 KDPH)', '30 WPM (9000 KDPH)', '35 WPM (10,500 KDPH)', '40 WPM (12,000 KDPH)'],
+      correctIndex: 2,
+      explanation: 'SSC CHSL requires 35 words per minute in English, which translates to 10,500 Key Depressions Per Hour (approx 1750 key strokes in 10 minutes).'
+    },
+    {
+      question: 'What is the maximum permissible error percentage for General (UR) category candidates in the SSC CHSL Typing Test?',
+      options: ['5% errors', '7% errors', '10% errors', '15% errors'],
+      correctIndex: 1,
+      explanation: 'Unreserved (UR) candidates are allowed a maximum of 7% errors. For reserved categories (OBC, SC, ST, EWS), up to 10% errors are permissible.'
+    },
+    {
+      question: 'What dictation speed is tested for SSC Stenographer Grade C positions?',
+      options: ['60 WPM', '80 WPM', '100 WPM', '120 WPM'],
+      correctIndex: 2,
+      explanation: 'SSC Stenographer Grade C requires 100 WPM shorthand dictation for 10 minutes, whereas Grade D requires 80 WPM.'
+    }
+  ],
+  'seo-blog-rrb-ntpc-group-d-mega-2026': [
+    {
+      question: 'What is the standard negative marking penalty in Indian Railway RRB CBT examinations?',
+      options: ['1/4th (0.25) marks', '1/3rd (0.33) marks', '1/2 (0.50) marks', 'No negative marking'],
+      correctIndex: 1,
+      explanation: 'Railways strictly penalizes incorrect answers with a deduction of 1/3rd (0.33) of the mark allocated to that question.'
+    },
+    {
+      question: 'Under which Pay Level do Railway Station Master and Goods Train Manager posts fall?',
+      options: ['Level 2 and 3', 'Level 4 and 5', 'Level 6 and Level 5', 'Level 8 and 9'],
+      correctIndex: 2,
+      explanation: 'Station Master is a Pay Level 6 post, while Goods Train Manager (Guard) is Pay Level 5.'
+    }
+  ],
+  'seo-blog-top-10-high-paying-sarkari-jobs': [
+    {
+      question: 'Through which examination is an Assistant Section Officer (ASO) in the Ministry of External Affairs (MEA) recruited?',
+      options: ['UPSC Civil Services', 'SSC CGL Examination', 'IBPS PO Examination', 'NDA Examination'],
+      correctIndex: 1,
+      explanation: 'ASO in MEA is one of the highest-cutoff and most sought-after posts recruited through SSC CGL (Combined Graduate Level).'
+    }
+  ],
+  'seo-blog-ssc-gd-constable-physical-syllabus': [
+    {
+      question: 'What is the mandatory running distance and time for male candidates in the SSC GD Constable Physical Efficiency Test (PET)?',
+      options: ['1.6 km in 6 minutes 30 seconds', '5 km in 24 minutes', '1 km in 4 minutes', '5 km in 30 minutes'],
+      correctIndex: 1,
+      explanation: 'Male aspirants in general areas must complete a 5 km run in 24 minutes to qualify in the SSC GD Physical Efficiency Test.'
+    },
+    {
+      question: 'What is the minimum chest expansion required for male candidates in the SSC GD Constable Physical Standard Test?',
+      options: ['3 cm expansion', '5 cm expansion (from 80 cm to 85 cm)', '7 cm expansion', 'No expansion required'],
+      correctIndex: 1,
+      explanation: 'Male candidates must have an unexpanded chest of 80 cm with a minimum 5 cm expansion (to at least 85 cm).'
     }
   ]
 };

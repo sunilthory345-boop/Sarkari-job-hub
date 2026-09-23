@@ -93,7 +93,7 @@ export default function AdvertiseModal({
             <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-xs text-slate-600 space-y-1 max-w-md mx-auto">
               <p><strong>Selected Slot:</strong> {selectedPlacement.toUpperCase()}</p>
               <p><strong>Duration:</strong> {selectedDuration} Days</p>
-              <p><strong>Estimated Campaign Package:</strong> ₹{estimatedCost.toLocaleString()} + GST</p>
+              <p><strong>Estimated Campaign Package:</strong> ₹{Number(estimatedCost || 0).toLocaleString()} + GST</p>
             </div>
             <div className="flex gap-3 justify-center pt-2">
               <button
@@ -241,7 +241,7 @@ export default function AdvertiseModal({
                 <div className="text-right sm:text-right">
                   <span className="text-[10px] text-slate-500 font-bold block">Estimated Package:</span>
                   <strong className="text-base sm:text-lg font-black text-slate-900">
-                    ₹{estimatedCost.toLocaleString()} <span className="text-[10px] font-normal text-slate-500">(approx)</span>
+                    ₹{Number(estimatedCost || 0).toLocaleString()} <span className="text-[10px] font-normal text-slate-500">(approx)</span>
                   </strong>
                 </div>
               </div>

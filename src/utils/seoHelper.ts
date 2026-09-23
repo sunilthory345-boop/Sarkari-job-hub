@@ -82,6 +82,11 @@ const SEO_MAP: Record<LocaleType, Record<string, SEOMetadata>> = {
       title: "Contact Official Support Helpdesk — Candidate Ticket Resolution",
       description: "Need help? File structural preparation feedback, premium account assistance, or platform bug tickets. Our officers are active.",
       keywords: "Sarkari query contact, customer help desk, support tickets, file feedback, student resolution panel"
+    },
+    'typing-test': {
+      title: "Govt Typing & Stenography Skill Test Simulator — SSC CHSL, Steno Grade C/D, RRB NTPC",
+      description: "Official pattern bilingual typing test for SSC CHSL (35 WPM / 10,500 KDPH), SSC Stenographer (80 & 100 WPM audio dictation), and RRB NTPC. Full & half mistake error analysis.",
+      keywords: "Sarkari typing test, ssc chsl typing speed, ssc stenographer dictation audio, rrb ntpc typing skill test, hindi mangal inscript typing"
     }
   },
   hi: {
@@ -159,6 +164,11 @@ const SEO_MAP: Record<LocaleType, Record<string, SEOMetadata>> = {
       title: "सहायता केंद्र संपर्क — उम्मीदवार समस्या निवारण कक्ष",
       description: "क्या आपको तैयारी में सहायता या प्रीमियम शिकायत है? तुरंत टिकट दर्ज करें। हमारी समर्पित फैकल्टी सहयोग करेगी।",
       keywords: "सहायता संपर्क, टिकट दर्ज करें, स्टूडेंट हेल्प डेस्क, शिकायत निवारण, सरकारी हब सपोर्ट"
+    },
+    'typing-test': {
+      title: "सरकारी टाइपिंग व आशुलिपि टेस्ट सिम्युलेटर — SSC CHSL, स्टेनोग्राफर 80/100 WPM, RRB NTPC",
+      description: "आधिकारिक एसएससी सीएचएसएल (35 WPM / 10500 KDPH), एसएससी आशुलिपिक 80 व 100 WPM ऑडियो डिक्टेशन एवं रेलवे टाइपिंग टेस्ट। पूर्ण एवं अर्ध गलतियों का सटीक मूल्यांकन।",
+      keywords: "सरकारी टाइपिंग टेस्ट, एसएससी सीएचएसएल टाइपिंग, एसएससी स्टेनोग्राफर डिक्टेशन ऑडियो, रेलवे टाइपिंग टेस्ट, हिंदी मंगल इनस्क्रिप्ट"
     }
   },
   mr: {
@@ -273,6 +283,7 @@ export function updateSEOMetadata(
       const parentName = activeTab === 'admit-cards' ? (locale === 'hi' ? "प्रवेश पत्र" : "Admit Cards") : 
                          activeTab === 'results' ? (locale === 'hi' ? "परीक्षा परिणाम" : "Results") :
                          activeTab === 'mock-tests' ? (locale === 'hi' ? "मॉक टेस्ट" : "Mock Tests") :
+                         activeTab === 'typing-test' ? (locale === 'hi' ? "टाइपिंग व आशुलिपि टेस्ट" : "Typing & Steno Test") :
                          activeTab === 'syllabus' ? (locale === 'hi' ? "पाठ्यक्रम" : "Syllabus") :
                          activeTab === 'jobs' ? (locale === 'hi' ? "सरकारी नौकरियां" : "Jobs") :
                          activeTab === 'calendar' ? (locale === 'hi' ? "परीक्षा कैलेंडर" : "Exam Calendar") :
@@ -339,3 +350,91 @@ export function updateSEOMetadata(
     console.error("SEO Metadata dynamic update failed:", error);
   }
 }
+
+/**
+ * Dynamically updates Title, Description, OpenGraph, and injects Schema.org BlogPosting
+ * for individual articles when an aspirant views or shares a blog.
+ */
+export function updateBlogSEOMetadata(
+  blog: { id: string; title: string; summary: string; content: string; author: string; date: string; category: string },
+  isHindi: boolean = false
+) {
+  try {
+    const postTitle = `${blog.title} — Job Sarkari Hub 2026 Strategy`;
+    const postDesc = blog.summary.slice(0, 160);
+    const baseUrl = "https://sarkari-job-hub-v595.onrender.com";
+    const postUrl = `${baseUrl}/blog?id=${blog.id}`;
+
+    // 1. Update Title
+    document.title = postTitle;
+
+    // 2. Update Meta Description
+    let checkDescMeta = document.querySelector('meta[name="description"]');
+    if (checkDescMeta) {
+      checkDescMeta.setAttribute('content', postDesc);
+    }
+
+    // 3. Update OG Tags
+    const ogMap: Record<string, string> = {
+      'og:title': postTitle,
+      'og:description': postDesc,
+      'og:type': 'article',
+      'og:url': postUrl
+    };
+    Object.entries(ogMap).forEach(([prop, val]) => {
+      let ogMeta = document.querySelector(`meta[property="${prop}"]`);
+      if (ogMeta) ogMeta.setAttribute('content', val);
+    });
+
+    // 4. Update Twitter Tags
+    const twMap: Record<string, string> = {
+      'twitter:title': postTitle,
+      'twitter:description': postDesc
+    };
+    Object.entries(twMap).forEach(([prop, val]) => {
+      let twMeta = document.querySelector(`meta[name="${prop}"]`);
+      if (twMeta) twMeta.setAttribute('content', val);
+    });
+
+    // 5. Inject BlogPosting JSON-LD Schema
+    let blogSchemaScript = document.getElementById('sarkari-blog-posting-schema');
+    if (!blogSchemaScript) {
+      blogSchemaScript = document.createElement('script');
+      blogSchemaScript.setAttribute('id', 'sarkari-blog-posting-schema');
+      blogSchemaScript.setAttribute('type', 'application/ld+json');
+      document.head.appendChild(blogSchemaScript);
+    }
+
+    const blogSchema = {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": blog.title,
+      "description": blog.summary,
+      "articleSection": blog.category,
+      "inLanguage": isHindi ? "hi" : "en",
+      "author": {
+        "@type": "Person",
+        "name": blog.author
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Job Sarkari Hub",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://images.unsplash.com/photo-1532375811409-90b14564167e?q=80&w=200&auto=format&fit=crop"
+        }
+      },
+      "datePublished": blog.date,
+      "dateModified": blog.date,
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": postUrl
+      }
+    };
+
+    blogSchemaScript.innerHTML = JSON.stringify(blogSchema, null, 2);
+  } catch (err) {
+    console.error("Failed to update blog SEO metadata:", err);
+  }
+}
+

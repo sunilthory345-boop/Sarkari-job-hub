@@ -16,6 +16,7 @@ import {
 } from './data/mockData';
 import { DAILY_CURRENT_AFFAIRS_ITEMS, CURRENT_AFFAIRS_QUIZ_QUESTIONS } from './data/currentAffairsData';
 import { LANGUAGES, TRANSLATIONS, LocaleType } from './utils/lang';
+import { getJobDates, formatJobDate, getDaysRemaining, getLatestVacancies, getLastDateVacancies } from './utils/jobDateUtils';
 
 import Navbar from './components/Navbar';
 import JobCard from './components/JobCard';
@@ -56,6 +57,7 @@ import MpesbLiveSyncHub from './components/MpesbLiveSyncHub';
 import GovPortalsSyncBar from './components/GovPortalsSyncBar';
 import SscAiMockGenerator from './components/SscAiMockGenerator';
 import AutoMockTestCreator from './components/AutoMockTestCreator';
+import { TypingTestPortal } from './components/TypingTestPortal';
 import { SarkariPdfModal } from './components/SarkariPdfModal';
 import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice, IbpsLiveNotice, SbiLiveNotice, RajLiveNotice, ArmyLiveNotice, NavyLiveNotice, BtscLiveNotice, HpscLiveNotice, PgrkamLiveNotice, UppbpbLiveNotice, MpesbLiveNotice } from './types';
 import { initializeGA, trackPageView } from './utils/analytics';
@@ -183,20 +185,39 @@ function deduplicateById<T extends { id: string }>(arr: T[]): T[] {
 
 export default function App() {
   // ----- ROOT PERSISTENT STATE -----
+  const [vacancySectionFilter, setVacancySectionFilter] = useState<'all' | 'latest' | 'last-date'>('all');
   const [jobs, setJobs] = useState<GovJob[]>(() => {
     const saved = localStorage.getItem('sarkari_jobs');
     if (saved) {
       try {
         const parsed = JSON.parse(saved) as GovJob[];
         const deduplicated = deduplicateById(parsed);
-        const existingIds = new Set(deduplicated.map(j => j.id));
+        const initMap = new Map(INITIAL_JOBS.map(j => [j.id, j]));
+        const updated = deduplicated.filter(Boolean).map(j => {
+          const init = initMap.get(j.id);
+          const totalPosts = (j.totalPosts !== undefined && j.totalPosts !== null && !isNaN(Number(j.totalPosts)))
+            ? Number(j.totalPosts)
+            : (init?.totalPosts || 1000);
+          if (init) {
+            return {
+              ...init,
+              ...j,
+              totalPosts,
+              postedDate: init.postedDate,
+              lastDate: init.lastDate,
+              importantDates: init.importantDates
+            };
+          }
+          return {
+            ...j,
+            totalPosts
+          };
+        });
+        const existingIds = new Set(updated.map(j => j.id));
         const missingJobs = INITIAL_JOBS.filter(j => !existingIds.has(j.id));
-        if (missingJobs.length > 0 || deduplicated.length !== parsed.length) {
-          const merged = deduplicateById([...missingJobs, ...deduplicated]);
-          localStorage.setItem('sarkari_jobs', JSON.stringify(merged));
-          return merged;
-        }
-        return deduplicated;
+        const merged = deduplicateById([...missingJobs, ...updated]);
+        localStorage.setItem('sarkari_jobs', JSON.stringify(merged));
+        return merged;
       } catch (e) {
         return INITIAL_JOBS;
       }
@@ -745,8 +766,8 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
       // Determine initial activeTab based on pathname first
       const path = window.location.pathname.replace(/^\//, '');
       const validTabs = [
-        'jobs', 'admit-cards', 'results', 'mock-tests', 'ssc-ai-mock', 'syllabus', 
-        'calendar', 'current-affairs', 'blog', 'premium', 'contact', 'dashboard', 'admin', 'whatsapp-alerts', 'ai-doubt-solver',
+        'jobs', 'admit-cards', 'results', 'mock-tests', 'typing-test', 'auto-mock-creator', 'ssc-ai-mock', 'syllabus', 
+        'pyqs', 'uploads', 'newspapers', 'calendar', 'current-affairs', 'blog', 'premium', 'contact', 'dashboard', 'admin', 'whatsapp-alerts', 'ai-doubt-solver',
         'pgrkam-sync', 'uppbpb-sync', 'mpesb-sync', 'hpsc-sync', 'btsc-sync', 'navy-sync', 'army-sync', 'rajasthan-sync', 'sbi-sync', 'ibps-sync', 'rrb-sync', 'upsc-sync', 'ssc-sync'
       ];
       if (validTabs.includes(path)) {
@@ -770,8 +791,8 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
       try {
         const path = window.location.pathname.replace(/^\//, '');
         const validTabs = [
-          'jobs', 'admit-cards', 'results', 'mock-tests', 'ssc-ai-mock', 'syllabus', 
-          'calendar', 'current-affairs', 'blog', 'premium', 'contact', 'dashboard', 'admin', 'whatsapp-alerts', 'ai-doubt-solver',
+          'jobs', 'admit-cards', 'results', 'mock-tests', 'typing-test', 'auto-mock-creator', 'ssc-ai-mock', 'syllabus', 
+          'pyqs', 'uploads', 'newspapers', 'calendar', 'current-affairs', 'blog', 'premium', 'contact', 'dashboard', 'admin', 'whatsapp-alerts', 'ai-doubt-solver',
           'pgrkam-sync', 'uppbpb-sync', 'mpesb-sync', 'hpsc-sync', 'btsc-sync', 'navy-sync', 'army-sync', 'rajasthan-sync', 'sbi-sync', 'ibps-sync', 'rrb-sync', 'upsc-sync', 'ssc-sync'
         ];
         if (validTabs.includes(path)) {
@@ -3421,30 +3442,37 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                     Stay ahead with prompt notifications, chapter-wise mock test structures, verified PDFs, and professional guidance compiled for SSC, Banking, Railways, UPSC & State Exams.
                   </p>
 
-                  <div className="pt-2 flex flex-wrap gap-4 items-center">
+                  <div className="pt-2 flex flex-wrap gap-3 items-center">
                     <button 
                       onClick={() => setActiveTab('jobs')}
-                      className="rounded-xl bg-orange-500 px-6 py-3 text-sm font-extrabold text-white shadow-lg shadow-orange-500/30 hover:bg-orange-600 transition flex items-center gap-1 cursor-pointer"
+                      className="rounded-xl bg-orange-500 px-5 py-3 text-sm font-extrabold text-white shadow-lg shadow-orange-500/30 hover:bg-orange-600 transition flex items-center gap-1 cursor-pointer"
                     >
                       Browse Vacancies <ArrowUpRight className="h-4.5 w-4.5" />
                     </button>
                     <button 
+                      onClick={() => setActiveTab('typing-test')}
+                      className="rounded-xl bg-linear-to-r from-amber-400 via-amber-500 to-yellow-500 px-5 py-3 text-sm font-black text-slate-950 shadow-lg shadow-amber-500/30 hover:brightness-105 transition flex items-center gap-1.5 cursor-pointer ring-2 ring-amber-300/50 animate-pulse"
+                    >
+                      <span>⌨️</span>
+                      <span>{locale === 'hi' ? 'सरकारी टाइपिंग टेस्ट (SSC/Steno)' : 'Govt Typing & Steno Test'}</span>
+                    </button>
+                    <button 
                       onClick={() => setActiveTab('auto-mock-creator')}
-                      className="rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-5 py-3 text-sm font-extrabold text-white shadow-lg shadow-emerald-500/20 hover:from-emerald-400 hover:to-teal-500 transition flex items-center gap-1.5 cursor-pointer"
+                      className="rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-4 py-3 text-sm font-extrabold text-white shadow-lg shadow-emerald-500/20 hover:from-emerald-400 hover:to-teal-500 transition flex items-center gap-1.5 cursor-pointer"
                     >
                       <Zap className="h-4 w-4 fill-amber-300 text-amber-300" />
-                      🎯 Auto Mock Creator (SSC, Bank, Rly, Army)
+                      🎯 Auto Mock
                     </button>
                     <button 
                       onClick={() => setActiveTab('ssc-ai-mock')}
-                      className="rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-4 py-3 text-sm font-extrabold text-slate-950 shadow-lg shadow-amber-500/20 hover:from-amber-400 hover:to-amber-500 transition flex items-center gap-1.5 cursor-pointer"
+                      className="rounded-xl bg-white/10 px-4 py-3 text-sm font-extrabold text-white border border-white/20 hover:bg-white/15 transition flex items-center gap-1.5 cursor-pointer"
                     >
-                      <Sparkles className="h-4 w-4 fill-slate-950" />
+                      <Sparkles className="h-4 w-4 text-amber-300" />
                       SSC 7-Day AI
                     </button>
                     <button 
                       onClick={() => setActiveTab('mock-tests')}
-                      className="rounded-xl bg-white/10 px-5 py-3 text-sm font-extrabold text-white border border-white/20 hover:bg-white/15 transition cursor-pointer"
+                      className="rounded-xl bg-white/10 px-4 py-3 text-sm font-extrabold text-white border border-white/20 hover:bg-white/15 transition cursor-pointer"
                     >
                       All Mocks
                     </button>
@@ -4140,80 +4168,347 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
 
             </div>
 
+            {/* DEDICATED SARKARI TYPING & STENOGRAPHY SKILL TEST PORTAL CALLOUT BANNER */}
+            <div className="bg-linear-to-r from-blue-900 via-indigo-900 to-slate-900 rounded-3xl p-5 sm:p-6 text-white shadow-lg border border-blue-700/60 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-80 h-80 bg-amber-400/10 rounded-full blur-3xl pointer-events-none"></div>
+              <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5 text-left">
+                <div className="space-y-2 max-w-2xl">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="bg-amber-400 text-slate-950 text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full shadow-sm animate-pulse">
+                      NEW SECTION ⌨️
+                    </span>
+                    <span className="text-blue-200 text-xs font-bold font-mono">
+                      SSC CHSL • Steno Grade C/D • RRB NTPC • Court
+                    </span>
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-black text-white tracking-tight">
+                    {locale === 'hi' 
+                      ? 'सरकारी टाइपिंग और आशुलिपि (Stenography) स्किल टेस्ट' 
+                      : 'Govt Typing & Stenography Skill Test Simulator'}
+                  </h3>
+                  <p className="text-xs text-blue-200 leading-relaxed">
+                    {locale === 'hi'
+                      ? 'SSC CHSL 35 WPM (10,500 KDPH), स्टेनोग्राफर 80/100 WPM लाइव ऑडियो डिक्टेशन, हिंदी मंगल इनस्क्रिप्ट कीबोर्ड तथा पूर्ण व अर्ध गलतियों (% Error) का आधिकारिक मूल्यांकन।'
+                      : 'Practice with official TCS iON exam simulation, 80/100 WPM live audio dictation, Mangal Inscript layout, and official mistake calculation rules.'}
+                  </p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row md:flex-col gap-2.5 shrink-0">
+                  <button
+                    onClick={() => {
+                      setActiveTab('typing-test');
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className="px-5 py-3 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black rounded-2xl shadow-md transition flex items-center justify-center gap-2 text-xs uppercase cursor-pointer"
+                  >
+                    <span>{locale === 'hi' ? 'टाइपिंग टेस्ट शुरू करें →' : 'Start Typing Test →'}</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setActiveTab('typing-test');
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/20 transition flex items-center justify-center gap-1.5 text-xs cursor-pointer"
+                  >
+                    <span>🎙️ Steno 80/100 WPM Dictation</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
             {/* Main grid columns */}
             <div className="grid gap-10 md:grid-cols-12">
               
               {/* Left Column (8 cols): Latest Job listings & category sections */}
               <div className="md:col-span-8 space-y-10">
                 
-                {/* Latest Jobs Highlight Header */}
-                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                  <div className="flex items-center gap-2">
-                    <Briefcase className="h-6 w-6 text-blue-600" />
-                    <h3 className="font-sans text-base font-bold text-slate-900">
-                      Latest Live Job Notifications
-                    </h3>
-                  </div>
-                  <button 
-                    onClick={() => setActiveTab('jobs')}
-                    className="text-xs font-bold text-blue-600 hover:underline flex items-center gap-1"
-                  >
-                    View All Live <ArrowUpRight className="h-3.5 w-3.5" />
-                  </button>
-                </div>
-
-                <div className="space-y-4">
-                  {jobs.slice(0, 3).map((job) => (
-                    <div 
-                      key={job.id} 
-                      className="bg-white rounded-2xl border border-slate-100 p-4 hover:border-blue-200 transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4"
-                      onClick={() => setActiveTab('jobs')}
-                    >
+                {/* ======================================================== */}
+                {/* SECTION 1: 🆕 LATEST VACANCY / नवीनतम सरकारी भर्तियां */}
+                {/* ======================================================== */}
+                <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm overflow-hidden">
+                  <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 p-4 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="p-2 rounded-xl bg-white/15 backdrop-blur-xs">
+                        <Sparkles className="h-5 w-5 text-amber-300 fill-amber-300" />
+                      </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="text-[10px] font-bold bg-blue-50 text-blue-700 px-2 py-0.5 rounded">
-                            {job.category} Exam
+                          <h3 className="font-sans text-base font-extrabold text-white tracking-wide">
+                            {locale === 'hi' ? '🆕 नवीनतम सरकारी भर्तियां (Latest Vacancy)' : '🆕 Latest Government Vacancies (New Releases)'}
+                          </h3>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-400 text-slate-950 uppercase animate-pulse">
+                            {locale === 'hi' ? 'नई भर्तियां' : 'New'}
                           </span>
-                          {(job.postedDate === '2026-07-07' || job.postedDate === '2026-07-06' || job.postedDate === '2026-06-30' || job.postedDate === '2026-06-29' || job.postedDate === '2026-06-28' || job.postedDate === '2026-06-27') && (
-                            <span className="text-[10px] font-extrabold bg-rose-500 text-white px-2 py-0.5 rounded animate-pulse flex items-center gap-1 shadow-xs">
-                              <span className="h-1.5 w-1.5 rounded-full bg-white animate-ping"></span>
-                              TODAY
-                            </span>
-                          )}
-                          <span className="text-xs text-slate-400">{job.org}</span>
                         </div>
-                        <h4 className="font-sans text-sm font-bold text-slate-800 mt-2 leading-snug">
-                          {job.title}
-                        </h4>
-                        <div className="flex items-center gap-3 mt-1.5 text-xs text-slate-500 font-medium">
-                          <span className="flex items-center gap-1"><MapPin className="h-3.5 w-3.5 text-slate-400" /> {job.location}</span>
-                          <span>•</span>
-                          <span className="font-bold text-slate-700">Deadline: {job.lastDate}</span>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <button 
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setGlobalPdfJob(job);
-                          }}
-                          className="rounded-xl border border-red-200 bg-red-50 font-black px-3 py-2 text-xs text-red-700 hover:bg-red-100 transition flex items-center gap-1 cursor-pointer shadow-xs"
-                          title="View & Download Official PDF Notification"
-                        >
-                          <FileText className="h-3.5 w-3.5 text-red-600" />
-                          <span>PDF</span>
-                        </button>
-                        <button 
-                          onClick={() => setActiveTab('jobs')}
-                          className="rounded-xl border border-blue-100 font-bold px-4 py-2 text-xs text-blue-600 hover:bg-blue-50/50 transition cursor-pointer"
-                        >
-                          View Notice
-                        </button>
+                        <p className="text-xs text-emerald-100 font-medium mt-0.5">
+                          {locale === 'hi' ? 'हाल ही में जारी आधिकारिक विज्ञापन — आवेदन शुरू तिथि व अंतिम तिथि सहित' : 'Recently published recruitment notifications with starting and last dates'}
+                        </p>
                       </div>
                     </div>
-                  ))}
+
+                    <button 
+                      onClick={() => {
+                        setVacancySectionFilter('latest');
+                        setActiveTab('jobs');
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                      className="rounded-xl bg-white text-emerald-800 hover:bg-emerald-50 px-3.5 py-2 text-xs font-black shadow-sm transition flex items-center gap-1.5 self-start sm:self-auto cursor-pointer shrink-0"
+                    >
+                      <span>{locale === 'hi' ? 'सभी नवीनतम देखें' : 'View All Latest'}</span>
+                      <ArrowUpRight className="h-4 w-4" />
+                    </button>
+                  </div>
+
+                  {/* Latest Vacancies Cards */}
+                  <div className="p-4 space-y-3.5 divide-y divide-slate-100">
+                    {getLatestVacancies(jobs, 4).map((job) => {
+                      const { startingDate, lastDate } = getJobDates(job);
+                      const daysLeft = getDaysRemaining(lastDate);
+                      return (
+                        <div 
+                          key={`latest-${job.id}`}
+                          className="pt-3.5 first:pt-0 group hover:bg-slate-50/70 p-2.5 -mx-1 rounded-2xl transition"
+                        >
+                          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                            <div className="flex-1">
+                              <div className="flex flex-wrap items-center gap-2">
+                                <span className="text-[10px] font-extrabold bg-blue-50 text-blue-700 px-2 py-0.5 rounded-md border border-blue-100">
+                                  {job.category}
+                                </span>
+                                <span className="text-[10px] font-extrabold bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-md border border-emerald-100 flex items-center gap-1">
+                                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                                  {job.org}
+                                </span>
+                                <span className="text-[10px] font-semibold text-slate-500">
+                                  📍 {job.location}
+                                </span>
+                              </div>
+
+                              <h4 
+                                onClick={() => {
+                                  setActiveTab('jobs');
+                                  window.scrollTo({ top: 200, behavior: 'smooth' });
+                                }}
+                                className="font-sans text-sm font-extrabold text-slate-900 mt-1.5 leading-snug group-hover:text-blue-600 cursor-pointer"
+                              >
+                                {job.title}
+                              </h4>
+
+                              <div className="flex flex-wrap items-center gap-3 mt-1.5 text-xs text-slate-600 font-medium">
+                                <span className="font-bold text-slate-800">🎯 {(job?.totalPosts ? Number(job.totalPosts).toLocaleString() : 'Multiple')} Posts</span>
+                                <span>•</span>
+                                <span>🎓 {job.qualification}</span>
+                              </div>
+
+                              {/* DUAL DATE HIGHLIGHT BOX */}
+                              <div className="mt-2.5 grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-xl">
+                                <div className="bg-emerald-50/80 border border-emerald-200/90 rounded-xl px-3 py-1.5 flex items-center justify-between">
+                                  <div className="flex items-center gap-1.5 text-emerald-800 text-[11px] font-bold">
+                                    <Calendar className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                                    <span>{locale === 'hi' ? 'आवेदन शुरू तिथि:' : 'Starting Date:'}</span>
+                                  </div>
+                                  <span className="font-mono text-xs font-black text-emerald-950">
+                                    {formatJobDate(startingDate, locale === 'hi')}
+                                  </span>
+                                </div>
+
+                                <div className="bg-rose-50/80 border border-rose-200/90 rounded-xl px-3 py-1.5 flex items-center justify-between">
+                                  <div className="flex items-center gap-1.5 text-rose-800 text-[11px] font-bold">
+                                    <Clock className="h-3.5 w-3.5 text-rose-600 shrink-0" />
+                                    <span>{locale === 'hi' ? 'आवेदन अंतिम तिथि:' : 'Last Date:'}</span>
+                                  </div>
+                                  <div className="flex items-center gap-1.5">
+                                    <span className="font-mono text-xs font-black text-rose-700">
+                                      {formatJobDate(lastDate, locale === 'hi')}
+                                    </span>
+                                    {daysLeft >= 0 && (
+                                      <span className="text-[9px] px-1.5 py-0.2 rounded bg-rose-200/70 text-rose-900 font-bold">
+                                        {daysLeft}d left
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Action Buttons */}
+                            <div className="flex items-center gap-2 self-start md:self-center shrink-0">
+                              <button 
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setGlobalPdfJob(job);
+                                }}
+                                className="rounded-xl border border-red-200 bg-red-50 font-black px-3 py-2 text-xs text-red-700 hover:bg-red-100 transition flex items-center gap-1 cursor-pointer shadow-xs"
+                                title="Official PDF Notification"
+                              >
+                                <FileText className="h-3.5 w-3.5 text-red-600" />
+                                <span>PDF</span>
+                              </button>
+                              <a
+                                href={job.applyUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold px-3.5 py-2 text-xs transition flex items-center gap-1 shadow-xs cursor-pointer"
+                              >
+                                {locale === 'hi' ? 'ऑनलाइन आवेदन' : 'Apply Online'}
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* ======================================================== */}
+                {/* SECTION 2: ⏳ LAST DATE VACANCY / अंतिम तिथि नजदीक */}
+                {/* ======================================================== */}
+                <div className="bg-white rounded-3xl border border-rose-200 shadow-sm overflow-hidden">
+                  <div className="bg-gradient-to-r from-rose-600 via-red-600 to-amber-700 p-4 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="p-2 rounded-xl bg-white/15 backdrop-blur-xs">
+                        <Clock className="h-5 w-5 text-amber-300 animate-pulse" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-sans text-base font-extrabold text-white tracking-wide">
+                            {locale === 'hi' ? '⏳ अंतिम तिथि नजदीक भर्तियां (Last Date Vacancy)' : '⏳ Last Date Vacancies (Closing Soon - Apply Now)'}
+                          </h3>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-400 text-slate-950 uppercase animate-bounce">
+                            {locale === 'hi' ? 'अंतिम अवसर' : 'Urgent'}
+                          </span>
+                        </div>
+                        <p className="text-xs text-rose-100 font-medium mt-0.5">
+                          {locale === 'hi' ? 'इन सरकारी भर्तियों की अंतिम तिथि जल्द समाप्त हो रही है! सर्वर डाउन से पहले तुरंत फॉर्म भरें।' : 'Deadlines closing very soon! Complete your online application before registration ends.'}
+                        </p>
+                      </div>
+                    </div>
+
+                    <button 
+                      onClick={() => {
+                        setVacancySectionFilter('last-date');
+                        setActiveTab('jobs');
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                      className="rounded-xl bg-white text-rose-800 hover:bg-rose-50 px-3.5 py-2 text-xs font-black shadow-sm transition flex items-center gap-1.5 self-start sm:self-auto cursor-pointer shrink-0"
+                    >
+                      <span>{locale === 'hi' ? 'सभी अंतिम तिथि देखें' : 'View All Closing Soon'}</span>
+                      <ArrowUpRight className="h-4 w-4" />
+                    </button>
+                  </div>
+
+                  {/* Urgent Notice Banner */}
+                  <div className="bg-amber-50/80 border-b border-amber-250/50 px-4 py-2 text-xs text-amber-900 flex items-center gap-2">
+                    <span className="text-amber-600 font-bold shrink-0">⚠️ ध्यान दें:</span>
+                    <span>{locale === 'hi' ? 'अंतिम दिनों में वेबसाइट सर्वर व्यस्त हो जाता है। कृपया अंतिम तिथि का इंतजार किए बिना आज ही फॉर्म सबमिट करें।' : 'Servers often slow down on final dates. Avoid last-minute rush by applying today.'}</span>
+                  </div>
+
+                  {/* Last Date Vacancies Cards */}
+                  <div className="p-4 space-y-3.5 divide-y divide-slate-100">
+                    {getLastDateVacancies(jobs, 4).map((job) => {
+                      const { startingDate, lastDate } = getJobDates(job);
+                      const daysLeft = getDaysRemaining(lastDate);
+                      return (
+                        <div 
+                          key={`lastdate-${job.id}`}
+                          className="pt-3.5 first:pt-0 group hover:bg-rose-50/30 p-2.5 -mx-1 rounded-2xl transition"
+                        >
+                          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                            <div className="flex-1">
+                              <div className="flex flex-wrap items-center gap-2">
+                                <span className="text-[10px] font-extrabold bg-rose-100 text-rose-800 px-2 py-0.5 rounded-md border border-rose-200">
+                                  {job.category}
+                                </span>
+                                <span className="text-[10px] font-extrabold bg-slate-100 text-slate-800 px-2 py-0.5 rounded-md">
+                                  {job.org}
+                                </span>
+                                {daysLeft <= 7 && daysLeft >= 0 ? (
+                                  <span className="text-[10px] font-black bg-rose-600 text-white px-2 py-0.5 rounded-md animate-pulse shadow-xs flex items-center gap-1">
+                                    <Clock className="h-3 w-3" />
+                                    {daysLeft <= 1 ? (locale === 'hi' ? 'आज ही अंतिम दिन!' : 'Ends Today!') : `${daysLeft} ${locale === 'hi' ? 'दिन शेष (Hurry)' : 'Days Left'}`}
+                                  </span>
+                                ) : daysLeft < 0 ? (
+                                  <span className="text-[10px] font-bold bg-slate-200 text-slate-600 px-2 py-0.5 rounded-md">
+                                    {locale === 'hi' ? 'तारीख समाप्त' : 'Closed'}
+                                  </span>
+                                ) : (
+                                  <span className="text-[10px] font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded-md border border-amber-200">
+                                    {daysLeft} {locale === 'hi' ? 'दिन शेष' : 'Days Left'}
+                                  </span>
+                                )}
+                              </div>
+
+                              <h4 
+                                onClick={() => {
+                                  setActiveTab('jobs');
+                                  window.scrollTo({ top: 200, behavior: 'smooth' });
+                                }}
+                                className="font-sans text-sm font-extrabold text-slate-900 mt-1.5 leading-snug group-hover:text-rose-600 cursor-pointer"
+                              >
+                                {job.title}
+                              </h4>
+
+                              <div className="flex flex-wrap items-center gap-3 mt-1.5 text-xs text-slate-600 font-medium">
+                                <span className="font-bold text-slate-800">🎯 {(job?.totalPosts ? Number(job.totalPosts).toLocaleString() : 'Multiple')} Posts</span>
+                                <span>•</span>
+                                <span>🎓 {job.qualification}</span>
+                                <span>•</span>
+                                <span>📍 {job.location}</span>
+                              </div>
+
+                              {/* DUAL DATE HIGHLIGHT BOX */}
+                              <div className="mt-2.5 grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-xl">
+                                <div className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 flex items-center justify-between">
+                                  <div className="flex items-center gap-1.5 text-slate-700 text-[11px] font-bold">
+                                    <Calendar className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                                    <span>{locale === 'hi' ? 'आवेदन शुरू तिथि:' : 'Starting Date:'}</span>
+                                  </div>
+                                  <span className="font-mono text-xs font-black text-slate-900">
+                                    {formatJobDate(startingDate, locale === 'hi')}
+                                  </span>
+                                </div>
+
+                                <div className="bg-rose-100/70 border-2 border-rose-400 rounded-xl px-3 py-1.5 flex items-center justify-between shadow-xs">
+                                  <div className="flex items-center gap-1.5 text-rose-900 text-[11px] font-black">
+                                    <Clock className="h-3.5 w-3.5 text-rose-600 shrink-0 animate-pulse" />
+                                    <span>{locale === 'hi' ? 'आवेदन अंतिम तिथि:' : 'Last Date:'}</span>
+                                  </div>
+                                  <span className="font-mono text-xs font-black text-rose-900">
+                                    {formatJobDate(lastDate, locale === 'hi')}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Action Buttons */}
+                            <div className="flex items-center gap-2 self-start md:self-center shrink-0">
+                              <button 
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setGlobalPdfJob(job);
+                                }}
+                                className="rounded-xl border border-red-200 bg-red-50 font-black px-3 py-2 text-xs text-red-700 hover:bg-red-100 transition flex items-center gap-1 cursor-pointer shadow-xs"
+                                title="Official PDF Notification"
+                              >
+                                <FileText className="h-3.5 w-3.5 text-red-600" />
+                                <span>PDF</span>
+                              </button>
+                              <a
+                                href={job.applyUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="rounded-xl bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white font-extrabold px-3.5 py-2 text-xs transition flex items-center gap-1 shadow-sm cursor-pointer"
+                              >
+                                {locale === 'hi' ? 'तुरंत आवेदन करें' : 'Apply Now'}
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
 
                 {/* Educational qualification matrices */}
@@ -4527,6 +4822,9 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
               onOpenPdf={(job) => setGlobalPdfJob(job)}
               triggerToast={triggerToast}
               onGoPremium={() => setActiveTab('premium')}
+              locale={locale}
+              vacancySectionFilter={vacancySectionFilter}
+              setVacancySectionFilter={setVacancySectionFilter}
             />
           </div>
         )}
@@ -4794,6 +5092,18 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
             </div>
 
             <AiDoubtSolver />
+          </div>
+        )}
+
+        {/* TAB 6.75: GOVT TYPING & STENOGRAPHY SKILL TEST PORTAL (SSC CHSL, STENO, RRB NTPC) */}
+        {activeTab === 'typing-test' && (
+          <div className="space-y-6 animate-fadeIn">
+            <TypingTestPortal
+              user={user}
+              locale={locale}
+              onGoPremium={() => setPremiumModalOpen(true)}
+              triggerToast={triggerToast}
+            />
           </div>
         )}
 
@@ -5594,7 +5904,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
 
                           <div className="mt-5 pt-3 border-t border-slate-50 flex items-center justify-between text-[10px] text-slate-400 font-semibold">
                             <span>🔥 {paper.category} {locale === 'hi' ? 'श्रेणी' : 'Category'}</span>
-                            <span>📥 {paper.downloadCount.toLocaleString()} {locale === 'hi' ? 'डाउनलोड' : 'downloads'}</span>
+                            <span>📥 {(paper?.downloadCount ? Number(paper.downloadCount).toLocaleString() : '1,000+')} {locale === 'hi' ? 'डाउनलोड' : 'downloads'}</span>
                           </div>
                         </div>
 
@@ -6766,7 +7076,7 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
                   </div>
                   <div>
                     <span className="text-[10px] uppercase font-bold text-slate-550 block tracking-wider">Page Views Today</span>
-                    <span className="text-xl font-black text-white font-mono">{(trafficPageViews).toLocaleString()}</span>
+                    <span className="text-xl font-black text-white font-mono">{Number(trafficPageViews || 0).toLocaleString()}</span>
                     <span className="text-[10.5px] text-emerald-400 font-bold block">▲ +12% since yesterday</span>
                   </div>
                 </div>

@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { 
   Briefcase, Calendar, MapPin, IndianRupee,
   Search, ShieldAlert, ArrowUpRight, FileText,
-  Filter, Bookmark, BookmarkCheck, Share2, Info, Clock, AlertCircle, GraduationCap
+  Filter, Bookmark, BookmarkCheck, Share2, Info, Clock, AlertCircle, GraduationCap, Sparkles
 } from 'lucide-react';
 import { GovJob, UserProfile } from '../types';
 import { SarkariPdfModal } from './SarkariPdfModal';
 import SarkariAds from './SarkariAds';
+import { getJobDates, formatJobDate, getDaysRemaining as calcDaysRemaining } from '../utils/jobDateUtils';
 
 interface JobCardProps {
   jobs: GovJob[];
@@ -20,6 +21,9 @@ interface JobCardProps {
   onOpenPdf?: (job: GovJob) => void;
   triggerToast?: (msg: string) => void;
   onGoPremium?: () => void;
+  locale?: string;
+  vacancySectionFilter?: 'all' | 'latest' | 'last-date';
+  setVacancySectionFilter?: (filter: 'all' | 'latest' | 'last-date') => void;
 }
 
 const getCategoryStyles = (cat: string) => {
@@ -83,7 +87,10 @@ export default function JobCard({
   pyqsList,
   onOpenPdf,
   triggerToast,
-  onGoPremium
+  onGoPremium,
+  locale = 'en',
+  vacancySectionFilter,
+  setVacancySectionFilter
 }: JobCardProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [localCategory, setLocalCategory] = useState('All');
@@ -92,6 +99,10 @@ export default function JobCard({
   const [selectedJob, setSelectedJob] = useState<GovJob | null>(null);
   const [pdfViewerJob, setPdfViewerJob] = useState<GovJob | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const [localSectionFilter, setLocalSectionFilter] = useState<'all' | 'latest' | 'last-date'>('all');
+  const sectionFilter = vacancySectionFilter !== undefined ? vacancySectionFilter : localSectionFilter;
+  const setSectionFilter = setVacancySectionFilter !== undefined ? setVacancySectionFilter : setLocalSectionFilter;
 
   const handleOpenPdf = (job: GovJob) => {
     if (onOpenPdf) {
@@ -190,12 +201,26 @@ export default function JobCard({
   });
 
   const getDaysRemaining = (lastDateStr: string) => {
-    const lastDate = new Date(lastDateStr);
-    const today = new Date('2026-06-12'); // Mocked system baseline time from prompt metadata
-    const diffTime = lastDate.getTime() - today.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays;
+    return calcDaysRemaining(lastDateStr);
   };
+
+  // Process and sort jobs based on sectionFilter
+  const displayedJobs = [...filteredJobs].sort((a, b) => {
+    const datesA = getJobDates(a);
+    const datesB = getJobDates(b);
+
+    if (sectionFilter === 'latest') {
+      return datesB.startingDate.localeCompare(datesA.startingDate);
+    } else if (sectionFilter === 'last-date') {
+      const daysA = calcDaysRemaining(datesA.lastDate);
+      const daysB = calcDaysRemaining(datesB.lastDate);
+      if (daysA >= 0 && daysB >= 0) return daysA - daysB;
+      if (daysA >= 0) return -1;
+      if (daysB >= 0) return 1;
+      return datesA.lastDate.localeCompare(datesB.lastDate);
+    }
+    return 0;
+  });
 
   const handleCopyShare = (job: GovJob) => {
     const shareText = `🔥 ${job.title} - ${job.org} \n🎯 Total Vacancies: ${job.totalPosts} posts\n🎓 Qualification: ${job.qualification}\n⏱️ Last Date: ${job.lastDate}\n👉 Apply online here!`;
@@ -206,6 +231,120 @@ export default function JobCard({
 
   return (
     <div className="space-y-4">
+
+      {/* DEDICATED SECTION TABS: ALL VACANCIES vs LATEST VACANCY vs LAST DATE VACANCY */}
+      <div className="bg-white border border-slate-200 rounded-2xl p-2.5 shadow-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          <button
+            type="button"
+            onClick={() => setSectionFilter('all')}
+            className={`flex items-center gap-3 p-3 rounded-xl transition cursor-pointer text-left ${
+              sectionFilter === 'all'
+                ? 'bg-blue-600 text-white shadow-md shadow-blue-600/25 ring-2 ring-blue-500'
+                : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200/80'
+            }`}
+          >
+            <div className={`p-2 rounded-lg shrink-0 ${sectionFilter === 'all' ? 'bg-white/20 text-white' : 'bg-blue-100 text-blue-600'}`}>
+              <Briefcase className="h-5 w-5" />
+            </div>
+            <div>
+              <div className="text-xs font-black uppercase tracking-wide">
+                {locale === 'hi' ? 'सभी सरकारी भर्तियां' : 'All Vacancies'}
+              </div>
+              <div className={`text-[10px] font-semibold mt-0.5 ${sectionFilter === 'all' ? 'text-blue-100' : 'text-slate-500'}`}>
+                {jobs.length} {locale === 'hi' ? 'सक्रिय पद उपलब्ध' : 'Active Vacancies'}
+              </div>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setSectionFilter('latest')}
+            className={`flex items-center gap-3 p-3 rounded-xl transition cursor-pointer text-left ${
+              sectionFilter === 'latest'
+                ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-md shadow-emerald-600/25 ring-2 ring-emerald-400'
+                : 'bg-emerald-50/70 text-emerald-900 hover:bg-emerald-100/70 border border-emerald-200'
+            }`}
+          >
+            <div className={`p-2 rounded-lg shrink-0 ${sectionFilter === 'latest' ? 'bg-white/20 text-white' : 'bg-emerald-100 text-emerald-700'}`}>
+              <Sparkles className="h-5 w-5" />
+            </div>
+            <div>
+              <div className="text-xs font-black uppercase tracking-wide flex items-center gap-1.5">
+                <span>{locale === 'hi' ? '🆕 नवीनतम भर्तियां' : '🆕 Latest Vacancy'}</span>
+                <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-emerald-400/30 text-emerald-100 font-bold">New</span>
+              </div>
+              <div className={`text-[10px] font-semibold mt-0.5 ${sectionFilter === 'latest' ? 'text-emerald-100' : 'text-emerald-700'}`}>
+                {locale === 'hi' ? 'हाल ही में जारी विज्ञापन (New Releases)' : 'Newly Announced Notifications'}
+              </div>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setSectionFilter('last-date')}
+            className={`flex items-center gap-3 p-3 rounded-xl transition cursor-pointer text-left ${
+              sectionFilter === 'last-date'
+                ? 'bg-gradient-to-r from-rose-600 to-red-700 text-white shadow-md shadow-rose-600/25 ring-2 ring-rose-400'
+                : 'bg-rose-50/70 text-rose-900 hover:bg-rose-100/70 border border-rose-200'
+            }`}
+          >
+            <div className={`p-2 rounded-lg shrink-0 ${sectionFilter === 'last-date' ? 'bg-white/20 text-white' : 'bg-rose-100 text-rose-700'}`}>
+              <Clock className="h-5 w-5 animate-pulse" />
+            </div>
+            <div>
+              <div className="text-xs font-black uppercase tracking-wide flex items-center gap-1.5">
+                <span>{locale === 'hi' ? '⏳ अंतिम तिथि नजदीक' : '⏳ Last Date Vacancy'}</span>
+                <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-rose-400/30 text-rose-100 font-bold">Urgent</span>
+              </div>
+              <div className={`text-[10px] font-semibold mt-0.5 ${sectionFilter === 'last-date' ? 'text-rose-100' : 'text-rose-700'}`}>
+                {locale === 'hi' ? 'जल्द समाप्त होने वाले आवेदन (Ending Soon)' : 'Closing Soon — Apply Before Deadline'}
+              </div>
+            </div>
+          </button>
+        </div>
+
+        {/* Section info contextual banner */}
+        {sectionFilter === 'latest' && (
+          <div className="mt-2.5 p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs text-emerald-900">
+            <div className="flex items-center gap-2">
+              <span className="text-base">📢</span>
+              <div>
+                <span className="font-extrabold">{locale === 'hi' ? 'नवीनतम सरकारी भर्ती अनुभाग (Latest Vacancies Section):' : 'Latest Vacancies Section:'}</span>{' '}
+                <span className="font-medium text-emerald-800">
+                  {locale === 'hi' ? 'हाल ही में जारी भर्ती विज्ञापन व आवेदन शुरू तिथि (Starting Date) और अंतिम तिथि (Last Date) नीचे देखें।' : 'Recently released vacancies with application starting date and last date displayed below.'}
+                </span>
+              </div>
+            </div>
+            <button 
+              onClick={() => setSectionFilter('all')}
+              className="text-[11px] font-bold text-emerald-700 hover:underline shrink-0 ml-2"
+            >
+              {locale === 'hi' ? 'सभी देखें' : 'View All'}
+            </button>
+          </div>
+        )}
+
+        {sectionFilter === 'last-date' && (
+          <div className="mt-2.5 p-3 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-between text-xs text-rose-900">
+            <div className="flex items-center gap-2">
+              <span className="text-base animate-bounce">⚠️</span>
+              <div>
+                <span className="font-extrabold">{locale === 'hi' ? 'अंतिम तिथि नजदीक अनुभाग (Last Date Vacancies Section):' : 'Last Date Vacancies Section:'}</span>{' '}
+                <span className="font-medium text-rose-800">
+                  {locale === 'hi' ? 'जिन भर्तियों की अंतिम तिथि जल्द समाप्त हो रही है! अंतिम तिथि से पहले तुरंत आवेदन पूरा करें।' : 'Vacancies with deadlines ending soon! Submit your application before the registration closes.'}
+                </span>
+              </div>
+            </div>
+            <button 
+              onClick={() => setSectionFilter('all')}
+              className="text-[11px] font-bold text-rose-700 hover:underline shrink-0 ml-2"
+            >
+              {locale === 'hi' ? 'सभी देखें' : 'View All'}
+            </button>
+          </div>
+        )}
+      </div>
       
       {/* Target Exam Quick Filter Board Roster */}
       <div className="bg-[#F8FAFC] border border-slate-200 rounded-2xl p-4 space-y-2.5 shadow-xs">
@@ -360,10 +499,11 @@ export default function JobCard({
 
       {/* Jobs Catalog Listing Grid */}
       <div id="jobs-cards-grid" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredJobs.length > 0 ? (
-          filteredJobs.map((job, idx) => {
+        {displayedJobs.length > 0 ? (
+          displayedJobs.map((job, idx) => {
             const isSaved = user.savedJobs.includes(job.id);
-            const daysRemaining = getDaysRemaining(job.lastDate);
+            const { startingDate, lastDate } = getJobDates(job);
+            const daysRemaining = calcDaysRemaining(lastDate);
             const isExpired = daysRemaining < 0;
             const cStyles = getCategoryStyles(job.category);
 
@@ -381,7 +521,9 @@ export default function JobCard({
 
                 <div 
                   id={`job-idx-${job.id}`}
-                  className={`group relative flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-3.5 shadow-xs transition-all duration-200 hover:shadow-md ${cStyles.border}`}
+                  className={`group relative flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-3.5 shadow-xs transition-all duration-200 hover:shadow-md ${cStyles.border} ${
+                    sectionFilter === 'last-date' || (daysRemaining <= 7 && daysRemaining >= 0) ? 'ring-1 ring-rose-200 hover:ring-rose-300' : ''
+                  }`}
                 >
                   {/* Save bookmark and Commission banner */}
                 <div className="flex items-start justify-between gap-2">
@@ -389,10 +531,16 @@ export default function JobCard({
                     <span className={`inline-block rounded px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wide ${cStyles.text}`}>
                       {job.category} Exam
                     </span>
-                    {(job.postedDate === '2026-06-28' || job.postedDate === '2026-06-27') && (
-                      <span className="inline-flex items-center gap-0.5 rounded bg-rose-500 text-white px-1.5 py-0.5 text-[8.5px] font-extrabold animate-pulse shadow-xs">
+                    {(sectionFilter === 'last-date' || (daysRemaining <= 5 && daysRemaining >= 0)) && (
+                      <span className="inline-flex items-center gap-0.5 rounded bg-rose-600 text-white px-1.5 py-0.5 text-[8.5px] font-extrabold animate-pulse shadow-xs">
+                        <Clock className="h-2.5 w-2.5" />
+                        {daysRemaining <= 1 ? (locale === 'hi' ? 'आज अंतिम दिन' : 'Ends Today') : `${daysRemaining}d left`}
+                      </span>
+                    )}
+                    {(sectionFilter === 'latest' || job.postedDate === '2026-09-22' || job.postedDate === '2026-09-21' || job.postedDate === '2026-09-20') && (
+                      <span className="inline-flex items-center gap-0.5 rounded bg-emerald-600 text-white px-1.5 py-0.5 text-[8.5px] font-extrabold shadow-xs">
                         <span className="h-1 w-1 rounded-full bg-white animate-ping"></span>
-                        TODAY
+                        {locale === 'hi' ? 'नया विज्ञापन' : 'NEW'}
                       </span>
                     )}
                     {job.isWhatsAppAlert && (
@@ -449,7 +597,7 @@ export default function JobCard({
                   <div className="mt-2.5 grid grid-cols-2 gap-y-1.5 gap-x-1 border-t border-slate-100 pt-2 text-[10px] font-semibold text-slate-600">
                     <div className="flex items-center gap-1">
                       <Briefcase className="h-3.5 w-3.5 text-slate-400" />
-                      <span>{job.totalPosts.toLocaleString()} Posts</span>
+                      <span>{(job?.totalPosts ? Number(job.totalPosts).toLocaleString() : 'Multiple')} Posts</span>
                     </div>
                     <div className="flex items-center gap-1">
                       <GraduationCap className="h-3.5 w-3.5 text-slate-400" />
@@ -477,6 +625,42 @@ export default function JobCard({
                     }
                     return null;
                   })()}
+
+                  {/* DEDICATED STARTING DATE & LAST DATE BOX */}
+                  <div className="mt-3 rounded-xl border border-slate-200/90 bg-slate-50/80 p-2 text-[10px]">
+                    <div className="grid grid-cols-2 gap-2">
+                      {/* Starting Date */}
+                      <div className="border-r border-slate-200 pr-1 space-y-0.5">
+                        <div className="flex items-center gap-1 text-emerald-700 font-bold uppercase tracking-wider text-[8.5px]">
+                          <Calendar className="h-3 w-3 text-emerald-600 shrink-0" />
+                          <span>{locale === 'hi' ? 'आवेदन शुरू' : 'Starting Date'}</span>
+                        </div>
+                        <div className="font-extrabold text-slate-900 text-[10.5px] font-mono leading-tight">
+                          {formatJobDate(startingDate, locale === 'hi')}
+                        </div>
+                      </div>
+
+                      {/* Last Date */}
+                      <div className="pl-1 space-y-0.5">
+                        <div className="flex items-center gap-1 text-rose-700 font-bold uppercase tracking-wider text-[8.5px]">
+                          <Clock className="h-3 w-3 text-rose-600 shrink-0" />
+                          <span>{locale === 'hi' ? 'अंतिम तिथि' : 'Last Date'}</span>
+                        </div>
+                        <div className="font-extrabold text-rose-750 text-[10.5px] font-mono leading-tight flex items-center justify-between">
+                          <span>{formatJobDate(lastDate, locale === 'hi')}</span>
+                          <span className={`text-[8px] px-1 py-0.2 rounded font-bold ${
+                            daysRemaining <= 7 && daysRemaining >= 0
+                              ? 'bg-rose-100 text-rose-850 animate-pulse border border-rose-200'
+                              : isExpired
+                              ? 'bg-slate-200 text-slate-650'
+                              : 'bg-emerald-100 text-emerald-800'
+                          }`}>
+                            {isExpired ? (locale === 'hi' ? 'समाप्त' : 'Closed') : `${daysRemaining}d`}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Footer Action buttons & countdown */}
@@ -592,7 +776,7 @@ export default function JobCard({
               <div className="rounded-2xl bg-linear-to-r from-blue-50 to-indigo-50/50 p-4 border border-blue-100/50 grid gap-3 sm:grid-cols-3 text-center">
                 <div className="border-r border-blue-100 last:border-0 pr-2">
                   <span className="block text-[10px] font-bold text-slate-400 uppercase">Vacancies</span>
-                  <span className="text-base font-extrabold text-blue-900">{selectedJob.totalPosts.toLocaleString()} Posts</span>
+                  <span className="text-base font-extrabold text-blue-900">{(selectedJob?.totalPosts ? Number(selectedJob.totalPosts).toLocaleString() : 'Multiple')} Posts</span>
                 </div>
                 <div className="border-r border-blue-100 last:border-0 px-2">
                   <span className="block text-[10px] font-bold text-slate-400 uppercase">Eligibility</span>
@@ -610,22 +794,40 @@ export default function JobCard({
                   <Calendar className="h-4 w-4 text-blue-600" />
                   Official Important Timelines
                 </h4>
-                <div className="grid gap-3 sm:grid-cols-4 bg-slate-50 p-3.5 rounded-2xl text-xs">
-                  <div>
-                    <span className="block text-[10px] font-medium text-slate-400 block mb-0.5">Submit Form From</span>
-                    <span className="font-bold text-slate-700">{selectedJob.importantDates.applyStart}</span>
+                <div className="grid gap-3 sm:grid-cols-4 bg-slate-50 p-4 rounded-2xl text-xs border border-slate-200">
+                  <div className="bg-emerald-50/60 p-2.5 rounded-xl border border-emerald-200">
+                    <span className="block text-[10px] font-bold text-emerald-800 uppercase mb-0.5 flex items-center gap-1">
+                      <Calendar className="h-3 w-3 text-emerald-600" />
+                      {locale === 'hi' ? 'आवेदन शुरू तिथि (Starting)' : 'Starting Date'}
+                    </span>
+                    <span className="font-extrabold text-emerald-950 text-sm font-mono block">
+                      {formatJobDate(selectedJob.importantDates?.applyStart || selectedJob.postedDate, locale === 'hi')}
+                    </span>
                   </div>
-                  <div>
-                    <span className="block text-[10px] font-medium text-slate-400 block mb-0.5">Closing Registration</span>
-                    <span className="font-bold text-rose-600">{selectedJob.importantDates.applyEnd}</span>
+                  <div className="bg-rose-50/60 p-2.5 rounded-xl border border-rose-200">
+                    <span className="block text-[10px] font-bold text-rose-800 uppercase mb-0.5 flex items-center gap-1">
+                      <Clock className="h-3 w-3 text-rose-600" />
+                      {locale === 'hi' ? 'आवेदन अंतिम तिथि (Last Date)' : 'Last Date'}
+                    </span>
+                    <span className="font-extrabold text-rose-700 text-sm font-mono block">
+                      {formatJobDate(selectedJob.importantDates?.applyEnd || selectedJob.lastDate, locale === 'hi')}
+                    </span>
                   </div>
-                  <div>
-                    <span className="block text-[10px] font-medium text-slate-400 block mb-0.5">Exam Calendar Date</span>
-                    <span className="font-bold text-blue-700">{selectedJob.importantDates.examDate}</span>
+                  <div className="bg-blue-50/60 p-2.5 rounded-xl border border-blue-200">
+                    <span className="block text-[10px] font-bold text-blue-800 uppercase mb-0.5">
+                      {locale === 'hi' ? 'परीक्षा तिथि' : 'Exam Date'}
+                    </span>
+                    <span className="font-extrabold text-blue-900 text-xs block">
+                      {selectedJob.importantDates?.examDate || 'TBA'}
+                    </span>
                   </div>
-                  <div>
-                    <span className="block text-[10px] font-medium text-slate-400 block mb-0.5">Admit Card Date</span>
-                    <span className="font-bold text-emerald-600">{selectedJob.importantDates.admitCardRelease}</span>
+                  <div className="bg-slate-100 p-2.5 rounded-xl border border-slate-200">
+                    <span className="block text-[10px] font-bold text-slate-700 uppercase mb-0.5">
+                      {locale === 'hi' ? 'प्रवेश पत्र (Admit Card)' : 'Admit Card'}
+                    </span>
+                    <span className="font-extrabold text-slate-800 text-xs block">
+                      {selectedJob.importantDates?.admitCardRelease || 'TBA'}
+                    </span>
                   </div>
                 </div>
               </div>

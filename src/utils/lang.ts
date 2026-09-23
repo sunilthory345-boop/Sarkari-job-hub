@@ -23,6 +23,7 @@ export interface TranslationDictionary {
   syllabusAdmission: string;
   pyqPapers: string;
   mockTests: string;
+  typingTest: string;
   uploads: string;
   currentAffairs: string;
   blogsStrategies: string;
@@ -79,6 +80,7 @@ export const TRANSLATIONS: Record<LocaleType, TranslationDictionary> = {
     syllabusAdmission: "Syllabus & Admission",
     pyqPapers: "Previous Year Papers",
     mockTests: "Mock Tests & Quizzes",
+    typingTest: "⌨️ Govt Typing Test (SSC CHSL/Steno/RRB)",
     uploads: "Aspirant Uploads (अपलोड)",
     currentAffairs: "Current Affairs",
     blogsStrategies: "Blogs & Strategies",
@@ -124,6 +126,7 @@ export const TRANSLATIONS: Record<LocaleType, TranslationDictionary> = {
     syllabusAdmission: "पाठ्यक्रम एवं प्रवेश",
     pyqPapers: "पुराने प्रश्न पत्र (PYQs)",
     mockTests: "मॉक टेस्ट और क्विज़",
+    typingTest: "⌨️ सरकारी टाइपिंग व आशुलिपि टेस्ट (SSC/CHSL/Steno)",
     uploads: "आकांक्षी अपलोड",
     currentAffairs: "करंट अफेयर्स",
     blogsStrategies: "ब्लॉग और रणनीतियाँ",
@@ -169,6 +172,7 @@ export const TRANSLATIONS: Record<LocaleType, TranslationDictionary> = {
     syllabusAdmission: "अभ्यासक्रम आणि प्रवेश",
     pyqPapers: "मागील वर्षांचे पेपर्स",
     mockTests: "मॉक टेस्ट आणि क्विझ",
+    typingTest: "⌨️ सरकारी टायपिंग व स्टेनो टेस्ट (SSC/CHSL/Steno)",
     uploads: "विद्यार्थी अपलोड",
     currentAffairs: "चालू घडामोडी",
     blogsStrategies: "ब्लॉग आणि रणनीती",
@@ -214,6 +218,7 @@ export const TRANSLATIONS: Record<LocaleType, TranslationDictionary> = {
     syllabusAdmission: "सिलेबस अर एडमीशन",
     pyqPapers: "पुराणा पेपर हल समेत",
     mockTests: "मॉक टेस्ट अर क्विज़",
+    typingTest: "⌨️ सरकारी टाइपिंग अर स्टेनो टेस्ट (SSC/CHSL)",
     uploads: "टाबरां री फाइलें",
     currentAffairs: "आज री खास खबरें",
     blogsStrategies: "टॉपर री रणनीतियां",

@@ -530,7 +530,7 @@ export default function IbpsLiveSyncHub({
                     </h3>
 
                     {/* Summary / Highlights */}
-                    {notice.details.summary && (
+                    {notice.details?.summary && (
                       <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
                         {notice.details.summary}
                       </p>
@@ -538,19 +538,19 @@ export default function IbpsLiveSyncHub({
 
                     {/* Key Details Pills */}
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-1 pt-1 text-xs text-slate-600">
-                      {notice.details.posts && (
+                      {notice.details?.posts && (
                         <div>
                           <span className="text-slate-400">Posts: </span>
-                          <strong className="text-blue-700 font-mono">{notice.details.posts.toLocaleString()} Vacancies</strong>
+                          <strong className="text-blue-700 font-mono">{Number(notice.details.posts).toLocaleString()} Vacancies</strong>
                         </div>
                       )}
-                      {notice.details.salary && (
+                      {notice.details?.salary && (
                         <div>
                           <span className="text-slate-400">Salary: </span>
                           <strong className="text-emerald-700">{notice.details.salary}</strong>
                         </div>
                       )}
-                      {notice.details.lastDate && (
+                      {notice.details?.lastDate && (
                         <div>
                           <span className="text-slate-400">Last Date: </span>
                           <strong className="text-red-600 font-mono">{notice.details.lastDate}</strong>

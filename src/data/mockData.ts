@@ -20,13 +20,13 @@ export const INITIAL_JOBS: GovJob[] = [
     applyUrl: 'https://indiapostgdsonline.gov.in',
     pdfUrl: 'https://indiapostgdsonline.gov.in',
     officialWebsite: 'https://indiapostgdsonline.gov.in',
-    postedDate: '2026-07-29',
-    lastDate: '2026-08-25',
+    postedDate: '2026-09-22',
+    lastDate: '2026-10-25',
     importantDates: {
-      applyStart: '2026-07-29',
-      applyEnd: '2026-08-25',
+      applyStart: '2026-09-22',
+      applyEnd: '2026-10-25',
       examDate: 'Direct 10th Merit Based (No Written Exam)',
-      admitCardRelease: 'August 2026 Merit List'
+      admitCardRelease: 'November 2026 Merit List'
     },
     selectionProcess: [
       'System-generated automated Merit List based on 10th Class / SSC examination marks',
@@ -57,13 +57,13 @@ export const INITIAL_JOBS: GovJob[] = [
     applyUrl: 'https://rrbapply.gov.in',
     pdfUrl: 'https://www.rrbcdg.gov.in',
     officialWebsite: 'https://www.rrbcdg.gov.in',
-    postedDate: '2026-07-28',
-    lastDate: '2026-08-28',
+    postedDate: '2026-09-21',
+    lastDate: '2026-10-28',
     importantDates: {
-      applyStart: '2026-07-28',
-      applyEnd: '2026-08-28',
-      examDate: 'November 2026',
-      admitCardRelease: 'October 2026'
+      applyStart: '2026-09-21',
+      applyEnd: '2026-10-28',
+      examDate: 'December 2026',
+      admitCardRelease: 'November 2026'
     },
     selectionProcess: [
       'Computer Based Test (CBT)',
@@ -94,13 +94,13 @@ export const INITIAL_JOBS: GovJob[] = [
     applyUrl: 'https://ibps.in',
     pdfUrl: 'https://ibps.in',
     officialWebsite: 'https://ibps.in',
-    postedDate: '2026-07-25',
-    lastDate: '2026-08-25',
+    postedDate: '2026-09-20',
+    lastDate: '2026-10-24',
     importantDates: {
-      applyStart: '2026-07-25',
-      applyEnd: '2026-08-25',
-      examDate: 'October 2026',
-      admitCardRelease: 'September 2026'
+      applyStart: '2026-09-20',
+      applyEnd: '2026-10-24',
+      examDate: 'November 2026',
+      admitCardRelease: 'October 2026'
     },
     selectionProcess: [
       'Preliminary Examination (CBT)',
@@ -199,12 +199,12 @@ export const INITIAL_JOBS: GovJob[] = [
     applyUrl: 'https://rsmssb.rajasthan.gov.in',
     pdfUrl: 'https://rsmssb.rajasthan.gov.in',
     officialWebsite: 'https://rsmssb.rajasthan.gov.in',
-    postedDate: '2026-07-18',
-    lastDate: '2026-08-18',
+    postedDate: '2026-09-02',
+    lastDate: '2026-10-05',
     importantDates: {
-      applyStart: '2026-07-18',
-      applyEnd: '2026-08-18',
-      examDate: 'October 2026',
+      applyStart: '2026-09-02',
+      applyEnd: '2026-10-05',
+      examDate: 'November 2026',
       admitCardRelease: 'October 2026'
     },
     selectionProcess: [
@@ -234,13 +234,13 @@ export const INITIAL_JOBS: GovJob[] = [
     applyUrl: 'https://ssc.gov.in',
     pdfUrl: 'https://ssc.gov.in',
     officialWebsite: 'https://ssc.gov.in',
-    postedDate: '2026-07-15',
-    lastDate: '2026-08-15',
+    postedDate: '2026-08-30',
+    lastDate: '2026-10-02',
     importantDates: {
-      applyStart: '2026-07-15',
-      applyEnd: '2026-08-15',
-      examDate: 'October 2026',
-      admitCardRelease: 'September 2026'
+      applyStart: '2026-08-30',
+      applyEnd: '2026-10-02',
+      examDate: 'December 2026',
+      admitCardRelease: 'November 2026'
     },
     selectionProcess: [
       'Tier I Examination (CBT)',
@@ -269,13 +269,13 @@ export const INITIAL_JOBS: GovJob[] = [
     applyUrl: 'https://bpssc.bih.nic.in',
     pdfUrl: 'https://bpssc.bih.nic.in',
     officialWebsite: 'https://bpssc.bih.nic.in',
-    postedDate: '2026-07-14',
-    lastDate: '2026-08-14',
+    postedDate: '2026-08-27',
+    lastDate: '2026-09-30',
     importantDates: {
-      applyStart: '2026-07-14',
-      applyEnd: '2026-08-14',
-      examDate: 'November 2026',
-      admitCardRelease: 'October 2026'
+      applyStart: '2026-08-27',
+      applyEnd: '2026-09-30',
+      examDate: 'December 2026',
+      admitCardRelease: 'November 2026'
     },
     selectionProcess: [
       'Prelims Written Exam',
@@ -487,13 +487,13 @@ export const INITIAL_JOBS: GovJob[] = [
     applyUrl: 'https://upsc.gov.in',
     pdfUrl: 'https://upsc.gov.in',
     officialWebsite: 'https://upsc.gov.in',
-    postedDate: '2026-06-26',
-    lastDate: '2026-07-26',
+    postedDate: '2026-08-25',
+    lastDate: '2026-09-26',
     importantDates: {
-      applyStart: '2026-06-26',
-      applyEnd: '2026-07-26',
-      examDate: 'September 2026',
-      admitCardRelease: 'August 2026'
+      applyStart: '2026-08-25',
+      applyEnd: '2026-09-26',
+      examDate: 'November 2026',
+      admitCardRelease: 'October 2026'
     },
     selectionProcess: [
       'Written Examination (Objective CBT/OMR)',
@@ -522,11 +522,11 @@ export const INITIAL_JOBS: GovJob[] = [
     applyUrl: 'http://upsssc.gov.in',
     pdfUrl: 'http://upsssc.gov.in',
     officialWebsite: 'http://upsssc.gov.in',
-    postedDate: '2026-06-26',
-    lastDate: '2026-07-26',
+    postedDate: '2026-08-28',
+    lastDate: '2026-09-28',
     importantDates: {
-      applyStart: '2026-06-26',
-      applyEnd: '2026-07-26',
+      applyStart: '2026-08-28',
+      applyEnd: '2026-09-28',
       examDate: 'December 2026',
       admitCardRelease: 'November 2026'
     },

@@ -3,7 +3,7 @@ import {
   Briefcase, FileText, Award, BookOpen, Clock, 
   Sparkles, Mail, Bell, Menu, X, CheckSquare, 
   GraduationCap, MessageSquare, Download, LogIn,
-  Moon, Sun, HelpCircle, FileDown, Star, Calendar, FileUp, Globe, Newspaper, Zap, Train, Landmark, Swords, Anchor
+  Moon, Sun, HelpCircle, FileDown, Star, Calendar, FileUp, Globe, Newspaper, Zap, Train, Landmark, Swords, Anchor, Keyboard
 } from 'lucide-react';
 import { UserProfile } from '../types';
 import { LANGUAGES, TRANSLATIONS, LocaleType } from '../utils/lang';
@@ -65,6 +65,7 @@ export default function Navbar({
     { id: 'whatsapp-alerts', label: t.whatsappChannel, icon: MessageSquare, category: 'Main', highlight: true },
     
     { id: 'syllabus', label: t.syllabusAdmission, icon: GraduationCap, category: 'Prep Zone' },
+    { id: 'typing-test', label: t.typingTest, icon: Keyboard, category: 'Prep Zone', highlight: true },
     { id: 'auto-mock-creator', label: locale === 'hi' ? '🎯 ऑटो मॉक टेस्ट (All Exams)' : '🎯 Auto Mock Test (All Exams)', icon: Zap, category: 'Prep Zone', highlight: true },
     { id: 'mock-tests', label: t.mockTests, icon: Clock, category: 'Prep Zone' },
     { id: 'ssc-ai-mock', label: locale === 'hi' ? '🤖 SSC 7-Day AI मॉक (New Pattern)' : '🤖 SSC 7-Day AI Mock (2026)', icon: Sparkles, category: 'Prep Zone' },
@@ -121,7 +122,7 @@ export default function Navbar({
 
           {/* Desktop Horizontal Navigation Links (High Density Layout) */}
           <div className="hidden md:flex items-center gap-4 text-xs font-semibold">
-            {menuItems.filter(item => ['home', 'jobs', 'blog', 'ssc-sync', 'ai-doubt-solver', 'newspapers', 'calendar', 'admit-cards', 'results', 'current-affairs', 'whatsapp-alerts', 'premium'].includes(item.id)).map((item) => {
+            {menuItems.filter(item => ['home', 'jobs', 'typing-test', 'blog', 'ssc-sync', 'ai-doubt-solver', 'newspapers', 'calendar', 'admit-cards', 'results', 'current-affairs', 'whatsapp-alerts', 'premium'].includes(item.id)).map((item) => {
               const isSelected = activeTab === item.id;
               return (
                 <button
@@ -130,8 +131,10 @@ export default function Navbar({
                   className={`hover:text-blue-200 transition-all cursor-pointer pb-0.5 border-b-2 ${
                     isSelected 
                       ? 'border-white text-white font-extrabold' 
-                      : item.id === 'blog'
-                        ? 'border-transparent text-yellow-300 hover:text-yellow-200 font-bold'
+                      : item.id === 'typing-test'
+                        ? 'border-transparent text-amber-300 hover:text-amber-200 font-extrabold flex items-center gap-1 bg-amber-400/20 px-2 py-0.5 rounded-full border border-amber-300/40 shadow-xs'
+                        : item.id === 'blog'
+                          ? 'border-transparent text-yellow-300 hover:text-yellow-200 font-bold'
                         : item.id === 'ssc-sync'
                           ? 'border-transparent text-amber-300 hover:text-amber-200 font-extrabold uppercase animate-pulse flex items-center gap-1 bg-amber-400/10 px-2 py-0.5 rounded-full border border-amber-400/30'
                           : item.id === 'ai-doubt-solver'

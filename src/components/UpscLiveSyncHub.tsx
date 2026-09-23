@@ -504,7 +504,7 @@ export default function UpscLiveSyncHub({
                     {notice.details?.posts && (
                       <div className="flex justify-between">
                         <span className="text-slate-500">Total Vacancies:</span>
-                        <span className="font-bold font-mono text-amber-800">{notice.details.posts.toLocaleString()} Posts</span>
+                        <span className="font-bold font-mono text-amber-800">{Number(notice.details.posts).toLocaleString()} Posts</span>
                       </div>
                     )}
                     {notice.details?.qualification && (

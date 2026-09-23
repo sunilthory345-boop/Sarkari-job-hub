@@ -42,6 +42,17 @@ export class ErrorBoundary extends React.Component<Props, State> {
     }
   };
 
+  private handleClearCacheAndReload = () => {
+    try {
+      localStorage.removeItem('sarkari_jobs');
+      localStorage.removeItem('sarkari_admit_cards');
+      localStorage.removeItem('sarkari_results');
+    } catch {
+      // ignore
+    }
+    window.location.reload();
+  };
+
   public render() {
     if (this.state.hasError) {
       return (
@@ -70,7 +81,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
               <button
                 id="error-boundary-reload-btn"
                 onClick={this.handleReload}
-                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-700 hover:bg-blue-800 text-white text-sm font-semibold rounded-xl shadow-sm transition-colors"
+                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-700 hover:bg-blue-800 text-white text-sm font-semibold rounded-xl shadow-sm transition-colors cursor-pointer"
               >
                 <RefreshCw className="w-4 h-4" />
                 Reload Portal
@@ -78,12 +89,19 @@ export class ErrorBoundary extends React.Component<Props, State> {
               <button
                 id="error-boundary-home-btn"
                 onClick={this.handleGoHome}
-                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold rounded-xl transition-colors"
+                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold rounded-xl transition-colors cursor-pointer"
               >
                 <Home className="w-4 h-4" />
                 Home
               </button>
             </div>
+
+            <button
+              onClick={this.handleClearCacheAndReload}
+              className="text-[11px] text-slate-400 hover:text-slate-700 underline block mx-auto cursor-pointer"
+            >
+              Reset Saved Data & Reload / डेटा रीसेट करें
+            </button>
           </div>
         </div>
       );
