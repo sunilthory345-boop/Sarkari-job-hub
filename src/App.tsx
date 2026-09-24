@@ -5,7 +5,7 @@ import {
   CheckCircle, ArrowUpRight, GraduationCap, FileText, 
   HelpCircle, Download, CheckSquare, Send, Mail, Phone, 
   Building2, Globe, Heart, ShieldCheck, Zap, CreditCard, Plus, Share2, ChevronDown, ChevronUp, Printer, Link, Camera, X, RefreshCw, ExternalLink,
-  ChevronLeft, ChevronRight, CheckCircle2, Flame
+  ChevronLeft, ChevronRight, CheckCircle2, Flame, UserPlus, Check
 } from 'lucide-react';
 
 import { GovJob, AdmitCard, JobResult, MockTest, CurrentAffair, Blog, UserProfile, AnswerKey, Question, Newspaper } from './types';
@@ -59,6 +59,8 @@ import SscAiMockGenerator from './components/SscAiMockGenerator';
 import AutoMockTestCreator from './components/AutoMockTestCreator';
 import { TypingTestPortal } from './components/TypingTestPortal';
 import { SarkariPdfModal } from './components/SarkariPdfModal';
+import FollowCommunityModal from './components/FollowCommunityModal';
+import FloatingFollowButton from './components/FloatingFollowButton';
 import { SscLiveNotice, UpscLiveNotice, RrbLiveNotice, IbpsLiveNotice, SbiLiveNotice, RajLiveNotice, ArmyLiveNotice, NavyLiveNotice, BtscLiveNotice, HpscLiveNotice, PgrkamLiveNotice, UppbpbLiveNotice, MpesbLiveNotice } from './types';
 import { initializeGA, trackPageView } from './utils/analytics';
 import { updateSEOMetadata } from './utils/seoHelper';
@@ -2274,6 +2276,29 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
   const [trafficOpen, setTrafficOpen] = useState(false);
   const [advertiseOpen, setAdvertiseOpen] = useState(false);
 
+  // Official Community Follow State & Counter
+  const [isFollowed, setIsFollowed] = useState<boolean>(() => {
+    return localStorage.getItem('job_sarkari_hub_followed') === 'true';
+  });
+  const [followerCount, setFollowerCount] = useState<number>(() => {
+    const saved = localStorage.getItem('job_sarkari_hub_follower_count');
+    return saved ? parseInt(saved, 10) : 284520;
+  });
+  const [isFollowModalOpen, setIsFollowModalOpen] = useState(false);
+
+  const handleToggleFollow = () => {
+    setIsFollowed(prev => {
+      const next = !prev;
+      localStorage.setItem('job_sarkari_hub_followed', String(next));
+      setFollowerCount(c => {
+        const updated = next ? c + 1 : Math.max(284520, c - 1);
+        localStorage.setItem('job_sarkari_hub_follower_count', String(updated));
+        return updated;
+      });
+      return next;
+    });
+  };
+
   // Filter properties passed down to JobCard
   const [qualificationFilter, setQualificationFilter] = useState('All');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
@@ -2664,6 +2689,9 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
         setLocale={setLocale}
         onOpenAuthModal={() => setAuthModalOpen(true)}
         liveNotifications={liveNotifications}
+        isFollowed={isFollowed}
+        followerCount={followerCount}
+        onOpenFollowModal={() => setIsFollowModalOpen(true)}
       />
 
       {/* ⚡ PGRKAM, UPPBPB, MPESB, HPSC, BTSC, JOIN INDIAN NAVY, ARMY, RAJASTHAN SSO, SBI, IBPS, RRB, UPSC & SSC REAL-TIME LIVE UPDATE BAR */}
@@ -3392,6 +3420,28 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
               </div>
               
               <div className="flex flex-wrap gap-2.5 w-full md:w-auto shrink-0 justify-end">
+                <button
+                  type="button"
+                  onClick={() => setIsFollowModalOpen(true)}
+                  className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 rounded-xl px-4 py-2.5 text-xs font-black transition duration-200 shadow-md cursor-pointer border ${
+                    isFollowed
+                      ? 'bg-slate-900 text-white border-slate-700 shadow-slate-900/20'
+                      : 'bg-amber-400 hover:bg-amber-300 text-slate-950 border-amber-300 shadow-amber-400/25 active:scale-95 animate-pulse'
+                  }`}
+                >
+                  {isFollowed ? (
+                    <>
+                      <Check className="h-4 w-4 stroke-[3] text-emerald-400" />
+                      <span>{locale === 'hi' ? 'Following (284K+)' : '✓ Following (284K+)'}</span>
+                    </>
+                  ) : (
+                    <>
+                      <UserPlus className="h-4 w-4 stroke-[2.5]" />
+                      <span>{locale === 'hi' ? '+ Follow करें' : '+ Follow Hub'}</span>
+                      <span className="text-[10px] font-mono bg-slate-950/20 px-1.5 py-0.5 rounded-md font-bold">284K+</span>
+                    </>
+                  )}
+                </button>
                 <button
                   onClick={() => {
                     setActiveTab('whatsapp-alerts');
@@ -7914,6 +7964,25 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
         isOpen={advertiseOpen}
         onClose={() => setAdvertiseOpen(false)}
         triggerToast={triggerToast}
+      />
+
+      {/* Floating Follow Button */}
+      <FloatingFollowButton
+        isFollowed={isFollowed}
+        onOpenModal={() => setIsFollowModalOpen(true)}
+        followerCount={followerCount}
+        locale={locale}
+      />
+
+      {/* Official Community Follow Modal */}
+      <FollowCommunityModal
+        isOpen={isFollowModalOpen}
+        onClose={() => setIsFollowModalOpen(false)}
+        isFollowed={isFollowed}
+        onToggleFollow={handleToggleFollow}
+        followerCount={followerCount}
+        triggerToast={triggerToast}
+        locale={locale}
       />
 
       {/* Sticky Bottom Sponsored Bar */}

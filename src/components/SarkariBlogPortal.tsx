@@ -33,7 +33,8 @@ import {
   CheckCheck,
   Flame,
   Rocket,
-  Keyboard
+  Keyboard,
+  UserPlus
 } from 'lucide-react';
 import { Blog } from '../types';
 import { 
@@ -118,6 +119,29 @@ export default function SarkariBlogPortal({ blogs, onAddBlog, triggerToast, onNa
   const [newContent, setNewContent] = useState('');
   const [newAuthor, setNewAuthor] = useState('');
   const [newMetaKeywords, setNewMetaKeywords] = useState('Sarkari Result, Mock test, Syllabus PDF');
+
+  // Followed Authors and Hub Community State
+  const [followedAuthors, setFollowedAuthors] = useState<Record<string, boolean>>(() => {
+    try {
+      const saved = localStorage.getItem('sarkari_followed_authors');
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
+
+  const toggleFollowAuthor = (authorName: string) => {
+    setFollowedAuthors(prev => {
+      const next = { ...prev, [authorName]: !prev[authorName] };
+      localStorage.setItem('sarkari_followed_authors', JSON.stringify(next));
+      if (next[authorName]) {
+        triggerToast(`✨ Now following ${authorName}! You will receive notifications for new guides.`);
+      } else {
+        triggerToast(`Unfollowed ${authorName}.`);
+      }
+      return next;
+    });
+  };
 
   // Sitemap Generator States
   const [isSitemapModalOpen, setIsSitemapModalOpen] = useState(false);
@@ -775,6 +799,27 @@ export default function SarkariBlogPortal({ blogs, onAddBlog, triggerToast, onNa
                   </h3>
                   <div className="flex flex-wrap items-center gap-2 text-[10px] text-slate-400 font-bold font-mono pt-1">
                     <span>By {selectedPost.author}</span>
+                    <button
+                      type="button"
+                      onClick={() => toggleFollowAuthor(selectedPost.author)}
+                      className={`px-2 py-0.5 rounded-full text-[9.5px] font-bold transition cursor-pointer flex items-center gap-1 ${
+                        followedAuthors[selectedPost.author]
+                          ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                          : 'bg-amber-100 hover:bg-amber-200 text-slate-900 border border-amber-300'
+                      }`}
+                    >
+                      {followedAuthors[selectedPost.author] ? (
+                        <>
+                          <Check className="h-3 w-3 stroke-[3] text-emerald-700" />
+                          <span>Following</span>
+                        </>
+                      ) : (
+                        <>
+                          <UserPlus className="h-3 w-3 stroke-[2.5]" />
+                          <span>+ Follow Author</span>
+                        </>
+                      )}
+                    </button>
                     <span>•</span>
                     <span>{selectedPost.date}</span>
                     <span>•</span>
@@ -789,8 +834,29 @@ export default function SarkariBlogPortal({ blogs, onAddBlog, triggerToast, onNa
 
                 {/* Instant Social Share Panel */}
                 <div className="border-t border-slate-100 pt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-left">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-mono">Simulate Share Notes with friends:</span>
-                  <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-mono">Share & Follow Community:</span>
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <button
+                      type="button"
+                      onClick={() => toggleFollowAuthor('Job Sarkari Hub')}
+                      className={`px-2.5 py-1 rounded font-bold text-[10px] flex items-center gap-1 transition cursor-pointer ${
+                        followedAuthors['Job Sarkari Hub']
+                          ? 'bg-emerald-600 text-white'
+                          : 'bg-amber-400 hover:bg-amber-500 text-slate-950 font-black'
+                      }`}
+                    >
+                      {followedAuthors['Job Sarkari Hub'] ? (
+                        <>
+                          <Check className="h-3 w-3 stroke-[3]" />
+                          <span>✓ Following Hub</span>
+                        </>
+                      ) : (
+                        <>
+                          <UserPlus className="h-3 w-3 stroke-[2.5]" />
+                          <span>+ Follow Hub</span>
+                        </>
+                      )}
+                    </button>
                     <button
                       type="button"
                       onClick={() => simulateShare('whatsapp', selectedPost.title)}

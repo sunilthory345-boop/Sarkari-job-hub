@@ -3,7 +3,8 @@ import {
   Briefcase, FileText, Award, BookOpen, Clock, 
   Sparkles, Mail, Bell, Menu, X, CheckSquare, 
   GraduationCap, MessageSquare, Download, LogIn,
-  Moon, Sun, HelpCircle, FileDown, Star, Calendar, FileUp, Globe, Newspaper, Zap, Train, Landmark, Swords, Anchor, Keyboard
+  Moon, Sun, HelpCircle, FileDown, Star, Calendar, FileUp, Globe, Newspaper, Zap, Train, Landmark, Swords, Anchor, Keyboard,
+  UserPlus, Check
 } from 'lucide-react';
 import { UserProfile } from '../types';
 import { LANGUAGES, TRANSLATIONS, LocaleType } from '../utils/lang';
@@ -21,6 +22,9 @@ interface NavbarProps {
   setLocale: (val: LocaleType) => void;
   onOpenAuthModal?: () => void;
   liveNotifications?: any[];
+  isFollowed?: boolean;
+  followerCount?: number;
+  onOpenFollowModal?: () => void;
 }
 
 export default function Navbar({ 
@@ -35,7 +39,10 @@ export default function Navbar({
   locale,
   setLocale,
   onOpenAuthModal,
-  liveNotifications = []
+  liveNotifications = [],
+  isFollowed = false,
+  followerCount = 284520,
+  onOpenFollowModal
 }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
@@ -175,6 +182,34 @@ export default function Navbar({
                 </button>
               )}
             </div>
+
+            {/* Interactive Follow Button */}
+            <button
+              id="nav-follow-btn"
+              type="button"
+              onClick={onOpenFollowModal}
+              className={`flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-bold transition shadow-xs cursor-pointer border ${
+                isFollowed
+                  ? 'bg-emerald-600 hover:bg-emerald-700 text-white border-emerald-400/60 shadow-emerald-600/20'
+                  : 'bg-amber-400 hover:bg-amber-300 text-slate-950 border-amber-300 font-black shadow-amber-400/25 active:scale-95 animate-pulse'
+              }`}
+              title={locale === 'hi' ? 'Job Sarkari Hub को फॉलो करें' : 'Follow Job Sarkari Hub'}
+            >
+              {isFollowed ? (
+                <>
+                  <Check className="h-3.5 w-3.5 stroke-[3]" />
+                  <span>{locale === 'hi' ? 'Following' : 'Following'}</span>
+                </>
+              ) : (
+                <>
+                  <UserPlus className="h-3.5 w-3.5 stroke-[2.5]" />
+                  <span>{locale === 'hi' ? '+ Follow' : '+ Follow'}</span>
+                  <span className="hidden lg:inline text-[10px] font-mono bg-slate-950/20 px-1.5 py-0.2 rounded-md font-bold">
+                    {followerCount ? `${Math.round(followerCount / 1000)}K` : '284K'}
+                  </span>
+                </>
+              )}
+            </button>
 
             {/* Globe Language Selector Dropdown */}
             <div className="flex items-center gap-1 bg-blue-900/60 border border-blue-700/60 rounded-xl px-2 py-1 shrink-0" id="nav-language-container">
@@ -353,6 +388,43 @@ export default function Navbar({
               className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-50"
             >
               <X className="h-5 w-5" />
+            </button>
+          </div>
+
+          {/* Mobile Follow Community Card */}
+          <div className="mb-4 bg-gradient-to-r from-amber-500/10 via-blue-500/10 to-indigo-500/10 border border-amber-300/40 rounded-2xl p-3 flex items-center justify-between gap-2 text-left">
+            <div>
+              <p className="text-xs font-black text-slate-900 flex items-center gap-1">
+                <span>Job Sarkari Hub</span>
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              </p>
+              <p className="text-[10px] text-slate-500 font-mono">
+                {followerCount ? `${followerCount.toLocaleString()}+` : '2,84,520+'} {locale === 'hi' ? 'अभ्यर्थी' : 'Followers'}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenFollowModal?.();
+              }}
+              className={`px-3 py-1.5 rounded-xl text-xs font-black transition cursor-pointer flex items-center gap-1.5 shadow-xs ${
+                isFollowed
+                  ? 'bg-emerald-600 text-white'
+                  : 'bg-amber-400 text-slate-950 shadow-amber-400/30'
+              }`}
+            >
+              {isFollowed ? (
+                <>
+                  <Check className="h-3.5 w-3.5 stroke-[3]" />
+                  <span>Following</span>
+                </>
+              ) : (
+                <>
+                  <UserPlus className="h-3.5 w-3.5 stroke-[2.5]" />
+                  <span>+ Follow</span>
+                </>
+              )}
             </button>
           </div>
 
