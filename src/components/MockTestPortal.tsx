@@ -3,7 +3,7 @@ import {
   Award, Clock, CheckCircle2, AlertTriangle, 
   HelpCircle, RefreshCw, FileText, ChevronRight, 
   ChevronLeft, BookOpen, Star, Sparkles, Download, Lock, Check, Minimize2, Video, Terminal,
-  Zap, ArrowRight
+  Zap, ArrowRight, Volume2, VolumeX
 } from 'lucide-react';
 import { MockTest, UserProfile, Question } from '../types';
 import CertificateModal from './CertificateModal';
@@ -68,6 +68,39 @@ export default function MockTestPortal({
   const [selectedDomainStream, setSelectedDomainStream] = useState<string>('All');
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState<string>('All');
   const [examSearchQuery, setExamSearchQuery] = useState<string>('');
+  const [speakingQId, setSpeakingQId] = useState<number | string | null>(null);
+
+  // Audio speech function for explanations
+  const handleSpeakExplanation = (questionText: string, explanation: string, qId: number | string) => {
+    if (!('speechSynthesis' in window)) {
+      alert('Speech synthesis is not supported in this browser.');
+      return;
+    }
+
+    if (speakingQId === qId) {
+      window.speechSynthesis.cancel();
+      setSpeakingQId(null);
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+    setSpeakingQId(qId);
+
+    const speechText = `प्रश्न: ${questionText}. विस्तारपूर्वक हल और उत्तर: ${explanation}`
+      .replace(/[*#_~`$]/g, '')
+      .replace(/\\times/g, ' गुणा ')
+      .replace(/\\div/g, ' भाग ')
+      .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '$1 बटा $2');
+
+    const utterance = new SpeechSynthesisUtterance(speechText);
+    utterance.lang = 'hi-IN';
+    utterance.rate = 0.95;
+
+    utterance.onend = () => setSpeakingQId(null);
+    utterance.onerror = () => setSpeakingQId(null);
+
+    window.speechSynthesis.speak(utterance);
+  };
 
   // Active question filter by section
   const getExamSections = (testCategory: string = '') => {
@@ -1677,18 +1710,42 @@ export default function MockTestPortal({
                     </div>
 
                     <div className="mt-3 bg-blue-50/50 p-3 rounded-xl border border-blue-100 text-xs text-sky-950">
-                      <div className="flex items-center justify-between gap-2 border-b border-blue-100 pb-1.5 mb-1.5">
+                      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-blue-100 pb-1.5 mb-1.5">
                         <p className="font-extrabold text-blue-900 font-mono">Detailed Explanation / विस्तारपूर्वक हल:</p>
-                        {onOpenAiDoubt && (
+                        <div className="flex items-center gap-2">
                           <button
                             type="button"
-                            onClick={() => onOpenAiDoubt(q.text)}
-                            className="bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1 rounded font-bold text-[10px] flex items-center gap-1 transition shadow-xs"
+                            onClick={() => handleSpeakExplanation(q.text, q.explanation, q.id)}
+                            className={`px-2.5 py-1 rounded font-bold text-[10px] flex items-center gap-1 transition shadow-xs ${
+                              speakingQId === q.id
+                                ? 'bg-amber-500 text-slate-950 animate-pulse'
+                                : 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                            }`}
+                            title="ऑडियो में प्रश्न और हल सुनें"
                           >
-                            <Sparkles className="h-3 w-3 text-amber-300" />
-                            Ask AI Doubt Mitra (शॉर्ट ट्रिक व पूर्ण समाधान)
+                            {speakingQId === q.id ? (
+                              <>
+                                <VolumeX className="h-3 w-3" />
+                                <span>ऑडियो रोकें (Stop)</span>
+                              </>
+                            ) : (
+                              <>
+                                <Volume2 className="h-3 w-3" />
+                                <span>ऑडियो में सुनें (Audio Answer)</span>
+                              </>
+                            )}
                           </button>
-                        )}
+                          {onOpenAiDoubt && (
+                            <button
+                              type="button"
+                              onClick={() => onOpenAiDoubt(q.text)}
+                              className="bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1 rounded font-bold text-[10px] flex items-center gap-1 transition shadow-xs"
+                            >
+                              <Sparkles className="h-3 w-3 text-amber-300" />
+                              Ask AI Doubt Mitra
+                            </button>
+                          )}
+                        </div>
                       </div>
                       <p className="mt-1 leading-relaxed whitespace-pre-wrap">{q.explanation}</p>
                     </div>

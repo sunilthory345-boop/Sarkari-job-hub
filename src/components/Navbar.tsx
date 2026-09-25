@@ -76,7 +76,7 @@ export default function Navbar({
     { id: 'auto-mock-creator', label: locale === 'hi' ? '🎯 ऑटो मॉक टेस्ट (All Exams)' : '🎯 Auto Mock Test (All Exams)', icon: Zap, category: 'Prep Zone', highlight: true },
     { id: 'mock-tests', label: t.mockTests, icon: Clock, category: 'Prep Zone' },
     { id: 'ssc-ai-mock', label: locale === 'hi' ? '🤖 SSC 7-Day AI मॉक (New Pattern)' : '🤖 SSC 7-Day AI Mock (2026)', icon: Sparkles, category: 'Prep Zone' },
-    { id: 'ai-doubt-solver', label: locale === 'hi' ? '⚡ AI Doubt Mitra (प्रश्न हलकर्ता)' : '⚡ AI Doubt Solver', icon: Sparkles, category: 'Prep Zone' },
+    { id: 'ai-doubt-solver', label: locale === 'hi' ? '⚡ AI Doubt Mitra PRO (उच्च गणित, रीजनिंग व इंग्लिश)' : '⚡ AI Doubt Solver PRO (Math, Reasoning & English)', icon: Sparkles, category: 'Prep Zone', highlight: true },
     { id: 'pyqs', label: t.pyqPapers, icon: FileDown, category: 'Prep Zone' },
     { id: 'newspapers', label: locale === 'hi' ? '📰 दैनिक समाचार पत्र' : '📰 Daily Newspaper ePaper', icon: Newspaper, category: 'Prep Zone' },
     { id: 'uploads', label: t.uploads, icon: FileUp, category: 'Prep Zone' },

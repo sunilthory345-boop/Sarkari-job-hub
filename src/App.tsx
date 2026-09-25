@@ -5119,22 +5119,39 @@ I am ready bilingually to clear formulas, solve reasoning problems, or compile s
         {/* TAB 6.5: FULL-SCREEN DEDICATED AI DOUBT SOLVER */}
         {activeTab === 'ai-doubt-solver' && (
           <div className="space-y-6 animate-fadeIn">
-            <div className="bg-[#0f172a] text-white p-6 rounded-3xl border border-slate-800 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="bg-gradient-to-r from-slate-900 via-blue-950 to-indigo-950 text-white p-6 rounded-3xl border border-blue-900/60 shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
-                <span className="text-[10px] font-mono font-bold bg-blue-500/20 text-blue-300 border border-blue-400/30 px-2.5 py-1 rounded-full uppercase tracking-widest inline-flex items-center gap-1 mb-2">
-                  <Sparkles className="h-3 w-3 text-amber-300 animate-spin" /> Sarkari AI Hub Engine v3.0
+                <span className="text-[10px] font-mono font-bold bg-amber-400/20 text-amber-300 border border-amber-400/40 px-3 py-1 rounded-full uppercase tracking-widest inline-flex items-center gap-1.5 mb-2 shadow-sm">
+                  <Sparkles className="h-3 w-3 text-amber-300 animate-spin" /> Sarkari AI Doubt Mitra PRO v4.0 (Fully Pro Level)
                 </span>
-                <h2 className="text-xl font-black tracking-tight text-white flex items-center gap-2">
+                <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-2">
                   <span>AI Doubt Solver (सरकारी एआई प्रश्न मित्र)</span>
+                  <span className="text-xs bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 font-black px-2.5 py-0.5 rounded-full uppercase">
+                    PRO LEVEL ⚡
+                  </span>
                 </h2>
-                <p className="text-xs text-slate-300 mt-1 max-w-2xl leading-relaxed">
-                  Voice Search, Image Upload, and instant Bilingual (हिन्दी + English) step-by-step solutions for SSC, UPSC, Banking, Railways & State Level competitive exams.
+                <p className="text-xs sm:text-sm text-blue-200 mt-1 max-w-3xl leading-relaxed">
+                  Now with <strong>Advance Math (Algebra, Trigonometry, Geometry, Remainder)</strong>, <strong>Advance Reasoning (Only a few Syllogism, Puzzles, Machine I/O)</strong>, and <strong>Advance English Grammar (Inversion, Subjunctive, Participles, Subject-Verb Concord)</strong> with step-by-step rigorous solutions & value-putting shortcuts!
                 </p>
+                <div className="flex flex-wrap gap-2 mt-3 text-[11px]">
+                  <span className="bg-blue-600/30 text-blue-300 border border-blue-400/30 px-2.5 py-1 rounded-lg font-bold">
+                    🚀 Advance Math Pro
+                  </span>
+                  <span className="bg-purple-600/30 text-purple-300 border border-purple-400/30 px-2.5 py-1 rounded-lg font-bold">
+                    🧠 Advance Reasoning Pro
+                  </span>
+                  <span className="bg-emerald-600/30 text-emerald-300 border border-emerald-400/30 px-2.5 py-1 rounded-lg font-bold">
+                    📚 Advance English Grammar Pro
+                  </span>
+                  <span className="bg-amber-600/30 text-amber-300 border border-amber-400/30 px-2.5 py-1 rounded-lg font-bold">
+                    🔊 Bilingual Voice Explanations
+                  </span>
+                </div>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 shrink-0">
                 <button
                   onClick={() => setActiveTab('mock-tests')}
-                  className="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-4 py-2.5 rounded-xl border border-slate-700 transition"
+                  className="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-4 py-2.5 rounded-xl border border-slate-700 transition shadow-md"
                 >
                   📝 Return to Mock Tests
                 </button>
